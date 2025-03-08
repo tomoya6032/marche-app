@@ -1,0 +1,47 @@
+# Read about fixtures at https://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  title: MyString
+  description: MyText
+  start_time: 2025-03-08 08:22:47
+  end_time: 2025-03-08 08:22:47
+  venue: MyString
+  address: MyString
+  latitude: 1.5
+  longitude: 1.5
+  capacity: 1
+  is_online: false
+  online_url: MyString
+  is_free: false
+  price: 9.99
+  organizer: MyString
+  contact_info: MyString
+  website: MyString
+  status: 1
+  image: MyString
+  video: MyString
+  category_id: 1
+  facility_id: 1
+
+two:
+  title: MyString
+  description: MyText
+  start_time: 2025-03-08 08:22:47
+  end_time: 2025-03-08 08:22:47
+  venue: MyString
+  address: MyString
+  latitude: 1.5
+  longitude: 1.5
+  capacity: 1
+  is_online: false
+  online_url: MyString
+  is_free: false
+  price: 9.99
+  organizer: MyString
+  contact_info: MyString
+  website: MyString
+  status: 1
+  image: MyString
+  video: MyString
+  category_id: 1
+  facility_id: 1

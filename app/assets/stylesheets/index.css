@@ -1,0 +1,38 @@
+
+
+.header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 10px;
+}
+
+.logo {
+    width: 100px; /* ロゴの幅を調整 */
+}
+
+.header-right {
+    display: flex;
+    align-items: center;
+}
+
+.header-right button {
+   margin-left: 10px;
+}
+
+.login-btn {
+    display: flex;
+    flex-flow: column;
+}
+
+nav ul {
+    display: flex;
+    list-style: none;
+    padding: 0;
+    
+}
+
+nav ul li {
+    margin-right: 20px;
+    width: 100%;
+}
