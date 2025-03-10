@@ -7,28 +7,20 @@
 
 
 %body
-  .header
-    .header
-      %h1 つながるマルシェ
-  
+  = render 'header/header' # ヘッダーのパーシャルを呼び出す
     
-    .header-logo
-      %img{src: "your-logo.png", alt: "つながるマルシェ"}
-    .header-right
-      %p サブタイトル
-      .login-btn
-        %button ログイン
-        %button サインアップ
-  .nav
-    %nav
-      %ul
-        %li
-          %a{href: "#"} イベントタイプから選ぶ
-        %li
-          %a{href: "#"} イベント地域から選ぶ
-        %li
-          %a{href: "#"} 日程から選ぶ
-        %li
-          %a{href: "#"} 出展するには？
-        %li
-          %a{href: "#"} FAQ & Tips 
+
+  .event-container 
+    .event-btn
+      = link_to events_index_path do
+        .link_inner
+          %h3 イベント一覧
+
+
+
+  .facility-container 
+    .facility-btn
+      = link_to facility_index_path do
+        .link_inner
+          %h3 出展施設一覧
+      

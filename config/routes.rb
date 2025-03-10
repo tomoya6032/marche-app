@@ -1,4 +1,6 @@
 Rails.application.routes.draw do
+  get "facility/index"
+  get "facility/show"
   get "events/index"
   get "events/show"
   # Define your application routes per the DSL in https://guides.rubyonrails.org/routing.html
