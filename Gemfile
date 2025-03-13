@@ -56,7 +56,7 @@ group :development, :test do
   # better_errorsの画面上にirb/pry(PERL)を表示する
   gem 'binding_of_caller'
 
-  gem 'kaminari', '~> 0.17.0'
+  gem 'kaminari', '~> 1.2.2'
 
   # gem "sass-rails"
 end
