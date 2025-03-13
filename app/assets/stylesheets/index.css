@@ -37,3 +37,102 @@ nav ul li {
     margin-right: 20px;
     width: 100%;
 }
+
+.top-container {
+    display: flex;
+    
+}
+
+.event-container {
+    text-align: center;
+    width: 100%;
+    margin: 80px 0;
+}
+
+.facility-container {
+    text-align: center;
+    width: 100%;
+    margin: 80px 0;
+}
+
+.top-image {
+    width: 100%;
+    text-align: center;
+    
+}
+
+.top-slider img {
+   margin: 80px;
+}
+
+.column-section {
+    display: flex;
+   
+}
+
+.section.news {
+    width: 100%;
+    text-align: center;
+    margin-top: 30px;
+    margin-bottom: 30px;
+    
+}
+
+.section.news li {
+    list-style: none;
+    margin-top: 20px;
+    margin-bottom: 20px;
+}
+
+.sns-container {
+    width: 30%;
+    padding: 12px;
+}
+
+.sns-inner {
+  height: 200px;
+  
+}
+
+
+.section.events {
+    margin-top: 60px;
+    margin-bottom: 30px;
+
+}
+
+.event-list {
+    display: flex;
+    margin: 20px;
+}
+
+.event-item {
+    margin: 40px;
+}
+
+.recruitment-content {
+    width: 100%;
+    text-align: center;
+}
+
+.recruitment-content img {
+    margin: 60px;
+    padding: 50px;
+}
+
+
+.section.description {
+    width: 90%;
+    margin: auto;
+    
+}
+
+
+.footer {
+    margin-top: 60px;
+    height: 500px;
+    display: flex;
+    align-items: flex-end;
+    
+   
+}

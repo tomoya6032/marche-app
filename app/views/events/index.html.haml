@@ -1,5 +1,15 @@
 %body
   = render 'header/header' # ヘッダーのパーシャルを呼び出す
 
-%h1 Events#index
-%p Find me in app/views/events/index.html.haml
+  
+
+  %h1 新着イベント一覧
+  %p ここにフリマなどのイベント一覧が表示される予定
+  %ul
+    - @events.each do |event|
+      %li
+        = link_to event.title, event_path(event)
+        %p= event.description
+        %p= event.start_time.strftime("%Y/%m/%d %H:%M")
+
+  = paginate @events

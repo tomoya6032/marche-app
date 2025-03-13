@@ -10,17 +10,80 @@
   = render 'header/header' # ヘッダーのパーシャルを呼び出す
     
 
-  .event-container 
-    .event-btn
-      = link_to events_index_path do
-        .link_inner
-          %h3 イベント一覧
+  .top-container 
+    .event-container 
+      .event-btn
+        = link_to events_index_path do
+          .link_inner
+            %h3 イベント一覧
 
-
-
-  .facility-container 
-    .facility-btn
-      = link_to facility_index_path do
-        .link_inner
-          %h3 出展施設一覧
+    .facility-container 
+      .facility-btn
+        = link_to facility_index_path do
+          .link_inner
+            %h3 出展施設一覧
       
+  .top-image
+    .top-slider
+      %img(src="slider1.jpg" alt="スライダー1")
+      %img(src="slider2.jpg" alt="スライダー2")
+      %img(src="slider3.jpg" alt="スライダー3")
+
+  .column-section 
+    .section.news
+      %h2 お知らせ
+      %ul
+        %li
+          %a(href="#") イベント開催日変更のお知らせ
+        %li
+          %a(href="#") 新規出店者情報
+        %li
+          %a(href="#") 悪天候による開催について
+
+    .sns-container
+      .sns-inner 
+        .h3 インスタグラムセクション
+        
+      .sns-inner 
+        .h3 エックスセクション
+        
+      .sns-inner 
+        .h3 フェイスブックセクション
+    
+
+  .section.events
+    %h2 近日開催のイベント
+    .event-list
+      .event-item
+        %img(src="event1.jpg" alt="イベント1")
+        %h3 イベント名1
+        %p 開催日: 〇月〇日
+        %p 詳細: イベントの詳細テキスト...
+      .event-item
+        %img(src="event2.jpg" alt="イベント2")
+        %h3 イベント名2
+        %p 開催日: 〇月〇日
+        %p 詳細: イベントの詳細テキスト...
+      .event-item
+        %img(src="event3.jpg" alt="イベント3")
+        %h3 イベント名3
+        %p 開催日: 〇月〇日
+        %p 詳細: イベントの詳細テキスト...
+
+  .section.recruitment
+    .recruitment-content
+      %img(src="recruitment.jpg" alt="出展者募集")
+      %a.button(href="#") 出展者募集中！
+
+  
+
+  .section.description
+    %h2 マルシェについて
+    %p 私たちのマルシェは、地域と人々をつなぐ出会いの場です。イベントを通じて、楽しいお出かけと思い出を作りませんか？
+    %p イベントと参加者のマッチング: ...
+    %p お出かけをして楽しい出会いを作ろう: ...
+
+  .footer
+    %p &copy; 2024 マルシェイベント
+
+    .script(src="script.js")

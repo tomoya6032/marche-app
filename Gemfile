@@ -49,6 +49,16 @@ group :development, :test do
 
   # Omakase Ruby styling [https://github.com/rails/rubocop-rails-omakase/]
   gem "rubocop-rails-omakase", require: false
+
+   # エラー画面をわかりやすく整形してくれる
+  gem 'better_errors'
+
+  # better_errorsの画面上にirb/pry(PERL)を表示する
+  gem 'binding_of_caller'
+
+  gem 'kaminari', '~> 0.17.0'
+
+  # gem "sass-rails"
 end
 
 group :development do
@@ -58,6 +68,7 @@ group :development do
   gem 'erb2haml'
   gem "haml-lint"
   gem "html2haml"
+  
 end
 
 group :test do
