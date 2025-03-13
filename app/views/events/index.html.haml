@@ -1,15 +1,28 @@
 %body
   = render 'header/header' # ヘッダーのパーシャルを呼び出す
 
-  
+
 
   %h1 新着イベント一覧
   %p ここにフリマなどのイベント一覧が表示される予定
-  %ul
+
+  .event-container
     - @events.each do |event|
-      %li
-        = link_to event.title, event_path(event)
-        %p= event.description
-        %p= event.start_time.strftime("%Y/%m/%d %H:%M")
+      = link_to event_path(event) do
+        %h2= event.title
+      %p= event.description
+      %p= event.id # 追加
+      %p= event.start_time.strftime("%Y/%m/%d %H:%M")
+
+
+
+
+
+  = link_to new_event_path do
+    .link_inner
+      %h2 新規イベントを作成する
+
+
+
 
   = paginate @events

@@ -1,0 +1,22 @@
+= render 'header/header' # ヘッダーのパーシャルを呼び出す
+
+%h1 イベント作成
+
+= form_with model: @event, local: true do |f|
+  .field  
+    = f.label :title, 'タイトル'
+    = f.text_field :title
+  .field
+    = f.label :description, '説明'
+    = f.text_area :description
+  .field
+    = f.label :start_time, '開始日時'
+    = f.datetime_select :start_time
+  .field
+    = f.label :end_time, '終了日時'
+    = f.datetime_select :end_time
+  .field
+    = f.label :venue, '開催場所'
+    = f.text_field :venue
+  .actions
+    = f.submit '作成'

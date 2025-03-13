@@ -1,5 +1,18 @@
 %body
   = render 'header/header' # ヘッダーのパーシャルを呼び出す
 
-%h1 Events#show
-%p Find me in app/views/events/show.html.haml
+
+
+
+%h1 イベント詳細ページ
+
+%h1= @event.title
+
+%p= @event.description
+%p 開始日時: #{@event.start_time.strftime("%Y/%m/%d %H:%M")}
+%p 終了日時: #{@event.end_time.strftime("%Y/%m/%d %H:%M")}
+%p 開催場所: #{@event.venue}
+
+-# %h1= @event.title
+-# %p= @event.description
+
