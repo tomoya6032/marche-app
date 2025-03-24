@@ -18,7 +18,23 @@
     
     -# = stylesheet_link_tag :app, "data-turbo-track": "reload"
     -# = javascript_importmap_tags
+    
   %body
+    - if flash.present?
+      .flash
+        - flash.each do |message_type, message|
+          %div{:class => "alert alert-#{message_type}"}= message
+
+    - if flash.present?
+      .flash
+        - flash.each do |message_type, message|
+          %div{:class => "alert alert-#{message_type}"}= message
+
+    - if flash.present?
+      .flash
+        - flash.each do |key, value|
+          %div{:class => key}= value
+    
     -# %header.header
     -#   .header_logo
     -#     %h1 つながるマルシェ 

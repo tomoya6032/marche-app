@@ -6,12 +6,92 @@
 
 %h1 イベント詳細ページ
 
-%h1= @event.title
+%h2= @event.title
 
-%p= @event.description
-%p 開始日時: #{@event.start_time.strftime("%Y/%m/%d %H:%M")}
-%p 終了日時: #{@event.end_time.strftime("%Y/%m/%d %H:%M")}
-%p 開催場所: #{@event.venue}
+-# = image_tag @event.image if @event.image.attached?
+
+-# - if event.images.attached?
+-#   - event.images.each do |image|
+-#     %div= image_tag(image)
+
+%p
+  %strong タイトル:
+  = @event.title
+
+%p
+  %strong 説明:
+  = @event.description
+
+%p
+  %strong 画像:
+  - if @event.images.present? && @event.images.attached?
+    - @event.images.each do |image|
+      = image_tag image, size: "300x300"
+  - else
+    画像はありません
+
+%p
+  %strong 開始日時:
+  = @event.start_time
+
+%p
+  %strong 終了日時:
+  = @event.end_time
+
+%p
+  %strong 開催場所:
+  = @event.venue
+
+%p
+  %strong 住所:
+  = @event.address
+
+%p
+  %strong 定員の目安:
+  = @event.capacity
+
+%p
+  %strong オンライン開催:
+  = @event.is_online ? 'はい' : 'いいえ'
+
+%p
+  %strong オンラインURL:
+  = @event.online_url
+
+%p
+  %strong 無料イベント:
+  = @event.is_free ? 'はい' : 'いいえ'
+
+%p
+  %strong 価格:
+  = @event.price
+
+%p
+  %strong 主催者:
+  = @event.organizer
+
+%p
+  %strong 連絡先:
+  = @event.contact_info
+
+%p
+  %strong ウェブサイト:
+  = @event.website
+
+%p
+  %strong ステータス:
+  = @event.status
+
+%p
+  %strong 動画URL:
+  = @event.video
+
+= link_to '編集', edit_event_path(@event)
+|
+= link_to '戻る', events_path
+|
+= link_to '削除', event_path(@event), data: { turbo_method: :delete, confirm: '本当に削除してもよろしいですか？' }
+
 
 -# %h1= @event.title
 -# %p= @event.description

@@ -2,13 +2,25 @@
 
 %h1 イベント作成
 
+
+
+
+%ul
+  - @event.errors.full_messages.each do |message|
+    %li= message
+
+
+
 = form_with model: @event, local: true do |f|
-  .field  
+  .field
     = f.label :title, 'タイトル'
     = f.text_field :title
   .field
     = f.label :description, '説明'
     = f.text_area :description
+  .field
+    = f.label :images, '画像'
+    = f.file_field :images, multiple: true
   .field
     = f.label :start_time, '開始日時'
     = f.datetime_select :start_time
@@ -18,5 +30,41 @@
   .field
     = f.label :venue, '開催場所'
     = f.text_field :venue
+  .field
+    = f.label :address, '住所'
+    = f.text_field :address
+  
+  .field
+    = f.label :capacity, '定員の目安'
+    = f.number_field :capacity
+  .field
+    = f.label :is_online, 'オンライン開催'
+    = f.check_box :is_online
+  .field
+    = f.label :online_url, 'オンラインURL'
+    = f.text_field :online_url
+  .field
+    = f.label :is_free, '無料イベント'
+    = f.check_box :is_free
+  .field
+    = f.label :price, '価格'
+    = f.number_field :price
+  .field
+    = f.label :organizer, '主催者'
+    = f.text_field :organizer
+  .field
+    = f.label :contact_info, '連絡先'
+    = f.text_field :contact_info
+  .field
+    = f.label :website, 'ウェブサイト'
+    = f.text_field :website
+  .field
+    = f.label :status, 'ステータス'
+    = f.number_field :status
+  
+  .field
+    = f.label :video, '動画URL'
+    = f.text_field :video
+
   .actions
     = f.submit '作成'
