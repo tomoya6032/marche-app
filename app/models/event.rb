@@ -11,6 +11,10 @@ class Event < ApplicationRecord
    validates :title, presence: true
    validates :description, presence: true
    
+   # belongs_to :region #都道府県のバリデーションに関する記述
+
+   # attribute :region, :string
+   
    def images_content_type
       if images.attached?
         images.each do |image|

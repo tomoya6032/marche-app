@@ -13,10 +13,12 @@
     %link{:href => "/icon.svg", :rel => "icon", :type => "image/svg+xml"}/
     %link{:href => "/icon.png", :rel => "apple-touch-icon"}/
     = stylesheet_link_tag 'application', media: 'all', 'data-turbolinks-track': 'reload'
+    = stylesheet_link_tag 'eventindex', media: 'all', 'data-turbolinks-track': 'reload'
     = javascript_pack_tag 'application', 'data-turbolinks-track': 'reload'
+    = stylesheet_link_tag "application", "data-turbo-track": "reload"
     %link{:href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet"}
     
-    -# = stylesheet_link_tag :app, "data-turbo-track": "reload"
+    = stylesheet_link_tag "application", "data-turbo-track": "reload" 
     -# = javascript_importmap_tags
     
   %body

@@ -6,16 +6,37 @@
   %h1 新着イベント一覧
   %p ここにフリマなどのイベント一覧が表示される予定
 
-  .event-container
-    - @events.each do |event|
-      = link_to event_path(event) do
-        %h2= event.title
-      %p= event.description
-      %p= event.id # 追加
-      %p= event.start_time.strftime("%Y/%m/%d %H:%M")
+  = form_with url: events_path, method: :get do |f|
+    = f.label :prefecture, '都道府県で絞り込む'
+    = f.select :prefecture, @prefectures, include_blank: '全て'
 
+    = f.submit '絞り込む'
   
+  
+  - if @message.present?
+    %p= @message
 
+  .event-container
+    %table.event-table
+      %thead
+        %tr
+          %th タイトル
+          %th No.
+          %th 概要
+          %th 開始時間
+          %th 終了時間
+          %th 開催場所
+          %th 参加費用
+      %tbody
+        - @events.each do |event|
+          %tr.event-row
+            %td= link_to event.title, event_path(event)
+            %td= event.id
+            %td= truncate(event.description, length: 20)
+            %td= event.start_time.strftime("%Y/%m/%d %H:%M")
+            %td= event.end_time.strftime("%Y/%m/%d %H:%M")
+            %td= event.venue
+            %td= event.is_free ? '無料' : '有料'
 
   = link_to new_event_path do
     .link_inner
@@ -25,3 +46,4 @@
 
 
   = paginate @events
+

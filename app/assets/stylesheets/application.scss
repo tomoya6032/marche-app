@@ -1,0 +1,277 @@
+// Entry point for your Sass build
+
+a {
+    text-decoration: none;
+}
+
+.header-left .link_inner {
+    font-size: 12px;
+    width: 200px;
+}
+.header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 10px;
+}
+
+.header-logo {
+  margin: 10px;
+  padding: 10px;
+  width: 500px; /* ロゴの幅を調整 */
+}
+
+.header-right {
+  display: flex;
+  align-items: center;
+  width: 200px;
+}
+
+// .login-btn {
+//   display: flex;
+//   flex-flow: column;
+// }
+
+.login-btn,.signup-btn {
+    text-align: center;
+    width: 120px;
+}
+
+.login-btn button, .signup-btn button {
+ 
+  margin: 8px;
+  padding: 4px 4px;
+  width: 100px;
+  
+  border: none;
+  border-radius: 4px;
+  background-color: #007bff; /* ボタンの背景色 */
+  color: white; /* ボタンの文字色 */
+  cursor: pointer;
+  flex-flow: column;
+}
+
+nav ul {
+  display: flex;
+  list-style: none;
+  padding: 10px;
+}
+
+nav ul li {
+  margin: 10px;
+  width: 100%;
+  padding: 10px;
+  text-align: center;
+}
+
+nav ul li a {
+  padding: 20px;
+  text-decoration: none; /* リンクの下線を削除 */
+  color: #333; /* リンクの文字色 */
+}
+
+.top-container {
+    margin-bottom: 10px;
+    display: flex;
+    border: 1px solid #000;
+    margin-top: 60px;
+}
+
+.event-container {
+    text-align: center;
+    width: 100%;
+    margin: 80px 0;
+}
+
+.event-btn {
+    border: 1px solid #000;
+    margin: 20px;
+    padding: 20px;
+}
+
+.facility-container {
+    text-align: center;
+    width: 100%;
+    margin: 80px 0;
+}
+
+.facility-btn {
+    border: 1px solid #000;
+    margin: 20px;
+    padding: 20px;
+}
+
+.link_inner {
+    padding: 10px;
+    border: 1px solid #000;
+}
+
+.top-image {
+    
+    width: 100%;
+    text-align: center;
+    border: 1px solid #000;
+    height: 350px;
+    margin-top: 60px;
+}
+
+.top-slider img {
+    border: 1px solid #000;
+    margin: 120px;
+   
+   
+}
+
+.column-section {
+    display: flex;
+    border: 1px solid #000;
+    
+    margin: 20px 0;
+    margin-top: 60px;
+}
+
+.section.news {
+    width: 100%;
+    text-align: center;
+    margin-top: 30px;
+    margin-bottom: 30px;
+    
+}
+
+.section.news li {
+    list-style: none;
+    margin-top: 20px;
+    margin-bottom: 20px;
+}
+
+.sns-container {
+    width: 40%;
+    padding: 12px;
+    margin: 10px;
+    border: 1px solid #000;
+}
+
+.sns-inner {
+  height: 200px;
+  
+}
+
+
+.section.events {
+    margin-top: 60px;
+    margin-bottom: 30px;
+}
+
+
+.event-list {
+    display: flex;
+    margin: 20px;
+    border: 1px solid #000;
+}
+
+.event-item {
+    margin: 10px;
+    padding: 20px;
+    border: 1px solid #000;
+}
+
+.section.recruitment {
+    margin-top: 60px;
+}
+
+.recruitment-content {
+    width: 100%;
+    text-align: center;
+    border: 1px solid #000;
+}
+
+.recruitment-content img {
+    margin: 60px;
+    padding: 50px;
+}
+
+
+.section.description {
+    /* width: 90%; */
+    margin: auto;
+    margin-top: 60px;
+    
+}
+
+.marche-description {
+    width: 90%;
+    margin: 0 auto;
+    padding: 20px;
+    border: 1px solid #000;
+}
+
+.footer {
+    margin-top: 60px;
+    height: 500px;
+    display: flex;
+    align-items: flex-end;
+    border-top: 1px solid #000;
+}
+
+.footer-description {
+    display: flex;
+    width: 100%;
+    justify-content:space-around;
+    margin: auto;
+    margin-top: 60px;
+
+}
+
+.footer-copylight {
+    text-align: center;
+}
+
+
+
+
+
+.event-container {
+    // display: grid;
+    // grid-template-columns: repeat(3, 1fr); // 3列のグリッド
+    // gap: 20px; // イベント間のギャップ
+  }
+  
+.event-tab {
+  border: 1px solid #ccc;
+  padding: 20px;
+  text-align: left;
+}
+
+
+.event-tab{
+  display: flex;
+    
+}
+
+.event-table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-bottom: 20px;
+  }
+  
+  .event-table th, .event-table td {
+    border: 1px solid #ddd;
+    padding: 8px;
+    text-align: left;
+  }
+  
+  .event-table th {
+    background-color: #f2f2f2;
+  }
+  
+  .event-table tr:nth-child(even) {
+    background-color: #f9f9f9;
+  }
+  
+  .event-table tr:hover {
+    background-color: #f0f0f0;
+  }
+  
+  .event-row td a {
+    text-decoration: none;
+  }

@@ -1,5 +1,29 @@
 %body
   = render 'header/header' # ヘッダーのパーシャルを呼び出す
 
-%h1 Facility#index
 %p Find me in app/views/facility/index.html.haml
+%h1 Facility#index
+%h1 イベント出店施設一覧
+.event-container
+  %table.event-table
+    %thead
+      %tr
+        %th 施設名
+        %th 施設所在地
+        %th 開催間近のイベント
+        %th イベント開催場所
+    %tbody
+      -# - @facilities.each do |facility|
+        %tr.event-row
+          %td= link_to facility.name, facility_path(facility)
+          %td= facility.location
+          %td
+            - if facility.events.present?
+              = link_to facility.events.first.title, event_path(facility.events.first)
+            - else
+              開催予定のイベントはありません
+          %td
+            - if facility.events.present?
+              = facility.events.first.venue
+            - else
+              -

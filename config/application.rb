@@ -14,6 +14,12 @@ module Marche
     config.i18n.default_locale = :ja
     config.i18n.load_path += Dir[Rails.root.join('config', 'locales', '**', '*.yml').to_s]
     
+    # Sassファイルの自動コンパイルを有効化
+    config.assets.precompile += %w( .js .css .scss .sass )
+    # アセットパイプラインでSassを使用
+    config.sass.preferred_syntax = :scss
+    config.sass.line_comments = false
+    config.sass.cache = true
     
     # Please, add to the `ignore` list any other `lib` subdirectories that do
     # not contain `.rb` files, or that should not be reloaded or eager loaded.

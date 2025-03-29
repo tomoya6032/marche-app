@@ -71,6 +71,7 @@
         %p 詳細: イベントの詳細テキスト...
 
   .section.recruitment
+    %h2 出展者募集
     .recruitment-content
       %img(src="recruitment.jpg" alt="出展者募集")
       %a.button(href="#") 出展者募集中！
@@ -79,11 +80,14 @@
 
   .section.description
     %h2 マルシェについて
-    %p 私たちのマルシェは、地域と人々をつなぐ出会いの場です。イベントを通じて、楽しいお出かけと思い出を作りませんか？
-    %p イベントと参加者のマッチング: ...
-    %p お出かけをして楽しい出会いを作ろう: ...
+    .marche-description
+      %p 私たちのマルシェは、地域と人々をつなぐ出会いの場です。イベントを通じて、楽しいお出かけと思い出を作りませんか？
+      %p イベントと参加者のマッチング: ...
+      %p お出かけをして楽しい出会いを作ろう: ...
 
-  .footer
-    %p &copy; 2024 マルシェイベント
 
-    .script(src="script.js")
+
+  = render 'footer/footer'
+  
+  
+  .script(src="script.js")

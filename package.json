@@ -1,0 +1,11 @@
+{
+  "name": "app",
+  "private": "true",
+  "dependencies": {
+    "sass": "^1.86.0"
+  },
+  "scripts": {
+    "build:css": "sass ./app/assets/stylesheets/application.scss:./app/assets/builds/application.css --no-source-map",
+    "watch:css": "sass --watch ./app/assets/stylesheets/application.scss:./app/assets/builds/application.css --no-source-map"
+  }
+}

@@ -28,8 +28,8 @@
     = f.label :end_time, '終了日時'
     = f.datetime_select :end_time
   .field
-    = f.label :venue, '開催場所'
-    = f.text_field :venue
+    = f.label :venue, '開催都道府県'
+    = f.select :venue, @prefectures, include_blank: '選択してください'
   .field
     = f.label :address, '住所'
     = f.text_field :address
