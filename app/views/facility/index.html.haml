@@ -3,7 +3,9 @@
 
 %p Find me in app/views/facility/index.html.haml
 %h1 Facility#index
+
 %h1 イベント出店施設一覧
+
 .event-container
   %table.event-table
     %thead
@@ -13,10 +15,10 @@
         %th 開催間近のイベント
         %th イベント開催場所
     %tbody
-      -# - @facilities.each do |facility|
+      - @facilities.each do |facility|
         %tr.event-row
           %td= link_to facility.name, facility_path(facility)
-          %td= facility.location
+          %td= facility.address
           %td
             - if facility.events.present?
               = link_to facility.events.first.title, event_path(facility.events.first)

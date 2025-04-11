@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[8.0].define(version: 2025_03_28_225943) do
+ActiveRecord::Schema[8.0].define(version: 2025_04_07_215838) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "pg_catalog.plpgsql"
 
@@ -84,10 +84,48 @@ ActiveRecord::Schema[8.0].define(version: 2025_03_28_225943) do
     t.datetime "updated_at", null: false
   end
 
+  create_table "hosts", force: :cascade do |t|
+    t.string "email", default: "", null: false
+    t.string "encrypted_password", default: "", null: false
+    t.string "reset_password_token"
+    t.datetime "reset_password_sent_at"
+    t.datetime "remember_created_at"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["email"], name: "index_hosts_on_email", unique: true
+    t.index ["reset_password_token"], name: "index_hosts_on_reset_password_token", unique: true
+  end
+
   create_table "regions", force: :cascade do |t|
     t.string "name"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+  end
+
+  create_table "sellers", force: :cascade do |t|
+    t.string "email", default: "", null: false
+    t.string "encrypted_password", default: "", null: false
+    t.string "reset_password_token"
+    t.datetime "reset_password_sent_at"
+    t.datetime "remember_created_at"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.string "name"
+    t.text "description"
+    t.string "address"
+    t.string "phone_number"
+    t.string "website"
+    t.string "image"
+    t.string "video"
+    t.string "business_hours_days"
+    t.time "business_hours_start"
+    t.time "business_hours_end"
+    t.text "past_exhibitions_names"
+    t.text "past_exhibitions_dates"
+    t.text "sns_accounts_types"
+    t.text "sns_accounts_urls"
+    t.index ["email"], name: "index_sellers_on_email", unique: true
+    t.index ["reset_password_token"], name: "index_sellers_on_reset_password_token", unique: true
   end
 
   add_foreign_key "active_storage_attachments", "active_storage_blobs", column: "blob_id"

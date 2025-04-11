@@ -87,12 +87,12 @@
   %strong 動画URL:
   = @event.video
 
-= link_to '編集', edit_event_path(@event)
-|
-= link_to '戻る', events_path
-|
-= link_to '削除', event_path(@event), data: { turbo_method: :delete, confirm: '本当に削除してもよろしいですか？' }
+- if seller_signed_in? && current_seller == @event.seller # 追記
+  = link_to '編集', edit_event_path(@event)
+  |
+  = link_to '削除', event_path(@event), data: { turbo_method: :delete, confirm: '本当に削除してもよろしいですか？' }
 
+= link_to '戻る', events_path
 
 -# %h1= @event.title
 -# %p= @event.description

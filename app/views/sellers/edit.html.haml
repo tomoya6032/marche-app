@@ -1,0 +1,57 @@
+= render 'header/header' # ヘッダーのパーシャルを呼び出す
+
+.seller-edit
+  %h1 プロフィール編集
+
+  = form_with model: @seller, local: true do |form|
+    .field
+      = form.label :name, 'アカウント名'
+      = form.text_field :name
+    .field
+      = form.label :description, '概要の説明'
+      = form.text_area :description
+    .field
+      = form.label :address, '住所'
+      = form.text_field :address
+    .field
+      = form.label :phone_number, '電話番号'
+      = form.text_field :phone_number
+    .field
+      = form.label :email, 'メールアドレス'
+      = form.text_field :email
+    .field
+      = form.label :website, 'ウェブサイト'
+      = form.text_field :website
+    .field
+      = form.label :image, '画像'
+      = form.file_field :images, multiple: true # 複数のファイルを選択できるようにする
+    .field
+      = form.label :video, '動画'
+      = form.text_area :video
+
+    .field
+      = form.label :business_hours_days, '店休日'
+      = form.text_field :business_hours_days, placeholder: '例:元旦以外毎日営業（不定休）'
+    .field
+      = form.label :business_hours_start, '営業開始時間'
+      = form.time_select :business_hours_start
+    .field
+      = form.label :business_hours_end, '営業終了時間'
+      = form.time_select :business_hours_end
+
+    .field
+      = form.label :past_exhibitions_names, '過去の出店実績 (イベント名)'
+      = form.text_area :past_exhibitions_names, placeholder: '例: イベントA,イベントB,イベントC'
+    .field
+      = form.label :past_exhibitions_dates, '過去の出店実績 (イベント日時)'
+      = form.text_area :past_exhibitions_dates, placeholder: '例: 2023-01-01 10:00,2023-02-01 12:00,2023-03-01 14:00'
+
+    -# .field
+    -#   %label SNSアカウント
+    -#   - @seller.sns_types_for_select.each do |name, value|
+    -#     .sns-account-field
+    -#       = check_box_tag "seller[sns_accounts_types][]", value, @seller.sns_accounts_types&.split(',').include?(value.to_s)
+    -#       = label_tag "seller_sns_accounts_types_#{value}", name
+    -#       = text_field_tag "seller[sns_accounts_urls][]", (@seller.sns_accounts_urls&.split(',') || [])[value], placeholder: 'URL'
+    .actions
+      = form.submit '更新'

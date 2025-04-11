@@ -1,11 +1,18 @@
 Rails.application.routes.draw do
+  devise_for :hosts
+  devise_for :sellers
   
   get "facility/index"
+  resources :facilities do
+    resources :events, only: [:index] # facilitiesに紐づくeventsのindexアクションのみルーティング
+  end
 
   get "facility/show"
 
   resources :events, only: [:index, :show, :new, :create, :edit, :update, :destroy]
   
+  resources :sellers, only: [:index, :show, :new, :create, :edit, :update, :destroy]
+
 
 
 

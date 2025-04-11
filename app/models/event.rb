@@ -3,6 +3,7 @@ class Event < ApplicationRecord
    # 必要に応じて他の関連付けやバリデーションも修正
    # belongs_to :category
    has_many_attached :images
+   belongs_to :seller #追記
 
    validate :images_content_type
    validate :images_size

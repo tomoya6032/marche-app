@@ -1,6 +1,6 @@
 class EventsController < ApplicationController
   before_action :set_event, only: [:show, :edit, :update]
-
+  before_action :authenticate_seller!, only: [:edit, :update, :destroy]
 
   def index
     set_prefectures # 共通化
