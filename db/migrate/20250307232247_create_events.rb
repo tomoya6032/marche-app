@@ -9,11 +9,11 @@ class CreateEvents < ActiveRecord::Migration[8.0]
       t.string :address
       t.float :latitude
       t.float :longitude
-      t.integer :capacity
+      t.string :capacity
       t.boolean :is_online
       t.string :online_url
       t.boolean :is_free
-      t.decimal :price
+      t.string :price
       t.string :organizer
       t.string :contact_info
       t.string :website

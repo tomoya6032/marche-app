@@ -8,7 +8,7 @@ class Event < ApplicationRecord
    validate :images_content_type
    validate :images_size
 
-   
+
    validates :title, presence: true
    validates :description, presence: true
    
@@ -16,7 +16,7 @@ class Event < ApplicationRecord
 
    # attribute :region, :string
    
-   def images_content_type
+    def images_content_type
       if images.attached?
         images.each do |image|
           unless image.content_type.in?(%w[image/jpeg image/png image/gif])
@@ -30,12 +30,15 @@ class Event < ApplicationRecord
     def images_size
       if images.attached?
         images.each do |image|
-          if image.blob.byte_size > 10.megabytes
-            errors.add(:images, '：1MB以下のファイルをアップロードしてください。')
+          if image.blob.byte_size > 100.megabytes
+            errors.add(:images, '：100MB以下のファイルをアップロードしてください。')
             break # 1つでもエラーがあればループを抜ける
           end
         end
       end
     end
+    
+    
+
 
 end

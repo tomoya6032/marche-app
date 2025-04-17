@@ -3,13 +3,14 @@
 .seller-mypage
   %h1 セラーマイページ
 
-  = link_to edit_seller_path(@seller) do
-    .link_inner
-      %h2 プロフィール編集
+  .seller-btn
+    = link_to edit_seller_path(@seller) do
+      .link_inner
+        %h2 プロフィール編集
 
-  = link_to new_event_path do # 追加
-    .link_inner
-      %h2 イベント出店を投稿
+    = link_to new_event_path do # 追加
+      .link_inner
+        %h2 イベント出店を投稿
 
   .seller-profile-info
     %h2 セラープロフィール情報

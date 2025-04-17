@@ -1,6 +1,6 @@
 Rails.application.routes.draw do
   devise_for :hosts
-  devise_for :sellers
+  
   
   get "facility/index"
   resources :facilities do
@@ -11,9 +11,13 @@ Rails.application.routes.draw do
 
   resources :events, only: [:index, :show, :new, :create, :edit, :update, :destroy]
   
+
+
   resources :sellers, only: [:index, :show, :new, :create, :edit, :update, :destroy]
-
-
+ 
+ 
+  
+  devise_for :sellers
 
 
 

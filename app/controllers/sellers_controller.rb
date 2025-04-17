@@ -1,10 +1,14 @@
 class SellersController < ApplicationController
   before_action :authenticate_seller!
-  before_action :set_seller, only: [:edit, :update]
+  before_action :set_seller, only: [:show, :edit, :update, ]
 
   def index
     # セラーのマイページの処理
     @seller = current_seller
+  end
+
+  def show
+    
   end
 
   def edit
@@ -20,6 +24,13 @@ class SellersController < ApplicationController
       render :edit
     end
   end
+
+  def destroy
+   
+
+  end
+
+
 
   def set_seller
     @seller = current_seller

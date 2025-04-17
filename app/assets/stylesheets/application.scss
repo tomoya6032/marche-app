@@ -1,8 +1,45 @@
 // Entry point for your Sass build
+body {
+  font-family: 'Arial', sans-serif;
+  line-height: 1.6;
+  color: #333;
+  background-color: #ffffff;
+  padding: 20px;
+}
+
+h1, h2 {
+  color: #d87093; /* 温かみのあるピンク */
+  // margin-bottom: 20px;
+}
+
+h1 {
+  // font-size: 2.5em;
+}
+
+h2 {
+  font-size: 1.8em;
+}
+
+p {
+  margin-bottom: 10px;
+}
+
+strong {
+  font-weight: bold;
+  color: #5f9ea0; /* 温かみのある青緑 */
+}
 
 a {
-    text-decoration: none;
+  color: #d87093;
+  text-decoration: none;
 }
+
+a:hover {
+  font-weight: bold; /* ホバー時に太文字にする */
+}
+
+
+
 
 .header-left .link_inner {
     font-size: 12px;
@@ -27,34 +64,13 @@ a {
   width: 200px;
 }
 
-// .login-btn {
-//   display: flex;
-//   flex-flow: column;
-// }
+
 
 .login-btn,.signup-btn {
     text-align: center;
     width: 120px;
     word-wrap:break-word; //単語で切って改行してくれる
 }
-
-// .login-btn button, .signup-btn button, .login-btn a, .signup-btn a {
-//   display: inline-block;
-//   margin: 8px;
-//   padding: 4px 4px;
-//   width: 100px;
-//   border: none;
-//   border-radius: 4px;
-//   background-color: #007bff;
-//   color: white;
-//   cursor: pointer;
-//   flex-flow: column;
-//   text-decoration: none; /* リンクの下線を削除 */
-// }
-
-// .login-btn button:hover, .signup-btn button:hover, .login-btn a:hover, .signup-btn a:hover {
-//   background-color: #0056b3;
-// }
 
 .button {
   display: inline-block;
@@ -248,122 +264,367 @@ nav ul li a {
     text-align: center;
 }
 
+.title-content-container {
+  display: flex; /* 横並びにする */
+  justify-content: space-between; /* 両端配置、間隔を空ける */
+  align-items: center; /* 縦方向の中央揃え */
+  margin: 20px;
+}
 
+.title-content {
+  margin-right: 20px; /* 右側の要素との間隔 */
+}
 
-
-
-.event-container {
-    // display: grid;
-    // grid-template-columns: repeat(3, 1fr); // 3列のグリッド
-    // gap: 20px; // イベント間のギャップ
-  }
-  
-.event-tab {
-  border: 1px solid #ccc;
+.filter-form {
+  background-color: #fff8f0; /* 薄いベージュ */
   padding: 20px;
+  border-radius: 10px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  margin-bottom: 20px;
+}
+
+.filter-form label {
+  display: block;
+  margin-bottom: 5px;
+  color: #555;
+  font-weight: bold;
+}
+
+.filter-form select {
+  width: 40%;
+  padding: 10px;
+  border: 1px solid #ddd;
+  border-radius: 5px;
+  margin-bottom: 10px;
+  font-size: 16px;
+  color: #333;
+}
+
+.filter-form input[type="submit"] {
+  background-color: #ffead4; /* 薄いオレンジ */
+  color: #333;
+  padding: 10px 20px;
+  border: none;
+  border-radius: 5px;
+  font-size: 16px;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+.filter-form input[type="submit"]:hover {
+  background-color: #ffd8b1; /* より濃いオレンジ */
+}
+
+.message {
+  color: #8b0000; /* ダークレッド */
+  font-weight: bold;
+  margin-top: 10px;
+}
+
+.event-cards {
+  display: flex;
+  flex-wrap: wrap;
+  
+}
+  
+.event-card {
+  width: 300px;
+  margin: 20px;
+  border: 1px solid #ddd;
+  border-radius: 5px;
+  overflow: hidden;
+}
+
+.event-image {
+  width: 100%;
+  height: 200px;
+  object-fit: cover;
+  
+}
+
+.event-no-image {
+  width: 100%;
+  height: 200px;
+  background-color: #f2f2f2;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  border-bottom: solid 1px #d3d5d3;
+}
+
+
+.event-card-content {
+  padding: 10px;
+  text-align: left;
+  h3 {
+    margin-top: 0px;
+  }
+}
+
+.event-form {
+  background-color: #fff8f0; /* 薄いベージュ */
+  padding: 20px;
+  border-radius: 10px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  margin-bottom: 20px;
+  max-width: 90%; /* フォームの最大幅を設定 */
+  margin-left: auto; /* 中央寄せにする */
+  margin-right: auto; /* 中央寄せにする */
+}
+
+.event-form label {
+  display: block;
+  margin-bottom: 5px;
+  color: #555;
+  font-weight: bold;
+}
+
+.event-form input[type="text"],
+.event-form textarea,
+.event-form select,
+.event-form input[type="number"],
+.event-form input[type="datetime-local"] { /* datetime-local を追加 */
+  width: 80%;
+  padding: 10px;
+  
+  border: 3px solid #ddd;
+  border-radius: 5px;
+  margin-bottom: 10px;
+  font-size: 16px;
+  color: #333;
+}
+
+.event-form input[type="checkbox"] {
+  margin-right: 5px;
+}
+
+.event-form input[type="submit"] {
+  background-color: #ffead4; /* 薄いオレンジ */
+  color: #333;
+  padding: 10px 20px;
+  border: none;
+  border-radius: 5px;
+  font-size: 16px;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+.datetime-select-container {
+  display: flex; /* 横並びにする */
+  align-items: center; /* 縦方向の中央揃え */
+  width: 600px;
+}
+
+.datetime-select-container select {
+  margin-right: 5px; /* セレクトボックス間の余白 */
+}
+
+.datetime-fields .field {
+  flex: 1; /* 各フィールドを均等に広げる */
+  margin-right: 10px; /* フィールド間の余白 */
+}
+
+.datetime-fields .field:last-child {
+  margin-right: 0; /* 最後のフィールドの右余白を削除 */
+}
+
+.prefectures-field {
+  width: 300px;
+
+}
+.event-form input[type="submit"]:hover {
+  background-color: #ffd8b1; /* より濃いオレンジ */
+}
+
+.event-form .field {
+  margin-bottom: 20px;
+}
+
+.event-form .actions {
+  text-align: center;
+}
+
+.event-form .error-messages {
+  color: #8b0000; /* ダークレッド */
+  font-weight: bold;
+  margin-bottom: 10px;
+}
+
+.event-form .error-messages li {
+  list-style: none;
+}
+
+// body {
+//   font-family: 'Arial', sans-serif;
+//   line-height: 1.6;
+//   color: #333;
+//   background-color: #f8f8f8;
+//   padding: 20px;
+// }
+
+// h1, h2 {
+//   color: #d87093;
+//   margin-bottom: 20px;
+// }
+
+// h1 {
+//   font-size: 2.5em;
+// }
+
+// h2 {
+//   font-size: 1.8em;
+// }
+
+.event-images {
+  display: flex;
+  flex-wrap: wrap;
+  margin-bottom: 20px;
+}
+
+.event-image {
+  width: 300px;
+  margin-right: 10px;
+  margin-bottom: 60px;
+  img {
+    width: 100%; /* 親要素の幅に合わせる */
+    height: auto; /* 高さを自動調整 */
+    object-fit: contain; /* 縦横比を維持して収まるように表示 */
+    border-radius: 8px;
+  }
+}
+
+.event-images .event-no-image {
+  width: 300px;
+  border-radius: 8px;
+}
+
+// .event-image:nth-child(5n) {
+//   margin-right: 0;
+// }
+
+img {
+ 
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+table.event-details {
+  width: 100%;
+  border-collapse: collapse;
+  margin-bottom: 20px;
+}
+
+table.event-details th,
+table.event-details td {
+  border: 1px solid #ddd;
+  padding: 8px;
   text-align: left;
 }
 
-
-.event-tab{
-  display: flex;
-    
+table.event-details th {
+  width: 20%;
+  font-weight: bold;
+  background-color: #f2f2f2;
 }
 
-.event-table {
-    width: 100%;
-    border-collapse: collapse;
+.edit-links {
+  margin-top: 20px;
+}
+
+.edit-links a {
+  padding: 8px 15px;
+  border: 1px solid #d87093;
+  border-radius: 5px;
+  margin-right: 10px;
+}
+
+.edit-links a:hover {
+  background-color: #ffe4e1;
+}
+
+
+
+
+
+
+.seller-mypage {
+  padding: 20px;
+  font-family: sans-serif;
+
+  h1 {
+    font-size: 24px;
     margin-bottom: 20px;
   }
-  
-  .event-table th, .event-table td {
-    border: 1px solid #ddd;
-    padding: 8px;
-    text-align: left;
-  }
-  
-  .event-table th {
-    background-color: #f2f2f2;
-  }
-  
-  .event-table tr:nth-child(even) {
-    background-color: #f9f9f9;
-  }
-  
-  .event-table tr:hover {
-    background-color: #f0f0f0;
-  }
-  
-  .event-row td a {
-    text-decoration: none;
-  }
 
-
-
-  .seller-mypage {
-    padding: 20px;
-    font-family: sans-serif;
-  
-    h1 {
-      font-size: 24px;
-      margin-bottom: 20px;
-    }
-  
-    .seller-profile-info {
-      h2 {
-        font-size: 20px;
-        margin-bottom: 10px;
-      }
-  
-      table {
-        width: 100%;
-        border-collapse: collapse;
-  
-        th, td {
-          padding: 8px;
-          text-align: left;
-          border-bottom: 1px solid #ddd;
-        }
-  
-        th {
-          width: 150px;
-          font-weight: bold;
-        }
-  
-        img {
-          max-width: 200px;
-          height: auto;
-        }
-      }
-    }
-  }
-
-  .seller-edit {
-    padding: 20px;
-    font-family: sans-serif;
-  
-    h1 {
-      font-size: 24px;
-      margin-bottom: 20px;
-    }
-  
-    .field {
+  .seller-profile-info {
+    h2 {
+      font-size: 20px;
       margin-bottom: 10px;
-  
-      label {
-        display: block;
+    }
+
+    table {
+      width: 100%;
+      border-collapse: collapse;
+
+      th, td {
+        padding: 8px;
+        text-align: left;
+        border-bottom: 1px solid #ddd;
+      }
+
+      th {
+        width: 150px;
         font-weight: bold;
       }
-  
-      input[type="text"], textarea {
-        width: 100%;
-        padding: 8px;
-        border: 1px solid #ddd;
-        border-radius: 4px;
+
+      img {
+        max-width: 200px;
+        height: auto;
       }
     }
+  }
+}
+
+.seller-btn {  
+  display: flex; /* 横並びにする */
+  align-items: center; /* 縦方向の中央揃え */
+}
   
-    .actions {
-      margin-top: 20px;
+.seller-btn  {
+  margin-right: 10px; /* ボタン間の余白 */
+  
+}
+
+.link_inner {
+  border-radius: 10px;
+  margin-right: 10px;
+}
+
+.seller-edit {
+  padding: 20px;
+  font-family: sans-serif;
+
+  h1 {
+    font-size: 24px;
+    margin-bottom: 20px;
+  }
+
+  .field {
+    margin-bottom: 10px;
+
+    label {
+      display: block;
+      font-weight: bold;
+    }
+
+    input[type="text"], textarea {
+      width: 100%;
+      padding: 8px;
+      border: 1px solid #ddd;
+      border-radius: 4px;
     }
   }
+
+  .actions {
+    margin-top: 20px;
+  }
+}

@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[8.0].define(version: 2025_04_07_215838) do
+ActiveRecord::Schema[8.0].define(version: 2025_04_11_212953) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "pg_catalog.plpgsql"
 
@@ -51,11 +51,11 @@ ActiveRecord::Schema[8.0].define(version: 2025_04_07_215838) do
     t.string "address"
     t.float "latitude"
     t.float "longitude"
-    t.integer "capacity"
+    t.string "capacity"
     t.boolean "is_online"
     t.string "online_url"
     t.boolean "is_free"
-    t.decimal "price"
+    t.string "price"
     t.string "organizer"
     t.string "contact_info"
     t.string "website"

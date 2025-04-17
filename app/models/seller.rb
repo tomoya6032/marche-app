@@ -4,6 +4,8 @@ class Seller < ApplicationRecord
   devise :database_authenticatable, :registerable,
          :recoverable, :rememberable, :validatable
 
+  has_many :events
+  
   has_many_attached :images
   has_one_attached :image
   

@@ -14,6 +14,8 @@
     
     - if seller_signed_in?
       = link_to 'セラー　　　マイページ', sellers_path, class: 'button'
+      = link_to 'ログアウト', destroy_seller_session_path, method: :delete,  class: 'button'
+
     - else
       = link_to '個人出店者   ログイン', new_seller_session_path, class: 'button', id: 'seller-login-btn'
       = link_to '個人出店　　会員登録', new_seller_registration_path, class: 'button', id: 'seller-signup-btn'

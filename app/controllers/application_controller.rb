@@ -12,6 +12,11 @@ class ApplicationController < ActionController::Base
     super
   end
 
+  def destroy
+    sign_out current_seller # セッションからセラーを削除
+    redirect_to root_path, notice: 'ログアウトしました。' # ログアウト後にトップページに遷移
+  end
+
 
 
 end

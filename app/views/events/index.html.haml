@@ -1,46 +1,56 @@
 %body
   = render 'header/header' # ヘッダーのパーシャルを呼び出す
 
+  .title-content-container
+    .title-content
+      %h1 新着イベント一覧
+      %p ここにフリマなどのイベント一覧が表示される予定
+    - if seller_signed_in? || host_signed_in? # セラーまたはホストとしてログインしている場合のみ表示  
+      = link_to new_event_path do
+        .link_inner
+          %p 新規イベントを作成する
 
 
-  %h1 新着イベント一覧
-  %p ここにフリマなどのイベント一覧が表示される予定
-
-  = form_with url: events_path, method: :get do |f|
+  = form_with url: events_path, method: :get, class: 'filter-form' do |f|
     = f.label :prefecture, '都道府県で絞り込む'
     = f.select :prefecture, @prefectures, include_blank: '全て'
-
     = f.submit '絞り込む'
-  
-  
   - if @message.present?
     %p= @message
 
   .event-container
-    %table.event-table
-      %thead
-        %tr
-          %th タイトル
-          %th No.
-          %th 概要
-          %th 開始時間
-          %th 終了時間
-          %th 開催場所
-          %th 参加費用
-      %tbody
-        - @events.each do |event|
-          %tr.event-row
-            %td= link_to event.title, event_path(event)
-            %td= event.id
-            %td= truncate(event.description, length: 20)
-            %td= event.start_time.strftime("%Y/%m/%d %H:%M")
-            %td= event.end_time.strftime("%Y/%m/%d %H:%M")
-            %td= event.venue
-            %td= event.is_free ? '無料' : '有料'
+    .event-cards
+      - @events.each do |event|
+        .event-card
+          = link_to event_path(event) do 
+            - if event.images.present? && event.images.attached?
+              = image_tag event.images.first, class: 'event-image'
+            - else
+              .event-no-image
+                = image_tag "no_image_square.jpg", class: 'event-no-image' # デフォルト画像を表示
+          
+          .event-card-content
+            %h3= link_to event.title, event_path(event)
+            %p
+              %strong 主催者:
+              = link_to event.seller&.name, seller_path(event.seller) if event.seller
+            %p
+              %strong 概要:
+              = truncate(event.description, length: 50)
+            %p
+              %strong 開始時間:
+              = event.start_time.strftime("%Y/%m/%d %H:%M")
+            %p
+              %strong 終了時間:
+              = event.end_time.strftime("%Y/%m/%d %H:%M")
+            %p
+              %strong 開催場所:
+              = event.venue
+            %p
+              %strong 参加費用:
+              = event.is_free ? '無料' : '有料'
+   
 
-  = link_to new_event_path do
-    .link_inner
-      %h2 新規イベントを作成する
 
 
 

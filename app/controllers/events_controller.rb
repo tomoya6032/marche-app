@@ -32,8 +32,9 @@ class EventsController < ApplicationController
   end
   
   def create
-    @event = Event.new(event_params)
     set_prefectures # 共通化
+    @event = current_seller.events.build(event_params) # current_sellerに関連付け
+    
     if @event.save
       flash[:notice] = 'イベントが作成されました'
       redirect_to event_path (@event)

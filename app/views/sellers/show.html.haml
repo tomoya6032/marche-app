@@ -1,0 +1,23 @@
+= render 'header/header' # ヘッダーのパーシャルを呼び出す
+
+%h1 セラー詳細ページ
+
+%p
+  %strong 名前:
+  = @seller.name if @seller
+
+%p
+  %strong 説明:
+  = @seller.description if @seller
+
+%p
+  %strong 住所:
+  = @seller.address if @seller
+
+%p
+  %strong 電話番号:
+  = @seller.phone_number if @seller
+
+%p
+  %strong ウェブサイト:
+  = @seller.website if @seller

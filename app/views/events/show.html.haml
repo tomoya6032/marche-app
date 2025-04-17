@@ -1,99 +1,70 @@
 %body
   = render 'header/header' # ヘッダーのパーシャルを呼び出す
 
-
-
-
 %h1 イベント詳細ページ
 
 %h2= @event.title
 
--# = image_tag @event.image if @event.image.attached?
-
--# - if event.images.attached?
--#   - event.images.each do |image|
--#     %div= image_tag(image)
-
-%p
-  %strong タイトル:
-  = @event.title
-
-%p
-  %strong 説明:
-  = @event.description
-
-%p
-  %strong 画像:
+.event-images
   - if @event.images.present? && @event.images.attached?
-    - @event.images.each do |image|
-      = image_tag image, size: "300x300"
+    - @event.images.each_with_index do |image, index|
+      .event-image{class: "image-#{index + 1}"}
+        = image_tag image, size: "300x200"
   - else
-    画像はありません
+    .event-no-image
+      = image_tag "no_image_square.jpg", class: 'event-no-image' # デフォルト画像を表示
 
-%p
-  %strong 開始日時:
-  = @event.start_time
+%table.event-details
+  %tr
+    %th 主催者
+    %td= link_to @event.seller&.name, seller_path(@event.seller) if @event.seller
+  %tr
+    %th 説明
+    %td= @event.description
+  %tr
+    %th 開始日時
+    %td= @event.start_time
+  %tr
+    %th 終了日時
+    %td= @event.end_time
+  %tr
+    %th 都道府県
+    %td= @event.venue
+  %tr
+    %th 住所
+    %td= @event.address
+  %tr
+    %th 定員の目安
+    %td= @event.capacity
+  %tr
+    %th オンライン開催
+    %td= @event.is_online ? 'はい' : 'いいえ'
+  %tr
+    %th オンラインURL
+    %td= @event.online_url
+  %tr
+    %th 有料イベント
+    %td= @event.is_free ? '参加費用あり' : '無料'
+  %tr
+    %th 参加費
+    %td= @event.price
+  %tr
+    %th 連絡先
+    %td= @event.contact_info
+  %tr
+    %th ウェブサイト
+    %td= @event.website
+  -# %tr
+  -#   %th ステータス
+  -#   %td= @event.status
+  %tr
+    %th 動画URL
+    %td= @event.video
 
-%p
-  %strong 終了日時:
-  = @event.end_time
-
-%p
-  %strong 都道府県:
-  = @event.venue
-  
-
-%p
-  %strong 住所:
-  = @event.address
-
-%p
-  %strong 定員の目安:
-  = @event.capacity
-
-%p
-  %strong オンライン開催:
-  = @event.is_online ? 'はい' : 'いいえ'
-
-%p
-  %strong オンラインURL:
-  = @event.online_url
-
-%p
-  %strong 無料イベント:
-  = @event.is_free ? 'はい' : 'いいえ'
-
-%p
-  %strong 価格:
-  = @event.price
-
-%p
-  %strong 主催者:
-  = @event.organizer
-
-%p
-  %strong 連絡先:
-  = @event.contact_info
-
-%p
-  %strong ウェブサイト:
-  = @event.website
-
-%p
-  %strong ステータス:
-  = @event.status
-
-%p
-  %strong 動画URL:
-  = @event.video
-
-- if seller_signed_in? && current_seller == @event.seller # 追記
-  = link_to '編集', edit_event_path(@event)
-  |
-  = link_to '削除', event_path(@event), data: { turbo_method: :delete, confirm: '本当に削除してもよろしいですか？' }
-
-= link_to '戻る', events_path
-
--# %h1= @event.title
--# %p= @event.description
-
+- if seller_signed_in? && current_seller == @event.seller
+  .edit-links
+    = link_to '編集', edit_event_path(@event)
+    
+    = link_to '削除', event_path(@event), data: { turbo_method: :delete, confirm: '本当に削除してもよろしいですか？' }
+    
+    = link_to '戻る', events_path
