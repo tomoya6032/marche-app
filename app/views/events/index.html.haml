@@ -1,59 +1,60 @@
 %body
-  = render 'header/header' # ヘッダーのパーシャルを呼び出す
+  = render 'header/header'
 
   .title-content-container
     .title-content
       %h1 新着イベント一覧
       %p ここにフリマなどのイベント一覧が表示される予定
-    - if seller_signed_in? || host_signed_in? # セラーまたはホストとしてログインしている場合のみ表示  
-      = link_to new_event_path do
-        .link_inner
+    - if seller_signed_in? || host_signed_in?
+      .seller-btn
+        = link_to new_event_path, class: 'new-button' do
           %p 新規イベントを作成する
 
-
   = form_with url: events_path, method: :get, class: 'filter-form' do |f|
-    = f.label :prefecture, '都道府県で絞り込む'
-    = f.select :prefecture, @prefectures, include_blank: '全て'
+    .prefectures-field
+      = f.label :prefecture, '都道府県で絞り込む'
+      = f.select :prefecture, @prefectures, include_blank: '全て', selected: params[:prefecture]
+
+    .sort-field
+      = f.label :sort, '並び替え'
+      = f.select :sort, sort_options, include_blank: '並び替えを選択', selected: params[:sort]
+
     = f.submit '絞り込む'
+
   - if @message.present?
-    %p= @message
+    .message
+      %p= @message
 
-  .event-container
-    .event-cards
-      - @events.each do |event|
-        .event-card
-          = link_to event_path(event) do 
-            - if event.images.present? && event.images.attached?
-              = image_tag event.images.first, class: 'event-image'
-            - else
-              .event-no-image
-                = image_tag "no_image_square.jpg", class: 'event-no-image' # デフォルト画像を表示
-          
-          .event-card-content
-            %h3= link_to event.title, event_path(event)
-            %p
-              %strong 主催者:
-              = link_to event.seller&.name, seller_path(event.seller) if event.seller
-            %p
-              %strong 概要:
-              = truncate(event.description, length: 50)
-            %p
-              %strong 開始時間:
-              = event.start_time.strftime("%Y/%m/%d %H:%M")
-            %p
-              %strong 終了時間:
-              = event.end_time.strftime("%Y/%m/%d %H:%M")
-            %p
-              %strong 開催場所:
-              = event.venue
-            %p
-              %strong 参加費用:
-              = event.is_free ? '無料' : '有料'
-   
+  .event-cards
+    - @events.each do |event|
+      .event-card
+        = link_to event_path(event) do
+          - if event.images.present? && event.images.attached?
+            .event-image
+              = image_tag url_for(event.images.first), class: 'event-image'
+          - else
+            .event-no-image
+              = image_tag asset_path("no_image_square.jpg"), class: 'event-no-image'
 
-
-
-
+        .event-card-content
+          %h3= link_to event.title, event_path(event)
+          %p
+            %strong 主催者:
+            = link_to event.seller&.name, seller_path(event.seller) if event.seller
+          %p
+            %strong 概要:
+            = truncate(event.description, length: 50)
+          %p
+            %strong 開始時間:
+            = event.start_time.present? ? event.start_time.strftime('%Y年%-m月%-d日 %H時%M分') : '未定'
+          %p
+            %strong 終了時間:
+            = event.end_time.present? ? event.end_time.strftime('%Y年%-m月%-d日 %H時%M分') : '未定'
+          %p
+            %strong 開催場所:
+            = event.venue
+          %p
+            %strong 参加費用:
+            = event.is_free ? '無料' : '有料'
 
   = paginate @events
-

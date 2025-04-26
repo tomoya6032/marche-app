@@ -1,15 +1,11 @@
 = render 'header/header' # ヘッダーのパーシャルを呼び出す
 
-%h1 イベント作成
+%h1 新しいイベントを作成
 
-
-
-
-%ul.error-messages
-  - @event.errors.full_messages.each do |message|
-    %li= message
-
-
+- if @event.errors.any?
+  %ul.error-messages
+    - @event.errors.full_messages.each do |message|
+      %li= message
 
 = form_with model: @event, local: true, class: 'event-form' do |f|
   .field
@@ -22,33 +18,33 @@
     = f.label :images, '画像'
     = f.file_field :images, multiple: true
   .datetime-fields
-  .field
-    = f.label :start_time, '開始日時'
-    .datetime-select-container
-      = f.select :start_time_year, options_for_select((Time.zone.now.year-10..Time.zone.now.year+10)), class: 'date-select'
-      %span 年
-      = f.select :start_time_month, options_for_select((1..12)), class: 'date-select'
-      %span 月
-      = f.select :start_time_day, options_for_select((1..31)), class: 'date-select'
-      %span 日
-      = f.select :start_time_hour, options_for_select((0..23)), class: 'date-select'
-      %span 時
-      = f.select :start_time_minute, options_for_select((0..59)), class: 'date-select'
-      %span 分
-  .field
-    = f.label :end_time, '終了日時'
-    .datetime-select-container
-      = f.select :end_time_year, options_for_select((Time.zone.now.year-10..Time.zone.now.year+10)), class: 'date-select'
-      %span 年
-      = f.select :end_time_month, options_for_select((1..12)), class: 'date-select'
-      %span 月
-      = f.select :end_time_day, options_for_select((1..31)), class: 'date-select'
-      %span 日
-      = f.select :end_time_hour, options_for_select((0..23)), class: 'date-select'
-      %span 時
-      = f.select :end_time_minute, options_for_select((0..59)), class: 'date-select'
-      %span 分
-
+    .field
+      = f.label :start_time, '開始日時'
+      .datetime-select-container
+        = f.select :start_time_year, options_for_select((Time.zone.now.year-10..Time.zone.now.year+10)), class: 'date-select'
+        %span 年
+        = f.select :start_time_month, options_for_select((1..12)), class: 'date-select'
+        %span 月
+        = f.select :start_time_day, options_for_select((1..31)), class: 'date-select'
+        %span 日
+        = f.select :start_time_hour, options_for_select((0..23)), class: 'date-select'
+        %span 時
+        = f.select :start_time_minute, options_for_select((0..59)), class: 'date-select'
+        %span 分
+    .field
+      = f.label :end_time, '終了日時'
+      .datetime-select-container
+        = f.select :end_time_year, options_for_select((Time.zone.now.year-10..Time.zone.now.year+10)), class: 'date-select'
+        %span 年
+        = f.select :end_time_month, options_for_select((1..12)), class: 'date-select'
+        %span 月
+        = f.select :end_time_day, options_for_select((1..31)), class: 'date-select'
+        %span 日
+        = f.select :end_time_hour, options_for_select((0..23)), class: 'date-select'
+        %span 時
+        = f.select :end_time_minute, options_for_select((0..59)), class: 'date-select'
+        %span 分
+  
   .prefectures-field
     .field
       = f.label :venue, '開催都道府県'
@@ -56,7 +52,6 @@
   .field
     = f.label :address, '開催場所の住所'
     = f.text_field :address
-  
   .field
     = f.label :capacity, '定員の目安'
     = f.number_field :capacity
@@ -67,10 +62,10 @@
     = f.label :online_url, 'オンラインURL'
     = f.text_field :online_url
   .field
-    = f.label :is_free, '無料イベント'
+    = f.label :is_free, '有料イベント'
     = f.check_box :is_free
   .field
-    = f.label :price, '価格'
+    = f.label :price, '参加費'
     = f.text_field :price
   .field
     = f.label :organizer, '主催者'
@@ -81,13 +76,10 @@
   .field
     = f.label :website, 'ウェブサイト'
     = f.text_field :website
-  -# .field
-  -#   = f.label :status, 'ステータス'
-  -#   = f.number_field :status
-  
   .field
     = f.label :video, '動画URL'
     = f.text_field :video
-
   .actions
     = f.submit '作成'
+
+= link_to '戻る', events_path

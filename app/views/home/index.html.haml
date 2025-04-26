@@ -3,7 +3,7 @@
   = render 'header/header' # ヘッダーのパーシャルを呼び出す
     
 
-  .top-container 
+  .top-container
     .event-container 
       .event-btn
         = link_to events_path do
@@ -11,16 +11,21 @@
             %h3 イベント一覧
 
     .facility-container 
-      .facility-btn
-        = link_to facility_index_path do
+      = link_to facility_index_path do
+        .facility-btn
           .link_inner
             %h3 出展施設一覧
       
   .top-image
     .top-slider
-      %img(src="slider1.jpg" alt="スライダー1")
-      %img(src="slider2.jpg" alt="スライダー2")
-      %img(src="slider3.jpg" alt="スライダー3")
+      %img(src="#{asset_path('slider1.png')}" alt="スライダー1")
+      %img(src="#{asset_path('slider2.png')}" alt="スライダー2")
+      %img(src="#{asset_path('slider3.png')}" alt="スライダー3")
+    .slider-navigation
+      %button.prev 前へ
+      %button.next 次へ
+
+  
 
   .column-section 
     .section.news
@@ -36,37 +41,46 @@
     .sns-container
       .sns-inner 
         .h3 インスタグラムセクション
+        -# = image_tag "/images/instagram_icon.png", alt: "公式アカウントロゴ"
+        %img(src="#{asset_path('instagram_icon.png')}" alt="公式アカウントロゴ")
         
       .sns-inner 
         .h3 エックスセクション
+        -# = image_tag "/images/", alt: "公式アカウントロゴ"
+        %img(src="#{asset_path('twitter.png')}" alt="公式アカウントロゴ")
         
       .sns-inner 
         .h3 フェイスブックセクション
+        -# = image_tag "/images/mimamorifavicon.png", alt: "公式アカウントロゴ"
+        %img(src="#{asset_path('mimamorifavicon.png')}" alt="公式アカウントロゴ")
     
 
   .section.events
     %h2 近日開催のイベント
     .event-list
-      .event-item
-        %img(src="event1.jpg" alt="イベント1")
-        %h3 イベント名1
-        %p 開催日: 〇月〇日
-        %p 詳細: イベントの詳細テキスト...
-      .event-item
-        %img(src="event2.jpg" alt="イベント2")
-        %h3 イベント名2
-        %p 開催日: 〇月〇日
-        %p 詳細: イベントの詳細テキスト...
-      .event-item
-        %img(src="event3.jpg" alt="イベント3")
-        %h3 イベント名3
-        %p 開催日: 〇月〇日
-        %p 詳細: イベントの詳細テキスト...
+      - if @recent_events.present?
+        - @recent_events.each do |event|
+          .event-item
+            - if event.images.present? && event.images.attached?
+              = image_tag event.images.first, alt: event.title, class: 'event-image'
+            - else
+              .event-no-image
+                = image_tag "no_image_square.jpg", alt: "no image", class: 'event-no-image'
+            %h3= event.title
+            %p 開催日:
+            - if event.start_time.present?
+              = event.start_time.strftime('%Y/%m/%d')
+            - else
+              未定
+            %p 詳細:
+            = truncate(event.description, length: 50)
+      - else
+        %p 近日開催のイベントはありません。
 
   .section.recruitment
     %h2 出展者募集
     .recruitment-content
-      %img(src="recruitment.jpg" alt="出展者募集")
+      %img(src="slider1.png" alt="出展者募集")
       %a.button(href="#") 出展者募集中！
 
   
@@ -84,3 +98,17 @@
   
   
   .script(src="script.js")
+  
+:javascript
+  $(document).ready(function(){
+    $('.slider').slick({
+      autoplay: true, // 自動的に動き出すか
+      autoplaySpeed: 3000, // 次のスライドに切り替わる待ち時間
+      speed: 1500, // スライドの動きのスピード
+      infinite: true, // スライドをループさせるか
+      slidesToShow: 1, // スライドを画面に1枚見せる
+      slidesToScroll: 1, // 1回のスクロールで1枚の写真を移動して見せる
+      arrows: false, // 画像移動用の矢印の表示
+      dots: true // 下部ドットナビゲーションの表示
+    });
+  });

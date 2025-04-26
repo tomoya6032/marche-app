@@ -64,8 +64,10 @@ ActiveRecord::Schema[8.0].define(version: 2025_04_11_212953) do
     t.string "video"
     t.integer "category_id"
     t.integer "facility_id"
+    t.bigint "seller_id"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.index ["seller_id"], name: "index_events_on_seller_id"
   end
 
   create_table "facilities", force: :cascade do |t|
@@ -130,4 +132,5 @@ ActiveRecord::Schema[8.0].define(version: 2025_04_11_212953) do
 
   add_foreign_key "active_storage_attachments", "active_storage_blobs", column: "blob_id"
   add_foreign_key "active_storage_variant_records", "active_storage_blobs", column: "blob_id"
+  add_foreign_key "events", "sellers"
 end

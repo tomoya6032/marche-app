@@ -23,6 +23,7 @@ class CreateEvents < ActiveRecord::Migration[8.0]
       t.integer :category_id
       t.integer :facility_id
 
+      t.references :seller, foreign_key: true # seller_id カラムを追加
       t.timestamps
     end
   end

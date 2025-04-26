@@ -1,23 +1,33 @@
 class EventsController < ApplicationController
-  before_action :set_event, only: [:show, :edit, :update]
-  before_action :authenticate_seller!, only: [:edit, :update, :destroy]
+  before_action :authenticate_seller!, only: [ :new, :create, :edit, :update, :destroy ]
+  before_action :set_event, only: [ :show, :edit, :update, :destroy ]
+  before_action :set_prefectures, only: [ :index, :new, :edit, :create ]
 
   def index
-    set_prefectures # 共通化
+    @events = Event.all
 
-    if params[:prefecture].present? # 都道府県が選択されている場合
+    if params[:prefecture].present?
       @events = Event.where(venue: params[:prefecture])
-    else
-      @events = Event.all
     end
 
     if @events.empty?
       @message = "該当するイベントは見つかりませんでした。"
     end
 
-    @events = @events.order(created_at: :desc).page(params[:page]).per(10)
+    # 並び替えパラメータに基づいて並び替え
+    case params[:sort]
+    when "start_time_asc"
+      @events = @events.order(:start_time) # 開始日時の昇順
+    when "start_time_desc"
+      @events = @events.order(start_time: :desc) # 開始日時の降順
+    else
+      @events = @events.order(created_at: :desc) # デフォルトは作成日時の降順
+    end
+
+    @events = @events.page(params[:page]).per(10)
 
     puts "params[:prefecture]: #{params[:prefecture]}"
+    puts "params[:sort]: #{params[:sort]}"
   end
 
   def show
@@ -25,69 +35,103 @@ class EventsController < ApplicationController
   end
 
   def new
-    set_prefectures # 共通化
+    set_prefectures
     @event = Event.new
-    
-    
   end
-  
+
   def create
-    set_prefectures # 共通化
-    @event = current_seller.events.build(event_params) # current_sellerに関連付け
-    
+    set_prefectures
+    @event = current_seller.events.build(event_params)
+    combine_datetime_parts(@event) # 開始日時と終了日時を結合
+
     if @event.save
-      flash[:notice] = 'イベントが作成されました'
-      redirect_to event_path (@event)
+      flash[:notice] = "\u30A4\u30D9\u30F3\u30C8\u304C\u4F5C\u6210\u3055\u308C\u307E\u3057\u305F"
+      redirect_to event_path(@event)
     else
-      puts @event.errors.full_messages # エラーメッセージをコンソールに出力
+      flash[:alert] = @event.errors.full_messages.join(", ")
       render :new
     end
   end
 
   def edit
-    set_prefectures # 共通化
-    # @event = Event.find(params[:id]) # set_eventで読み込んでいるので、表示させる必要がない
+    set_prefectures
+    redirect_to events_path, alert: "\u30ED\u30B0\u30A4\u30F3\u3057\u3066\u304F\u3060\u3055\u3044" unless @event.seller == current_seller
   end
 
   def update
-    set_prefectures # 共通化
-    # @event = Event.find(params[:id]) # set_eventで読み込んでいるので、表示させる必要がない
-    if @event.update(event_params)
-      if params[:event][:images].present?
-        @event.images.purge # 既存の画像をクリア
-        @event.images.attach(params[:event][:images])
+    set_prefectures
+    if @event.seller == current_seller
+      combine_datetime_parts(@event) # 開始日時と終了日時を結合
+      if @event.update(event_params)
+        if params[:event][:images].present?
+          @event.images.purge # 既存の画像をクリア
+          @event.images.attach(params[:event][:images])
+        end
+        flash[:notice] = "\u30A4\u30D9\u30F3\u30C8\u304C\u66F4\u65B0\u3055\u308C\u307E\u3057\u305F"
+        redirect_to @event
+      else
+        flash[:alert] = @event.errors.full_messages.join(", ")
+        render :edit
       end
-      flash[:notice] = 'イベントが更新されました'
-      redirect_to @event
     else
-      puts @event.errors.full_messages # エラーメッセージをコンソールに出力
-      render :edit
+      redirect_to events_path, alert: "\u30ED\u30B0\u30A4\u30F3\u3057\u3066\u304F\u3060\u3055\u3044"
     end
-
-   
   end
 
   def destroy
-    event = Event.find(params[:id]) 
-    event.destroy!
-    redirect_to events_path(@event), notice: '削除に成功しました'
-    # event = current_user.events.find(params[:id])
-    # event.destroy!
-    # redirect_to events_path(@event), notice: '削除に成功しました'
-
+    if @event.seller == current_seller
+      @event.destroy!
+      redirect_to events_path, notice: "\u524A\u9664\u306B\u6210\u529F\u3057\u307E\u3057\u305F"
+    else
+      redirect_to events_path, alert: "\u30ED\u30B0\u30A4\u30F3\u3057\u3066\u304F\u3060\u3055\u3044"
+    end
   end
-   
+
   private
+
+  def combine_datetime_parts(event)
+    if params[:event][:start_time_year].present? &&
+       params[:event][:start_time_month].present? &&
+       params[:event][:start_time_day].present? &&
+       params[:event][:start_time_hour].present? &&
+       params[:event][:start_time_minute].present?
+      event.start_time = DateTime.new(
+        params[:event][:start_time_year].to_i,
+        params[:event][:start_time_month].to_i,
+        params[:event][:start_time_day].to_i,
+        params[:event][:start_time_hour].to_i,
+        params[:event][:start_time_minute].to_i
+      )
+    end
+
+    if params[:event][:end_time_year].present? &&
+       params[:event][:end_time_month].present? &&
+       params[:event][:end_time_day].present? &&
+       params[:event][:end_time_hour].present? &&
+       params[:event][:end_time_minute].present?
+      event.end_time = DateTime.new(
+        params[:event][:end_time_year].to_i,
+        params[:event][:end_time_month].to_i,
+        params[:event][:end_time_day].to_i,
+        params[:event][:end_time_hour].to_i,
+        params[:event][:end_time_minute].to_i
+      )
+    end
+  end
+
   def event_params
-    params.require(:event).permit(:title, :description, :start_time, :end_time, :venue, :address, :latitude, :longitude, :capacity, :is_online, :online_url, :is_free, :price, :organizer, :contact_info, :website, :status, :video, :category_id, images: [])
-    # :facility_id を入れない形で進めていく
+    params.require(:event).permit(
+      :title, :description, :venue, :address, :latitude, :longitude,
+      :capacity, :is_online, :online_url, :is_free, :price, :organizer,
+      :contact_info, :website, :status, :video, :category_id, images: []
+    )
   end
 
   def set_event
     @event = Event.find(params[:id])
   end
 
-  def set_prefectures # 共通化
+  def set_prefectures
     @prefectures = %w[
       北海道 青森県 岩手県 宮城県 秋田県 山形県 福島県
       茨城県 栃木県 群馬県 埼玉県 千葉県 東京都 神奈川県
@@ -98,9 +142,4 @@ class EventsController < ApplicationController
       熊本県 大分県 宮崎県 鹿児島県 沖縄県
     ]
   end
-
-
-
-
 end
-

@@ -23,10 +23,10 @@
     %td= @event.description
   %tr
     %th 開始日時
-    %td= @event.start_time
+    %td= @event.start_time.present? ? @event.start_time.strftime('%Y年%-m月%-d日 %H時%M分') : '未定'
   %tr
     %th 終了日時
-    %td= @event.end_time
+    %td= @event.end_time.present? ? @event.end_time.strftime('%Y年%-m月%-d日 %H時%M分') : '未定'
   %tr
     %th 都道府県
     %td= @event.venue

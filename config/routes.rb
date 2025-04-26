@@ -12,12 +12,12 @@ Rails.application.routes.draw do
   resources :events, only: [:index, :show, :new, :create, :edit, :update, :destroy]
   
 
-
+  devise_for :sellers
   resources :sellers, only: [:index, :show, :new, :create, :edit, :update, :destroy]
  
  
   
-  devise_for :sellers
+  
 
 
 

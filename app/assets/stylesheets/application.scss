@@ -4,7 +4,7 @@ body {
   line-height: 1.6;
   color: #333;
   background-color: #ffffff;
-  padding: 20px;
+  // padding: 20px;
 }
 
 h1, h2 {
@@ -93,13 +93,59 @@ nav ul {
   display: flex;
   list-style: none;
   padding: 10px;
+  padding-bottom: 0;
+  background-color: #f5fded;
+  
 }
 
 nav ul li {
-  margin: 10px;
+  margin: 5px;
   width: 100%;
   padding: 10px;
   text-align: center;
+}
+
+.nav nav ul {
+  list-style: none; /* デフォルトのリストマーカーを非表示 */
+  padding: 0;
+  margin: 0;
+  display: flex; /* 横並びにする場合 */
+  justify-content: space-around; /* 要素間に均等なスペースを配置する場合 */
+  align-items: center; /* 垂直方向中央揃え */
+}
+
+.nav nav ul li {
+  position: relative; /* 擬似要素の配置基準 */
+  padding: 0 5px; /* 左右の余白 (線の間隔) */
+}
+
+.nav nav ul li a {
+  text-decoration: none; /* リンクの下線を非表示にする場合 */
+  color: #333; /* テキストの色 */
+}
+
+.nav nav ul li::before,
+.nav nav ul li::after {
+  content: '';
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  width: 1px; /* 線の太さ */
+  height: 30px; /* 線の高さ (li の高さに対する割合) */
+  background-color: #ccc; /* 線の色 */
+}
+
+.nav nav ul li:first-child::before,
+.nav nav ul li:last-child::after {
+  display: none; /* 最初と最後の項目の外側の線は非表示にする場合 */
+}
+
+.nav nav ul li::before {
+  left: 0; /* 左端に配置 */
+}
+
+.nav nav ul li::after {
+  right: 0; /* 右端に配置 */
 }
 
 nav ul li a {
@@ -108,62 +154,112 @@ nav ul li a {
   color: #333; /* リンクの文字色 */
 }
 
+
 .top-container {
-    margin-bottom: 10px;
+    background-size: contain;
+    background-image: url("/assets/top-page-image.png");
+    background-repeat: no-repeat; /* 通常は繰り返しをなくします */
+    background-position: center; /* 画像を中央に配置 */
+    // margin-bottom: 10px;
     display: flex;
-    border: 1px solid #000;
-    margin-top: 60px;
+    // border: 1px solid #000;
+    // margin-top: 60px;
+    justify-content: space-evenly; /* 要素と両端に均等なスペース */
+    align-items: center; /* 横方向の中央揃え（必要に応じて） */
+    height: 600px;/* 親要素の高さをビューポートの高さに合わせる（必要に応じて） */
+    text-align: center;
+    margin: 10px auto;
 }
 
 .event-container {
+    background-color: #fbdd83;
+    width: 25%;
+    padding: 0 auto;
+    border-radius: 50px;
     text-align: center;
-    width: 100%;
-    margin: 80px 0;
+    box-shadow: 3px 3px 11px rgba(89, 12, 12, 0.8);
 }
 
 .event-btn {
-    border: 1px solid #000;
-    margin: 20px;
-    padding: 20px;
+    margin: 10px;
+    padding: 10px;
 }
 
 .facility-container {
+    box-shadow: 3px 3px 11px rgba(89, 12, 12, 0.8);
     text-align: center;
-    width: 100%;
-    margin: 80px 0;
+    background-color: #fbdd83;
+    width: 25%;
+    border-radius: 50px;
 }
 
 .facility-btn {
-    border: 1px solid #000;
-    margin: 20px;
-    padding: 20px;
+    margin: 10px;
+    padding: 10px;
+  
 }
 
 .link_inner {
-    padding: 10px;
-    border: 1px solid #000;
+    padding: 0px;
+    padding: auto;
+    
+    h3 {
+      font-size: 24px;
+      color: #000;
+    }
 }
 
 .top-image {
-    
-    width: 100%;
+   
+    width: 40%;
+    overflow: hidden; /* スライダーの幅を超えた画像を隠す */
+    position: relative; /* ナビゲーションボタンの配置基準 */
     text-align: center;
-    border: 1px solid #000;
-    height: 350px;
+    // border: 1px solid #000;
+    // height: 350px;
+    margin: 0 auto;
     margin-top: 60px;
+
+}
+
+.top-slider {
+  
+  display: flex; /* 横一列に画像を並べる */
+  transition: transform 0.5s ease-in-out; /* スライドのアニメーション */
 }
 
 .top-slider img {
-    border: 1px solid #000;
-    margin: 120px;
-   
-   
+    // border: 1px solid #000;
+  margin: 20px;
+  width: 100%; /* 各画像の幅をコンテナに合わせる */
+  flex-shrink: 0; /* 画像が縮小しないように */
+  
+}
+
+.slider-navigation button {
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  background: rgba(0, 0, 0, 0.5);
+  color: white;
+  border: none;
+  padding: 10px;
+  cursor: pointer;
+  z-index: 10; /* 画像より手前に表示 */
+}
+
+.slider-navigation .prev {
+  left: 10px;
+}
+
+.slider-navigation .next {
+  right: 10px;
 }
 
 .column-section {
     display: flex;
-    border: 1px solid #000;
     
+    background-color: #f5fded;
     margin: 20px 0;
     margin-top: 60px;
 }
@@ -180,18 +276,28 @@ nav ul li a {
     list-style: none;
     margin-top: 20px;
     margin-bottom: 20px;
+    
 }
 
 .sns-container {
     width: 40%;
-    padding: 12px;
-    margin: 10px;
-    border: 1px solid #000;
+    // padding: 12px;
+    // margin: 10px;
+    background-color: #fff8f0; /* 薄いベージュ */
+    border-left: 1px solid #ccc; /* 左側に線を追加 */
 }
+
+
 
 .sns-inner {
   height: 200px;
-  
+  .h3 {
+    margin-left: 20px;
+  }
+  img {
+    width: 50px;
+    border-radius: 10px;
+  }
 }
 
 
@@ -208,9 +314,14 @@ nav ul li a {
 }
 
 .event-item {
-    margin: 10px;
-    padding: 20px;
-    border: 1px solid #000;
+  width: 200px;
+  margin: 10px;
+  padding: 20px;
+  border: 1px solid #000;
+}
+
+.event-item img {
+  width: 200px;
 }
 
 .section.recruitment {
@@ -343,6 +454,7 @@ nav ul li a {
 }
 
 .event-no-image {
+  
   width: 100%;
   height: 200px;
   background-color: #f2f2f2;
@@ -584,15 +696,26 @@ table.event-details th {
   }
 }
 
-.seller-btn {  
+.new-button {  
   display: flex; /* 横並びにする */
   align-items: center; /* 縦方向の中央揃え */
+  background-color: #9bfe9b;
+  color: rgb(237, 155, 23);
+  padding: 10px 20px;
+  border: none;
+  border-radius: 5px;
+  text-decoration: none;
+  display: inline-block;
+  font-size: 18px;
+  font-weight: bold;
+}
+
+.new-button:hover {
+  background-color: #30f830; /* ホバー時の背景色 */
+  // font-weight: bold;
 }
   
-.seller-btn  {
-  margin-right: 10px; /* ボタン間の余白 */
-  
-}
+
 
 .link_inner {
   border-radius: 10px;
