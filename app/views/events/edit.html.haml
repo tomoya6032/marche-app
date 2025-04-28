@@ -16,35 +16,42 @@
     = f.text_area :description
   .field
     = f.label :images, '画像'
-    = f.file_field :images, multiple: true
+    - if @event.images.attached?
+      .existing-images
+        %h3 既存の画像
+        - @event.images.each do |image|
+          .image-preview
+            = image_tag image, size: "100x100"
+            = check_box_tag "event[keep_images][]", image.signed_id, true # デフォルトでチェック済み
+            = label_tag "event_keep_images_#{image.signed_id}", "保持" # チェックボックスのラベル
+    = f.file_field :images, multiple: true, accept: "image/*", value: nil # 新しい画像を追加
   .datetime-fields
     .field
       = f.label :start_time, '開始日時'
       .datetime-select-container
-        = f.select :start_time_year, options_for_select((Time.zone.now.year-10..Time.zone.now.year+10)), class: 'date-select'
+        = f.select :start_time_year, options_for_select((Time.zone.now.year-10..Time.zone.now.year+10), @event.start_time&.year), class: 'date-select'
         %span 年
-        = f.select :start_time_month, options_for_select((1..12)), class: 'date-select'
+        = f.select :start_time_month, options_for_select((1..12), @event.start_time&.month), class: 'date-select'
         %span 月
-        = f.select :start_time_day, options_for_select((1..31)), class: 'date-select'
+        = f.select :start_time_day, options_for_select((1..31), @event.start_time&.day), class: 'date-select'
         %span 日
-        = f.select :start_time_hour, options_for_select((0..23)), class: 'date-select'
+        = f.select :start_time_hour, options_for_select((0..23), @event.start_time&.hour), class: 'date-select'
         %span 時
-        = f.select :start_time_minute, options_for_select((0..59)), class: 'date-select'
+        = f.select :start_time_minute, options_for_select((0..59), @event.start_time&.min), class: 'date-select'
         %span 分
     .field
       = f.label :end_time, '終了日時'
       .datetime-select-container
-        = f.select :end_time_year, options_for_select((Time.zone.now.year-10..Time.zone.now.year+10)), class: 'date-select'
+        = f.select :end_time_year, options_for_select((Time.zone.now.year-10..Time.zone.now.year+10), @event.end_time&.year), class: 'date-select'
         %span 年
-        = f.select :end_time_month, options_for_select((1..12)), class: 'date-select'
+        = f.select :end_time_month, options_for_select((1..12), @event.end_time&.month), class: 'date-select'
         %span 月
-        = f.select :end_time_day, options_for_select((1..31)), class: 'date-select'
+        = f.select :end_time_day, options_for_select((1..31), @event.end_time&.day), class: 'date-select'
         %span 日
-        = f.select :end_time_hour, options_for_select((0..23)), class: 'date-select'
+        = f.select :end_time_hour, options_for_select((0..23), @event.end_time&.hour), class: 'date-select'
         %span 時
-        = f.select :end_time_minute, options_for_select((0..59)), class: 'date-select'
+        = f.select :end_time_minute, options_for_select((0..59), @event.end_time&.min), class: 'date-select'
         %span 分
-  
   
   .prefectures-field
     .field
@@ -77,9 +84,6 @@
   .field
     = f.label :website, 'ウェブサイト'
     = f.text_field :website
-  -# .field
-  -#   = f.label :status, 'ステータス'
-  -#   = f.number_field :status
   .field
     = f.label :video, '動画URL'
     = f.text_field :video

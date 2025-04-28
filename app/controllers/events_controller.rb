@@ -62,28 +62,55 @@ class EventsController < ApplicationController
     set_prefectures
     if @event.seller == current_seller
       combine_datetime_parts(@event) # 開始日時と終了日時を結合
-      if @event.update(event_params)
-        if params[:event][:images].present?
-          @event.images.purge # 既存の画像をクリア
-          @event.images.attach(params[:event][:images])
+
+      # 削除対象の画像を処理
+      if params[:event][:remove_images].present?
+        params[:event][:remove_images].each do |signed_id|
+          image = ActiveStorage::Blob.find_signed(signed_id)
+          @event.images.find_by(blob_id: image.id)&.purge if image
         end
-        flash[:notice] = "\u30A4\u30D9\u30F3\u30C8\u304C\u66F4\u65B0\u3055\u308C\u307E\u3057\u305F"
+      end
+
+      if @event.update(event_params)
+        # 既存の画像を保持
+        if params[:event][:keep_images].present?
+          params[:event][:keep_images].each do |signed_id|
+            image = ActiveStorage::Blob.find_signed(signed_id)
+            unless @event.images.map(&:blob_id).include?(image.id) # 重複を防ぐ
+              @event.images.attach(image) if image
+            end
+          end
+        end
+
+        # 新しい画像がアップロードされた場合のみ追加
+        if params[:event][:images].present?
+          valid_images = params[:event][:images].reject(&:blank?) # 空のファイルフィールドを除外
+          valid_images.each do |image|
+            unless @event.images.map(&:filename).include?(image.original_filename) # 重複を防ぐ
+              @event.images.attach(image)
+            end
+          end
+        end
+
+        flash[:notice] = "イベントが更新されました"
         redirect_to @event
       else
         flash[:alert] = @event.errors.full_messages.join(", ")
         render :edit
       end
     else
-      redirect_to events_path, alert: "\u30ED\u30B0\u30A4\u30F3\u3057\u3066\u304F\u3060\u3055\u3044"
+      redirect_to events_path, alert: "ログインしてください"
     end
   end
 
   def destroy
-    if @event.seller == current_seller
-      @event.destroy!
-      redirect_to events_path, notice: "\u524A\u9664\u306B\u6210\u529F\u3057\u307E\u3057\u305F"
+    @event = Event.find(params[:id])
+    if @event.destroy
+      flash[:notice] = 'イベントを削除しました。'
+      redirect_to events_path
     else
-      redirect_to events_path, alert: "\u30ED\u30B0\u30A4\u30F3\u3057\u3066\u304F\u3060\u3055\u3044"
+      flash[:alert] = 'イベントの削除に失敗しました。'
+      redirect_to event_path(@event)
     end
   end
 
@@ -123,7 +150,7 @@ class EventsController < ApplicationController
     params.require(:event).permit(
       :title, :description, :venue, :address, :latitude, :longitude,
       :capacity, :is_online, :online_url, :is_free, :price, :organizer,
-      :contact_info, :website, :status, :video, :category_id, images: []
+      :contact_info, :website, :status, :video, :category_id, images: [], remove_images: []
     )
   end
 

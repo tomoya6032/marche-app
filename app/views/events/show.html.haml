@@ -6,9 +6,9 @@
 %h2= @event.title
 
 .event-images
-  - if @event.images.present? && @event.images.attached?
-    - @event.images.each_with_index do |image, index|
-      .event-image{class: "image-#{index + 1}"}
+  - if @event.images.attached?
+    - @event.images.uniq.each do |image| # 重複を防ぐために uniq を使用
+      .event-image
         = image_tag image, size: "300x200"
   - else
     .event-no-image
@@ -54,17 +54,13 @@
   %tr
     %th ウェブサイト
     %td= @event.website
-  -# %tr
-  -#   %th ステータス
-  -#   %td= @event.status
   %tr
     %th 動画URL
     %td= @event.video
 
 - if seller_signed_in? && current_seller == @event.seller
   .edit-links
-    = link_to '編集', edit_event_path(@event)
-    
-    = link_to '削除', event_path(@event), data: { turbo_method: :delete, confirm: '本当に削除してもよろしいですか？' }
-    
-    = link_to '戻る', events_path
+    = link_to '編集', edit_event_path(@event), class: 'button'
+    = link_to '削除', event_path(@event), data: { turbo_method: :delete, confirm: '本当に削除してもよろしいですか？' }, class: 'button-delete'
+
+= link_to '戻る', events_path, class: 'button'

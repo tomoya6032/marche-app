@@ -1,4 +1,3 @@
-
 //= link application.css
 //= link controllers/application.js
 //= link_tree ../builds
@@ -11,3 +10,5 @@
 //= link instagram_icon.png
 //= link twitter.png
 //= link mimamorifavicon.png
+//= link controllers/hello_controller.js
+//= link controllers/index.js

@@ -89,6 +89,20 @@ a:hover {
   background-color: #0056b3;
 }
 
+.button-delete {
+  background-color: #ff4d4d; /* 赤色 */
+  color: white;
+  padding: 10px 20px;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  text-decoration: none;
+}
+
+.button-delete:hover {
+  background-color: #cc0000; /* 濃い赤色 */
+}
+
 nav ul {
   display: flex;
   list-style: none;

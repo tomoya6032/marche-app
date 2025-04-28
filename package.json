@@ -2,10 +2,16 @@
   "name": "app",
   "private": "true",
   "dependencies": {
-    "sass": "^1.86.0"
+    "@rails/webpacker": "5.4.4",
+    "sass": "^1.86.0",
+    "webpack": "^4.46.0",
+    "webpack-cli": "^3.3.12"
   },
   "scripts": {
     "build:css": "sass ./app/assets/stylesheets/application.scss:./app/assets/builds/application.css --no-source-map",
     "watch:css": "sass --watch ./app/assets/stylesheets/application.scss:./app/assets/builds/application.css --no-source-map"
+  },
+  "devDependencies": {
+    "webpack-dev-server": "^3"
   }
 }

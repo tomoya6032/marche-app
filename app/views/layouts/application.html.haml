@@ -1,50 +1,29 @@
 !!!
 %html
   %head
-    %meta{:content => "text/html; charset=UTF-8", "http-equiv" => "Content-Type"}/
+    %meta{ content: "text/html; charset=UTF-8", "http-equiv" => "Content-Type" }
     %title= content_for(:title) || "Marche"
-    %meta{:content => "width=device-width,initial-scale=1", :name => "viewport"}/
-    %meta{:content => "yes", :name => "apple-mobile-web-app-capable"}/
-    %meta{:content => "yes", :name => "mobile-web-app-capable"}/
+    %meta{ content: "width=device-width,initial-scale=1", name: "viewport" }
+    %meta{ content: "yes", name: "apple-mobile-web-app-capable" }
+    %meta{ content: "yes", name: "mobile-web-app-capable" }
     = csrf_meta_tags
     = csp_meta_tag
     = yield :head
-    %link{:href => "/icon.png", :rel => "icon", :type => "image/png"}/
-    %link{:href => "/icon.svg", :rel => "icon", :type => "image/svg+xml"}/
-    %link{:href => "/icon.png", :rel => "apple-touch-icon"}/
-    %link{:rel => "stylesheet", :type => "text/css", :href => "//cdn.jsdelivr.net/npm/slick-carousel@1.8.1/slick/slick.css"}
-    %link{:rel => "stylesheet", :type => "text/css", :href => "//cdn.jsdelivr.net/npm/slick-carousel@1.8.1/slick/slick-theme.css"}
-    %script{:src => "https://code.jquery.com/jquery-3.7.1.min.js", :integrity => "sha256-/JqT3SQfawRcv/BIHPThreshery9jh6UpPQMHBGaGky/l0=", :crossorigin => "anonymous"}
-    = stylesheet_link_tag 'application', media: 'all', 'data-turbolinks-track': 'reload'
-    = stylesheet_link_tag 'eventindex', media: 'all', 'data-turbolinks-track': 'reload'
-    = javascript_pack_tag 'application', 'data-turbolinks-track': 'reload'
-    -# = stylesheet_link_tag "application", "data-turbo-track": "reload"
-    %link{:href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet"}
-    
-    = stylesheet_link_tag "application", "data-turbo-track": "reload" 
+    %link{ href: "/icon.png", rel: "icon", type: "image/png" }
+    %link{ href: "/icon.svg", rel: "icon", type: "image/svg+xml" }
+    %link{ href: "/icon.png", rel: "apple-touch-icon" }
+    %link{ rel: "stylesheet", type: "text/css", href: "//cdn.jsdelivr.net/npm/slick-carousel@1.8.1/slick/slick.css" }
+    %link{ rel: "stylesheet", type: "text/css", href: "//cdn.jsdelivr.net/npm/slick-carousel@1.8.1/slick/slick-theme.css" }
+    %script{ src: "https://code.jquery.com/jquery-3.7.1.min.js", crossorigin: "anonymous" }
+    %link{ href: "https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css", rel: "stylesheet" }
+
+    = stylesheet_link_tag "application", media: "all", "data-turbo-track": "reload"
     = javascript_importmap_tags
-    
+
   %body
     - if flash.present?
       .flash
         - flash.each do |message_type, message|
-          %div{:class => "alert alert-#{message_type}"}= message
-
-    - if flash.present?
-      .flash
-        - flash.each do |message_type, message|
-          %div{:class => "alert alert-#{message_type}"}= message
-
-    - if flash.present?
-      .flash
-        - flash.each do |key, value|
-          %div{:class => key}= value
-    
-    -# %header.header
-    -#   .header_logo
-    -#     %h1 つながるマルシェ 
-
+          %div{ class: "alert alert-#{message_type}" }= message
 
     = yield
-    = javascript_include_tag 'application'
-    = javascript_include_tag 'image_slider'

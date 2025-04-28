@@ -9,8 +9,7 @@ Rails.application.routes.draw do
 
   get "facility/show"
 
-  resources :events, only: [:index, :show, :new, :create, :edit, :update, :destroy]
-  
+  resources :events
 
   devise_for :sellers
   resources :sellers, only: [:index, :show, :new, :create, :edit, :update, :destroy]

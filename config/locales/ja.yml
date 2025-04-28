@@ -1,7 +1,10 @@
 ja:
   activerecord:
     errors:
-      models:
+      messages:
+        invalid_image_format: "：ファイル形式がJPEG, PNG, GIF以外になっています。ファイル形式をご確認ください。"
+        image_too_large: "：100MB以下のファイルをアップロードしてください。"
+        models:
         event:
           attributes:
             title:
