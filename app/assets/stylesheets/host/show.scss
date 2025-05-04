@@ -1,0 +1,229 @@
+$primary-color: #41404a; // 明るい水色 (温かみと信頼感)
+$secondary-color: #41404a; // 濃い青色 (落ち着きとプロフェッショナル)
+$accent-color: #edcaff; // 淡い黄色 (明るさと親しみやすさ)
+$text-color: #41404a; // 濃い灰色 (読みやすさ)
+$light-text-color: #f8f9fa; // 白に近い色 (背景とのコントラスト)
+$border-color: #d3d3d3; // 薄い灰色 (区切り)
+$background-color: #fdf3ff; // 温かみのある薄いベージュ
+
+.host-lp-page {
+  background-color: $background-color;
+  color: $text-color;
+  font-family: 'Noto Sans JP', sans-serif; // 日本語と相性の良いフォント例
+  line-height: 1.6;
+  padding: 2rem;
+  border-radius: 8px;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+
+  .top-section {
+    text-align: center;
+    padding-bottom: 2rem;
+    border-bottom: 1px solid $border-color;
+    margin-bottom: 2rem;
+
+    .host-name {
+      font-size: 2.5rem;
+      color: $secondary-color;
+      margin-bottom: 1rem;
+      font-weight: 700;
+    }
+
+    .top-image {
+      max-width: 80%;
+      margin: 0 auto 1rem;
+      border-radius: 8px;
+      overflow: hidden;
+
+      img {
+        display: block;
+        width: 100%;
+        height: auto;
+      }
+
+      p {
+        color: lighten($text-color, 20%);
+        font-style: italic;
+      }
+    }
+
+    .button.edit-button {
+      display: inline-block;
+      padding: 0.75rem 1.5rem;
+      background-color: $accent-color;
+      color: $text-color;
+      text-decoration: none;
+      border-radius: 6px;
+      font-weight: 600;
+      transition: background-color 0.3s ease;
+
+      &:hover {
+        background-color: darken($accent-color, 10%);
+      }
+    }
+  }
+
+  .about-us-section,
+  .company-info-section,
+  .access-map-section,
+  .gallery-section,
+  .event-list-section {
+    padding: 1.5rem 0;
+    border-bottom: 1px solid $border-color;
+    margin-bottom: 1.5rem;
+
+    &:last-child {
+      border-bottom: none;
+      margin-bottom: 0;
+    }
+
+    h2 {
+      font-size: 2rem;
+      color: $primary-color;
+      margin-bottom: 1rem;
+      font-weight: 600;
+    }
+
+    .host-description {
+      line-height: 1.8;
+      margin-bottom: 1rem;
+      color: lighten($text-color, 10%);
+    }
+
+    .company-info-table {
+      width: 100%;
+      border-collapse: collapse;
+      margin-bottom: 1rem;
+
+      tbody tr {
+        border-bottom: 1px solid $border-color;
+
+        &:last-child {
+          border-bottom: none;
+        }
+      }
+
+      th,
+      td {
+        padding: 0.75rem;
+        text-align: left;
+      }
+
+      th {
+        font-weight: 600;
+        color: $secondary-color;
+        width: 30%;
+      }
+
+      td a {
+        color: $primary-color;
+        text-decoration: none;
+        transition: color 0.3s ease;
+
+        &:hover {
+          color: darken($primary-color, 10%);
+        }
+      }
+    }
+
+    .map-container {
+      margin-bottom: 1rem;
+
+      p {
+        color: lighten($text-color, 10%);
+
+        a {
+          color: $primary-color;
+          text-decoration: none;
+          transition: color 0.3s ease;
+
+          &:hover {
+            color: darken($primary-color, 10%);
+          }
+        }
+      }
+    }
+
+    .image-gallery {
+      .row {
+        display: flex;
+        flex-wrap: wrap;
+        margin-right: -1rem;
+        margin-left: -1rem;
+      }
+
+      .col-md-3 {
+        padding-right: 1rem;
+        padding-left: 1rem;
+        margin-bottom: 1rem;
+        width: calc(25% - 2rem); // 4列配置の例
+      }
+
+      .gallery-image {
+        border-radius: 6px;
+        overflow: hidden;
+        box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+
+        img {
+          display: block;
+          width: 100%;
+          height: auto;
+          transition: transform 0.3s ease-in-out;
+
+          &:hover {
+            transform: scale(1.05);
+          }
+        }
+      }
+    }
+  }
+
+  .event-list-section {
+    h2 {
+      font-size: 2rem;
+      color: $accent-color;
+      margin-bottom: 1rem;
+      font-weight: 600;
+    }
+
+    .event-info-table {
+      width: 100%;
+      border-collapse: collapse;
+
+      thead th {
+        background-color: lighten($primary-color, 30%);
+        color: $text-color;
+        padding: 0.75rem;
+        text-align: left;
+        border-bottom: 2px solid $primary-color;
+      }
+
+      tbody tr {
+        border-bottom: 1px solid $border-color;
+
+        &:last-child {
+          border-bottom: none;
+        }
+
+        td {
+          padding: 0.75rem;
+        }
+
+        td a {
+          color: $secondary-color;
+          text-decoration: none;
+          font-weight: 500;
+          transition: color 0.3s ease;
+
+          &:hover {
+            color: darken($secondary-color, 10%);
+          }
+        }
+      }
+    }
+
+    p {
+      color: lighten($text-color, 20%);
+      font-style: italic;
+    }
+  }
+}

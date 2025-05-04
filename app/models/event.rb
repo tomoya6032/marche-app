@@ -1,6 +1,7 @@
 class Event < ApplicationRecord
   has_many_attached :images
-  belongs_to :seller
+  belongs_to :seller, optional: true # セラーとの関連
+  belongs_to :host, optional: true   # ホストとの関連
 
   validate :images_content_type, :images_size
 
@@ -17,7 +18,7 @@ class Event < ApplicationRecord
     end
 
     if invalid_images.any?
-      errors.add(:images, I18n.t('errors.messages.invalid_image_format'))
+      errors.add(:images, I18n.t("errors.messages.invalid_image_format"))
     end
   end
 
@@ -29,7 +30,7 @@ class Event < ApplicationRecord
     end
 
     if oversized_images.any?
-      errors.add(:images, I18n.t('errors.messages.image_too_large'))
+      errors.add(:images, I18n.t("errors.messages.image_too_large"))
     end
   end
 end

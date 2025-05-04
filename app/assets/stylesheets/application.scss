@@ -1,4 +1,12 @@
 // Entry point for your Sass build
+@import "admin/users";
+
+@import "sellers/show";
+@import "sellers/index";
+@import "host/index";
+@import "host/show";
+
+
 body {
   font-family: 'Arial', sans-serif;
   line-height: 1.6;
@@ -250,7 +258,7 @@ nav ul li a {
   
 }
 
-.slider-navigation button {
+slider-navigation button {
   position: absolute;
   top: 50%;
   transform: translateY(-50%);
@@ -672,43 +680,6 @@ table.event-details th {
 
 
 
-.seller-mypage {
-  padding: 20px;
-  font-family: sans-serif;
-
-  h1 {
-    font-size: 24px;
-    margin-bottom: 20px;
-  }
-
-  .seller-profile-info {
-    h2 {
-      font-size: 20px;
-      margin-bottom: 10px;
-    }
-
-    table {
-      width: 100%;
-      border-collapse: collapse;
-
-      th, td {
-        padding: 8px;
-        text-align: left;
-        border-bottom: 1px solid #ddd;
-      }
-
-      th {
-        width: 150px;
-        font-weight: bold;
-      }
-
-      img {
-        max-width: 200px;
-        height: auto;
-      }
-    }
-  }
-}
 
 .new-button {  
   display: flex; /* 横並びにする */
@@ -737,6 +708,36 @@ table.event-details th {
 }
 
 .seller-edit {
+  padding: 20px;
+  font-family: sans-serif;
+
+  h1 {
+    font-size: 24px;
+    margin-bottom: 20px;
+  }
+
+  .field {
+    margin-bottom: 10px;
+
+    label {
+      display: block;
+      font-weight: bold;
+    }
+
+    input[type="text"], textarea {
+      width: 100%;
+      padding: 8px;
+      border: 1px solid #ddd;
+      border-radius: 4px;
+    }
+  }
+
+  .actions {
+    margin-top: 20px;
+  }
+}
+
+.host-edit {
   padding: 20px;
   font-family: sans-serif;
 

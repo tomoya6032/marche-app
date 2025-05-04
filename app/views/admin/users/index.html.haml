@@ -1,0 +1,82 @@
+%h1 管理画面ダッシュボード
+
+%section.admin-section
+  %h2.admin-section-title セラー情報
+  %p.admin-section-summary 合計セラー数: #{@total_sellers}
+  %h3.admin-section-subtitle 最近登録されたセラー
+  %table.admin-table
+    %thead
+      %tr
+        %th 名前
+        %th メールアドレス
+        %th 操作
+    %tbody
+      - if @recent_sellers.present?
+        - @recent_sellers.each do |seller|
+          %tr
+            %td= seller.name
+            %td= seller.email
+            %td
+              = link_to "編集", edit_admin_seller_path(seller), class: "admin-button"
+      - else
+        %tr
+          %td{ colspan: 3 } 最近登録されたセラーはありません。
+
+%section.admin-section
+  %h2.admin-section-title ホスト情報
+  %p.admin-section-summary 合計ホスト数: #{@total_hosts}
+  %h3.admin-section-subtitle 最近登録されたホスト
+  %table.admin-table
+    %thead
+      %tr
+        %th 名前
+        %th メールアドレス
+        %th 操作
+    %tbody
+      - if @recent_hosts.present?
+        - @recent_hosts.each do |host|
+          %tr
+            %td= host.name
+            %td= host.email
+            %td
+              = link_to "編集", edit_admin_host_path(host), class: "admin-button"
+      - else
+        %tr
+          %td{ colspan: 3 } 最近登録されたホストはありません。
+
+%section.admin-section
+  %h2.admin-section-title イベント情報
+  %p.admin-section-summary 合計イベント数: #{@total_events}
+  %h3.admin-section-subtitle 最近作成されたイベント
+  %table.admin-table
+    %thead
+      %tr
+        %th イベント名
+        %th 開催日
+%th 都道府県
+     %th 開催者名
+          %th アカウント種別
+%tbody
+      - if @recent_events.present?
+        - @recent_events.each do |event|
+          %tr
+            %td= link_to event.title, event_path(event)
+            %td= event.start_time.strftime('%Y/%m/%d') if event.start_time
+%td= event.venue || "未設定" # venue を表示
+            %td
+              - if event.seller.present?
+= event.seller.name
+              - elsif event.host.present?
+            = event.host.name
+              - else
+                未設定
+            %td
+              - if event.seller.present?
+セラー
+              - elsif event.host.present?
+ホスト
+              - else
+                未設定
+      - else
+        %tr
+          %td{ colspan: 5 } 最近作成されたイベントはありません。

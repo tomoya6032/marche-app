@@ -1,0 +1,62 @@
+%body
+  = render 'header/header' # ヘッダーのパーシャルを呼び出す
+
+%h1 出展施設一覧
+
+.section
+  %h2 ホスト一覧
+  - if @hosts.present?
+    %table
+      %thead
+        %tr
+          %th 名前
+          %th メールアドレス
+          %th 住所
+          %th 直近の開催イベント
+      %tbody
+        - @hosts.each do |host|
+          %tr
+            %td
+              - if host.name.present?
+                = link_to host.name, host_path(host) # 修正: `host_path` を使用してホストの詳細ページに遷移
+              - else
+                %span 未設定
+            %td= host.email.presence || 'メールアドレス未設定'
+            %td= host.address.presence || '住所未設定'
+            %td
+              - if host.events.present?
+                = link_to host.events.order(start_time: :asc).first.title, event_path(host.events.order(start_time: :asc).first)
+              - else
+                %span イベントなし
+  - else
+    %p ホストが見つかりません。
+
+.section
+  %h2 セラー一覧
+  - if @sellers.present?
+    %table
+      %thead
+        %tr
+          %th 名前
+          %th メールアドレス
+          %th 住所
+          %th 直近の開催イベント
+      %tbody
+        - @sellers.each do |seller|
+          %tr
+            %td
+              - if seller.name.present?
+                = link_to seller.name, seller_path(seller)
+              - else
+                %span 未設定
+            %td= seller.email.presence || 'メールアドレス未設定'
+            %td= seller.address.presence || '住所未設定'
+            %td
+              - if seller.events.present?
+                = link_to seller.events.order(start_time: :asc).first.title, event_path(seller.events.order(start_time: :asc).first)
+              - else
+                %span イベントなし
+  - else
+    %p セラーが見つかりません。
+
+= link_to '戻る', root_path, class: 'btn btn-secondary'

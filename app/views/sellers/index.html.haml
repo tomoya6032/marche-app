@@ -6,11 +6,11 @@
   .seller-btn
     = link_to edit_seller_path(@seller) do
       .link_inner
-        %h2 プロフィール編集
+        %p プロフィール編集
 
     = link_to new_event_path do # 追加
       .link_inner
-        %h2 イベント出店を投稿
+        %p イベント出店を投稿
 
   .seller-profile-info
     %h2 セラープロフィール情報
@@ -74,3 +74,15 @@
       %tr
         %th 動画
         %td= @seller.video
+
+      %tr
+        %th 運営からのコメント
+        %td
+          - if @comments.present?
+            - @comments.each do |comment|
+              .admin-comment
+                %p.comment-date= l comment.created_at, format: :long
+                %p= comment.body
+                
+          - else
+            %p まだ運営からのコメントはありません。

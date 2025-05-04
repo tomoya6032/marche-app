@@ -1,5 +1,14 @@
 %body
   = render 'header/header' # ヘッダーのパーシャルを呼び出す
 
-%h1 Facility#show
-%p Find me in app/views/facility/show.html.haml
+- if @facility
+  %h1= @facility.name.presence || '名称未設定'
+
+  %p= @facility.description.presence || '説明がありません。'
+  %p 住所: #{@facility.address.presence || '住所が未設定です。'}
+  %p 電話番号: #{@facility.phone_number.presence || '電話番号が未設定です。'}
+  %p ウェブサイト: #{link_to @facility.website.presence || 'ウェブサイトが未設定です。', @facility.website, target: "_blank"}
+
+  = link_to '戻る', root_path, class: 'btn btn-secondary'
+- else
+  %p 施設が見つかりません。

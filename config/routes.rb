@@ -1,40 +1,51 @@
 Rails.application.routes.draw do
+  # ホスト関連のルート
   devise_for :hosts
+  resources :hosts, only: [:index, :show, :new, :create, :edit, :update, :destroy] do
+  member do
+      get 'events/new', to: 'hosts#new_event', as: :new_event
+      post 'events', to: 'hosts#create_event', as: :events
   
-  
-  get "facility/index"
-  resources :facilities do
-    resources :events, only: [:index] # facilitiesに紐づくeventsのindexアクションのみルーティング
+      get 'facility', to: 'facilities#show', as: :facility
+    end
+      resources :events, only: [:edit, :update, :destroy], controller: 'hosts'
   end
 
-  get "facility/show"
-
-  resources :events
-
+  # セラー関連のルート
   devise_for :sellers
   resources :sellers, only: [:index, :show, :new, :create, :edit, :update, :destroy]
+
+  # 管理者関連のルート
+  devise_for :administrators, path: "administrators", controllers: {
+    sessions: "admin/sessions",
+    registrations: "admin/registrations"
+  }
+
+  namespace :admin do
+    resources :sellers, controller: 'admin_sellers', only: [:index, :edit, :update] do
+      resources :comments, only: [:create], module: :sellers
+    end
+    resources :hosts, controller: 'admin_hosts', only: [:index, :edit, :update] do
+      resources :comments, only: [:create], module: :hosts
+    end
+    resources :events, only: [:index, :edit, :update, :destroy]
+    resources :users do
+      resources :comments, only: [:create], module: :users
+    end
+    root to: "users#index"
+  end
+
+  # ユーザー関連のルート
+  devise_for :users
+
+  # 施設関連のルート
+  resources :facilities, only: [:index, :show]
+  resource :facility, only: [:show, :new, :create, :edit, :update, :destroy], controller: 'facility'
  
- 
-  
-  
 
+  # イベント関連のルート
+  resources :events
 
-
-  # Define your application routes per the DSL in https://guides.rubyonrails.org/routing.html
-
-  # Reveal health status on /up that returns 200 if the app boots with no exceptions, otherwise 500.
-  # Can be used by load balancers and uptime monitors to verify that the app is live.
-  # get "up" => "rails/health#show", as: :rails_health_check
-
-  # get '/' => 'home#index'
-  root 'home#index'
-
-  
-
-  # Render dynamic PWA files from app/views/pwa/* (remember to link manifest in application.html.erb)
-  # get "manifest" => "rails/pwa#manifest", as: :pwa_manifest
-  # get "service-worker" => "rails/pwa#service_worker", as: :pwa_service_worker
-
-  # Defines the root path route ("/")
-  # root "posts#index"
+  # アプリケーションのルート
+  root "home#index"
 end

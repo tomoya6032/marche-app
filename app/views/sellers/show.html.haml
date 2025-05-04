@@ -1,23 +1,45 @@
 = render 'header/header' # ヘッダーのパーシャルを呼び出す
 
-%h1 セラー詳細ページ
+.seller-details
+  %h1 セラー詳細ページ
 
-%p
-  %strong 名前:
-  = @seller.name if @seller
+  %table.seller-info-table
+    %tbody
+      %tr
+        %th 名前
+        %td= @seller.name if @seller
 
-%p
-  %strong 説明:
-  = @seller.description if @seller
+      %tr
+        %th メール
+        %td= @seller.email if @seller
 
-%p
-  %strong 住所:
-  = @seller.address if @seller
+      %tr
+        %th 説明
+        %td= @seller.description if @seller
 
-%p
-  %strong 電話番号:
-  = @seller.phone_number if @seller
+      %tr
+        %th 住所
+        %td= @seller.address if @seller
 
-%p
-  %strong ウェブサイト:
-  = @seller.website if @seller
+      %tr
+        %th 電話番号
+        %td= @seller.phone_number if @seller
+
+      %tr
+        %th ウェブサイト
+        %td= link_to @seller.website, @seller.website, target: "_blank" if @seller&.website
+
+  %h2 開催したイベント
+  - if @seller.events.present?
+    %table.event-info-table
+      %thead
+        %tr
+          %th イベント名
+          %th 開催日
+      %tbody
+        - @seller.events.each do |event|
+          %tr
+            %td= link_to event.title, event_path(event)
+            %td= event.start_time.strftime('%Y/%m/%d') if event.start_time
+  - else
+    %p このセラーはまだイベントを開催していません。

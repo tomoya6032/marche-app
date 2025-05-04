@@ -1,0 +1,8 @@
+%h1 有料会員への移行
+
+%p 無料期間はあと #{@user.trial_end_date - Date.today} 日です。
+
+%p 以下のプランから選択してください。
+
+= button_to "セラー会員（月額480円）", upgrade_membership_users_path(membership_type: "seller"), method: :post, class: "button"
+= button_to "ホスト会員（月額980円）", upgrade_membership_users_path(membership_type: "host"), method: :post, class: "button"

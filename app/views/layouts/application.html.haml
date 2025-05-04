@@ -21,6 +21,13 @@
     = javascript_importmap_tags
 
   %body
+    - if administrator_signed_in?
+      %p ログイン中: #{current_administrator.email}
+      = link_to "ログアウト", destroy_administrator_session_path, method: :delete
+    - else
+      = link_to "ログイン", new_administrator_session_path
+      = link_to "サインアップ", new_administrator_registration_path
+    
     - if flash.present?
       .flash
         - flash.each do |message_type, message|

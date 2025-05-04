@@ -1,0 +1,63 @@
+= render 'header/header' # ヘッダーのパーシャルを呼び出す
+
+.host-lp-page
+  .top-section
+    %h1.host-name= @host.name if @host
+    .top-image
+      - if @host&.top_image&.attached?
+        = image_tag @host.top_image
+      - else
+        %p トップ画像はまだ設定されていません。
+    = link_to 'プロフィールを編集', edit_host_path(@host), class: 'button edit-button' if @host
+
+  .about-us-section
+    %h2 私たちについて
+    .host-description= @host.description if @host
+
+  .company-info-section
+    %h2 法人の概要
+    %table.company-info-table
+      %tbody
+        %tr
+          %th 住所
+          %td= @host.address if @host
+        %tr
+          %th 電話番号
+          %td= @host.phone_number if @host
+        %tr
+          %th ウェブサイト
+          %td= link_to @host.website, @host.website, target: "_blank" if @host&.website
+
+  .access-map-section
+    %h2 アクセス
+    .map-container
+      - if @host&.address.present?
+        %p= "地図は#{link_to @host.address, "https://www.google.com/maps/search?q=#{@host.address}", target: "_blank"}で確認できます。"
+      - else
+        %p 住所が設定されていません。
+
+  .gallery-section
+    %h2 活動風景・施設外観
+    .image-gallery
+      - if @host&.images&.attached?
+        .row
+          - @host.images.each do |image|
+            .col-md-3.gallery-image
+              = image_tag image, style: "width: 100%; height: auto;"
+      - else
+        %p 画像はまだ登録されていません。
+
+  %h2 開催したイベント
+  - if @host.events.present?
+    %table.event-info-table
+      %thead
+        %tr
+          %th イベント名
+          %th 開催日
+      %tbody
+        - @host.events.each do |event|
+          %tr
+            %td= link_to event.title, event_path(event)
+            %td= event.start_time.strftime('%Y/%m/%d') if event.start_time
+  - else
+    %p このセラーはまだイベントを開催していません。

@@ -1,0 +1,84 @@
+= render 'header/header' # ヘッダーのパーシャルを呼び出す
+
+.host-edit
+  %h1 プロフィール編集
+
+  = form_with model: @host, local: true, multipart: true do |form|
+    .field
+      = form.label :top_image, 'トップ画像'
+      = form.file_field :top_image
+      - if @host&.top_image&.attached?
+        .current-image
+          = image_tag @host.top_image, size: "200x200"
+          = form.check_box :remove_top_image
+          = form.label :remove_top_image, "削除"
+
+     
+    .field
+      = form.label :name, '名前'
+      = form.text_field :name
+
+    .field
+      = form.label :description, '私たちについて'
+      = form.text_area :description
+
+    .field
+      = form.label :address, '法人概要 - 住所'
+      = form.text_field :address
+
+    .field
+      = form.label :phone_number, '法人概要 - 電話番号'
+      = form.text_field :phone_number
+
+    .field
+      = form.label :website, '法人概要 - ウェブサイト'
+      = form.text_field :website
+
+    .field
+      = form.label :images, '活動風景・施設外観 (複数選択可)'
+      = form.file_field :images, multiple: true
+      - if @host&.images&.attached?
+        .current-images
+          - @host.images.each do |image|
+            .current-image
+              = image_tag image, size: "100x100"
+              = check_box_tag "host[remove_images][]", image.id, false
+              = label_tag "host_remove_images_#{image.id}", "削除"
+
+    -# .field
+    -#   = form.label :video, '動画'
+    -#   = form.text_area :video
+
+    -# 不要になった項目はコメントアウトまたは削除
+    -# .field
+    -#   = form.label :supported_event_types, '対応可能なイベント'
+    -#   = form.text_area :supported_event_types, placeholder: '例: 音楽イベント,展示会,ワークショップ'
+
+    -# .field
+    -#   = form.label :business_hours_days, '対応可能日'
+    -#   = form.text_field :business_hours_days, placeholder: '例: 月〜金, 土日祝'
+    -# .field
+    -#   = form.label :business_hours_start, '対応可能開始時間'
+    -#   = form.time_select :business_hours_start
+    -# .field
+    -#   = form.label :business_hours_end, '対応可能終了時間'
+    -#   = form.time_select :business_hours_end
+
+    -# .field
+    -#   = form.label :past_exhibitions_names, '過去の主催実績 (イベント名)'
+    -#   = form.text_area :past_exhibitions_names, placeholder: '例: イベントA,イベントB,イベントC'
+    -# .field
+    -#   = form.label :past_exhibitions_dates, '過去の主催実績 (イベント日時)'
+    -#   = form.text_area :past_exhibitions_dates, placeholder: '例: 2023-01-01 10:00,2023-02-01 12:00,2023-03-01 14:00'
+
+    -# SNSアカウントの入力フォーム (Seller モデルのものを参考に)
+    -# .field
+    -#   %label SNSアカウント
+    -#   - Host.sns_types_for_select.each do |name, value|
+    -#     .sns-account-field
+    -#       = check_box_tag "host[sns_accounts_types][]", value, @host.sns_accounts_types&.split(',').include?(value.to_s)
+    -#       = label_tag "host_sns_accounts_types_#{value}", name
+    -#       = text_field_tag "host[sns_accounts_urls][]", (@host.sns_accounts_urls&.split(',') || [])[value], placeholder: 'URL'
+
+    .actions
+      = form.submit '更新'

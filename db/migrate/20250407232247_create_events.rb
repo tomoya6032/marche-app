@@ -21,9 +21,9 @@ class CreateEvents < ActiveRecord::Migration[8.0]
       t.string :image
       t.string :video
       t.integer :category_id
-      t.integer :facility_id
+      t.references :facility, foreign_key: true
+      t.references :seller, foreign_key: true # ここで外部キーを参照
 
-      t.references :seller, foreign_key: true # seller_id カラムを追加
       t.timestamps
     end
   end
