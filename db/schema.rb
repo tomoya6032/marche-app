@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[8.0].define(version: 2025_05_04_190000) do
+ActiveRecord::Schema[8.0].define(version: 2025_05_10_121528) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "pg_catalog.plpgsql"
 
@@ -113,14 +113,14 @@ ActiveRecord::Schema[8.0].define(version: 2025_05_04_190000) do
   end
 
   create_table "facilities", force: :cascade do |t|
-    t.string "name"
-    t.text "description"
-    t.string "address"
+    t.string "name", default: ""
+    t.text "description", default: ""
+    t.string "address", default: ""
     t.float "latitude"
     t.float "longitude"
-    t.string "phone_number"
+    t.string "phone_number", default: ""
     t.string "email"
-    t.string "website"
+    t.string "website", default: ""
     t.integer "facility_type"
     t.string "image"
     t.string "video"
@@ -152,6 +152,13 @@ ActiveRecord::Schema[8.0].define(version: 2025_05_04_190000) do
     t.text "sns_accounts_types"
     t.text "sns_accounts_urls"
     t.bigint "facility_id"
+    t.text "news"
+    t.text "topics"
+    t.text "goods_introduction"
+    t.text "goods_introduction_1"
+    t.text "goods_introduction_2"
+    t.text "goods_introduction_3"
+    t.text "goods_introduction_4"
     t.index ["email"], name: "index_hosts_on_email", unique: true
     t.index ["facility_id"], name: "index_hosts_on_facility_id"
     t.index ["reset_password_token"], name: "index_hosts_on_reset_password_token", unique: true
@@ -192,6 +199,15 @@ ActiveRecord::Schema[8.0].define(version: 2025_05_04_190000) do
     t.index ["reset_password_token"], name: "index_sellers_on_reset_password_token", unique: true
   end
 
+  create_table "topics", force: :cascade do |t|
+    t.string "title"
+    t.text "content"
+    t.bigint "host_id", null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["host_id"], name: "index_topics_on_host_id"
+  end
+
   create_table "users", force: :cascade do |t|
     t.string "email", default: "", null: false
     t.string "encrypted_password", default: "", null: false
@@ -214,4 +230,5 @@ ActiveRecord::Schema[8.0].define(version: 2025_05_04_190000) do
   add_foreign_key "events", "sellers"
   add_foreign_key "hosts", "facilities"
   add_foreign_key "sellers", "facilities"
+  add_foreign_key "topics", "hosts"
 end

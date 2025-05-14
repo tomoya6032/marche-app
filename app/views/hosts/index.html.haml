@@ -3,18 +3,18 @@
 .host-mypage
   %h1 ホストマイページ
 
+
+  
+
   .host-btn
     = link_to edit_host_path(@host) do
       .link_inner
         %p プロフィール編集
 
-    -# ホスト固有のボタンを追加 (例: 会場登録)
-    = link_to new_facility_path do
-      .link_inner
-        %p 会場を登録
+    
 
-    -# = link_to new_host_event_path(@host), class: 'new-button' do
-    -#   %p 新規イベントを作成する
+    = link_to new_host_event_path(@host), class: 'new-button' do
+      %p 新規イベントを作成する
 
   .host-profile-info
     %h2 ホストプロフィール情報
@@ -41,17 +41,6 @@
         %th ウェブサイト
         %td= @host.website
     
-      %tr
-        %th 活動風景・施設外観
-        %td
-          .image-gallery
-            - if @host&.images&.attached?
-              .row
-                - @host.images.each do |image|
-                  .col-md-3.gallery-image
-                    = image_tag image, style: "width: 100%; height: auto;"
-            - else
-              %p 画像はまだ登録されていません。
         -#   -# ホスト固有の情報 (例: 対応可能なイベントの種類)
         -#   %tr
         -#     %th 対応可能なイベント
@@ -95,7 +84,7 @@
             %p 設定なし
 
       %tr
-        %th 画像
+        %th 活動風景・施設外観
         %td
           - if @host.images.any?
             - @host.images.each do |image|

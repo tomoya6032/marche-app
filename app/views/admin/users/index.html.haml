@@ -1,4 +1,4 @@
-%h1 管理画面ダッシュボード
+%h1 管理画面ダッシュボード★
 
 %section.admin-section
   %h2.admin-section-title セラー情報
@@ -53,30 +53,34 @@
       %tr
         %th イベント名
         %th 開催日
-%th 都道府県
-     %th 開催者名
-          %th アカウント種別
-%tbody
+        %th 都道府県
+        %th 開催者名
+        %th アカウント種別
+        %th 操作
+    %tbody
       - if @recent_events.present?
         - @recent_events.each do |event|
           %tr
             %td= link_to event.title, event_path(event)
             %td= event.start_time.strftime('%Y/%m/%d') if event.start_time
-%td= event.venue || "未設定" # venue を表示
+            %td= event.venue || "未設定"
             %td
               - if event.seller.present?
-= event.seller.name
+                = link_to event.seller.name, admin_seller_path(event.seller)
               - elsif event.host.present?
-            = event.host.name
+                = link_to event.host.name, admin_host_path(event.host)
               - else
                 未設定
             %td
               - if event.seller.present?
-セラー
+                セラー
               - elsif event.host.present?
-ホスト
+                ホスト
               - else
                 未設定
+            %td
+              = link_to "編集", edit_admin_event_path(event), class: "admin-button"
+            -#   = link_to "削除", admin_event_path(event), data: { turbo_method: :delete, confirm: '本当に削除してもよろしいですか？' }, class: "admin-button-delete"
       - else
         %tr
-          %td{ colspan: 5 } 最近作成されたイベントはありません。
+          %td{ colspan: 6 } 最近作成されたイベントはありません。

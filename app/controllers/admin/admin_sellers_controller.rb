@@ -6,6 +6,12 @@ module Admin
       @sellers = Seller.all
     end
 
+    def show
+      @seller = Seller.find(params[:id]) # @user インスタンス変数にセラー情報を代入
+      @admin_comments = @seller.comments.where(commenter_type: 'Administrator').order(created_at: :desc)
+     
+    end
+
     def edit
       @admin_comments = @seller.comments.where(admin_id: current_administrator.id).order(created_at: :desc)
     end

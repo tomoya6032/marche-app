@@ -50,6 +50,14 @@
 
     td {
       color: #555;
+      
+        img {
+          width: 300px; /* 希望する横幅 */
+           /* 高さ自動調整 */
+          margin-right: 18px; /* 必要に応じて右マージンを追加 */
+          vertical-align: middle; /* 必要に応じて縦方向の配置を調整 */
+        }
+      
     }
 
     a {
@@ -64,6 +72,7 @@
 
   .seller-info-table {
     margin-bottom: 30px;
+    
   }
 
   .event-info-table {

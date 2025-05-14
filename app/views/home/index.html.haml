@@ -1,29 +1,46 @@
 %body
   = render 'header/header' # ヘッダーのパーシャルを呼び出す
-
+    
   .top-container
-    .event-container
-      .event-btn
-        = link_to events_path, class: 'btn btn-primary' do
-          .link_inner
-            %h3 イベント一覧
+    .top-container-message
+      %h1 ようこそマルシェへ
+      %p 私たちのマルシェは、地域と人々をつなぐ出会いの場です。
+      %p イベントを通じて、楽しいお出かけと思い出を作りませんか？
+      %p お出かけをして楽しい出会いを作ろう: ... 
 
-    .facility-container
-      .facility-btn
-        = link_to facilities_path, class: 'btn btn-secondary' do
-          .link_inner
-            %h3 出展施設一覧
 
+    .top-btn-container
+      .event-container 
+        .event-btn
+          = link_to events_path, class: 'btn btn-primary' do
+            .link_inner
+              %h3 イベント一覧
+
+      .facility-container 
+        .facility-btn
+          = link_to facilities_path, class: 'btn btn-secondary' do
+            .link_inner
+              %h3 出展施設一覧
+
+      .upcoming-events-container
+        .upcoming-events-button
+          = link_to events_path(filter: 'recent'), class: 'btn btn-secondary' do
+            .link_inner
+              %h3 開催直近のイベント
+
+  
+  
+      
   .top-image
     .top-slider
-      %img{ src: asset_path('slider1.png'), alt: 'スライダー1' }
-      %img{ src: asset_path('slider2.png'), alt: 'スライダー2' }
-      %img{ src: asset_path('slider3.png'), alt: 'スライダー3' }
+      %img(src="#{asset_path('slider1.png')}" alt="スライダー1")
+      %img(src="#{asset_path('slider2.png')}" alt="スライダー2")
+      %img(src="#{asset_path('slider3.png')}" alt="スライダー3")
     .slider-navigation
       %button.prev 前へ
       %button.next 次へ
 
-  .column-section
+    .column-section 
     .section.news
       %h2 お知らせ
       %ul
@@ -35,17 +52,21 @@
           %a(href="#") 悪天候による開催について
 
     .sns-container
+      .sns-inner 
+        .h3 インスタグラムセクション
+        -# = image_tag "/images/instagram_icon.png", alt: "公式アカウントロゴ"
+        %img(src="#{asset_path('instagram_icon.png')}" alt="公式アカウントロゴ")
+      
       .sns-inner
-        %h3 インスタグラムセクション
-        %img{ src: asset_path('instagram_icon.png'), alt: '公式アカウントロゴ' }
-
-      .sns-inner
-        %h3 エックスセクション
-        -# %img{ src: asset_path('twitter.png'), alt: '公式アカウントロゴ' }
-
-      .sns-inner
-        %h3 フェイスブックセクション
-        -# %img{ src: asset_path('facebook_icon.png'), alt: '公式アカウントロゴ' }
+        .h3 エックスセクション
+        -# = image_tag "/images/",lt: "公式アカウントロゴ"
+        %img(src="#{asset_path('twitter.png')}" alt="公式アカウントロゴ")
+        
+      .sns-inner 
+        .h3 フェイスブックセクション
+        -# = image_tag "/images/mimamorifavicon.png", alt: "公式アカウントロゴ"
+        %img(src="#{asset_path('mimamorifavicon.png')}" alt="公式アカウントロゴ")
+    
 
   .section.events
     %h2 近日開催のイベント
@@ -72,7 +93,8 @@
   .section.recruitment
     %h2 出展者募集
     .recruitment-content
-      %img{ src: asset_path('slider1.png'), alt: '出展者募集' }
+  %img(src="#{asset_path('mimamorifavicon.png')}" alt="出店者")
+-# %img{ src: asset_path('slider1.png'), alt: '出展者募集' }
       %a.button{ href: "#" } 出展者募集中！
 
   .section.description
@@ -83,7 +105,10 @@
       %p お出かけをして楽しい出会いを作ろう: ...
 
   = render 'footer/footer'
-
+  
+  
+  .script(src="script.js")
+  
 :javascript
   $(document).ready(function(){
     $('.slider').slick({
@@ -96,5 +121,5 @@
       arrows: false, // 画像移動用の矢印の表示
       dots: true // 下部ドットナビゲーションの表示
     });
-  });
+    });
 

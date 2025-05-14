@@ -39,10 +39,10 @@
 
   %h2 管理者コメント
   = form_with model: [@seller, Comment.new], url: admin_seller_comments_path(@seller), method: :post, local: true do |f|
-  .form-group
-    = f.label :body, "コメント"
+    .form-group
+      = f.label :body, "コメント"
       = f.text_area :body, rows: 5, class: "form-control"
 
-.form-actions
+    .form-actions
       = f.submit "コメントを保存", class: "button"
-= link_to "戻る", admin_users_path, class: "button button-secondary"
+    = link_to "戻る", admin_users_path, class: "button button-secondary"

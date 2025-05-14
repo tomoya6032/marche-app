@@ -8,7 +8,7 @@
       .link_inner
         %p プロフィール編集
 
-    = link_to new_event_path do # 追加
+    = link_to new_event_path do
       .link_inner
         %p イベント出店を投稿
 
@@ -25,7 +25,6 @@
       %tr
         %th 住所
         %td= @seller.address
-      
       %tr
         %th 電話番号
         %td= @seller.phone_number
@@ -40,7 +39,6 @@
         %td
           %p= "曜日: #{@seller.business_hours_days}"
           %p= "時間: #{@seller.business_hours_start&.strftime('%H:%M')} - #{@seller.business_hours_end&.strftime('%H:%M')}"
-
       %tr
         %th 過去の出店実績
         %td
@@ -49,7 +47,6 @@
               %p= "#{name}: #{(@seller.past_exhibitions_dates&.split(',')[index])}"
           - else
             %p 設定なし
-
       %tr
         %th SNSアカウント
         %td
@@ -62,19 +59,17 @@
                   -# = image_tag "#{sns_type}.png" # カラーアイコン
           - else
             %p 設定なし
-
       %tr
         %th 画像
         %td
-          - if @seller.images.any?
-            - @seller.images.each do |image|
+          - if @seller.images.attached?
+            - @seller.images.uniq.each do |image|
               = image_tag image
           - else
             = image_tag "no_image_square.jpg"
       %tr
         %th 動画
         %td= @seller.video
-
       %tr
         %th 運営からのコメント
         %td
@@ -83,6 +78,6 @@
               .admin-comment
                 %p.comment-date= l comment.created_at, format: :long
                 %p= comment.body
-                
           - else
             %p まだ運営からのコメントはありません。
+

@@ -27,7 +27,7 @@
     - else
       = link_to "ログイン", new_administrator_session_path
       = link_to "サインアップ", new_administrator_registration_path
-    
+
     - if flash.present?
       .flash
         - flash.each do |message_type, message|

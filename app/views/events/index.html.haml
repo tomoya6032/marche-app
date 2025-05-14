@@ -5,10 +5,10 @@
     .title-content
       %h1 新着イベント一覧
       %p ここにフリマなどのイベント一覧が表示される予定
-    - if seller_signed_in? || host_signed_in?
-      .seller-btn
-        = link_to new_event_path, class: 'new-button' do
-          %p 新規イベントを作成する
+    -# - if seller_signed_in? || host_signed_in?
+    -#   .seller-btn
+    -#     = link_to new_event_path, class: 'new-button' do
+    -#       %p 新規イベントを作成する
 
   = form_with url: events_path, method: :get, class: 'filter-form' do |f|
     .prefectures-field
@@ -30,7 +30,7 @@
       .event-card
         = link_to event_path(event) do
           - if event.images.present? && event.images.attached?
-            .event-image
+            .index-event-image
               = image_tag url_for(event.images.first), class: 'event-image'
           - else
             .event-no-image
@@ -40,7 +40,12 @@
           %h3= link_to event.title, event_path(event)
           %p
             %strong 主催者:
-            = link_to event.seller&.name, seller_path(event.seller) if event.seller
+            - if event&.seller.present?
+              = link_to event.seller.name, seller_path(event.seller)
+            - elsif event&.host.present?
+              = link_to event.host.name, host_path(event.host)
+            - else
+              主催者 未設定
           %p
             %strong 概要:
             = truncate(event.description, length: 50)

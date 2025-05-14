@@ -1,0 +1,50 @@
+%body
+  = render 'header/header' # ヘッダーのパーシャルを呼び出す
+
+- if @facility
+%h1= @facility.name.presence || '名称未設定'
+
+%p= @facility.description.presence || '説明がありません。'
+%p 住所: #{@facility.address.presence || '住所が未設定です。'}
+%p 電話番号: #{@facility.phone_number.presence || '電話番号が未設定です。'}
+%p ウェブサイト: #{link_to @facility.website.presence || 'ウェブサイトが未設定です。', @facility.website, target: "_blank"}
+
+.section
+    %h2 ホスト一覧
+    - if @facility.hosts.present?
+      %table
+        %thead
+          %tr
+            %th 名前
+            %th メールアドレス
+            %th 住所
+        %tbody
+          - @facility.hosts.each do |host|
+            %tr
+              %td= host.name.presence || '名称未設定'
+              %td= host.email.presence || 'メールアドレス未設定'
+              %td= host.address.presence || '住所未設定'
+    - else
+      %p ホストが見つかりません。
+
+  .section
+    %h2 セラー一覧
+    - if @facility.sellers.present?
+      %table
+        %thead
+          %tr
+            %th 名前
+            %th メールアドレス
+            %th 住所
+        %tbody
+          - @facility.sellers.each do |seller|
+            %tr
+              %td= seller.name.presence || '名称未設定'
+              %td= seller.email.presence || 'メールアドレス未設定'
+              %td= seller.address.presence || '住所未設定'
+    - else
+      %p セラーが見つかりません。
+
+= link_to '戻る', facilities_path, class: 'btn btn-secondary'
+- else
+  %p 施設が見つかりません。

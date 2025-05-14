@@ -16,11 +16,43 @@
      
     .field
       = form.label :name, '名前'
-      = form.text_field :name
+      = form.text_area :name
 
     .field
       = form.label :description, '私たちについて'
       = form.text_area :description
+
+    .field
+      = form.label :news, '新着ニュース'
+      = form.text_area :news
+
+    .field
+      = form.label :topics, 'トピックス'
+      = form.text_area :topics
+
+    -# .field
+    -#   = form.label :goods_introduction, '商品紹介'
+    -#   = form.text_area :goods_introduction
+
+    .field
+      = form.label :goods_introduction, '商品紹介1'
+      = form.text_area :goods_introduction_1
+      = form.file_field :goods_image_1
+
+    .field
+      = form.label :goods_introduction_1, '商品紹介2'
+      = form.text_area :goods_introduction_2
+      = form.file_field :goods_image_2
+
+    .field
+      = form.label :goods_introduction_2, '商品紹介3'
+      = form.text_area :goods_introduction_3
+      = form.file_field :goods_image_3
+
+    .field
+      = form.label :goods_introduction_3, '商品紹介4'
+      = form.text_area :goods_introduction_4
+      = form.file_field :goods_image_4
 
     .field
       = form.label :address, '法人概要 - 住所'
@@ -36,14 +68,15 @@
 
     .field
       = form.label :images, '活動風景・施設外観 (複数選択可)'
-      = form.file_field :images, multiple: true
-      - if @host&.images&.attached?
+      - if @host.images.attached?
         .current-images
+          %h2 現在の画像
           - @host.images.each do |image|
             .current-image
-              = image_tag image, size: "100x100"
-              = check_box_tag "host[remove_images][]", image.id, false
-              = label_tag "host_remove_images_#{image.id}", "削除"
+              = image_tag image, size: '100x100'
+              = check_box_tag "host[keep_images][]", image.signed_id, true # 保持用チェックボックス
+              = label_tag "host_keep_images_#{image.signed_id}", '保持'
+      = form.file_field :images, multiple: true, accept: "image/*", value: nil # 新しい画像を追加
 
     -# .field
     -#   = form.label :video, '動画'

@@ -29,6 +29,15 @@
         %th ウェブサイト
         %td= link_to @seller.website, @seller.website, target: "_blank" if @seller&.website
 
+      %tr
+        %th セラー紹介写真
+        %td
+          - if @seller.images.attached?
+            - @seller.images.uniq.each do |image|
+              = image_tag image
+          - else
+            = image_tag "no_image_square.jpg"
+
   %h2 開催したイベント
   - if @seller.events.present?
     %table.event-info-table

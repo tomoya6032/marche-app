@@ -6,8 +6,15 @@ module Admin
       @hosts = Host.all # ホストの一覧表示 (必要であれば)
     end
 
+    def show
+      @host = Host.find(params[:id])
+      @admin_comments = @host.comments.where(commenter_type: 'Administrator').order(created_at: :desc)
+      
+    end
+  
+
     def edit
-@admin_comments = @host.comments.where(admin_id: current_administrator.id).order(created_at: :desc)
+      @admin_comments = @host.comments.where(admin_id: current_administrator.id).order(created_at: :desc)
       # before_action で @host はセット済み
     end
 

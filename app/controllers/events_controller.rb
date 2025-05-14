@@ -4,7 +4,11 @@ class EventsController < ApplicationController
   before_action :set_prefectures, only: [ :index, :new, :edit, :create ]
 
   def index
-    @events = Event.all
+    @events = if params[:filter] == 'recent'
+      Event.order(:start_time) # 開催日の近い順に取得
+    else
+      Event.all # 通常のイベント一覧を取得 (並び順はデフォルト)
+    end
 
     if params[:prefecture].present?
       @events = Event.where(venue: params[:prefecture])

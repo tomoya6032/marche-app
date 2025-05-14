@@ -1,7 +1,6 @@
 class SellersController < ApplicationController
-  before_action :authenticate_seller!, only: [ :edit, :update, :destroy ]
-  before_action :set_seller, only: [:show, :edit, :update, :destroy ]
-  
+  before_action :authenticate_seller!, only: [:edit, :update, :destroy]
+  before_action :set_seller, only: [:show, :edit, :update, :destroy]
 
   def index
     # セラーのマイページの処理
@@ -9,7 +8,6 @@ class SellersController < ApplicationController
     @comments = @seller.comments.order(created_at: :desc) # 管理者からのコメントを取得
     @events = @seller.events.order(created_at: :desc) # ホストが出店したイベントを取得
     @events = @seller.events if @seller # ホストに紐づくイベントを取得する場合
-  
   end
 
   def show
@@ -20,43 +18,42 @@ class SellersController < ApplicationController
   end
 
   def update
-    if @seller.update(seller_params)
-      if params[:seller][:images].present?
-        @seller.image.attach(params[:seller][:image])
+    # 削除対象の画像を処理 (seller_params の更新とは独立して実行)
+    if params[:seller][:keep_images].present?
+      keep_image_ids = params[:seller][:keep_images].map { |signed_id| ActiveStorage::Blob.find_signed(signed_id).id }
+      @seller.images.each do |image|
+        image.purge unless keep_image_ids.include?(image.blob_id)
       end
-      redirect_to sellers_path, notice: "\u30D7\u30ED\u30D5\u30A3\u30FC\u30EB\u3092\u66F4\u65B0\u3057\u307E\u3057\u305F\u3002"
     else
-      render :edit
+      # keep_images が送信されない場合は、既存の画像を全て削除する
+      @seller.images.purge
+    end
+
+    if @seller.update(seller_params.except(:images)) # images パラメータを除外して更新
+      # 新しい画像を添付
+      if params[:seller][:images].present?
+        params[:seller][:images].each do |image|
+          @seller.images.attach(image)
+        end
+      end
+
+      redirect_to sellers_path, notice: 'セラー情報が更新されました。'
+    else
+      flash[:alert] = 'セラー情報の更新に失敗しました。'
+      render :index
     end
   end
 
   def destroy
   end
 
-
-
-  def set_seller
-    @seller = current_seller
-  end
+  private
 
   def set_seller
-    @seller = Seller.find_by(id: params[:id])
-    unless @seller
-      flash[:alert] = "セラーが見つかりませんでした。"
-      redirect_to sellers_path
-    end
+    @seller = Seller.find(params[:id])
   end
-
-  # def set_event
-  #   @event = @seller.events.find(params[:id])
-  # end
 
   def seller_params
-    params.require(:seller).permit(:name, :description, :address, :phone_number, :website, :video, :business_hours_days, :business_hours_start, :business_hours_end,
-    :past_exhibitions_names, :past_exhibitions_dates, sns_accounts_types: [], sns_accounts_urls: [], images: [])
-  end
-
-  def event_params
-    params.require(:event).permit(:title, :description, :start_time, :end_time, :venue, :address, :latitude, :longitude, :capacity, :is_online, :online_url, :is_free, :price, :organizer, :contact_info, :website, :status, :image, :video, :category_id)
+    params.require(:seller).permit(:name, :email, :address, images: [])
   end
 end

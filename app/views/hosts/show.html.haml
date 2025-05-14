@@ -1,63 +1,85 @@
 = render 'header/header' # ヘッダーのパーシャルを呼び出す
 
-.host-lp-page
-  .top-section
-    %h1.host-name= @host.name if @host
-    .top-image
+.host-details
+  .host-header
+    .host-identity
+      %h1.host-name-with-breaks= @host.name.presence || '名称未設定'
+      
       - if @host&.top_image&.attached?
-        = image_tag @host.top_image
-      - else
-        %p トップ画像はまだ設定されていません。
-    = link_to 'プロフィールを編集', edit_host_path(@host), class: 'button edit-button' if @host
+        .top-image-container
+          = image_tag @host.top_image, class: 'top-image'
+    .host-contact-info
+      .contact-items
+        %p.host-website= "ウェブサイト: #{link_to @host.website.presence || '未設定', @host.website, target: '_blank'}"
+        %p.host-address= "住所: #{@host.address.presence || '未設定'}"
+        %p.host-phone= "電話番号: #{@host.phone_number.presence || '未設定'}"
+     
 
-  .about-us-section
+  .content-grid
+    .left-column
+      .news-section
+        %h2 新着ニュース
+        %p= simple_format(@news_text.presence || '新しいニュースはありません。')
+      
+    .right-column
+      .topics-section
+        %h2 トピックス
+        %p= simple_format(@topics_text.presence || 'トピックスはありません。')
+
+  .description-section
     %h2 私たちについて
-    .host-description= @host.description if @host
+    %p= simple_format(@host.description.presence || 'トピックスはありません。')
 
-  .company-info-section
-    %h2 法人の概要
-    %table.company-info-table
-      %tbody
-        %tr
-          %th 住所
-          %td= @host.address if @host
-        %tr
-          %th 電話番号
-          %td= @host.phone_number if @host
-        %tr
-          %th ウェブサイト
-          %td= link_to @host.website, @host.website, target: "_blank" if @host&.website
+  .goods-section
+    %h2 商品紹介
+    .goods-list
+      -#   .good-item
+      -#     %h3 商品説明
+      -#     %p= @host.goods_introduction.presence || '商品紹介はありません。'
 
-  .access-map-section
-    %h2 アクセス
-    .map-container
-      - if @host&.address.present?
-        %p= "地図は#{link_to @host.address, "https://www.google.com/maps/search?q=#{@host.address}", target: "_blank"}で確認できます。"
-      - else
-        %p 住所が設定されていません。
+      .good-item
+        %h3 商品紹介①
+        - if @host.goods_image_1.attached?
+          = image_tag @host.goods_image_1, class: 'good-image'
+        %p= simple_format(@host.goods_introduction_1.presence || '商品紹介はありません。')
 
-  .gallery-section
-    %h2 活動風景・施設外観
-    .image-gallery
-      - if @host&.images&.attached?
-        .row
-          - @host.images.each do |image|
-            .col-md-3.gallery-image
-              = image_tag image, style: "width: 100%; height: auto;"
-      - else
-        %p 画像はまだ登録されていません。
+      .good-item
+        %h3 商品紹介②
+        - if @host.goods_image_2.attached?
+          = image_tag @host.goods_image_2, class: 'good-image'
+        %p= simple_format(@host.goods_introduction_2.presence || '商品紹介はありません。')
 
-  %h2 開催したイベント
-  - if @host.events.present?
-    %table.event-info-table
-      %thead
-        %tr
-          %th イベント名
-          %th 開催日
-      %tbody
-        - @host.events.each do |event|
-          %tr
-            %td= link_to event.title, event_path(event)
-            %td= event.start_time.strftime('%Y/%m/%d') if event.start_time
-  - else
-    %p このセラーはまだイベントを開催していません。
+      .good-item
+        %h3 商品紹介③
+        - if @host.goods_image_3.attached?
+          = image_tag @host.goods_image_3, class: 'good-image'
+        %p= simple_format(@host.goods_introduction_3.presence || '商品紹介はありません。')
+
+      .good-item
+        %h3 商品紹介④
+        - if @host.goods_image_4.attached?
+          = image_tag @host.goods_image_4, class: 'good-image'
+        %p= simple_format(@host.goods_introduction_4.presence || '商品紹介はありません。')
+
+  .host-images
+    %h2 画像ギャラリー
+    - if @host.images.attached?
+      .image-gallery
+        - @host.images.each_with_index do |image, index|
+          = image_tag image, class: 'host-image', style: "order: #{index};"
+    - else
+      %p 画像がありません。
+
+    -#   .host-video
+    -#     %h2 動画
+    -#     - if @host.video.attached?
+    -#       .video-container
+    -#         = video_tag @host.video, controls: true, class: 'host-video'
+    -#     - else
+    -#       %p 動画がありません。
+
+  .contact-section
+    %h2 コンタクト
+    
+    %p.contact-message お問い合わせはこちらから:
+    -# = link_to 'お問い合わせフォーム', contact_path, class: 'contact-link'

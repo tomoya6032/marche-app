@@ -1,0 +1,41 @@
+= render 'header/header' # ヘッダーのパーシャルを呼び出す
+
+.admin-edit-page
+  %h1 ホストアカウント詳細ページ
+
+  %table.admin-user-info
+    %tbody
+      %tr
+        %th 名前
+        %td= @host.name if @host.respond_to?(:name) # name属性が存在する場合のみ表示
+
+      %tr
+        %th メール
+        %td= @host.email
+
+      %tr
+        %th 住所
+        %td= @host.address
+
+      %tr
+        %th 電話番号
+        %td= @host.phone_number
+
+      %tr
+        %th ウェブサイト
+        %td= link_to @host.website, @host.website, target: "_blank" if @host.website.present?
+
+    -#   %tr
+    -#     %th 運営からコメント
+    -#     %td
+    -#       - if @admin_comments.present?
+    -#         %ul
+    -#           - @admin_comments.each do |comment|
+    -#             %li
+    -#               %strong= comment.created_at.strftime('%Y/%m/%d %H:%M')
+    -#               = ": #{comment.body}"
+    -#       - else
+    -#         %p コメントはまだありません。
+
+
+%p= link_to "管理者コメントはこちら", edit_admin_host_path

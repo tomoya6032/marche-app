@@ -14,7 +14,7 @@ class Seller < ApplicationRecord
   attribute :name, :string
   attribute :description, :text
   attribute :address, :string
-  validates :email, presence: true, uniqueness: true
+    validates :email, presence: true, uniqueness: true
 
   attribute :phone_number, :string
   attribute :website, :string

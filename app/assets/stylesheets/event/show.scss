@@ -1,0 +1,86 @@
+body {
+    width: 95%;
+    margin: auto;
+
+}
+
+.event-no-image {
+//   width: 300px; /* 他の画像と同じ幅にする */
+  height: auto; /* 高さを自動調整 */
+  border-radius: 8px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+
+}
+  
+//   .event-image:nth-child(5n) {
+//     margin-right: 0;
+//   }
+  
+img {
+
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+
+.event-images {
+    display: flex;
+    flex-wrap: wrap; /* ← この行を追加 */
+    margin: auto;
+    margin: 10px;
+    // height: auto; /* 高さを自動調整 */
+    border-radius: 8px;
+
+    justify-content: center;
+    // align-items: center;
+
+}
+
+.event-image {
+    // width: 100%;
+    // height: auto; /* 高さを自動調整 */
+    // margin: 10px; /* 画像下の余白を調整 */
+    // padding: 20px;
+    border-radius: 8px;
+    // object-fit: contain; /* 縦横比を維持して収まるように表示 */
+    // box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* 影を追加 */
+    img {
+        width: 300px;
+        height: auto; /* 高さを自動調整 */
+        text-align: center;
+        margin: 20px;
+       }
+}
+
+table.event-details {
+    width: 100%;
+    border-collapse: collapse;
+    margin-bottom: 20px;
+}
+  
+table.event-details th,
+table.event-details td {
+  border: 1px solid #ddd;
+  padding: 8px;
+  text-align: left;
+
+}
+  
+table.event-details th {
+  width: 20%;
+  font-weight: bold;
+  background-color: #f2f2f2;
+}
+
+.edit-links {
+  margin-top: 20px;
+}
+
+.edit-links a {
+  padding: 8px 15px;
+
+  border-radius: 5px;
+  margin-right: 10px;
+}
+

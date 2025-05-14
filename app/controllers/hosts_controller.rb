@@ -1,37 +1,44 @@
 class HostsController < ApplicationController
-  before_action :authenticate_host!
+  before_action :authenticate_host!, only: [ :edit, :update, :destroy, :new_event, :create_event]
   before_action :set_host, only: [:show, :edit, :update, :destroy, :new_event, :create_event]
   before_action :set_event, only: [:edit_event, :update_event, :destroy_event]
 
   def index
-     @host = current_host
-     @comments = @host.comments.order(created_at: :desc) # 管理者からのコメントを取得
-      @events = @host.events.order(created_at: :desc) # ホストが出店したイベントを取得
+        @host = current_host
+    @comments = @host.comments.order(created_at: :desc) # 管理者からのコメントを取得
+@events = @host.events.order(created_at: :desc) # ホストが出店したイベントを取得
      @events = @host.events if @host # ホストに紐づくイベントを取得する場合
   end
 
   def show
+@topics_text = @host.topics # トピックスのテキストを取得
+    @news_text = @host.news # 新着ニュースのテキストを取得
+    @goods_introduction_text = @host.goods_introduction # 商品紹介のテキストを取得
   end
 
   def edit
-  
+    
   end
   def update
-    if @host.update(host_params)
-      # プロフィールの基本情報を更新成功した場合の処理
-      if params[:host][:remove_top_image] == '1'
-        @host.top_image.purge
-      end
+    
+    # トップ画像の削除
+    if params[:remove_top_image] == '1'
+      @host.top_image.purge
+    end
 
-      if params[:host][:remove_images].present?
-        params[:host][:remove_images].each do |image_id|
-          if image = @host.images.find_by(id: image_id)
-            image.purge
-          end
-        end
+    # 削除する画像の処理 (host_params の更新とは独立して実行)
+    if params[:host][:keep_images].present?
+      keep_image_ids = params[:host][:keep_images].map { |signed_id| ActiveStorage::Blob.find_signed(signed_id).id }
+      @host.images.each do |image|
+        image.purge unless keep_image_ids.include?(image.blob_id)
       end
+    else
+      # keep_images が送信されない場合は、既存の画像を全て削除する
+      @host.images.purge
+    end
 
-      # 新しい画像が送信されていれば添付する
+    if @host.update(host_params.except(:images))
+       # 新しい画像の添付処理
       if params[:host][:images].present?
         params[:host][:images].each do |image|
           @host.images.attach(image)
@@ -40,7 +47,7 @@ class HostsController < ApplicationController
 
       redirect_to host_path(@host), notice: 'プロフィールを更新しました。'
     else
-      # プロフィールの基本情報更新に失敗した場合の処理
+# プロフィールの基本情報更新に失敗した場合の処理
       render :edit
     end
   end
@@ -85,7 +92,9 @@ class HostsController < ApplicationController
   private
 
   def set_host
-    @host = current_host
+    @host = Host.find(params[:id])
+  rescue ActiveRecord::RecordNotFound
+    redirect_to hosts_path, alert: 'ホストが見つかりませんでした。'
   end
 
   def set_event
@@ -93,7 +102,7 @@ class HostsController < ApplicationController
   end
 
   def host_params
-    params.require(:host).permit(:name, :email, :description, :address, :phone_number, :website, :top_image, images: [])
+    params.require(:host).permit(:name, :email, :description, :address, :phone_number, :website, :top_image, :news, :topics, :goods_introduction, images: [])
   end
 
   def event_params
@@ -101,4 +110,15 @@ class HostsController < ApplicationController
   end
 
 
+    def host_params
+  params.require(:host).permit(
+    :name, :email, :description, :address, :phone_number, :website, :top_image, :news, :topics, :goods_introduction,
+    :goods_introduction,
+:goods_introduction_1, :goods_image_1,
+    :goods_introduction_2, :goods_image_2,
+    :goods_introduction_3, :goods_image_3,
+    :goods_introduction_4, :goods_image_4,
+    images: []
+  )
 end
+end      

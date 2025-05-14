@@ -1,13 +1,13 @@
 = render 'header/header' # ヘッダーのパーシャルを呼び出す
 
-%h1 新しいイベントを作成。
+%h1 ホストの新しいイベントを作成
 
 - if @event.errors.any?
   %ul.error-messages
     - @event.errors.full_messages.each do |message|
       %li= message
 
-= form_with model: @event, url: host_create_event_path(@host), local: true, class: 'event-form' do |f|
+= form_with model: [@event], url: host_events_path(@host), local: true, class: 'event-form' do |f|
   .field
     = f.label :title, 'タイトル'
     = f.text_field :title
@@ -20,10 +20,31 @@
   .datetime-fields
     .field
       = f.label :start_time, '開始日時'
-      = f.datetime_select :start_time, class: 'datetime-select'
+      .datetime-select-container
+        = f.select :start_time_year, options_for_select((Time.zone.now.year-10..Time.zone.now.year+10)), class: 'date-select'
+        %span 年
+        = f.select :start_time_month, options_for_select((1..12)), class: 'date-select'
+        %span 月
+        = f.select :start_time_day, options_for_select((1..31)), class: 'date-select'
+        %span 日
+        = f.select :start_time_hour, options_for_select((0..23)), class: 'date-select'
+        %span 時
+        = f.select :start_time_minute, options_for_select((0..59)), class: 'date-select'
+        %span 分
     .field
       = f.label :end_time, '終了日時'
-      = f.datetime_select :end_time, class: 'datetime-select'
+      .datetime-select-container
+        = f.select :end_time_year, options_for_select((Time.zone.now.year-10..Time.zone.now.year+10)), class: 'date-select'
+        %span 年
+        = f.select :end_time_month, options_for_select((1..12)), class: 'date-select'
+        %span 月
+        = f.select :end_time_day, options_for_select((1..31)), class: 'date-select'
+        %span 日
+        = f.select :end_time_hour, options_for_select((0..23)), class: 'date-select'
+        %span 時
+        = f.select :end_time_minute, options_for_select((0..59)), class: 'date-select'
+        %span 分
+  
   .prefectures-field
     .field
       = f.label :venue, '開催都道府県'
@@ -59,6 +80,6 @@
     = f.label :video, '動画URL'
     = f.text_field :video
   .actions
-    = f.submit '作成', class: 'btn btn-primary'
+    = f.submit '作成'
 
 = link_to '戻る', hosts_path, class: 'btn btn-secondary'

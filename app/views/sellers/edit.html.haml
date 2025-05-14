@@ -3,7 +3,7 @@
 .seller-edit
   %h1 プロフィール編集
 
-  = form_with model: @seller, local: true do |form|
+  = form_with model: @seller, local: true, multipart: true do |form|
     .field
       = form.label :name, 'アカウント名'
       = form.text_field :name
@@ -22,9 +22,20 @@
     .field
       = form.label :website, 'ウェブサイト'
       = form.text_field :website
+
     .field
-      = form.label :image, '画像'
-      = form.file_field :images, multiple: true # 複数のファイルを選択できるようにする
+      = form.label :images, '画像'
+      -# 既存の画像保持チェックボックス
+      - if @seller.images.attached?
+        .current-images
+          %h2 既存の画像
+          - @seller.images.each do |image|
+            .current-image
+              = image_tag image, size: "100x100"
+              = check_box_tag "seller[keep_images][]", image.signed_id, true # デフォルトでチェックなし (削除する場合にチェック)
+              = label_tag "seller_keep_images_#{image.signed_id}", "保持"
+      = form.file_field :images, multiple: true, accept: "image/*", value: nil # 新しい画像を追加
+    
     .field
       = form.label :video, '動画'
       = form.text_area :video

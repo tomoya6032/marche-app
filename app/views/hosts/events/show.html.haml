@@ -9,7 +9,7 @@
     - if @event.images.attached?
       - @event.images.uniq.each do |image| # 重複を防ぐために uniq を使用
         .event-image
-          = image_tag image
+          = image_tag image, size: "300x200"
     - else
       .event-no-image
         = image_tag "no_image_square.jpg", class: 'event-no-image' # デフォルト画像を表示
