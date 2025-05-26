@@ -1,6 +1,6 @@
 module Admin
   class AdminSellersController < ApplicationController
-    before_action :set_seller, only: [ :index, :edit, :update, :destroy ]
+    before_action :set_seller, only: [ :index, :edit, :update, :destroy, :toggle_editable]
 
     def index
       @sellers = Seller.all
@@ -29,7 +29,20 @@ module Admin
       redirect_to admin_sellers_path, notice: "\u30BB\u30E9\u30FC\u3092\u524A\u9664\u3057\u307E\u3057\u305F\u3002"
     end
 
+    def toggle_editable
+      @seller = Seller.find(params[:id])
+      if @seller.update(editable: params[:editable] == "1") # チェックボックスの値を確認
+        redirect_to admin_users_path, notice: "編集可能状態を更新しました。"
+      else
+        redirect_to admin_users_path, alert: "編集可能状態の更新に失敗しました。"
+      end
+    end
+
+    
+
     private
+
+   
 
     def set_seller
       @seller = Seller.find(params[:id])

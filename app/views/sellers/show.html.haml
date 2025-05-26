@@ -1,7 +1,7 @@
 = render 'header/header' # ヘッダーのパーシャルを呼び出す
 
 .seller-details
-  %h1 セラー詳細ページ
+  %h1 個人ショップ詳細ページ
 
   %table.seller-info-table
     %tbody
@@ -30,7 +30,7 @@
         %td= link_to @seller.website, @seller.website, target: "_blank" if @seller&.website
 
       %tr
-        %th セラー紹介写真
+        %th ショップ紹介写真
         %td
           - if @seller.images.attached?
             - @seller.images.uniq.each do |image|

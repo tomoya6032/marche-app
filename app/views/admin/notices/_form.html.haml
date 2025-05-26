@@ -1,0 +1,25 @@
+
+
+
+= form_with model: [:admin, @notice], local: true do |form|
+  - if @notice.errors.any?
+    #error_explanation
+      %h2= pluralize(@notice.errors.count, "error") + " prohibited this notice from being saved:"
+      %ul
+        - @notice.errors.full_messages.each do |message|
+          %li= message
+
+  .form-group
+    = form.label :title, "タイトル"
+    = form.text_field :title, class: 'form-control'
+
+  .form-group
+    = form.label :content, "内容"
+    = form.text_area :content, class: 'form-control'
+
+  .form-group
+    = form.label :published_at, "公開日時"
+    = form.datetime_select :published_at, class: 'form-control'
+
+  .actions
+    = form.submit class: 'btn btn-primary'

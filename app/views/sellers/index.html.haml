@@ -1,21 +1,37 @@
 = render 'header/header' # ヘッダーのパーシャルを呼び出す
 
 .seller-mypage
-  %h1 セラーマイページ
+  %h1 個人ショップマイページ
 
   .seller-btn
-    = link_to edit_seller_path(@seller) do
-      .link_inner
-        %p プロフィール編集
+    - if @seller.editable
+      = link_to edit_seller_path(@seller) do
+        .link_inner
+          %p プロフィール編集
 
-    = link_to new_event_path do
-      .link_inner
+      = link_to new_event_path(@seller), class: 'new-button' do
         %p イベント出店を投稿
 
   .seller-profile-info
-    %h2 セラープロフィール情報
+    %h2 ショッププロフィール情報
 
     %table
+      %tr
+        %th アカウント取得日
+        %td
+          .acccount-date
+            %span= @seller.created_at.strftime('%Y/%m/%d') if @seller.created_at
+            .free-acccount-date
+            - if @seller.created_at
+              - remaining_days = 21 - (Date.today - @seller.created_at.to_date).to_i
+              - if remaining_days > 0
+                %span.text-muted 無料アカウント期間：残り#{remaining_days}日
+              - else
+                %span.text-muted 無料アカウント期間は終了しました。決済登録をお願いします。
+                .payment
+                  %form{ action: "https://www.kaihipay.jp/forms?form_code=7064409617634745", method: "get", target: "_blank" }
+                    = link_to "決済登録", "https://www.kaihipay.jp/forms?form_code=7064409617634745", class: "payment-button", target: "_blank"
+      
       %tr
         %th アカウント名
         %td= @seller.name
@@ -81,3 +97,5 @@
           - else
             %p まだ運営からのコメントはありません。
 
+
+= render 'footer/footer'

@@ -6,8 +6,12 @@ class Admin::UsersController < Admin::BaseController
     @total_hosts = Host.count
     @recent_sellers = Seller.order(created_at: :desc).limit(5)
     @recent_hosts = Host.order(created_at: :desc).limit(5)
-@total_events = Event.count
+    @total_events = Event.count
     @recent_events = Event.includes(:seller, :host).order(created_at: :desc).limit(5) # セラーとホストを含めて取得
+    @total_notices = Notice.count
+    @recent_notices = Notice.order(published_at: :desc).limit(10)
+    @notices = Notice.order(published_at: :desc).limit(10) # 最新5件のお知らせを取得
+    # 他のデータ取得処理...
   end
 
   def edit_seller

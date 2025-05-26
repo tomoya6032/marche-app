@@ -47,6 +47,7 @@ class SellersController < ApplicationController
   def destroy
   end
 
+
   private
 
   def set_seller

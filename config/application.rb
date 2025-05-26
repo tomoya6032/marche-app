@@ -31,7 +31,9 @@ module Marche
     # These settings can be overridden in specific environments using the files
     # in config/environments, which are processed later.
     #
-    # config.time_zone = "Central Time (US & Canada)"
+    # タイムゾーンを設定
+    config.time_zone = 'Tokyo' # 日本時間に設定
+    config.active_record.default_timezone = :local # データベースの時間もローカル時間に合わせる
     # config.eager_load_paths << Rails.root.join("extras")
   end
 end

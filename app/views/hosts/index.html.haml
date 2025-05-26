@@ -1,25 +1,37 @@
 = render 'header/header' # ヘッダーのパーシャルを呼び出す
 
 .host-mypage
-  %h1 ホストマイページ
-
-
-  
+  %h1 ショップマイベージ：プロフィール情報
 
   .host-btn
-    = link_to edit_host_path(@host) do
-      .link_inner
-        %p プロフィール編集
+    - if @host.editable
+      = link_to edit_host_path(@host) do
+        .link_inner
+          %p プロフィール編集
 
-    
-
-    = link_to new_host_event_path(@host), class: 'new-button' do
-      %p 新規イベントを作成する
+      = link_to new_host_event_path(@host), class: 'new-button' do
+        %p 新規イベントを作成する
 
   .host-profile-info
-    %h2 ホストプロフィール情報
+    %h2 
 
     %table
+      %tr
+        %th アカウント取得日
+        %td
+          .acccount-date
+            %span= @host.created_at.strftime('%Y/%m/%d') if @host.created_at
+            .free-acccount-date
+            - if @host.created_at
+              - remaining_days = 21 - (Date.today - @host.created_at.to_date).to_i
+              - if remaining_days > 0
+                %span.text-muted 無料アカウント期間：残り#{remaining_days}日
+              - else
+                %span.text-muted 無料アカウント期間は終了しました。決済登録をお願いします。
+                .payment
+                  %form{ action: "https://www.kaihipay.jp/forms?form_code=9300764061642479", method: "get", target: "_blank" }
+                    = link_to "決済登録", "https://www.kaihipay.jp/forms?form_code=9300764061642479", class: "payment-button", target: "_blank"
+        
       %tr
         %th アカウント名
         %td= @host.name
@@ -93,7 +105,9 @@
             = image_tag "no_image_square.jpg"
       %tr
         %th 動画
-        %td= @host.video
+        -# %td= @host.video
+        %td
+          %p comming soon...
 
       %tr
         %th 運営からのコメント
@@ -125,3 +139,5 @@
                 = link_to '削除', host_event_path(@host, event), method: :delete, data: { confirm: '本当に削除しますか？' }, class: 'button-delete'
     - else
       %p イベントがありません。
+
+= render 'footer/footer'

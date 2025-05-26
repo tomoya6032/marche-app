@@ -1,5 +1,7 @@
 # app/controllers/admin/dashboard_controller.rb (例)
 class Admin::DashboardController < Admin::BaseController # Admin::BaseController が存在すると仮定
+  before_action :authenticate_administrator!
+  
   def index
     @total_sellers = Seller.count
     @total_hosts = Host.count

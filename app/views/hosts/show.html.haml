@@ -5,19 +5,21 @@
     .host-identity
       %h1.host-name-with-breaks= @host.name.presence || '名称未設定'
       
-      - if @host&.top_image&.attached?
-        .top-image-container
-          = image_tag @host.top_image, class: 'top-image'
+      
     .host-contact-info
       .contact-items
         %p.host-website= "ウェブサイト: #{link_to @host.website.presence || '未設定', @host.website, target: '_blank'}"
-        %p.host-address= "住所: #{@host.address.presence || '未設定'}"
-        %p.host-phone= "電話番号: #{@host.phone_number.presence || '未設定'}"
-     
+        %p.host-address= "所在地: #{@host.address.presence || '未設定'}"
+        %p.host-phone= "TEL: #{@host.phone_number.presence || '未設定'}"
+  
+  .host-top-image
+  - if @host&.top_image&.attached?
+    .top-image-container
+      = image_tag @host.top_image, class: 'host-top-image'
 
   .content-grid
     .left-column
-      .news-section
+      .host-news-section
         %h2 新着ニュース
         %p= simple_format(@news_text.presence || '新しいニュースはありません。')
       
@@ -83,3 +85,5 @@
     
     %p.contact-message お問い合わせはこちらから:
     -# = link_to 'お問い合わせフォーム', contact_path, class: 'contact-link'
+
+= render 'footer/footer'

@@ -1,0 +1,51 @@
+= render 'header/header' # ヘッダーのパーシャルを呼び出す
+
+.sign-in-page
+  .sign-in-container
+    .sign-in-header
+      %h2.sign-in-title 会員の皆さま<br>おかえりなさい
+      %p.sign-in-subtitle あなたや事業所のマルシェを創りましょう。
+
+    .sign-in-form-wrapper
+      = form_for(resource, as: resource_name, url: session_path(resource_name), html: { class: 'sign-in-form' }) do |f|
+        .form-group
+          = f.label :email, 'メールアドレス'
+          = f.email_field :email, autofocus: true, autocomplete: 'email', class: 'form-control', placeholder: 'your@example.com'
+
+        .form-group
+          = f.label :password, 'パスワード'
+          = f.password_field :password, autocomplete: 'current-password', class: 'form-control', placeholder: '******'
+
+        - if devise_mapping.rememberable?
+          .form-group.checkbox-group
+            = f.check_box :remember_me, class: 'form-check-input'
+            = f.label :remember_me, 'ログイン状態を維持する', class: 'form-check-label'
+
+        .form-actions
+          = f.submit 'ログイン', class: 'btn btn-primary btn-block'
+
+    .sign-in-footer
+      .other-links
+        = render 'sellers/shared/links'
+
+      .social-login
+        -# %p.social-login-text ソーシャルアカウントでログイン
+        .social-buttons
+          -# ここにSNSログインボタンを配置
+          -# 例: = link_to 'Googleでログイン', user_google_oauth2_omniauth_authorize_path, class: 'btn btn-social-google'
+          -# 例: = link_to 'X (旧Twitter) でログイン', user_twitter_omniauth_authorize_path, class: 'btn btn-social-twitter'
+          -# %button.btn.btn-social.btn-google
+          -#   %i.fab.fa-google
+          -#   Googleでログイン
+          -# %button.btn.btn-social.btn-x
+          -#   %i.fab.fa-x-twitter
+          -#   X (旧Twitter) でログイン
+          -# Font Awesome などのアイコンライブラリを導入している場合
+
+      .no-account
+        %p アカウントをお持ちでないですか？
+        = link_to new_registration_path(resource_name), class: 'btn btn-secondary' do
+          %span.link_inner
+            %h3 新規アカウント作成（出店者さま向け）
+
+= render 'footer/footer'

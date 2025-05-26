@@ -1,6 +1,7 @@
 // 全体のスタイル
 .admin-section {
   padding: 20px;
+  
   font-family: Arial, sans-serif;
 
   h1 {
@@ -138,14 +139,15 @@
   .form-actions {
     display: flex;
     gap: 10px;
-
+    
     .button {
-      padding: 10px 20px;
+      
+      padding: 10px;
       border-radius: 5px;
       text-decoration: none;
       color: white;
       background-color: #007bff;
-
+      text-align: center;
       &:hover {
         background-color: #0056b3;
       }
@@ -159,5 +161,9 @@
       }
     }
   }
+}
+
+.actions {
+  margin: 10px;
 }
 

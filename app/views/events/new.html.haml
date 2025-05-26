@@ -1,6 +1,6 @@
 = render 'header/header' # ヘッダーのパーシャルを呼び出す
 
-%h1 セラーの新しいイベントを作成
+%h1 個人ショップの新しいイベントを作成
 
 - if @event.errors.any?
   %ul.error-messages
@@ -76,9 +76,9 @@
   .field
     = f.label :website, 'ウェブサイト'
     = f.text_field :website
-  .field
-    = f.label :video, '動画URL'
-    = f.text_field :video
+  -# .field
+  -#   = f.label :video, '動画URL'
+    -# = f.text_field :video
   .actions
     = f.submit '作成'
 

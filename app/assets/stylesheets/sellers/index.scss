@@ -52,7 +52,7 @@
         color: #555;
   
         a {
-          color: #007bff;
+          color: #ffffff;
           text-decoration: none;
   
           &:hover {
@@ -112,14 +112,14 @@
       margin-bottom: 20px;
   
       a {
-        display: block;
+        // display: block;
         text-decoration: none;
         border-radius: 5px;
         overflow: hidden;
-        box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+        // box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
   
         .link_inner {
-          background-color: #ffd8b1;
+          background-color: #66aaff;
           color: white;
           padding: 10px 15px;
           text-align: center;
@@ -131,9 +131,33 @@
           }
   
           &:hover {
-            background-color: #f6b06b;
+            background-color: #3c93df;
           }
         }
       }
+
+      .new-button {
+        
+      }
     }
   }
+
+  .acccount-date {
+    display: flex;
+    justify-content: space-between;
+   
+    align-items: center;
+    
+    span {
+      font-size: 14px; // フォントサイズを調整
+      color: #555; // テキストの色をミュートカラーに設定
+      
+    }
+  
+    .text-muted {
+      font-style: italic; // 無料アカウント期間のテキストを斜体に
+      color: #999; // テキストの色を薄いグレーに
+      
+    }
+    
+}

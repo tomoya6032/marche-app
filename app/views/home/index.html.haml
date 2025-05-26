@@ -4,53 +4,79 @@
   .top-container
     .top-container-message
       %h1 ようこそマルシェへ
-      %p 私たちのマルシェは、地域と人々をつなぐ出会いの場です。
-      %p イベントを通じて、楽しいお出かけと思い出を作りませんか？
-      %p お出かけをして楽しい出会いを作ろう: ... 
+      %p 私たちのマルシェは、地域と人々をつなぐ<br>出会いの場です。
+      %p イベントを通じて、楽しいお出かけと<br>思い出を作りませんか？
+      %p 楽しい出会いを見つけにいこう！
 
 
     .top-btn-container
       .event-container 
         .event-btn
-          = link_to events_path, class: 'btn btn-primary' do
+          = link_to events_path, class: 'btn-primary' do
             .link_inner
               %h3 イベント一覧
 
       .facility-container 
         .facility-btn
-          = link_to facilities_path, class: 'btn btn-secondary' do
+          = link_to facilities_path, class: 'btn-secondary' do
             .link_inner
-              %h3 出展施設一覧
+              %h3 出店一覧
 
       .upcoming-events-container
         .upcoming-events-button
-          = link_to events_path(filter: 'recent'), class: 'btn btn-secondary' do
+          = link_to events_path(filter: 'recent'), class: 'btn-secondary' do
             .link_inner
               %h3 開催直近のイベント
 
   
-  
-      
-  .top-image
-    .top-slider
-      %img(src="#{asset_path('slider1.png')}" alt="スライダー1")
-      %img(src="#{asset_path('slider2.png')}" alt="スライダー2")
-      %img(src="#{asset_path('slider3.png')}" alt="スライダー3")
-    .slider-navigation
-      %button.prev 前へ
-      %button.next 次へ
+  .pickup-contaner
+    %h2 注目イベントピックアップ
+  .pickup-top
+    .pickup-slider
+      - if @featured_events.present?
+        - @featured_events.each do |event|
+          .event-item
+            - if event.images.present? && event.images.attached?
+              = link_to event_path(event) do
+                = image_tag event.images.first, alt: event.title, class: 'event-image'
+            - else
+              .event-no-image
+                = image_tag "no_image_square.jpg", alt: "no image", class: 'event-no-image'
+            %h3
+              = link_to event.title, event_path(event)
+            %p 開催日
+            - if event.start_time.present?
+              = event.start_time.strftime('%Y/%m/%d')
+            - else
+              未定
+            %p 詳細
+            = truncate(event.description, length: 50)
+      - else
+        %p 注目イベントは現在ありません。
 
-    .column-section 
+    = paginate @featured_events
+
+   
+  .news-section
+    %h2 お知らせ   
+  .column-section 
     .section.news
-      %h2 お知らせ
+      %h3 NEWS
       %ul
-        %li
-          %a(href="#") イベント開催日変更のお知らせ
-        %li
-          %a(href="#") 新規出店者情報
-        %li
-          %a(href="#") 悪天候による開催について
-
+        - if @notices.present?
+          - @notices.each do |notice|
+            %li
+              .news-contaier 
+                .news-contaier-date
+                  = notice.published_at.strftime('%Y/%m/%d') if notice.published_at
+                %strong= notice.title
+              -# %small 公開日時: 
+              
+              %p= truncate(notice.content, length: 100) # 内容を100文字に切り詰めて表示
+              
+        - else
+          %p お知らせはありません。
+        
     .sns-container
       .sns-inner 
         .h3 インスタグラムセクション
@@ -75,51 +101,44 @@
         - @recent_events.each do |event|
           .event-item
             - if event.images.present? && event.images.attached?
-              = image_tag event.images.first, alt: event.title, class: 'event-image'
+              = link_to event_path(event) do
+                = image_tag event.images.first, alt: event.title, class: 'event-image'
             - else
               .event-no-image
                 = image_tag "no_image_square.jpg", alt: "no image", class: 'event-no-image'
-            %h3= event.title
-            %p 開催日:
+            %h3
+              = link_to event.title, event_path(event)
+            %p 開催日
             - if event.start_time.present?
               = event.start_time.strftime('%Y/%m/%d')
             - else
               未定
-            %p 詳細:
+            %p 詳細
             = truncate(event.description, length: 50)
       - else
         %p 近日開催のイベントはありません。
 
   .section.recruitment
-    %h2 出展者募集
+    %h2 出店者募集!! 
     .recruitment-content
-  %img(src="#{asset_path('mimamorifavicon.png')}" alt="出店者")
--# %img{ src: asset_path('slider1.png'), alt: '出展者募集' }
-      %a.button{ href: "#" } 出展者募集中！
+      %p 出店者を募集しています。事業所のイベントを告知したい方や出店する情報を告知したい方は以下のリンクから告知要項ををご覧ください。
+      .recruitment-link
+        = link_to recruitment_path do
+          出店者募集要項へ
+    .recruitment-image
+      = image_tag "slider1.png", alt: "出店者募集のイメージ", class: "recruitment-image"
+      
 
   .section.description
-    %h2 マルシェについて
+    %h2 つながるマルシェについて
     .marche-description
       %p 私たちのマルシェは、地域と人々をつなぐ出会いの場です。イベントを通じて、楽しいお出かけと思い出を作りませんか？
-      %p イベントと参加者のマッチング: ...
-      %p お出かけをして楽しい出会いを作ろう: ...
+      %p イベントに出店する事業所さまや個人事業主、団体の方々を募集しています。
+      出店することで、地域の人々とつながり、新しい出会いを楽しむことができます。
+      %p このマルシェに掲載されているお店に出かけてみましょう。
+      楽しいイベントが開催されています。きっと新しい発見が見つかるはずです。
 
   = render 'footer/footer'
   
   
-  .script(src="script.js")
-  
-:javascript
-  $(document).ready(function(){
-    $('.slider').slick({
-      autoplay: true, // 自動的に動き出すか
-      autoplaySpeed: 3000, // 次のスライドに切り替わる待ち時間
-      speed: 1500, // スライドの動きのスピード
-      infinite: true, // スライドをループさせるか
-      slidesToShow: 1, // スライドを画面に1枚見せる
-      slidesToScroll: 1, // 1回のスクロールで1枚の写真を移動して見せる
-      arrows: false, // 画像移動用の矢印の表示
-      dots: true // 下部ドットナビゲーションの表示
-    });
-    });
 

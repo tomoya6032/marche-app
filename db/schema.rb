@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[8.0].define(version: 2025_05_10_121528) do
+ActiveRecord::Schema[8.0].define(version: 2025_05_23_232557) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "pg_catalog.plpgsql"
 
@@ -107,6 +107,7 @@ ActiveRecord::Schema[8.0].define(version: 2025_05_10_121528) do
     t.datetime "updated_at", null: false
     t.string "prefecture"
     t.bigint "host_id"
+    t.boolean "is_featured", default: false, null: false
     t.index ["facility_id"], name: "index_events_on_facility_id"
     t.index ["host_id"], name: "index_events_on_host_id"
     t.index ["seller_id"], name: "index_events_on_seller_id"
@@ -159,9 +160,18 @@ ActiveRecord::Schema[8.0].define(version: 2025_05_10_121528) do
     t.text "goods_introduction_2"
     t.text "goods_introduction_3"
     t.text "goods_introduction_4"
+    t.boolean "editable", default: true
     t.index ["email"], name: "index_hosts_on_email", unique: true
     t.index ["facility_id"], name: "index_hosts_on_facility_id"
     t.index ["reset_password_token"], name: "index_hosts_on_reset_password_token", unique: true
+  end
+
+  create_table "notices", force: :cascade do |t|
+    t.string "title"
+    t.text "content"
+    t.datetime "published_at"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
   end
 
   create_table "regions", force: :cascade do |t|
@@ -194,6 +204,7 @@ ActiveRecord::Schema[8.0].define(version: 2025_05_10_121528) do
     t.text "sns_accounts_urls"
     t.text "admin_comment"
     t.bigint "facility_id"
+    t.boolean "editable", default: true
     t.index ["email"], name: "index_sellers_on_email", unique: true
     t.index ["facility_id"], name: "index_sellers_on_facility_id"
     t.index ["reset_password_token"], name: "index_sellers_on_reset_password_token", unique: true

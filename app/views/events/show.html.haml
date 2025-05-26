@@ -1,9 +1,10 @@
 %body
   = render 'header/header' # ヘッダーのパーシャルを呼び出す
-
-  %p イベント詳細ページ◯
-
-  %h2= @event.title
+  .index-btn
+    %p 出店詳細ページ
+  
+  .event-title
+    %h2= @event.title
 
   .event-images
     - if @event.images.attached?
@@ -17,14 +18,14 @@
   %table.event-details
     %tr
       %th.organizer-label 
-        主催者
+        出店者
       %td
         - if @event&.seller.present?
           = link_to @event.seller.name, seller_path(@event.seller)
         - elsif @event&.host.present?
           = link_to @event.host.name, host_path(@event.host)
         - else
-          主催者 未設定
+          出店者 未設定
     %tr
       %th 説明
       %td= @event.description
@@ -61,17 +62,19 @@
     %tr
       %th ウェブサイト
       %td= @event.website
-    %tr
-      %th 動画URL
-      %td= @event.video
+    -# %tr
+    -#   %th 動画URL
+    -#   %td= @event.video
 
-  - if (seller_signed_in? && current_seller == @event.seller) || (host_signed_in? && current_host == @event.host)
-    .edit-links
-      - if host_signed_in? && current_host == @event.host
-        = link_to '編集', edit_host_event_path(@event.host, @event), class: 'operation-button'
-        = link_to '削除', host_event_path(@event.host, @event), data: { turbo_method: :delete, confirm: '本当に削除してもよろしいですか？' }, class: 'operation-button'
-      - elsif seller_signed_in? && current_seller == @event.seller
-        = link_to '編集', edit_event_path(@event), class: 'operation-button'
-        = link_to '削除', event_path(@event), data: { turbo_method: :delete, confirm: '本当に削除してもよろしいですか？' }, class: 'operation-button'
+- if (seller_signed_in? && current_seller == @event.seller && current_seller.editable) || (host_signed_in? && current_host == @event.host && current_host.editable)
+  .edit-links
+    - if host_signed_in? && current_host == @event.host
+      = link_to '編集', edit_host_event_path(@event.host, @event), class: 'operation-button'
+      = link_to '削除', host_event_path(@event.host, @event), data: { turbo_method: :delete, confirm: '本当に削除してもよろしいですか？' }, class: 'operation-button'
+    - elsif seller_signed_in? && current_seller == @event.seller
+      = link_to '編集', edit_event_path(@event), class: 'operation-button'
+      = link_to '削除', event_path(@event), data: { turbo_method: :delete, confirm: '本当に削除してもよろしいですか？' }, class: 'operation-button'
 
-= link_to '戻る', events_path, class: 'operation-button'
+= link_to 'イベント一覧へ戻る', events_path, class: 'operation-button'
+
+= render 'footer/footer'

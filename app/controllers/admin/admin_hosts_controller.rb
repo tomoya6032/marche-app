@@ -31,7 +31,18 @@ module Admin
       redirect_to admin_hosts_path, notice: 'ホストを削除しました。'
     end
 
+    def toggle_editable
+      @host = Host.find(params[:id])
+      if @host.update(editable: params[:editable] == "1") # チェックボックスの値を確認
+        redirect_to admin_users_path, notice: "編集可能状態を更新しました。"
+      else
+        redirect_to admin_users_path, alert: "編集可能状態の更新に失敗しました。"
+      end
+    end
+
     private
+
+    
 
     def set_host
       @host = Host.find(params[:id])

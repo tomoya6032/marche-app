@@ -1,16 +1,19 @@
 // Entry point for your Sass build
 @import "admin/users";
+@import "admin/index";
 @import "event/show";
 @import "sellers/show";
 @import "sellers/index";
+@import "facilities/index";
 @import "host/index";
 @import "host/show";
 @import "hosts/show";
 
 
 // メインカラーの定義
-$primary-pink: #d87093;   /* 温かみのあるピンク */
+$primary-pink: #ec7ca1;   /* 温かみのあるピンク */
 $secondary-teal: #4dca98; /* 温かみのある青緑 */
+$third-color: #ffb595; /* 温かみのある薄い緑 */
 // $secondary-teal-hover: #30cb8d; /* 温かみのある青緑 */
 $text-dark: #333;
 $text-light: #555;
@@ -39,10 +42,25 @@ $link-hover-font-weight: bold;
   }
 }
 
-// .button:hover {
-//   background-color: $link-hover-font-weight;
-//   background-color: #349c72;
-// }
+.payment-button {
+  display: inline-block;
+  text-align: center;
+  margin: 6px;
+  padding: 4px;
+  padding-left: 8px;  
+  width: 100px;
+  border: none;
+  border-radius: 4px;
+  background-color: $primary-pink;
+  color: #ffffff; // 好きな色を指定（例: 青色）
+  text-decoration: none; // 必要に応じて下線を削除
+  cursor: pointer;
+  
+  &:hover {
+    background-color: #d87093; /* ホバー時の色 */
+    font-weight: bold; /* ホバー時に太文字にする */
+  }
+}
 
 body {
   font-family: 'Arial', sans-serif;
@@ -118,12 +136,12 @@ a:hover {
 
 .button {
   display: inline-block;
-  // text-align: center;
+  text-align: center;
   margin: 6px;
   
   padding: 4px;
-  padding-left: 8px;  
-  width: 186px;
+  // padding-left: 8px;  
+  width: 120px;
   border: none;
   border-radius: 4px;
   background-color: $secondary-teal;
@@ -152,6 +170,360 @@ a:hover {
   background-color: #cc0000; /* 濃い赤色 */
 }
 
+// サインインページの全体的なスタイル
+.sign-in-page {
+  display: flex;
+  margin-top: 30px;
+  justify-content: center; // 水平方向の中央寄せ
+  align-items: center;     // 垂直方向の中央寄せ
+  min-height: 100vh;       // 画面全体の高さ
+  background-color: #f7f3e6; // 温かい背景色（例: 薄いクリーム色）
+  // background-image: url('your-warm-background-image.jpg'); // 温かいマルシェの風景画像など
+  background-size: cover;
+  background-position: center;
+  padding: 20px;
+  box-sizing: border-box; // paddingがwidthに含まれるように
+}
+
+.sign-in-container {
+  background-color: rgba(255, 255, 255, 0.95); // 半透明の白で背景との調和
+  padding: 40px 30px;
+  border-radius: 15px; // 角を丸くする
+  box-shadow: 0 5px 20px rgba(0, 0, 0, 0.1); // 柔らかな影
+  width: 100%;
+  max-width: 450px; // 最大幅を設定
+  text-align: center;
+  box-sizing: border-box;
+}
+
+.sign-in-header {
+  margin-bottom: 30px;
+  .sign-in-title {
+    font-size: 28px;
+    color: #7a5230; // 温かいブラウン系
+    margin-bottom: 10px;
+    font-weight: bold;
+  }
+  .sign-in-subtitle {
+    font-size: 16px;
+    color: #555;
+    line-height: 1.6;
+  }
+}
+
+.form-group {
+  margin-bottom: 20px;
+  text-align: left; // ラベルと入力フィールドを左寄せに
+  label {
+    display: block; // ラベルをブロック要素にして、入力フィールドの上に配置
+    margin-bottom: 8px;
+    font-size: 14px;
+    color: #666;
+    font-weight: bold;
+  }
+}
+
+.form-control {
+  width: 100%;
+  padding: 12px 15px;
+  border: 1px solid #ddd;
+  border-radius: 8px; // 入力フィールドの角も丸く
+  font-size: 16px;
+  box-sizing: border-box; // paddingがwidthに含まれるように
+  &:focus {
+    border-color: #f0c330; // フォーカス時の色
+    box-shadow: 0 0 5px rgba(240, 195, 48, 0.3);
+    outline: none;
+  }
+}
+
+.checkbox-group {
+  display: flex;
+  align-items: center;
+  margin-top: -10px; // 上のform-groupとの余白調整
+  margin-bottom: 25px; // 下のボタンとの余白
+  .form-check-input {
+    margin-right: 8px;
+    cursor: pointer;
+  }
+  .form-check-label {
+    font-size: 14px;
+    color: #666;
+    font-weight: normal;
+    cursor: pointer;
+  }
+}
+
+.form-actions {
+  margin-top: 30px;
+  .btn-block {
+    width: 100%; // ボタンをブロック要素にする
+    padding: 14px 20px;
+    font-size: 18px;
+    border-radius: 10px; // ボタンの角を丸く
+    background-color: #f0c330; // 温かい黄色
+    border: none;
+    color: #fff;
+    font-weight: bold;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+    &:hover {
+      background-color: #e0b020; // ホバー時の色
+    }
+  }
+}
+
+.sign-in-footer {
+  margin-top: 30px;
+  .other-links {
+    margin-bottom: 20px;
+    a {
+      color: #7a5230;
+      text-decoration: none;
+      font-size: 14px;
+      &:hover {
+        text-decoration: underline;
+      }
+    }
+    p {
+      margin-bottom: 10px; // 各リンク間の余白
+    }
+  }
+}
+
+.social-login {
+  margin-top: 30px;
+  padding-top: 20px;
+  border-top: 1px solid #eee;
+  .social-login-text {
+    font-size: 14px;
+    color: #888;
+    margin-bottom: 15px;
+  }
+  .social-buttons {
+    display: flex;
+    flex-direction: column; // ボタンを縦に並べる
+    gap: 10px; // ボタン間のスペース
+
+    .btn-social {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 12px 20px;
+      border-radius: 8px;
+      font-size: 16px;
+      font-weight: bold;
+      text-decoration: none;
+      color: #fff;
+      border: none;
+      cursor: pointer;
+      transition: background-color 0.3s ease;
+      i {
+        margin-right: 10px;
+        font-size: 20px;
+      }
+    }
+    .btn-google {
+      background-color: #db4437; // Googleカラー
+      &:hover { background-color: #c0362c; }
+    }
+    .btn-x {
+      background-color: #000; // X (旧Twitter) カラー
+      &:hover { background-color: #333; }
+    }
+  }
+}
+
+.no-account {
+  margin-top: 30px;
+  p {
+    font-size: 14px;
+    color: #555;
+    margin-bottom: 15px;
+  }
+  .btn-secondary {
+    padding: 12px 20px;
+    font-size: 16px;
+    border-radius: 10px;
+    background-color: #e8ddd1; // 落ち着いたグレー系
+    border: none;
+    color: #fff;
+    font-weight: bold;
+    text-decoration: none;
+    display: inline-block; // ボタンとして表示
+    
+    &:hover {
+      background-color: #cdbfac;
+    }
+  }
+}
+
+ // サインアップページの全体的なスタイル（サインインページとほぼ同じ）
+ .sign-up-page {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  min-height: 100vh;
+  background-color: #f7f3e6;
+  background-size: cover;
+  background-position: center;
+  margin-top: 30px;
+  padding: 20px;
+  box-sizing: border-box;
+}
+
+.sign-up-container {
+  background-color: rgba(255, 255, 255, 0.95);
+  padding: 40px 30px;
+  border-radius: 15px;
+  box-shadow: 0 5px 20px rgba(0, 0, 0, 0.1);
+  width: 100%;
+  max-width: 450px;
+  text-align: center;
+  box-sizing: border-box;
+}
+
+.sign-up-header {
+  margin-bottom: 30px;
+  .sign-up-title {
+    font-size: 28px;
+    color: #7a5230;
+    margin-bottom: 10px;
+    font-weight: bold;
+  }
+  .sign-up-subtitle {
+    font-size: 16px;
+    color: #555;
+    line-height: 1.6;
+  }
+}
+
+.form-group {
+  margin-bottom: 20px;
+  text-align: left;
+  label {
+    display: block;
+    margin-bottom: 8px;
+    font-size: 14px;
+    color: #666;
+    font-weight: bold;
+  }
+  .form-control {
+    width: 100%;
+    padding: 12px 15px;
+    border: 1px solid #ddd;
+    border-radius: 8px;
+    font-size: 16px;
+    box-sizing: border-box;
+    &:focus {
+      border-color: #f0c330;
+      box-shadow: 0 0 5px rgba(240, 195, 48, 0.3);
+      outline: none;
+    }
+  }
+  .form-text {
+    font-size: 12px;
+    color: #888;
+    margin-top: 5px;
+    display: block; // テキストが次の行に表示されるように
+  }
+}
+
+.form-actions {
+  margin-top: 30px;
+  .btn-block {
+    width: 100%;
+    padding: 14px 20px;
+    font-size: 18px;
+    border-radius: 10px;
+    background-color: #f0c330;
+    border: none;
+    color: #fff;
+    font-weight: bold;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+    &:hover {
+      background-color: #e0b020;
+    }
+  }
+}
+
+.sign-up-footer {
+  margin-top: 30px;
+  .other-links {
+    margin-bottom: 20px;
+    p {
+      font-size: 14px;
+      color: #0f1deb;
+      
+      margin-bottom: 15px;
+    }
+    .btn-secondary {
+      padding: 12px 20px;
+      font-size: 16px;
+      border-radius: 10px;
+      
+      background-color: #9beefc;
+      border: none;
+      color: #fff;
+      font-weight: bold;
+      text-decoration: none;
+      display: inline-block;
+      .link_inner {
+        
+        h3 {
+          color: #0f1deb;
+          
+          margin: 0;
+          font-size: 16px;
+        }
+      }
+      &:hover {
+        background-color: #17d4f5;
+        border: 2px solid #0f1deb;
+      }
+    }
+  }
+}
+
+.terms-and-privacy {
+  margin-top: 20px;
+  font-size: 12px;
+  color: #888;
+  .link-underline {
+    color: #7a5230;
+    text-decoration: underline;
+    &:hover {
+      color: #5d3d25;
+    }
+  }
+}
+
+// エラーメッセージのスタイル
+#error_explanation {
+  background-color: #fef2f2;
+  border: 1px solid #fcc;
+  color: #cc0000;
+  padding: 15px;
+  margin-bottom: 20px;
+  border-radius: 8px;
+  text-align: left;
+
+  h2 {
+    font-size: 16px;
+    color: #cc0000;
+    margin-top: 0;
+    margin-bottom: 10px;
+  }
+  ul {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    li {
+      margin-bottom: 5px;
+    }
+  }
+}
 
 
 .nav ul {
@@ -165,9 +537,9 @@ a:hover {
 
 nav ul li {
   margin: 5px;
-  width: 100%;
+  width: 80%;
   padding: 10px;
-  text-align: center;
+  text-align: left;
 }
 
 .nav nav ul {
@@ -214,11 +586,36 @@ nav ul li {
 }
 
 nav ul li a {
-  padding: 20px;
+  padding: 10px;
   text-decoration: none; /* リンクの下線を削除 */
   color: #333; /* リンクの文字色 */
 }
 
+.index-btn {
+  // display: inline-block;
+  text-align: center;
+  margin: 4px;
+  margin-top: 8px;
+  padding: 2px;
+  padding-left: 8px;  
+  width: 200px;
+  border: none;
+  border-radius: 4px;
+  background-color: $primary-pink;
+  color: white;
+
+  p {
+    padding: 4px;
+    margin: 4px;
+  }
+}
+
+.event-title {
+  h2 {
+    margin: 4px;
+    margin-top: 8px;
+  }
+}
 
 .top-container {
     background-size: contain;
@@ -323,10 +720,14 @@ nav ul li a {
   
 }
 
+
 .link_inner {
-    padding: 0px;
-    padding: auto;
-    
+    border-radius: 10px;
+    padding: 0px auto;
+    margin-right: 10px;
+    a {
+      padding: 80px 120px;
+    }
     h3 {
       font-size: 24px;
       color: #000;
@@ -346,10 +747,28 @@ nav ul li a {
 
 }
 
-.top-slider {
-  
-  display: flex; /* 横一列に画像を並べる */
-  transition: transform 0.5s ease-in-out; /* スライドのアニメーション */
+.pickup-contaner {
+  margin-top: 100px;
+    h2{
+      margin-top: 30px;
+      color: $text-light; 
+      text-align: center;
+    }
+}
+
+.pickup-top {
+ 
+}
+
+
+.pickup-slider {
+  margin: auto;
+  display: flex;
+  .event-no-image {
+    width: 100%;
+    height: 150px;
+    margin: 0;
+  }
 }
 
 .top-slider img {
@@ -360,7 +779,18 @@ nav ul li a {
   
 }
 
-slider-navigation button {
+// .slider-nav-container {
+//   padding: 20px;
+//   margin: 60px;
+//   width: 700px;
+
+// }
+
+.slider-navigation {
+  width: 800px; /* スライダーの幅 */
+}
+
+.slider-navigation button { 
   position: absolute;
   top: 50%;
   transform: translateY(-50%);
@@ -368,6 +798,7 @@ slider-navigation button {
   color: white;
   border: none;
   padding: 10px;
+  
   cursor: pointer;
   z-index: 10; /* 画像より手前に表示 */
 }
@@ -380,13 +811,49 @@ slider-navigation button {
   right: 10px;
 }
 
+.pagination {
+  display: flex;
+  justify-content: center;
+  margin-top: 20px;
+  list-style: none;
+
+  li {
+    margin: 0 5px;
+
+    a, span {
+      display: block;
+      padding: 8px 12px;
+      text-decoration: none;
+      color: #333;
+      border: 1px solid #ddd;
+      border-radius: 4px;
+    }
+
+    a:hover {
+      background-color: #f0f0f0;
+    }
+
+    &.active span {
+      background-color: #007bff;
+      color: #fff;
+      border-color: #007bff;
+    }
+  }
+}
+
 .column-section {
     display: flex;
-    
     background-color: #f5fded;
     margin: 20px 0;
-    margin-top: 60px;
+    margin-top: 30px;
 }
+
+.news-section {
+  text-align: center;
+  margin-top: 80px;
+}
+
+
 
 .section.news {
     width: 100%;
@@ -426,64 +893,189 @@ slider-navigation button {
 
 
 .section.events {
-    margin-top: 60px;
-    margin-bottom: 30px;
+  text-align: center;
+  margin-top: 80px;
+  margin-bottom: 30px;
 }
 
 
 .event-list {
     display: flex;
     margin: 20px;
-    border: 1px solid #000;
+    // border: 1px solid #000;
 }
 
 .event-item {
+  
   width: 200px;
-  margin: 10px;
-  padding: 20px;
-  border: 1px solid #000;
+  background-color: #f1f0f0; /* カードの背景色 */
+  border-radius: 8px; /* カードの角を丸くする */
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* カードに影をつける */
+  padding: 20px; /* 内側の余白 */
+  margin: 10px; /* 外側の余白 */
+  padding: auto;
+  text-align: left;
+  font-size: 14px;
+  transition: transform 0.2s ease, box-shadow 0.2s ease; /* ホバー時のアニメーション */
+  p {
+    text-align: left;
+    color: #ffffff;
+    padding: 4px;
+    padding-left: 12px;
+    background-color: $third-color;
+    font-size: 12px;
+    border-radius: 8px;
+  }
+}
+
+.event-item:hover {
+  transform: translateY(-5px); /* ホバー時に少し浮き上がる */
+  box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2); /* ホバー時の影を強調 */
 }
 
 .event-item img {
-  width: 200px;
+  width: 100%; /* 画像をカードの幅に合わせる */
+  height: 150px;
+  text-align: center;
+  margin: 0 auto;
+  border-radius: 5px; /* 画像の角を少し丸くする */
+  margin-bottom: 10px; /* 画像とテキストの間に余白を追加 */
+  object-fit: cover; /* 画像を親要素に収めつつ、縦横比を維持 */
+}
+
+.event-item h3 {
+  font-size: 18px;
+  color: #333;
+  margin-bottom: 10px;
+}
+
+
+
+.event-no-image {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background-color: #e0e0e0; /* デフォルト画像の背景色 */
+  width: 100%;
+  height: 150px;
+  border-radius: 5px;
+  margin-bottom: 10px;
 }
 
 .section.recruitment {
-    margin-top: 60px;
+  text-align: center;
+    h2{
+      margin-top: 80px;
+      text-align: center;
+    }
+
+  
 }
+
+
+
 
 .recruitment-content {
-    width: 100%;
-    text-align: center;
-    border: 1px solid #000;
+    width: 60%;
+    margin: auto;
+    color: $text-dark;
+    // text-align: center;
+    p {
+      margin-top: 20px;
+      text-align: left;
+    }
+    .recruitment-link {
+      // margin: auto;
+      margin: 30px;
+      a {
+        color: $text-dark;
+        width: 300px;
+        padding: 20px 80px;
+      }
+      background-color: #f3dda1;
+      width: 300px;
+      padding: 10px;
+      border-radius: 20px;
+      text-align: center;
+      box-shadow: 3px 3px 11px rgba(89, 12, 12, 0.8);
+      
+    }
+   
 }
 
-.recruitment-content img {
-    margin: 60px;
-    padding: 50px;
+
+.btn-recruitment {
+  background-color: #205bff; /* 赤色 */
+  color: white;
+  display: inline-block; // 中央揃えを適用するためにインラインブロックに設定
+  text-align: center;
+  padding: 10px 20px;
+  margin: 20px;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  text-decoration: none;
+}
+
+.btn-recruitment:hover {
+  background-color: #4bb1ff; /* 濃い赤色 */
+}
+
+.recruitment-btn-containaer {
+    // display: flex;
+    text-align: center;
+    margin-top: 20px; /* 上部の余白 */
+}
+
+
+.recruitment-image {
+    margin: auto;
+    margin-top: 20px;
+    width: 80%;
+    border-radius: 10px;
 }
 
 
 .section.description {
-    /* width: 90%; */
+    background-color:#f1f0f0;
+    h2{
+      text-align: center;
+      margin-bottom: 10px;
+    }
     margin: auto;
-    margin-top: 60px;
-    
+    margin-top: 80px;
+    padding: 10px;
 }
 
 .marche-description {
     width: 90%;
     margin: 0 auto;
     padding: 20px;
-    border: 1px solid #000;
+    // border: 1px solid #000;
 }
 
 .footer {
-    margin-top: 60px;
-    height: 500px;
-    display: flex;
-    align-items: flex-end;
-    border-top: 1px solid #000;
+  margin-top: 60px;
+  height: 500px;
+  display: flex;
+  align-items: flex-end;
+  border-top: 1px solid #000;
+  
+  .footer-button {
+    color: #fff;
+    margin: 10px;
+    padding: 6px;
+    text-align: center;
+    background-color: $secondary-teal; /* カードの背景色 */
+    border-radius: 8px; /* カードの角を丸くする */
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* カードに影をつける */
+    padding: auto;
+    font-size: 12px;
+    transition: transform 0.2s ease, box-shadow 0.2s ease; /* ホバー時のアニメーション */    
+    display: block; /* ボタンをブロック要素にして縦に並べる */
+    width: 140px; /* ボタンの幅を統一 */
+  }
+    
 }
 
 .footer-description {
@@ -565,7 +1157,9 @@ slider-navigation button {
 .event-card {
   width: 300px;
   margin: 20px;
-  border: 1px solid #ddd;
+  padding: 8px;
+  background-color: #fff8f0;
+  // border: 1px solid #ddd;
   border-radius: 5px;
   overflow: hidden;
 }
@@ -594,6 +1188,16 @@ slider-navigation button {
   text-align: left;
   h3 {
     margin-top: 0px;
+  }
+  p {
+    text-align: left;
+    color: #ffffff;
+    padding: 4px;
+    padding-left: 12px;
+    margin-top: 30px;
+    background-color: $third-color;
+    font-size: 12px;
+    border-radius: 8px;
   }
 }
 
@@ -696,27 +1300,29 @@ slider-navigation button {
   display: flex; /* 横並びにする */
   align-items: center; /* 縦方向の中央揃え */
   background-color: #9bfe9b;
-  color: rgb(237, 155, 23);
-  padding: 10px 20px;
+  // color: rgb(237, 155, 23);
+  
+  padding: auto;
+  
   border: none;
-  border-radius: 5px;
+  border-radius: 10px;
   text-decoration: none;
-  display: inline-block;
+  // display: inline-block;
   font-size: 18px;
   font-weight: bold;
+  p {
+    margin: 8px;
+    
+  }
 }
 
 .new-button:hover {
   background-color: #30f830; /* ホバー時の背景色 */
-  // font-weight: bold;
+  color: black;
 }
   
 
 
-.link_inner {
-  border-radius: 10px;
-  margin-right: 10px;
-}
 
 .seller-edit {
   padding: 20px;
@@ -775,5 +1381,86 @@ slider-navigation button {
 
   .actions {
     margin-top: 20px;
+  }
+}
+
+.column-section {
+  .section.news {
+    margin-top: 20px;
+
+    h3 {
+      font-size: 24px;
+      font-weight: bold;
+      margin-bottom: 15px;
+    }
+
+    ul {
+      list-style: none;
+      padding: 0;
+
+      .news-contaier {
+        display: flex;
+        // justify-content: space-between;
+        align-items: start;
+        margin-bottom: 10px;
+
+        .news-contaier-date{
+          margin-right: 30px;
+        }
+      }
+      li {
+        margin-bottom: 20px;
+        padding: 10px;
+        border-bottom: 1px solid #ddd;
+
+        strong {
+          font-size: 18px;
+          font-weight: bold;
+          margin-right: 10px;
+        }
+
+        small {
+          font-size: 14px;
+          color: #666;
+        }
+
+        p {
+          margin-top: 5px;
+          font-size: 16px;
+          color: #333;
+          line-height: 1.5;
+        }
+
+        display: flex;
+        flex-direction: column;
+
+        // タイトルと公開日時を横並びにする
+        // strong,
+        // small {
+        //   display: inline-block;
+        // }
+      }
+    }
+
+    p {
+      text-align: left;
+    }
+  }
+}
+
+table.account-comparison {
+  width: 100%;
+  border-collapse: collapse;
+  margin-top: 20px;
+
+  th, td {
+    border: 1px solid #ccc;
+    padding: 10px;
+    text-align: center;
+  }
+
+  th {
+    background-color: #f8f8f8;
+    font-weight: bold;
   }
 }

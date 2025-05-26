@@ -1,8 +1,8 @@
 .host-mypage {
-    padding: 20px 15px;
+    // padding: 20px 15px;
     font-family: Arial, sans-serif;
     background-color: #f9f9f9;
-    border-radius: 10px;
+    // border-radius: 10px;
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
 
     h1 {
@@ -52,7 +52,7 @@
             color: #555;
 
             a {
-                color: #007bff;
+                color: #ffffff;
                 text-decoration: none;
 
                 &:hover {
@@ -118,28 +118,52 @@
         margin-bottom: 20px;
 
         a {
-            display: block;
+            // display: block;
             text-decoration: none;
-            border-radius: 5px;
-            overflow: hidden;
-            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+            // border-radius: 5px;
+            // overflow: hidden;
+            // box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
 
             .link_inner {
                 background-color: #66aaff;
                 color: white;
+                padding: auto;
                 padding: 10px 15px;
                 text-align: center;
                 transition: background-color 0.3s ease;
 
                 p {
-                    margin-bottom: 0;
+                    // margin-bottom: 0;
                     font-size: 16px;
+                    margin: 0;
+                    
                 }
 
                 &:hover {
-                    background-color: #337ab7;
+                    background-color: #3c93df;
+                    color: black;
                 }
             }
         }
     }
+}
+
+.acccount-date {
+    display: flex;
+    justify-content: space-between;
+   
+    align-items: center;
+    
+    span {
+      font-size: 14px; // フォントサイズを調整
+      color: #555; // テキストの色をミュートカラーに設定
+      
+    }
+  
+    .text-muted {
+      font-style: italic; // 無料アカウント期間のテキストを斜体に
+      color: #999; // テキストの色を薄いグレーに
+      
+    }
+    
 }

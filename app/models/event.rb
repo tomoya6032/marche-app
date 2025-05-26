@@ -7,6 +7,8 @@ class Event < ApplicationRecord
 
   validates :title, presence: true
   validates :description, presence: true
+  paginates_per 5 # デフォルトで1ページに5件表示
+  scope :featured, -> { where(is_featured: true) }
 
   private
 
@@ -33,4 +35,9 @@ class Event < ApplicationRecord
       errors.add(:images, I18n.t("errors.messages.image_too_large"))
     end
   end
+
+  def image_url
+    images.attached? ? Rails.application.routes.url_helpers.rails_blob_url(images.first, only_path: true) : nil
+  end
+
 end

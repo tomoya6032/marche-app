@@ -1,45 +1,91 @@
 %h1 管理画面ダッシュボード★
 
 %section.admin-section
-  %h2.admin-section-title セラー情報
-  %p.admin-section-summary 合計セラー数: #{@total_sellers}
-  %h3.admin-section-subtitle 最近登録されたセラー
+  %h2.admin-section-title お知らせ管理
+  = link_to '新規作成', new_admin_notice_path, class: 'admin-button'
+  %table.admin-table
+    %thead
+      %tr
+        %th タイトル
+        %th 内容
+        %th 公開日時
+        %th 操作
+    %tbody
+      - if @notices.present?
+        - @notices.each do |notice|
+          %tr
+            %td= notice.title
+            %td= truncate(notice.content, length: 200) # 内容を200文字に切り詰めて表示
+            %td= notice.published_at.strftime('%Y/%m/%d %H:%M') if notice.published_at
+            %td
+              = link_to '編集', edit_admin_notice_path(notice), class: "admin-button"
+              = button_to '削除', admin_notice_path(notice), method: :delete, data: { confirm: '本当に削除しますか？' }, class: "admin-button"
+      - else
+        %tr
+          %td{ colspan: 3 } お知らせはありません。
+
+%section.admin-section
+  %h2.admin-section-title 個人会員情報
+  %p.admin-section-summary 合計個人会員数: #{@total_sellers}
+  %h3.admin-section-subtitle 最近登録された個人会員
   %table.admin-table
     %thead
       %tr
         %th 名前
         %th メールアドレス
-        %th 操作
+        %th アカウント取得日
+        %th 無料期間終了日
+        %th 編集可能
+        %th コメント
+        
     %tbody
       - if @recent_sellers.present?
         - @recent_sellers.each do |seller|
           %tr
             %td= seller.name
             %td= seller.email
+            %td= seller.created_at.strftime('%Y/%m/%d') if seller.created_at
+            %td= (seller.created_at + 21.days).strftime('%Y/%m/%d') if seller.created_at
             %td
-              = link_to "編集", edit_admin_seller_path(seller), class: "admin-button"
+              = form_with url: toggle_editable_admin_seller_path(seller), method: :patch, local: true do |f|
+                = f.check_box :editable, checked: seller.editable # デフォルトでチェックをオン
+                = f.submit "更新", class: "admin-button"
+            %td
+              = link_to "コメント", edit_admin_seller_path(seller), class: "admin-button"
       - else
         %tr
-          %td{ colspan: 3 } 最近登録されたセラーはありません。
+          %td{ colspan: 3 } 最近登録された個人会員はありません。
 
 %section.admin-section
-  %h2.admin-section-title ホスト情報
-  %p.admin-section-summary 合計ホスト数: #{@total_hosts}
-  %h3.admin-section-subtitle 最近登録されたホスト
+  %h2.admin-section-title ショップ会員情報
+  %p.admin-section-summary 合計ショップ会員数: #{@total_hosts}
+  %h3.admin-section-subtitle 最近登録されたショップ会員
   %table.admin-table
     %thead
       %tr
         %th 名前
         %th メールアドレス
-        %th 操作
+        %th アカウント取得日
+        %th 無料期間終了日
+        %th 編集可能
+        %th コメント
     %tbody
       - if @recent_hosts.present?
         - @recent_hosts.each do |host|
           %tr
             %td= host.name
             %td= host.email
+            %td= host.created_at.strftime('%Y/%m/%d') if host.created_at
+            %td= (host.created_at + 21.days).strftime('%Y/%m/%d') if host.created_at
+            
             %td
-              = link_to "編集", edit_admin_host_path(host), class: "admin-button"
+              = form_with url: toggle_editable_admin_host_path(host), method: :patch, local: true do |f|
+                = f.check_box :editable, checked: host.editable # デフォルトでチェックをオン
+                = f.submit "更新", class: "admin-button"
+            
+
+            %td
+              = link_to "コメント", edit_admin_host_path(host), class: "admin-button"
       - else
         %tr
           %td{ colspan: 3 } 最近登録されたホストはありません。
@@ -48,39 +94,44 @@
   %h2.admin-section-title イベント情報
   %p.admin-section-summary 合計イベント数: #{@total_events}
   %h3.admin-section-subtitle 最近作成されたイベント
-  %table.admin-table
-    %thead
-      %tr
-        %th イベント名
-        %th 開催日
-        %th 都道府県
-        %th 開催者名
-        %th アカウント種別
-        %th 操作
-    %tbody
-      - if @recent_events.present?
-        - @recent_events.each do |event|
-          %tr
-            %td= link_to event.title, event_path(event)
-            %td= event.start_time.strftime('%Y/%m/%d') if event.start_time
-            %td= event.venue || "未設定"
-            %td
-              - if event.seller.present?
-                = link_to event.seller.name, admin_seller_path(event.seller)
-              - elsif event.host.present?
-                = link_to event.host.name, admin_host_path(event.host)
-              - else
-                未設定
-            %td
-              - if event.seller.present?
-                セラー
-              - elsif event.host.present?
-                ホスト
-              - else
-                未設定
-            %td
-              = link_to "編集", edit_admin_event_path(event), class: "admin-button"
-            -#   = link_to "削除", admin_event_path(event), data: { turbo_method: :delete, confirm: '本当に削除してもよろしいですか？' }, class: "admin-button-delete"
-      - else
+  = form_with url: featured_admin_events_path, method: :post, local: true do |form|
+    %table.admin-table
+      %thead
         %tr
-          %td{ colspan: 6 } 最近作成されたイベントはありません。
+          %th チェック
+          %th イベント名
+          %th 開催日
+          %th 都道府県
+          %th 開催者名
+          %th アカウント種別
+          %th コメント
+      %tbody
+        - if @recent_events.present?
+          - @recent_events.each do |event|
+            %tr
+              %td
+                = check_box_tag "featured_event_ids[]", event.id, event.is_featured
+              %td= link_to event.title, event_path(event)
+              %td= event.start_time.strftime('%Y/%m/%d') if event.start_time
+              %td= event.venue || "未設定"
+              %td
+                - if event.seller.present?
+                  = link_to event.seller.name, admin_seller_path(event.seller)
+                - elsif event.host.present?
+                  = link_to event.host.name, admin_host_path(event.host)
+                - else
+                  未設定
+              %td
+                - if event.seller.present?
+                  個人
+                - elsif event.host.present?
+                  ショップ
+                - else
+                  未設定
+              -# %td
+              -#   = link_to "編集", edit_admin_event_path(event), class: "admin-button"
+        - else
+          %tr
+            %td{ colspan: 7 } 最近作成されたイベントはありません。
+    .actions
+      = form.submit "注目イベントを更新", class: "admin-button"

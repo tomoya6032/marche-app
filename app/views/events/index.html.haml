@@ -38,28 +38,23 @@
 
         .event-card-content
           %h3= link_to event.title, event_path(event)
-          %p
-            %strong 主催者:
-            - if event&.seller.present?
-              = link_to event.seller.name, seller_path(event.seller)
-            - elsif event&.host.present?
-              = link_to event.host.name, host_path(event.host)
-            - else
-              主催者 未設定
-          %p
-            %strong 概要:
-            = truncate(event.description, length: 50)
-          %p
-            %strong 開始時間:
-            = event.start_time.present? ? event.start_time.strftime('%Y年%-m月%-d日 %H時%M分') : '未定'
-          %p
-            %strong 終了時間:
-            = event.end_time.present? ? event.end_time.strftime('%Y年%-m月%-d日 %H時%M分') : '未定'
-          %p
-            %strong 開催場所:
-            = event.venue
-          %p
-            %strong 参加費用:
-            = event.is_free ? '無料' : '有料'
+          %p 出店者
+          - if event&.seller.present?
+            = link_to event.seller.name, seller_path(event.seller)
+          - elsif event&.host.present?
+            = link_to event.host.name, host_path(event.host)
+          - else
+            主催者 未設定
+          %p 概要
+          = truncate(event.description, length: 50)
+          %p 開始時間
+          = event.start_time.present? ? event.start_time.strftime('%Y年%-m月%-d日 %H時%M分') : '未定'
+          %p 終了時間
+          = event.end_time.present? ? event.end_time.strftime('%Y年%-m月%-d日 %H時%M分') : '未定'
+          %p 開催場所
+          = event.venue.present? ? event.venue : 'その他'
+          
+
+  = render 'footer/footer'
 
   = paginate @events

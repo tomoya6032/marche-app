@@ -1,0 +1,21 @@
+%h1 お知らせ管理
+= link_to '新規作成', new_admin_notice_path, class: 'btn btn-primary'
+
+%table
+  %thead
+    %tr
+      %th タイトル
+      %th 公開日時
+      %th 操作
+  %tbody
+    - if @notices.present?
+      - @notices.each do |notice|
+        %tr
+          %td= notice.title
+          %td= notice.published_at.strftime('%Y/%m/%d %H:%M') if notice.published_at
+          %td
+            = link_to '編集', edit_admin_notice_path(notice), class: 'btn btn-secondary'
+            = link_to '削除', admin_notice_path(notice), method: :delete, data: { confirm: '本当に削除しますか？' }, class: 'btn btn-danger'
+    - else
+      %tr
+        %td{ colspan: 3 } お知らせはありません。

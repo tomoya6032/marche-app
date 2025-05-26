@@ -5,13 +5,13 @@ class HostsController < ApplicationController
 
   def index
         @host = current_host
-    @comments = @host.comments.order(created_at: :desc) # 管理者からのコメントを取得
-@events = @host.events.order(created_at: :desc) # ホストが出店したイベントを取得
-     @events = @host.events if @host # ホストに紐づくイベントを取得する場合
+       @comments = @host.comments.order(created_at: :desc) # 管理者からのコメントを取得
+       @events = @host.events.order(created_at: :desc) # ホストが出店したイベントを取得
+       @events = @host.events if @host # ホストに紐づくイベントを取得する場合
   end
 
   def show
-@topics_text = @host.topics # トピックスのテキストを取得
+    @topics_text = @host.topics # トピックスのテキストを取得
     @news_text = @host.news # 新着ニュースのテキストを取得
     @goods_introduction_text = @host.goods_introduction # 商品紹介のテキストを取得
   end
@@ -111,14 +111,14 @@ class HostsController < ApplicationController
 
 
     def host_params
-  params.require(:host).permit(
-    :name, :email, :description, :address, :phone_number, :website, :top_image, :news, :topics, :goods_introduction,
-    :goods_introduction,
-:goods_introduction_1, :goods_image_1,
-    :goods_introduction_2, :goods_image_2,
-    :goods_introduction_3, :goods_image_3,
-    :goods_introduction_4, :goods_image_4,
-    images: []
+      params.require(:host).permit(
+      :name, :email, :description, :address, :phone_number, :website, :top_image, :news, :topics, :goods_introduction,
+      :goods_introduction,
+      :goods_introduction_1, :goods_image_1,
+      :goods_introduction_2, :goods_image_2,
+      :goods_introduction_3, :goods_image_3,
+      :goods_introduction_4, :goods_image_4,
+      images: []
   )
 end
 end      

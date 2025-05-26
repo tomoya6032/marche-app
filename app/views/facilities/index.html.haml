@@ -1,17 +1,19 @@
 %body
   = render 'header/header' # ヘッダーのパーシャルを呼び出す
 
-%h1 出展施設一覧
+%h1 イベント出店一覧
+%p ここではイベントに出店しているアカウントの一覧を表示します。
+%p 出店者の詳細を確認するには、名前をクリックしてください。
 
-.section
-  %h2 ホスト一覧
+.section-index
+  %h2 ショップ出店一覧
   - if @hosts.present?
     %table
       %thead
         %tr
-          %th 名前
-          %th メールアドレス
-          %th 住所
+          %th ショップ名
+          -# %th メールアドレス
+          %th ショップ住所
           %th 直近の開催イベント
       %tbody
         - @hosts.each do |host|
@@ -21,7 +23,7 @@
                 = link_to host.name, host_path(host) # 修正: `host_path` を使用してホストの詳細ページに遷移
               - else
                 %span 未設定
-            %td= host.email.presence || 'メールアドレス未設定'
+            -# %td= host.email.presence || 'メールアドレス未設定'
             %td= host.address.presence || '住所未設定'
             %td
               - if host.events.present?
@@ -29,17 +31,17 @@
               - else
                 %span イベントなし
   - else
-    %p ホストが見つかりません。
+    %p ショップ出店が見つかりません。
 
-.section
-  %h2 セラー一覧
+.section-index
+  %h2 個人出店一覧
   - if @sellers.present?
     %table
       %thead
         %tr
-          %th 名前
-          %th メールアドレス
-          %th 住所
+          %th ショップ(アカウント)名
+          -# %th メールアドレス
+          %th ショップ住所
           %th 直近の開催イベント
       %tbody
         - @sellers.each do |seller|
@@ -49,7 +51,7 @@
                 = link_to seller.name, seller_path(seller)
               - else
                 %span 未設定
-            %td= seller.email.presence || 'メールアドレス未設定'
+            -# %td= seller.email.presence || 'メールアドレス未設定'
             %td= seller.address.presence || '住所未設定'
             %td
               - if seller.events.present?
@@ -57,6 +59,8 @@
               - else
                 %span イベントなし
   - else
-    %p セラーが見つかりません。
+    %p 個人出店が見つかりません。
 
-= link_to '戻る', root_path, class: 'btn btn-secondary'
+= link_to '戻る', root_path, class: 'operation-button'
+
+= render 'footer/footer'

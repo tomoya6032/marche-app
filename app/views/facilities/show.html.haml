@@ -10,7 +10,7 @@
 %p ウェブサイト: #{link_to @facility.website.presence || 'ウェブサイトが未設定です。', @facility.website, target: "_blank"}
 
 .section
-    %h2 ホスト一覧
+    %h2 ショップ出店一覧
     - if @facility.hosts.present?
       %table
         %thead
@@ -25,10 +25,10 @@
               %td= host.email.presence || 'メールアドレス未設定'
               %td= host.address.presence || '住所未設定'
     - else
-      %p ホストが見つかりません。
+      %p ショップ出店が見つかりません。
 
   .section
-    %h2 セラー一覧
+    %h2 個人出店一覧
     - if @facility.sellers.present?
       %table
         %thead
@@ -43,8 +43,11 @@
               %td= seller.email.presence || 'メールアドレス未設定'
               %td= seller.address.presence || '住所未設定'
     - else
-      %p セラーが見つかりません。
+      個人出店が見つかりません。
 
 = link_to '戻る', facilities_path, class: 'btn btn-secondary'
 - else
-  %p 施設が見つかりません。
+  %p 出店が見つかりません。
+
+
+= render 'footer/footer'
