@@ -4,7 +4,10 @@
   .title-content-container
     .title-content
       %h1 新着イベント一覧
-      %p ここにフリマなどのイベント一覧が表示される予定
+      %p 日本全国のイベントがここに集結！地域の魅力を発見しよう。
+      %p さあ、あなたの次のお出かけを見つけましょう！
+      %p つながるマルシェで、素敵な出会いを見つけてください！
+      
     -# - if seller_signed_in? || host_signed_in?
     -#   .seller-btn
     -#     = link_to new_event_path, class: 'new-button' do
@@ -34,7 +37,7 @@
               = image_tag url_for(event.images.first), class: 'event-image'
           - else
             .event-no-image
-              = image_tag asset_path("no_image_square.jpg"), class: 'event-no-image'
+              = image_tag asset_path("no_image_square.jpg"), class: 'event-no-img'
 
         .event-card-content
           %h3= link_to event.title, event_path(event)
@@ -54,7 +57,9 @@
           %p 開催場所
           = event.venue.present? ? event.venue : 'その他'
           
-
-  = render 'footer/footer'
-
+%nav.pagination
   = paginate @events
+
+
+= render 'footer/footer'
+

@@ -6,14 +6,16 @@ class HostsController < ApplicationController
   def index
         @host = current_host
        @comments = @host.comments.order(created_at: :desc) # 管理者からのコメントを取得
-       @events = @host.events.order(created_at: :desc) # ホストが出店したイベントを取得
+      #  @events = @host.events.order(created_at: :desc) # ホストが出店したイベントを取得
        @events = @host.events if @host # ホストに紐づくイベントを取得する場合
   end
 
   def show
+    @events = @host.events.order(start_time: :desc).limit(5) # 開催日が近い順に直近5件を取得
     @topics_text = @host.topics # トピックスのテキストを取得
     @news_text = @host.news # 新着ニュースのテキストを取得
     @goods_introduction_text = @host.goods_introduction # 商品紹介のテキストを取得
+    @events = @host.events.order(start_time: :asc) # ホストに関連するイベントを取得し、開催日順に並べる
   end
 
   def edit

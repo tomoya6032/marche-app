@@ -1,5 +1,7 @@
 %body
   = render 'header/header' # ヘッダーのパーシャルを呼び出す
+  
+  
   .index-btn
     %p 出店詳細ページ
   
@@ -70,7 +72,7 @@
   .edit-links
     - if host_signed_in? && current_host == @event.host
       = link_to '編集', edit_host_event_path(@event.host, @event), class: 'operation-button'
-      = link_to '削除', host_event_path(@event.host, @event), data: { turbo_method: :delete, confirm: '本当に削除してもよろしいですか？' }, class: 'operation-button'
+      = link_to '削除', host_event_path(@event.host, @event), data: { turbo_method: :delete, turbo_confirm: '本当に削除しますか？' }, class: 'operation-button'
     - elsif seller_signed_in? && current_seller == @event.seller
       = link_to '編集', edit_event_path(@event), class: 'operation-button'
       = link_to '削除', event_path(@event), data: { turbo_method: :delete, confirm: '本当に削除してもよろしいですか？' }, class: 'operation-button'

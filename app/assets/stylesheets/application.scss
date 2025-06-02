@@ -8,6 +8,7 @@
 @import "host/index";
 @import "host/show";
 @import "hosts/show";
+@import "hosts/new";
 
 
 // メインカラーの定義
@@ -52,7 +53,7 @@ $link-hover-font-weight: bold;
   border: none;
   border-radius: 4px;
   background-color: $primary-pink;
-  color: #ffffff; // 好きな色を指定（例: 青色）
+  color: #ffffff !important; // 好きな色を指定（例: 青色）
   text-decoration: none; // 必要に応じて下線を削除
   cursor: pointer;
   
@@ -68,7 +69,7 @@ body {
   color: #333;
   background-color: #ffffff;
   margin: auto;
-  
+  // line-break: strict;
 }
 
 h1, h2 {
@@ -100,11 +101,22 @@ a:hover {
 }
 
 
-
+.header-left {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  width: 100%;
+}
 
 .header-left .link_inner {
     font-size: 12px;
     width: 200px;
+    img {
+      height: 100px; /* ロゴの高さを調整 */
+      margin-right: 20px; /* ロゴとテキストの間隔を調整 */
+      border-radius: 14px;
+    }
+    
 }
 .header {
   display: flex;
@@ -116,16 +128,50 @@ a:hover {
 .header-logo {
   margin: 10px;
   padding: 10px;
-  width: 500px; /* ロゴの幅を調整 */
+  // width: 500px; /* ロゴの幅を調整 */
+  img {
+    height: 150px; /* ロゴの高さを調整 */
+  }
+
+}
+
+.header-inner {
+  display: flex;
+  
+  // align-items: center;
+  // justify-content: space-between;
+  width: 100%;
+  
+
+  
 }
 
 .header-right {
   display: flex;
   align-items: center;
-  width: 200px;
+  // width: 200px;
 }
 
+.spnav {
+  display: none;
+}
 
+.menu-toggle {
+  display: none; /* デフォルトでは非表示 */
+  background: none;
+  border: none;
+  cursor: pointer;
+  flex-direction: column;
+  justify-content: space-between;
+  // height: 20px;
+  
+  span {
+    display: block;
+    width: 90%;
+    height: 5px;
+    background-color: #333;
+  }
+}
 
 .login-btn,.signup-btn {
     font-size: 14px;
@@ -134,13 +180,20 @@ a:hover {
     word-wrap:break-word; //単語で切って改行してくれる
 }
 
+.sp-login-btn, .sp-signup-btn {
+  display: none; /* デフォルトでは非表示 */
+  font-size: 14px;
+  margin-left: 8px;
+  width: 200px;
+  word-wrap: break-word; //単語で切って改行してくれる
+}
+
 .button {
   display: inline-block;
   text-align: center;
   margin: 6px;
-  
   padding: 4px;
-  // padding-left: 8px;  
+ 
   width: 120px;
   border: none;
   border-radius: 4px;
@@ -157,13 +210,17 @@ a:hover {
 
 
 .button-delete {
+  display: inline-block;
   background-color: #ff4d4d; /* 赤色 */
   color: white;
-  padding: 10px 20px;
+  text-align: center;
+  padding: 4px;
+  width: 120px;
   border: none;
-  border-radius: 5px;
+  border-radius: 4px;
   cursor: pointer;
   text-decoration: none;
+  font-size: 12px;
 }
 
 .button-delete:hover {
@@ -648,7 +705,7 @@ nav ul li a {
     font-size: 32px;
     color: #ffffff;
     font-weight: bold;
-    text-shadow: 4px 4px 5px rgba(0, 0, 0, 0.9); /* 黒色の影 */
+    text-shadow: 2px 2px 0 $text-light, -2px -2px 0 $text-light, 2px -2px 0 $text-light, -2px 2px 0 $text-light;
   
     h1 {
       color: #ffffff;
@@ -668,7 +725,7 @@ nav ul li a {
 
 .event-container {
     background-color: #fbdd83;
-    width: 300px;
+    width: 200px;
     margin-left: 50px;
     padding: 0 auto;
     border-radius: 50px;
@@ -681,7 +738,7 @@ nav ul li a {
 
 .upcoming-events-container {
   background-color: #fbdd83;
-  width: 300px;
+  width: 200px;
   margin-left: 50px;
   padding: 0 auto;
   border-radius: 50px;
@@ -690,33 +747,40 @@ nav ul li a {
   transform: translateY(-50%); /* 子要素自身の高さの半分だけ上に移動 */
   text-align: center;
   box-shadow: 3px 3px 11px rgba(89, 12, 12, 0.8);
+  
 }
 
 .event-btn {
     margin: 10px;
     padding: 10px;
+    height: 40px;
 }
 
 .facility-container {
     box-shadow: 3px 3px 11px rgba(89, 12, 12, 0.8);
     text-align: center;
     background-color: #fbdd83;
-    width: 300px;
+    width: 200px;
     margin-left: 50px;
     border-radius: 50px;
     position: absolute;
     top: 50%;
+    
     transform: translateY(-50%); /* 子要素自身の高さの半分だけ上に移動 */
 }
 
 .facility-btn {
     margin: 10px;
     padding: 10px;
+    height: 40px;
+    // align-items: center;
 }
 
 .upcoming-events-button {
   margin: 10px;
   padding: 10px;
+  height: 60px;
+  // align-items: center;
   
 }
 
@@ -726,11 +790,14 @@ nav ul li a {
     padding: 0px auto;
     margin-right: 10px;
     a {
-      padding: 80px 120px;
+      // padding: 80px 80px;
     }
     h3 {
-      font-size: 24px;
+      font-size: 18px;
       color: #000;
+      margin: 8px;
+      
+     
     }
 }
 
@@ -756,9 +823,7 @@ nav ul li a {
     }
 }
 
-.pickup-top {
- 
-}
+
 
 
 .pickup-slider {
@@ -887,6 +952,7 @@ nav ul li a {
   }
   img {
     width: 50px;
+    margin-left: 20px;
     border-radius: 10px;
   }
 }
@@ -951,15 +1017,18 @@ nav ul li a {
 
 
 
-.event-no-image {
-  display: flex;
+.event-no-img {
+  // display: flex;
   justify-content: center;
   align-items: center;
-  background-color: #e0e0e0; /* デフォルト画像の背景色 */
-  width: 100%;
-  height: 150px;
+  // background-color: #e0e0e0; /* デフォルト画像の背景色 */
+  width: 80%;
+  max-height: 200px;
   border-radius: 5px;
-  margin-bottom: 10px;
+  
+  margin: 0 auto; /* 中央に配置 */
+  margin-top: 20px;
+  
 }
 
 .section.recruitment {
@@ -970,6 +1039,44 @@ nav ul li a {
     }
 
   
+}
+
+.pagination {
+  display: flex; /* 横並びにする */
+  justify-content: center; /* 中央寄せ */
+  margin-top: 20px;
+  list-style: none; /* デフォルトのリストスタイルを消す */
+  padding: 0;
+
+  li {
+    margin: 0 8px; /* リンク間のスペース */
+  }
+
+  a, span {
+    display: inline-block; /* インラインブロックにする */
+    padding: 10px 15px; /* 内側の余白を調整 */
+    border-radius: 5px; /* 角を丸くする */
+    text-decoration: none; /* 下線を消す */
+    color: #333; /* テキストの色 */
+    background-color: #f9f9f9; /* 背景色を薄いグレーにする */
+    transition: background-color 0.3s ease; /* ホバー時のアニメーション */
+  }
+
+  a:hover {
+    background-color: #e0e0e0; /* ホバー時の背景色 */
+  }
+
+  .current span {
+    // display: inline-block; /* インラインブロックにする */
+    padding: 15px auto; /* 内側の余白を調整 */
+    justify-content: center; /* 中央寄せ */
+    align-items: center;
+    border-radius: 5px; /* 角を丸くする */
+    text-decoration: none; /* 下線を消す */
+    color: #fff; /* 現在のページの文字色 */
+    background-color: #007bff; /* 現在のページの背景色 */
+    border: 1px solid #007bff; /* 現在のページの枠線色 */
+  }
 }
 
 
@@ -983,6 +1090,10 @@ nav ul li a {
     p {
       margin-top: 20px;
       text-align: left;
+      
+    }
+    span {
+      display: inline;
     }
     .recruitment-link {
       // margin: auto;
@@ -1021,6 +1132,13 @@ nav ul li a {
   background-color: #4bb1ff; /* 濃い赤色 */
 }
 
+.highlight {
+  background-color: #fff9c4; /* 薄い黄色 */
+  padding: 2px 4px; /* 少し余白を追加 */
+  display: inline; /* 必ずインライン要素として扱う */
+  border-radius: 3px; /* 角を丸くする */
+}
+
 .recruitment-btn-containaer {
     // display: flex;
     text-align: center;
@@ -1056,7 +1174,7 @@ nav ul li a {
 
 .footer {
   margin-top: 60px;
-  height: 500px;
+  height: auto;
   display: flex;
   align-items: flex-end;
   border-top: 1px solid #000;
@@ -1092,14 +1210,19 @@ nav ul li a {
 }
 
 .title-content-container {
-  display: flex; /* 横並びにする */
-  justify-content: space-between; /* 両端配置、間隔を空ける */
-  align-items: center; /* 縦方向の中央揃え */
+  
   margin: 20px;
+
+  p {
+    margin: auto;
+    text-align: center;
+  }
+
 }
 
 .title-content {
   margin-right: 20px; /* 右側の要素との間隔 */
+  
 }
 
 .filter-form {
@@ -1173,9 +1296,9 @@ nav ul li a {
 
 .event-no-image {
   
-  width: 300px;
+  max-width: 300px;
   height: 200px;
-  background-color: #f2f2f2;
+  // background-color: #f2f2f2;
   display: flex;
   justify-content: center;
   align-items: center;
@@ -1186,6 +1309,7 @@ nav ul li a {
 .event-card-content {
   padding: 10px;
   text-align: left;
+  width: 90%;
   h3 {
     margin-top: 0px;
   }
@@ -1194,6 +1318,7 @@ nav ul li a {
     color: #ffffff;
     padding: 4px;
     padding-left: 12px;
+    width: 90%;
     margin-top: 30px;
     background-color: $third-color;
     font-size: 12px;
@@ -1387,6 +1512,7 @@ nav ul li a {
 .column-section {
   .section.news {
     margin-top: 20px;
+    padding: 30px;
 
     h3 {
       font-size: 24px;
@@ -1464,3 +1590,772 @@ table.account-comparison {
     font-weight: bold;
   }
 }
+
+
+.stores-registration {
+  text-align: left;
+  padding-left: 20px;
+  margin: 10px;
+  background-color: #f5fded;
+  .h4 {
+    font-size: 18px; /* 見出しの下に余白を追加 */
+    margin-top: 20px;
+    font-weight: bold;
+  }
+  p {
+    font-size: 14px; /* フォントサイズを調整 */
+    margin: 4px;
+  
+  }
+}
+
+.event-guidance {
+  text-align: left;
+  padding-left: 20px;
+  margin: 10px;
+  background-color: #f5fded;
+  .h4 {
+    font-size: 18px; /* 見出しの下に余白を追加 */
+    margin-top: 20px;
+    font-weight: bold;
+  }
+  p {
+    font-size: 14px; /* フォントサイズを調整 */
+    margin: 4px;
+  
+  }
+}
+
+.stores-opner {
+  text-align: left;
+  padding-left: 20px;
+  margin: 10px;
+  background-color: #f5fded;
+  .h4 {
+    font-size: 18px; /* 見出しの下に余白を追加 */
+    margin-top: 20px;
+    font-weight: bold;
+  }
+  p {
+    font-size: 14px; /* フォントサイズを調整 */
+    margin: 4px;
+  
+  }
+}
+
+.information-container {
+  text-align: left; /* テキストを中央揃え */
+  padding-left: 20px;
+  margin: 10px;
+  background-color: #f5fded;
+  .h4 {
+    font-size: 18px; /* 見出しの下に余白を追加 */
+    margin-top: 20px;
+    font-weight: bold;
+  }
+  p {
+    font-size: 14px; /* フォントサイズを調整 */
+    margin: 4px;
+  
+  }
+}
+
+.information-container {
+  text-align: left; /* テキストを中央揃え */
+  padding-left: 20px;
+  margin: 10px;
+  background-color: #f5fded;
+  .h4 {
+    font-size: 18px; /* 見出しの下に余白を追加 */
+    margin-top: 20px;
+    font-weight: bold;
+  }
+  p {
+    font-size: 14px; /* フォントサイズを調整 */
+    margin: 4px;
+  
+  }
+}
+
+
+
+
+/* SPデザイン */
+@media (max-width: 480px) {
+    /* 全体の調整 */
+    body {
+      padding: 10px; 
+    }
+    /* ボタンの調整 */
+    .button, .operation-button {
+      width: 90%; /* ボタンを画面幅に合わせる */
+      margin: 10px auto; /* ボタン間の余白を追加 */
+      
+    }
+
+    
+    /* ヘッダー */
+    .header {
+      flex-direction: column; /* 縦並びに変更 */
+      align-items: center;
+      text-align: center;
+  
+      .header-logo {
+        padding: 0;
+        padding: auto; /* ロゴのパディングを自動に設定 */
+        margin: auto; /* ロゴとタイトルの間に余白を追加 */
+      }
+      .header-logo img {
+        width: 60px; /* 画像の幅を固定 */
+        // height: auto; /* 高さを自動調整（アスペクト比を維持） */
+        object-fit: contain; /* 画像を枠内に収める */
+        margin-right: 10px;
+      }
+  
+      .header-left {
+        h1 {
+          font-size: 22px; /* フォントサイズを調整 */
+          // margin: 0; /* マージンをリセット */
+        }
+      }
+      
+    }
+
+    .header-inner {
+      display: flex;
+      
+      // flex-direction: column; /* 縦並びに変更 */
+      align-items: center; /* 中央揃え */
+      width: 100%; /* 幅を100%に設定 */
+    }
+
+    .nav {
+       display: none; /* デフォルトでは非表示 */
+    }
+    
+
+    .menu-toggle {
+      display: flex; /* SPでは表示 */
+      flex-direction: column;
+      justify-content: space-between;
+      width: 50px;
+      height: 30px;
+      background: none;
+      border: none;
+      cursor: pointer;
+      // margin-left: 20px;
+
+      span {
+        display: block;
+        width: 90%;
+        height: 5px;
+        background-color: #333;
+      }
+    }
+  
+    .spnav.active {
+      display: flex; /* トグルで表示 */
+    }
+
+    .spnav {
+      // display: none; /* デフォルトでは非表示 */
+      flex-direction: column; /* 縦並びに変更 */
+      align-items: center; /* 中央揃え */
+      width: 88%;
+      background-color: #e0f8c8; /* 背景色を設定 */
+      padding: 10px;
+      ul {
+        list-style: none; /* デフォルトのリストマーカーを非表示 */
+        padding: 0;
+        margin: 0;
+        width: 100%; /* 幅を100%に設定 */
+        li {
+          width: 100%; /* 各リストアイテムの幅を100%に設定 */
+          
+        }
+      }
+
+      .sp-login-btn a,
+      .sp-signup-btn a {
+        margin: auto;         
+      }
+    }
+    
+
+
+    .button {
+      width: 80%;
+      font-size: 12px;
+      &.logged-in {
+        background-color: $primary-pink; /* ログイン時の色 */
+        color: white;
+      }
+    }
+
+    .login-btn {
+      display: none;
+    }
+    .signup-btn  {
+      display: none;
+    }
+
+
+
+    .top-container {
+      background-size: cover; /* 画像を画面幅に合わせる */
+      align-items: center; /* 中央揃え */
+      margin: 0;
+      padding: 0;
+      
+      .top-container-message {
+        width: 100%; /* SPでは幅を100%にする */
+        padding: 0px; /* パディングを調整 */
+        // text-align: center; /* テキストを中央揃え */
+        // margin-left: 0; /* 左マージンをリセット */
+        height: auto; /* 高さを自動調整 */
+      }
+
+    }
+
+    .event-container {
+      top: 38%; /* 上部の位置を調整 */
+    }
+
+    .facility-container {
+      top: 58%; /* 上部の位置を調整 */
+    }
+
+    .upcoming-events-container {
+      top: 78%; /* 上部の位置を調整 */
+    }
+
+
+    .event-container,.facility-container ,.upcoming-events-container {
+      height: 60px;
+      width: 40%; 
+      padding: 0 ;
+      // position: absolute;
+      margin-left: 30px; /* ボタン間の余白を追加 */
+      
+      // transform: none; /* モバイル表示でtransformを無効化 */
+      
+      
+      .event-btn,.facility-btn, .upcoming-events-button {
+        width: 100%;  /* ボタンを画面幅に合わせる */
+        height: 60px;
+        padding: 0;
+        top: 20%;
+        
+        text-align: center;
+        display: flex;             // Flexboxを有効にする
+        align-items: center; 
+        justify-content: center; 
+        margin: 0; /* ボタン間の余白を追加 */
+        h3 {
+          
+          margin: 0;
+          font-size: 14px; /* フォントサイズを調整 */
+        }
+      }
+    }
+
+    .top-btn-container {
+      height: fit-content;
+      margin-top: 20px; /* 上部の余白を追加 */
+      
+    
+    }
+    
+    .top-container-message {
+      // width: 60%;            /* SPでは幅を100%にする */
+      // padding: 10px; 
+      // text-align: right;         /* SPでのパディング調整 */
+      margin-left: 0;  
+      height: 380px;       /* SPでは左マージンをリセット */
+      // font-size: 24px;        /* SPでのフォントサイズ調整 */
+      // padding-right: 20px;    /* SPでのパディング調整 */
+      // .sp-hide {
+      //   display: none;
+      // }
+      h1 {
+        width: 100%;
+        text-align: left;
+        margin-bottom: 50px;
+        font-size: 32px;      /* SPでのH1フォントサイズ調整 */
+      }
+      p {
+        width: 56%;
+        text-align: left;
+        font-size: 14px;      /* SPでのパラグラフフォントサイズ調整 */
+      }
+    }
+    .link_inner {
+      
+    }
+    
+  
+  
+    /* ピックアップセクション */
+    .pickup-contaner {
+      margin-top: 50px;
+  
+      h2 {
+        font-size: 1.5em; /* 見出しのフォントサイズを調整 */
+      }
+    }
+  
+    .pickup-top {
+      margin: auto;
+      margin-bottom: 10px;
+      width: 90%;
+      
+      grid-template-columns: 1fr; /* 1列に変更 */
+      gap: 10px; /* アイテム間のスペースを調整 */
+      .pickup-slider {
+        flex-direction: column; /* 縦並びに変更 */
+        // text-align: center;
+        margin: auto;
+        // margin-bottom: 10px;
+      }
+    }
+  
+    .event-item {
+      width: 80%; /* カードを画面幅に合わせる */
+      margin: auto; /* 中央揃え */
+      padding: 20px;
+      text-align: left; /* テキストを中央揃え */
+      margin-bottom: 30px;
+    
+    }
+  
+    .event-item img {
+      height: auto; /* 画像の高さを自動調整 */
+    }
+  
+    /* ニュースセクション */
+    .news-section {
+      
+      margin-top: 40px;
+  
+      h2 {
+        font-size: 1.5em;
+      }
+  
+      .section.news ul {
+        padding: 10px;
+  
+        li {
+          text-align: left; /* テキストを左揃え */
+          padding: 10px;
+        }
+      }
+    }
+
+    .column-section {
+      padding: 12px;
+      flex-direction: column; /* 縦並びに変更 */
+      align-items: center; /* 中央揃え */
+      height: auto;
+      .sns-container {
+        width: 90%; /* SNSコンテナの幅を調整 */
+        padding: 10px;
+        margin: 20px auto; /* 中央揃え */
+        background-color: #e1fbed; /* 薄いベージュ */
+        border-left: none; /* 左側に線を追加 */
+      }
+    }
+    .sns-inner {
+      // height: auto; /* 高さを自動調整 */
+      text-align: left; /* テキストを中央揃え */
+      img {
+        width: 30px;
+        border-radius: 4px;
+      }
+    }
+    .section.recruitment {
+      .recruitment-link {
+        margin: 20px auto;
+        width: 180px;
+        padding: 10px;
+        border-radius: 20px;
+        box-shadow: 3px 3px 11px rgba(89, 12, 12, 0.8);
+        a {
+          width: 180px;
+          padding: 10px;
+        }
+      }
+      .recruitment-image {
+        width: 90%; /* 画像の幅を100%に設定 */
+        height: auto; /* 高さを自動調整 */
+        
+        margin: auto; /* 中央揃え */
+        border-radius: 10px;
+      }
+    }
+      
+    .section.description {
+      h2 {
+        font-size: 24px; /* 見出しのフォントサイズを調整 */
+      }
+    }
+
+    .host-mypage {
+      h1 {
+        font-size: 20px; /* 見出しのフォントサイズを調整 */
+        text-align: center; /* テキストを中央揃え */
+      }
+      .host-btn {
+        width: 80%; /* ボタンを画面幅に合わせる */
+        margin: 10px auto; /* 中央揃え */
+        padding: 10px;
+        font-size: 14px; /* フォントサイズを調整 */
+        text-align: center; /* テキストを中央揃え */
+      }
+      .acccount-date{
+        width: 100%;
+      }
+
+      .host-profile-info {
+        .text-muted {
+          margin: 8px;
+          margin-right: 10px;
+        }
+       
+        .payment-button {
+          width: 60%;
+          padding: 8px;
+          margin: 8px;
+          margin-right: 10px;
+          // text-align: center;
+        }
+        
+
+        th {
+          font-size: 12px; /* フォントサイズを調整 */
+          font-weight: bold; /* 太字にする */
+          min-width: 90px;
+        }
+        td {
+          
+          font-size: 12px; /* フォントサイズを調整 */
+          padding: 5px; /* セルのパディングを調整 */
+        }
+      }
+
+    }
+
+    .seller-mypage {
+      h1 {
+        font-size: 20px; /* 見出しのフォントサイズを調整 */
+        text-align: center; /* テキストを中央揃え */
+      }
+      .seller-btn {
+        width: 90%; /* ボタンを画面幅に合わせる */
+        margin: 10px auto; /* 中央揃え */
+        padding: 10px;
+        font-size: 14px; /* フォントサイズを調整 */
+        text-align: center; /* テキストを中央揃え */
+      }
+      .acccount-date{
+        width: 100%;
+      }
+
+      .seller-profile-info {
+        .text-muted {
+          margin: 8px;
+          margin-right: 10px;
+        }
+        
+        .payment-button {
+          width: 60%;
+          padding: 8px;
+          margin: 8px;
+          margin-right: 10px;
+          // text-align: center;
+        }
+        
+
+        th {
+          font-size: 12px; /* フォントサイズを調整 */
+          font-weight: bold; /* 太字にする */
+          min-width: 90px;
+        }
+        td {
+          
+          font-size: 12px; /* フォントサイズを調整 */
+          padding: 5px; /* セルのパディングを調整 */
+        }
+      }
+
+    }
+
+    /* フッター */
+    .footer {
+      flex-direction: column; /* 縦並びに変更 */
+      align-items: center;
+      width: 100%;
+      height: auto;
+      .footer-description {
+        flex-direction: column; /* 縦並びに変更 */
+        text-align: center;
+        width: 100%; /* 幅を100%に設定 */
+        
+        .stores-registration {
+          width: 100%; /* 幅を100%に設定 */
+          text-align: center; /* テキストを中央揃え */
+          margin: 0 auto;
+          .footer-button  {
+            width: 80%; /* ボタンを画面幅に合わせる */
+            margin: 20px;
+            text-align: center;
+            
+          }
+        }
+      }
+      .event-guidance {
+        text-align: left;
+        padding-left: 30px;
+        .h4 {
+          font-size: 18px; /* 見出しの下に余白を追加 */
+          margin-top: 20px;
+          font-weight: bold;
+        }
+        p {
+          font-size: 14px; /* フォントサイズを調整 */
+          margin: 4px;
+        
+        }
+      }
+
+      .stores-opner {
+        text-align: left;
+        padding-left: 30px;
+        .h4 {
+          font-size: 18px; /* 見出しの下に余白を追加 */
+          margin-top: 20px;
+          font-weight: bold;
+        }
+        p {
+          font-size: 14px; /* フォントサイズを調整 */
+          margin: 4px;
+        
+        }
+      }
+
+      .information-container {
+        text-align: left; /* テキストを中央揃え */
+        padding-left: 30px;
+        .h4 {
+          font-size: 18px; /* 見出しの下に余白を追加 */
+          margin-top: 20px;
+          font-weight: bold;
+        }
+        p {
+          font-size: 14px; /* フォントサイズを調整 */
+          margin: 4px;
+        
+        }
+      }
+
+      .information-container {
+        text-align: left; /* テキストを中央揃え */
+        padding-left: 30px;
+        .h4 {
+          font-size: 18px; /* 見出しの下に余白を追加 */
+          margin-top: 20px;
+          font-weight: bold;
+        }
+        p {
+          font-size: 14px; /* フォントサイズを調整 */
+          margin: 4px;
+        
+        }
+      }
+    }
+
+  
+      // .footer-button {
+      //   width: 100%; /* ボタンを画面幅に合わせる */
+      //   margin: auto; /* 中央揃え */
+      // }
+    .section.recruitment {
+      width: auto; /* セクションの幅を調整 */
+      text-align: center;
+      .page-title {
+        display: none;
+      }
+    }
+    .recruitment {
+      text-align: center;
+      margin: 0 auto;
+      width: 90%;
+
+      
+      h1 {
+        text-align: center;
+        margin: auto;
+        margin-top: 30px;
+        width: 100%;
+        font-size: 20px; /* 見出しのフォントサイズを調整 */
+        word-break: break-all;
+      }
+      
+    }
+
+    .recruitment-btn-containaer {
+      display: flex;
+      // flex-direction: column; /* 縦並びに変更 */
+      align-items: center; /* 中央揃え */
+
+      margin-top: 20px; /* 上部の余白 */
+      .btn-recruitment {
+        margin: 10px; /* ボタン間の余白を追加 */
+        width: 80%; /* ボタンを画面幅に合わせる */
+        padding: 6px; /* パディングを調整 */
+        font-size: 14px; /* フォントサイズを調整 */
+        text-align: center; /* テキストを中央揃え */
+      }
+    }
+    .recruitment-content {
+      width: 90%; /* コンテンツの幅を調整 */
+      margin: auto; /* 中央揃え */
+      color: $text-dark;
+      text-align: left; /* テキストを左揃え */
+      padding: 20px; /* パディングを追加 */
+      h2 {
+        font-size: 24px; /* 見出しのフォントサイズを調整 */
+        margin-top: 40px;
+        text-align: center;
+      }
+      p {
+        margin-top: 20px;
+        text-align: left; /* テキストを左揃え */
+      }
+      span {
+        display: inline;
+      }
+    }
+
+
+    .account-comparison {
+      font-size: 14px;
+     
+    }
+
+
+
+    /* その他のセクション */
+    .top-container {
+      height: auto; /* 高さを自動調整 */
+      padding: 20px;
+      text-align: center;
+
+      .top-container-message {
+        width: 100%;
+        font-size: 1.2em; /* フォントサイズを調整 */
+      }
+    }
+
+    .column-section {
+      flex-direction: column; /* 縦並びに変更 */
+      align-items: center;
+  
+      .section.news {
+        width: 100%;
+      }
+    }
+  
+    .event-title {
+      font-size: 0.8em; /* フォントサイズを調整 */
+      
+    }
+    .event-list {
+      flex-direction: column; /* 縦並びに変更 */
+      align-items: center;
+    }
+  
+    .event-card {
+      width: 100%; /* カードを画面幅に合わせる */
+      margin: 10px 0;
+    }
+  
+    .event-card img {
+      height: auto; /* 画像の高さを自動調整 */
+    }
+  
+    .filter-form {
+      width: 90%; /* フォームを画面幅に合わせる */
+      padding: 10px;
+      margin: auto; /* 中央揃え */
+      margin-bottom: 50px;
+    }
+  
+    .filter-form select {
+      width: 100%; /* セレクトボックスを画面幅に合わせる */
+      
+    }
+  
+    .filter-form input[type="submit"] {
+      width: 100%; /* ボタンを画面幅に合わせる */
+    }
+
+    .event-cards {
+      
+      margin: auto;
+      width: 100%; /* カードを画面幅に合わせる */
+
+      .event-card {
+        width: 90%; /* カードを画面幅に合わせる */
+        margin: 8px;
+      }
+      .event-image, .event-no-image {
+        margin: 14px;
+        width: 90%;
+        height: 200px; /* 画像の高さを固定 */
+        img {
+          width: 100%; /* 画像の幅を100%に設定 */
+         
+        }
+      }
+      
+    }
+    .event-card-content {
+      text-align: left; /* テキストを左揃え */
+      padding: 10px;
+      width: 90%; /* カードの幅を100%に設定 */
+    }
+
+
+
+    .button-delete {
+      width: 80%;
+    }
+  
+    .seller-profile-info {
+      img {
+        margin: 10px auto;
+      }
+    }
+
+    .title-content-container {
+      h1 {
+        font-size: 24px; /* 見出しのフォントサイズを調整 */
+      }
+      p {
+        text-align: left;
+        font-size: 18px; /* パラグラフのフォントサイズを調整 */
+      }
+    
+    }
+
+
+
+
+
+
+
+
+
+
+}
+

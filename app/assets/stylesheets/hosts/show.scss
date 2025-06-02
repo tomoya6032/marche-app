@@ -1,5 +1,13 @@
 .host-details {
     // padding: 20px;
+    a {
+      color: #007bff;
+      text-decoration: none;
+  
+      &:hover {
+        text-decoration: underline;
+      }
+    }
     font-family: 'Arial', sans-serif;
     background-color: #fdfdfd;
     width: 90%;

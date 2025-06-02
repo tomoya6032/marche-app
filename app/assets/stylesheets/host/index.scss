@@ -4,6 +4,10 @@
     background-color: #f9f9f9;
     // border-radius: 10px;
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    
+    .button, .button-delete {
+        color: white !important;
+    }
 
     h1 {
         font-size: 24px;
@@ -51,14 +55,7 @@
         td {
             color: #555;
 
-            a {
-                color: #ffffff;
-                text-decoration: none;
-
-                &:hover {
-                    text-decoration: underline;
-                }
-            }
+            
 
             p {
                 margin-bottom: 5px;
@@ -167,3 +164,16 @@
     }
     
 }
+
+.host-events {
+
+    .a {
+    color: #007bff;
+    text-decoration: none;
+
+        &:hover {
+            text-decoration: underline;
+        }
+    }
+    
+  }

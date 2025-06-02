@@ -23,10 +23,10 @@ gem "sassc-rails"
 
 # アセットパイプラインの新しい仕組み
 # gem 'sprockets-rails'
-gem 'sprockets-rails'
+
 
 # CSS・JSバンドラー
-gem 'cssbundling-rails'
+
 
 gem 'devise'
 

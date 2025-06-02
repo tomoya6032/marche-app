@@ -21,7 +21,7 @@ module Hosts
     def create
       @event = @host.events.build(event_params)
       if @event.save
-        redirect_to host_events_path(@host), notice: 'イベントを作成しました。'
+        redirect_to host_event_path(@host, @event), notice: 'イベントを作成しました。'
       else
         render :new, alert: 'イベントの作成に失敗しました。'
       end
@@ -64,8 +64,12 @@ module Hosts
     end
 
     def destroy
-      @event.destroy
-      redirect_to host_path(@host), notice: 'イベントが削除されました。'
+      @event = @host.events.find(params[:id]) # ホストに紐づくイベントを取得
+      if @event.destroy
+        redirect_to host_events_path(@host), notice: 'イベントを削除しました。'
+      else
+        redirect_to host_events_path(@host), alert: 'イベントの削除に失敗しました。'
+      end
     end
 
     private
@@ -80,13 +84,53 @@ module Hosts
       redirect_to host_events_path(@host), alert: 'イベントが見つかりません。' if @event.nil?
     end
 
+    def event_params_with_datetime
+      # まず、日時コンポーネントを含まない基本的なパラメータを許可
+      permitted_params = params.require(:event).permit(
+        :title, :description, :venue, :address, :latitude, :longitude,
+        :capacity, :is_online, :online_url, :is_free, :price, :organizer,
+        :contact_info, :website, :status, :video, :category_id,
+        images: [], remove_images: []
+      )
+
+      # 各日時コンポーネントを params から取得し、結合して permitted_params に追加
+      # start_timeとend_timeのそれぞれについて処理
+      [:start_time, :end_time].each do |time_field|
+        # 各コンポーネントのパラメータ名を取得
+        year = params[:event]["#{time_field}_year"]&.to_i
+        month = params[:event]["#{time_field}_month"]&.to_i
+        day = params[:event]["#{time_field}_day"]&.to_i
+        hour = params[:event]["#{time_field}_hour"]&.to_i
+        minute = params[:event]["#{time_field}_minute"]&.to_i
+      
+        if year.present? && month.present? && day.present? && hour.present? && minute.present?
+          begin
+            # DateTimeオブジェクトを構築
+            time_object = Time.zone.local(year, month, day, hour, minute)
+            permitted_params[time_field] = time_object
+          rescue ArgumentError => e
+            # 日付のパースエラー（例: 2月30日など無効な日付）が発生した場合
+            Rails.logger.warn "Invalid date/time for #{time_field}: #{e.message} - Params: #{params[:event].slice("#{time_field}_year", "#{time_field}_month", "#{time_field}_day", "#{time_field}_hour", "#{time_field}_minute")}"
+            permitted_params[time_field] = nil # 無効な場合はnilをセット
+          end
+        else
+          # コンポーネントが不完全な場合はnilをセット
+          permitted_params[time_field] = nil
+        end
+      end
+      permitted_params # 結合された日時が含まれたパラメータハッシュを返す
+    end
+
     def event_params
       params.require(:event).permit(
-        :title, :description, :start_time, :end_time, :venue, :address, :latitude, :longitude,
-        :capacity, :is_online, :online_url, :is_free, :price, :organizer, :contact_info, :website,
-        :status, :video, :category_id, images: []
+        :title, :description, :venue, :address, :latitude, :longitude,
+        :capacity, :is_online, :online_url, :is_free, :price, :organizer,
+        :contact_info, :website, :status, :video, :category_id,
+        images: [], # 新しい画像アップロード用
+        remove_images: [] # 編集時の画像削除用
       )
     end
+
 
     def set_prefectures
       @prefectures = %w[
@@ -106,7 +150,7 @@ module Hosts
          params[:event][:start_time_day].present? &&
          params[:event][:start_time_hour].present? &&
          params[:event][:start_time_minute].present?
-        event.start_time = DateTime.new(
+        event.start_time = Time.zone.local(
           params[:event][:start_time_year].to_i,
           params[:event][:start_time_month].to_i,
           params[:event][:start_time_day].to_i,
@@ -114,13 +158,13 @@ module Hosts
           params[:event][:start_time_minute].to_i
         )
       end
-
+    
       if params[:event][:end_time_year].present? &&
          params[:event][:end_time_month].present? &&
          params[:event][:end_time_day].present? &&
          params[:event][:end_time_hour].present? &&
          params[:event][:end_time_minute].present?
-        event.end_time = DateTime.new(
+        event.end_time = Time.zone.local(
           params[:event][:end_time_year].to_i,
           params[:event][:end_time_month].to_i,
           params[:event][:end_time_day].to_i,

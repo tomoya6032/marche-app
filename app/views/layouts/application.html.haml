@@ -14,11 +14,12 @@
     %link{ href: "/icon.png", rel: "apple-touch-icon" }
     %link{ rel: "stylesheet", type: "text/css", href: "//cdn.jsdelivr.net/npm/slick-carousel@1.8.1/slick/slick.css" }
     %link{ rel: "stylesheet", type: "text/css", href: "//cdn.jsdelivr.net/npm/slick-carousel@1.8.1/slick/slick-theme.css" }
-    %script{ src: "https://code.jquery.com/jquery-3.7.1.min.js", crossorigin: "anonymous" }
+    -# %script{ src: "https://code.jquery.com/jquery-3.7.1.min.js", crossorigin: "anonymous" }
     %link{ href: "https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css", rel: "stylesheet" }
 
     = stylesheet_link_tag "application", media: "all", "data-turbo-track": "reload"
     = javascript_importmap_tags
+    -# = javascript_include_tag "application", "data-turbo-track": "reload", defer: true
 
   %body
     -# - if administrator_signed_in?

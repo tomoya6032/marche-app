@@ -3,7 +3,7 @@ class Host < ApplicationRecord
          :recoverable, :rememberable, :validatable
 
   belongs_to :facility, optional: true
-  has_many :events
+  has_many :events, dependent: :destroy
   has_many :comments, dependent: :destroy
   # has_many :topics, dependent: :destroy # トピックスとの関連付け
   # has_many :news, dependent: :destroy # 新着ニュースとの関連付け

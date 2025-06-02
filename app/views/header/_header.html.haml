@@ -1,16 +1,38 @@
 .header
-  .header-left
-    = link_to root_path do
-      .link_inner
-        %h1 つながるマルシェ
+  .header-inner
+    .header-left
+      = link_to root_path do
+        .link_inner
+          %img(src="#{asset_path('marchelogo.png')}" alt="マルシェロゴ")
 
-  .header-logo
-    = image_tag "", alt: "つながるマルシェ"
-
-  .header-right
-    %p サブタイトル
+    .header-logo
     
-  .login-btn
+
+    .header-right
+      %button.menu-toggle{ type: "button", aria_label: "メニューを開閉" }
+        %span
+        %span
+        %span
+
+  .spnav
+    %nav
+      %ul
+        %li
+          
+          %a{href: "#"} イベントタイプから選択　<br>　"comming soon"
+
+        %li
+          = link_to events_path do
+            イベント地域から選択
+        %li
+          %a{href: "#"} 日程から選択　<br>　"comming soon"
+        %li
+          = link_to recruitment_path do
+            出展するには？
+        %li
+          %a{href: "#"} FAQ & Tips　<br>　"comming soon"
+
+    .sp-login-btn
     
     - if seller_signed_in?
       = link_to sellers_path, class: 'button logged-in' do
@@ -28,8 +50,41 @@
         %br
         ＼新規会員登録／
 
+    .sp-signup-btn
+    
+    - if host_signed_in?
+      = link_to hosts_path, method: :delete, class: 'button logged-in' do
+        ショップ出店<br>マイページ
+      = link_to 'ログアウト', destroy_host_session_path, method: :delete, class: 'button'
+    - else
+      = link_to new_host_session_path, class: 'button', id: 'host-login-btn' do
+        ショップ出店
+        %br
+        ログイン
+
+      = link_to new_host_registration_path, class: 'button', id: 'host-signup-btn' do
+        ショップ出店
+        %br
+        ＼新規会員登録／
+    
+  .login-btn
+    - if seller_signed_in?
+      = link_to sellers_path, class: 'button logged-in' do
+        個人出店<br>マイページ
+      = link_to 'ログアウト', destroy_seller_session_path, method: :delete,  class: 'button'
+
+    - else
+      = link_to new_seller_session_path, class: 'button', id: 'seller-login-btn' do
+        個人出店
+        %br
+        ログイン
+
+      = link_to new_seller_registration_path, class: 'button', id: 'seller-signup-btn' do
+        個人出店
+        %br
+        ＼新規会員登録／
+
   .signup-btn
-   
     - if host_signed_in?
       = link_to hosts_path, method: :delete, class: 'button logged-in' do
         ショップ出店<br>マイページ
@@ -45,14 +100,14 @@
         %br
         ＼新規会員登録／
 
+  
+
 
 .nav
   %nav
     %ul
-      %li
-        
+      %li      
         %a{href: "#"} イベントタイプから選択　<br>　"comming soon"
-
       %li
         = link_to events_path do
           イベント地域から選択
@@ -63,3 +118,16 @@
           出展するには？
       %li
         %a{href: "#"} FAQ & Tips　<br>　"comming soon"
+
+
+:javascript
+  document.addEventListener("DOMContentLoaded", () => {
+    const menuToggle = document.querySelector(".menu-toggle");
+    const spnav = document.querySelector(".spnav");
+
+    if (menuToggle && spnav) {
+      menuToggle.addEventListener("click", () => {
+        spnav.classList.toggle("active");
+      });
+    }
+  });

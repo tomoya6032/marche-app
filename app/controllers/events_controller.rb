@@ -4,34 +4,33 @@ class EventsController < ApplicationController
   before_action :set_prefectures, only: [ :index, :new, :edit, :create ]
 
   def index
-    @events = if params[:filter] == 'recent'
-      Event.order(:start_time) # 開催日の近い順に取得
-    else
-      Event.all # 通常のイベント一覧を取得 (並び順はデフォルト)
-    end
+    # 基本のイベント取得
+    @events = Event.all
 
-    if params[:prefecture].present?
-      @events = Event.where(venue: params[:prefecture])
-    end
+  # フィルタリング: 開催日の近い順
+  if params[:filter] == 'recent'
+    @events = @events.order(:start_time)
+  end
 
-    if @events.empty?
-      @message = "該当するイベントは見つかりませんでした。"
-    end
+  # フィルタリング: 都道府県
+  if params[:prefecture].present?
+    @events = @events.where(venue: params[:prefecture])
+  end
 
-    # 並び替えパラメータに基づいて並び替え
-    case params[:sort]
-    when "start_time_asc"
-      @events = @events.order(:start_time) # 開始日時の昇順
-    when "start_time_desc"
-      @events = @events.order(start_time: :desc) # 開始日時の降順
-    else
-      @events = @events.order(created_at: :desc) # デフォルトは作成日時の降順
-    end
+  # 並び替え処理
+  case params[:sort]
+  when "start_time_asc"
+    @events = @events.order(:start_time) # 開始日時の昇順
+  when "start_time_desc"
+    @events = @events.order(start_time: :desc) # 開始日時の降順
+  else
+    @events = @events.order(created_at: :desc) # デフォルトは作成日時の降順
+  end
 
     @events = @events.page(params[:page]).per(10)
 
-    puts "params[:prefecture]: #{params[:prefecture]}"
-    puts "params[:sort]: #{params[:sort]}"
+    # puts "params[:prefecture]: #{params[:prefecture]}"
+    # puts "params[:sort]: #{params[:sort]}"
   end
 
   def show
@@ -126,7 +125,7 @@ class EventsController < ApplicationController
        params[:event][:start_time_day].present? &&
        params[:event][:start_time_hour].present? &&
        params[:event][:start_time_minute].present?
-      event.start_time = DateTime.new(
+      event.start_time = Time.zone.local(
         params[:event][:start_time_year].to_i,
         params[:event][:start_time_month].to_i,
         params[:event][:start_time_day].to_i,
@@ -140,7 +139,7 @@ class EventsController < ApplicationController
        params[:event][:end_time_day].present? &&
        params[:event][:end_time_hour].present? &&
        params[:event][:end_time_minute].present?
-      event.end_time = DateTime.new(
+       event.end_time = Time.zone.local(
         params[:event][:end_time_year].to_i,
         params[:event][:end_time_month].to_i,
         params[:event][:end_time_day].to_i,

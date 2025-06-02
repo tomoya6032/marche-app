@@ -17,6 +17,24 @@
     .top-image-container
       = image_tag @host.top_image, class: 'host-top-image'
 
+  .host-events
+    %h2 出店イベント一覧
+    - if @events.present?
+      %table
+        %thead
+          %tr
+            %th イベント名
+            %th 開催日
+            
+        %tbody
+          - @events.each do |event|
+            %tr
+              %td= link_to event.title, event_path(event)
+              %td= event.start_time.strftime('%Y/%m/%d') if event.start_time
+             
+    - else
+      %p イベントがありません。
+
   .content-grid
     .left-column
       .host-news-section

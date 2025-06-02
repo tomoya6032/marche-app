@@ -1,7 +1,7 @@
 .footer 
   .footer-description 
     .stores-registration
-      .h4 ここは出店者登録
+      .h4 出店者登録について
       %p ▼マイページ
       = link_to new_host_session_path, class: 'footer-button' do
         ショップ出店
@@ -24,19 +24,28 @@
         %br
         ＼新規会員登録／
 
-      %p ▲HOME  
+      %p ▼HOME  
       = link_to root_path, class: 'footer-button' do
         ホームへ
     
     .event-guidance
-      .h4 ここは開催案内
+      .h4 【開催案内】
+      %p coming soon....
+      %p 開催案内は現在準備中です。<br>
+      %p ご不明点がある場合は、運営事務局までお問い合わせください。
     
     .stores-opner
-      .h4 ここは出店者案内
+      .h4 【出店者案内】
+      %p coming soon....
+      %p 出店者案内は現在準備中です。<br>
+      %p ご不明点がある場合は、運営事務局までお問い合わせください。
     
     .information-container
-      .h4 FAQ
-      <br>
+      .h4 【FAQについて】
+      %p coming soon....
+      %p FAQは現在準備中です。<br>
+      %p ご不明点がある場合は、運営事務局までお問い合わせください。<br>
+      %p お問い合わせフォームは、マイページの「お問い合わせ」からご利用いただけます。<br>
       <br>
       <br>
       .organizer-container
@@ -52,6 +61,18 @@
         .flash
           - flash.each do |message_type, message|
             %div{ class: "alert alert-#{message_type}" }= message
+
+      %p 会社名: みまもりlab
+      %p 代表者: 篠原　智哉
+      %p 住所: 群馬県前橋市千代田町2-7-14　2F
+      %p 電話番号: 070-8903-0836
+      %p メール: mimamorilab@gmail.com
+      %p 事業内容: つながるマルシェの管理・運営、地域活性化支援
+      %p 関連サービス:
+      %ul
+        %li= link_to 'みまもりハウス（訪問福祉サービス）', 'https://www.mimamori-lab.com/', target: '_blank'
+        %li= link_to 'ぐんまデザインラボ（ホームページ制作）', 'https://gunma-design-lab.work/', target: '_blank'
+
 
 
 .footer-copylight

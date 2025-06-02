@@ -5,9 +5,14 @@ resources :hosts, only: [:index, :show, :new, :create, :edit, :update, :destroy]
   resources :events, only: [:index, :show, :new, :create, :edit, :update, :destroy], module: :hosts
 end
 
+resources :hosts do
+  resources :events, only: [:index, :show, :new, :create, :edit, :update, :destroy], module: :hosts
+end
+
   # セラー関連のルート
   devise_for :sellers, controllers: {
-    sessions: 'sellers/sessions'
+    # sessions: 'sellers/sessions',
+    # registrations: 'sellers/registrations'
   }
     
   resources :sellers, only: [:index, :show, :new, :create, :edit, :update, :destroy]
