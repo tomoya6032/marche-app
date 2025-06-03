@@ -36,9 +36,9 @@
               = label_tag "seller_keep_images_#{image.signed_id}", "保持"
       = form.file_field :images, multiple: true, accept: "image/*", value: nil # 新しい画像を追加
     
-    .field
-      = form.label :video, '動画'
-      = form.text_area :video
+    -# .field
+    -#   = form.label :video, '動画'
+    -#   = form.text_area :video
 
     .field
       = form.label :business_hours_days, '店休日'
@@ -50,12 +50,12 @@
       = form.label :business_hours_end, '営業終了時間'
       = form.time_select :business_hours_end
 
-    .field
-      = form.label :past_exhibitions_names, '過去の出店実績 (イベント名)'
-      = form.text_area :past_exhibitions_names, placeholder: '例: イベントA,イベントB,イベントC'
-    .field
-      = form.label :past_exhibitions_dates, '過去の出店実績 (イベント日時)'
-      = form.text_area :past_exhibitions_dates, placeholder: '例: 2023-01-01 10:00,2023-02-01 12:00,2023-03-01 14:00'
+    -# .field
+    -#   = form.label :past_exhibitions_names, '過去の出店実績 (イベント名)'
+    -#   = form.text_area :past_exhibitions_names, placeholder: '例: イベントA,イベントB,イベントC'
+    -# .field
+    -#   = form.label :past_exhibitions_dates, '過去の出店実績 (イベント日時)'
+    -#   = form.text_area :past_exhibitions_dates, placeholder: '例: 2023-01-01 10:00,2023-02-01 12:00,2023-03-01 14:00'
 
     -# .field
     -#   %label SNSアカウント

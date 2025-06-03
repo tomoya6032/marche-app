@@ -25,13 +25,14 @@
           %tr
             %th イベント名
             %th 開催日
+            %th 開催地域
             
         %tbody
           - @events.each do |event|
             %tr
               %td= link_to event.title, event_path(event)
               %td= event.start_time.strftime('%Y/%m/%d') if event.start_time
-             
+              %td= event.venue.present? ? event.venue : '未設定'
     - else
       %p イベントがありません。
 

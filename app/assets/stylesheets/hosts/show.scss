@@ -96,6 +96,52 @@
       }
     }
 
+    .host-events {
+      margin: 20px auto;
+      height: auto;
+      min-height: 200px;
+    
+      h2 {
+        text-align: center; /* タイトルを中央揃え */
+        font-size: 1.5em; /* タイトルのフォントサイズを調整 */
+        margin-bottom: 20px; /* タイトルの下に余白を追加 */
+        color: #333; /* タイトルの文字色を濃いグレーに設定 */
+      }
+    
+      table {
+        border-collapse: collapse; /* 枠線を重ねる */
+        width: 100%; /* テーブル全体の幅を100%に設定 */
+        border: 1px solid #ddd; /* テーブル全体の枠線を薄いグレーに設定 */
+        background-color: #f9f9f9; /* テーブルの背景色を薄いグレーに設定 */
+      }
+    
+      th {
+        background-color: #e8f5e9; /* ヘッダーの背景色を薄い緑に設定 */
+        color: #333; /* ヘッダーの文字色を濃いグレーに設定 */
+        font-weight: bold; /* ヘッダーの文字を太字に設定 */
+        padding: 10px; /* ヘッダーセル内の余白を設定 */
+        text-align: left; /* ヘッダーのテキストを左揃えに設定 */
+        border: 1px solid #ddd; /* ヘッダーセルの枠線を薄いグレーに設定 */
+      }
+    
+      td {
+        padding: 10px; /* データセル内の余白を設定 */
+        text-align: left; /* データセルのテキストを左揃えに設定 */
+        border: 1px solid #ddd; /* データセルの枠線を薄いグレーに設定 */
+      }
+    
+      tr:nth-child(odd) {
+        background-color: #ffffff; /* 奇数行の背景色を白に設定 */
+      }
+    
+      tr:nth-child(even) {
+        background-color: #f2f2f2; /* 偶数行の背景色を薄いグレーに設定 */
+      }
+    
+      tr:hover {
+        background-color: #e0f7fa; /* ホバー時の背景色を薄い青に設定 */
+      }
+    }
   
     .content-grid {
       display: grid;
@@ -104,7 +150,7 @@
       margin-bottom: 20px;
       padding: 20px;
       height: 400px;
-      background-color: #ededed;
+      background-color: #e8f5e9;
       .host-news-section, .topics-section {
         text-align: center;
         
@@ -150,7 +196,7 @@
       margin: 40px 0; 
       padding: 20px;
       height: auto;
-      background-color: #ededed;
+      background-color: #e8f5e9;
 
       h2 {
         font-size: 22px;
@@ -241,7 +287,7 @@
     .contact-section {
       margin-top: 30px;
       text-align: center;
-      background-color: #ededed;
+      background-color: #e8f5e9;
       height: 300px;
   
       h2 {
@@ -271,4 +317,69 @@
         }
       }
     }
+}
+
+
+/* SPデザイン */
+@media (max-width: 480px) {
+    /* 全体の調整 */
+    body {
+      padding: 10px; 
+    }
+    /* ボタンの調整 */
+    .button, .operation-button {
+      width: 90%; /* ボタンを画面幅に合わせる */
+      margin: 10px auto; /* ボタン間の余白を追加 */
+      
+    }
+
+
+    
+  .host-header {
+    flex-direction: column;
+    
+    margin: 5px;
+    padding: 5px !important;
+    h1 {
+      font-size: 18px !important; ; /* 見出しのフォントサイズを調整 */
+      text-align: center; /* テキストを中央揃え */
+    }
+    p {
+      font-size: 14px !important; /* 段落のフォントサイズを調整 */
+     
+      margin: 0; /* マージンをリセット */
+      
+    }
+
+    .contact-items {
+      p {
+        text-align: right !important; /* テキストを右揃え */   
+      }
+    }
+  }  
+  
+  .host-top-image {
+    width: 100% !important;;
+    .host-top-image {
+      width: 100% !important; /* 横幅を100%に */
+      height: auto; /* 高さは自動調整 */
+      margin: 0 auto; /* 中央揃え */
+    }
+  }  
+
+  .content-grid {
+    
+    flex-direction: column; /* 子要素を縦並びにする */
+    gap: 20px; /* 子要素間の余白を設定 */
+    margin: 20px auto; /* 全体の余白を調整 */
   }
+
+  .left-column, .right-column {
+    width: 100%; /* 子要素の幅を100%に設定 */
+    text-align: center; /* テキストを中央揃えに設定 */
+  }
+
+}
+
+
+

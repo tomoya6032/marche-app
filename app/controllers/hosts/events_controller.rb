@@ -20,6 +20,7 @@ module Hosts
 
     def create
       @event = @host.events.build(event_params)
+      combine_datetime_parts(@event) # 開始日時と終了日時を結合
       if @event.save
         redirect_to host_event_path(@host, @event), notice: 'イベントを作成しました。'
       else
@@ -64,11 +65,16 @@ module Hosts
     end
 
     def destroy
-      @event = @host.events.find(params[:id]) # ホストに紐づくイベントを取得
+      Rails.logger.debug "Host ID: #{params[:host_id]}, Event ID: #{params[:id]}"
+      @host = Host.find(params[:host_id])
+      @event = @host.events.find(params[:id])
+    
       if @event.destroy
-        redirect_to host_events_path(@host), notice: 'イベントを削除しました。'
+        flash[:notice] = 'イベントを削除しました。'
+        redirect_to host_path(@host)
       else
-        redirect_to host_events_path(@host), alert: 'イベントの削除に失敗しました。'
+        flash[:alert] = 'イベントの削除に失敗しました。'
+        redirect_to host_event_path(@host, @event)
       end
     end
 
@@ -80,8 +86,8 @@ module Hosts
     end
 
     def set_event
-      @event = @host.events.find_by(id: params[:id])
-      redirect_to host_events_path(@host), alert: 'イベントが見つかりません。' if @event.nil?
+      @host = Host.find(params[:host_id])
+      @event = @host.events.find(params[:id])
     end
 
     def event_params_with_datetime

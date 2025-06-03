@@ -1,5 +1,6 @@
 class Event < ApplicationRecord
-  has_many_attached :images
+  has_many_attached :images, dependent: :purge_later
+  
   belongs_to :seller, optional: true # セラーとの関連
   belongs_to :host, optional: true   # ホストとの関連
 

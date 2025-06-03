@@ -1,7 +1,27 @@
+
+- content_for :title do
+  = @event.title + " | Marche イベント詳細"
+
+- content_for :description do
+  = truncate(@event.description, length: 150, omission: "...") # 説明文を150文字で切り詰め
+
+- content_for :canonical_url do
+  = request.original_url
+
+- content_for :og_title do
+  = @event.title + " | Marcheイベント"
+
+- content_for :og_description do
+  = truncate(@event.description, length: 200)
+
+- if @event.images.attached? && @event.images.first.present?
+  - content_for :og_image do
+    = url_for(@event.images.first.variant(resize_to_limit: [1200, 630])) # OGP推奨サイズにリサイズ
+  
 %body
   = render 'header/header' # ヘッダーのパーシャルを呼び出す
-
-  %p イベント詳細ページ
+  .index-btn
+    %p イベント詳細ページ
 
   %h2= @event.title
 
@@ -65,14 +85,25 @@
       %th 動画URL
       %td= @event.video
 
+
   - if (seller_signed_in? && current_seller == @event.seller) || (host_signed_in? && current_host == @event.host)
     .edit-links
       - if host_signed_in? && current_host == @event.host
         = link_to '編集', edit_host_event_path(@event.host, @event), class: 'operation-button'
-        = link_to '削除', host_event_path(@host, @event), data: { turbo_method: :delete, turbo_confirm: '本当に削除しますか？' }, class: 'button-delete'
+        = button_to '削除', host_event_path(@host, @event), method: :delete, data: { confirm: '本当に削除しますか？' }, class: 'button-delete'
       - elsif seller_signed_in? && current_seller == @event.seller
         = link_to '編集', edit_event_path(@event), class: 'operation-button'
         = link_to '削除', event_path(@event), data: { turbo_method: :delete, turbo_confirm: '本当に削除してもよろしいですか？' }, class: 'operation-button'
+
+
+  -# - if (seller_signed_in? && current_seller == @event.seller) || (host_signed_in? && current_host == @event.host)
+  -#   .edit-links
+  -#     - if host_signed_in? && current_host == @event.host
+  -#       = link_to '編集', edit_host_event_path(@event.host, @event), class: 'operation-button'
+  -#       = link_to '削除', host_event_path(@host, @event), data: { turbo_method: :delete, turbo_confirm: '本当に削除しますか？' }, class: 'button-delete'
+  -#     - elsif seller_signed_in? && current_seller == @event.seller
+  -#       = link_to '編集', edit_event_path(@event), class: 'operation-button'
+  -#       = link_to '削除', event_path(@event), data: { turbo_method: :delete, turbo_confirm: '本当に削除してもよろしいですか？' }, class: 'operation-button'
 
 = link_to '戻る', events_path, class: 'operation-button'
 

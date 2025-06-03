@@ -21,28 +21,29 @@
     .field
       = f.label :start_time, '開始日時'
       .datetime-select-container
-        = f.select :start_time_year, options_for_select((Time.zone.now.year-10..Time.zone.now.year+10)), class: 'date-select'
+        = f.select :start_time_year, options_for_select((Time.zone.now.year-5..Time.zone.now.year+5), @event.start_time&.year), class: 'date-select'
         %span 年
-        = f.select :start_time_month, options_for_select((1..12)), class: 'date-select'
+        = f.select :start_time_month, options_for_select((1..12), @event.start_time&.month), class: 'date-select'
         %span 月
-        = f.select :start_time_day, options_for_select((1..31)), class: 'date-select'
+        = f.select :start_time_day, options_for_select((1..31), @event.start_time&.day), class: 'date-select'
         %span 日
-        = f.select :start_time_hour, options_for_select((0..23)), class: 'date-select'
+        = f.select :start_time_hour, options_for_select((0..23), @event.start_time&.hour), class: 'date-select'
         %span 時
-        = f.select :start_time_minute, options_for_select((0..59)), class: 'date-select'
+        = f.select :start_time_minute, options_for_select((0..59), @event.start_time&.min), class: 'date-select'
         %span 分
+
     .field
       = f.label :end_time, '終了日時'
       .datetime-select-container
-        = f.select :end_time_year, options_for_select((Time.zone.now.year-10..Time.zone.now.year+10)), class: 'date-select'
+        = f.select :end_time_year, options_for_select((Time.zone.now.year-5..Time.zone.now.year+5), @event.end_time&.year), class: 'date-select'
         %span 年
-        = f.select :end_time_month, options_for_select((1..12)), class: 'date-select'
+        = f.select :end_time_month, options_for_select((1..12), @event.end_time&.month), class: 'date-select'
         %span 月
-        = f.select :end_time_day, options_for_select((1..31)), class: 'date-select'
+        = f.select :end_time_day, options_for_select((1..31), @event.end_time&.day), class: 'date-select'
         %span 日
-        = f.select :end_time_hour, options_for_select((0..23)), class: 'date-select'
+        = f.select :end_time_hour, options_for_select((0..23), @event.end_time&.hour), class: 'date-select'
         %span 時
-        = f.select :end_time_minute, options_for_select((0..59)), class: 'date-select'
+        = f.select :end_time_minute, options_for_select((0..59), @event.end_time&.min), class: 'date-select'
         %span 分
   
   .prefectures-field

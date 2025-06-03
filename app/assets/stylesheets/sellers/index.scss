@@ -52,7 +52,7 @@
         color: #555;
   
         a {
-          color: #ffffff;
+          // color: #ffffff;
           text-decoration: none;
   
           &:hover {
@@ -141,6 +141,58 @@
       }
     }
   }
+
+
+  .seller-events {
+    margin: 20px auto;
+    height: auto;
+    min-height: 200px;
+    
+   
+    h2 {
+      text-align: left; /* タイトルを中央揃え */
+      font-size: 1.5em; /* タイトルのフォントサイズを調整 */
+      margin-bottom: 20px; /* タイトルの下に余白を追加 */
+      color: #333; /* タイトルの文字色を濃いグレーに設定 */
+    }
+  
+    table {
+      border-collapse: collapse; /* 枠線を重ねる */
+      width: 100%; /* テーブル全体の幅を100%に設定 */
+      border: 1px solid #ddd; /* テーブル全体の枠線を薄いグレーに設定 */
+      color: #333;
+      background-color: #f9f9f9; /* テーブルの背景色を薄いグレーに設定 */
+    }
+  
+    th {
+      background-color: #e8f5e9; /* ヘッダーの背景色を薄い緑に設定 */
+      color: #333; /* ヘッダーの文字色を濃いグレーに設定 */
+      font-weight: bold; /* ヘッダーの文字を太字に設定 */
+      padding: 10px; /* ヘッダーセル内の余白を設定 */
+      text-align: left; /* ヘッダーのテキストを左揃えに設定 */
+      border: 1px solid #ddd; /* ヘッダーセルの枠線を薄いグレーに設定 */
+    }
+  
+    td {
+      padding: 10px; /* データセル内の余白を設定 */
+      text-align: left; /* データセルのテキストを左揃えに設定 */
+      border: 1px solid #ddd; /* データセルの枠線を薄いグレーに設定 */
+      
+    }
+  
+    tr:nth-child(odd) {
+      background-color: #ffffff; /* 奇数行の背景色を白に設定 */
+    }
+  
+    tr:nth-child(even) {
+      background-color: #f2f2f2; /* 偶数行の背景色を薄いグレーに設定 */
+    }
+  
+    tr:hover {
+      background-color: #e0f7fa; /* ホバー時の背景色を薄い青に設定 */
+    }
+  }
+
 
   .acccount-date {
     display: flex;

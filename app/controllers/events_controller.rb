@@ -107,13 +107,27 @@ class EventsController < ApplicationController
   end
 
   def destroy
-    @event = Event.find(params[:id])
+    # @event は set_event で既に設定されているはず
+
+    # 削除権限のチェック (重要: 誰でも削除できないようにする)
+    unless current_seller == @event.seller || current_host == @event.host
+      redirect_to root_path, alert: 'イベントを削除する権限がありません。'
+      return
+    end
+
     if @event.destroy
       flash[:notice] = 'イベントを削除しました。'
-      redirect_to events_path
+      # イベントを削除した後、どこにリダイレクトするか
+      if @event.seller.present? # セラーに紐づくイベントならセラーのイベント一覧、またはセラーの詳細へ
+        redirect_to seller_path(@event.seller) # 例: セラーの詳細ページ
+      elsif @event.host.present? # ホストに紐づくイベントならホストのイベント一覧、またはホストの詳細へ
+        redirect_to host_path(@event.host) # 例: ホストの詳細ページ
+      else
+        redirect_to root_path, alert: 'イベントを削除しました。' # どちらにも紐づかない場合（まれ）
+      end
     else
       flash[:alert] = 'イベントの削除に失敗しました。'
-      redirect_to event_path(@event)
+      redirect_to event_path(@event) # 削除失敗時はイベント詳細ページへ
     end
   end
 
@@ -153,12 +167,13 @@ class EventsController < ApplicationController
     params.require(:event).permit(
       :title, :description, :venue, :address, :latitude, :longitude,
       :capacity, :is_online, :online_url, :is_free, :price, :organizer,
-      :contact_info, :website, :status, :video, :category_id, images: [], remove_images: []
+      :contact_info, :business_hours_days, :website, :status, :video, :category_id, images: [], remove_images: []
     )
   end
 
   def set_event
     @event = Event.find(params[:id])
+
   end
 
   def set_prefectures

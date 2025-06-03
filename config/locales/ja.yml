@@ -10,3 +10,285 @@ ja:
             title:
               blank: "タイトルを入力してください。"
               too_long: "%{count}文字以内で入力してください。"
+
+  devise:
+    sessions:
+      signed_in: "ログインしました。"
+      signed_out: "ログアウトしました。"
+      # ログアウト時にメールアドレスが表示される場合など、必要に応じて
+      # signed_out: "ログアウトしました。またのご利用をお待ちしております！"
+    passwords:
+      send_instructions: "パスワード再設定の案内を送信しました。"
+      updated: "パスワードが変更されました。"
+      updated_not_active: "パスワードが変更されました。"
+    confirmations:
+      send_instructions: "アカウント有効化の案内を送信しました。"
+      confirmed: "アカウントが有効化されました。"
+    registrations:
+      signed_up: "アカウント登録が完了しました。"
+      signed_up_but_inactive: "アカウント登録が完了しました。認証メールをご確認ください。"
+      updated: "アカウント情報が更新されました。"
+      destroyed: "アカウントが削除されました。"
+    unlocks:
+      send_instructions: "アカウントロック解除の案内を送信しました。"
+      unlocked: "アカウントがロック解除されました。"
+    omniauth_callbacks:
+      success: "%{kind}アカウントによる認証に成功しました。"
+    mailer:
+      confirmation_instructions:
+        subject: "アカウント有効化のご案内"
+      reset_password_instructions:
+        subject: "パスワード再設定のご案内"
+      unlock_instructions:
+        subject: "アカウントロック解除のご案内"
+
+  # Deviseのモデルごとのメッセージ (例: SellerモデルにDeviseを設定している場合)
+  # これが前回の「Translation missing」の原因だったものです
+  seller:
+    devise:
+      sessions:
+        signed_out: "セラーアカウントからログアウトしました。"
+      registrations:
+        signed_up: "セラーアカウントの登録が完了しました。"
+      # 他にも必要に応じて追加
+
+  host:
+    devise:
+      sessions:
+        signed_out: "主催者アカウントからログアウトしました。"
+      registrations:
+        signed_up: "主催者アカウントの登録が完了しました。"
+      # 他にも必要に応じて追加
+
+
+  # ------------------------------------------------------------------
+  # 2. Active Record (モデルのバリデーションエラーメッセージ)
+  # ------------------------------------------------------------------
+  activerecord:
+    attributes:
+      # モデル名の翻訳 (例: Eventモデルの日本語名)
+      event: "イベント"
+      seller: "セラー"
+      host: "主催者"
+      user: "ユーザー" # 必要であれば
+      # ... その他のモデル ...
+
+      # モデルの属性（カラム）名の翻訳
+      # 例: eventモデルの属性
+      event/title: "イベント名"
+      event/description: "イベント詳細"
+      event/start_time: "開催日時"
+      event/end_time: "終了日時"
+      event/venue: "開催場所"
+      event/price: "料金"
+      event/seller_id: "セラーID"
+      event/host_id: "主催者ID"
+      event/images: "イベント画像"
+      # 例: userモデルの属性
+      user/email: "メールアドレス"
+      user/password: "パスワード"
+      user/password_confirmation: "パスワード（確認）"
+      user/name: "名前"
+      # ... その他の属性 ...
+
+    errors:
+      messages:
+        # よく使うバリデーションエラーメッセージの翻訳
+        accepted: "を承諾してください"
+        blank: "を入力してください"
+        confirmation: "と%{attribute}の入力が一致しません"
+        empty: "を入力してください"
+        equal_to: "は%{count}と等しく入力してください"
+        even: "は偶数で入力してください"
+        exclusion: "は予約されています"
+        greater_than: "は%{count}より大きい値にしてください"
+        greater_than_or_equal_to: "は%{count}以上の値にしてください"
+        inclusion: "はリストに含まれていません"
+        invalid: "は不正な値です"
+        less_than: "は%{count}より小さい値にしてください"
+        less_than_or_equal_to: "は%{count}以下の値にしてください"
+        model_invalid: "バリデーションに失敗しました: %{errors}"
+        not_a_number: "は数値で入力してください"
+        not_an_integer: "は整数で入力してください"
+        odd: "は奇数で入力してください"
+        other_than: "は%{count}以外の値にしてください"
+        present: "は入力しないでください"
+        record_invalid: "バリデーションに失敗しました: %{errors}"
+        taken: "は既に使用されています"
+        too_long: "は%{count}文字以内で入力してください"
+        too_short: "は%{count}文字以上で入力してください"
+        wrong_length: "は%{count}文字で入力してください"
+        not_saved: "%{count}件のエラーで%{resource}を保存できませんでした:"
+        # Active Storage 用のエラーメッセージ
+        content_type_invalid: "は許可されていないファイル形式です"
+        limit_reached: "は%{count}件までしか添付できません"
+        # カスタムバリデーションエラー
+        # 例えば、バリデーションで `errors.add(:base, :custom_error)` のように使った場合
+        # custom_error: "カスタムエラーメッセージです。"
+      
+      # 以下は、よくActiveRecordのバリデーションエラーをカスタマイズする際に使われます
+      # 例えば、`validates :title, presence: true, message: "イベントのタイトルを入力してください"`
+      # のようにカスタムメッセージを設定しない場合は、上記messagesが使われます。
+      # models:
+      #   event:
+      #     attributes:
+      #       title:
+      #         blank: "イベント名を入力してください。"
+
+  # ------------------------------------------------------------------
+  # 3. Helpers (フォームのボタンや日付/時刻など)
+  # ------------------------------------------------------------------
+  helpers:
+    submit:
+      create: "登録する" # 新規作成ボタンのデフォルトテキスト
+      update: "更新する" # 更新ボタンのデフォルトテキスト
+      # 個別のモデルに対するボタンテキスト (例: イベントの作成)
+      # event:
+      #   create: "イベントを登録する"
+      #   update: "イベントを更新する"
+    select:
+      prompt: "選択してください" # selectタグの初期プロンプト
+
+  # ------------------------------------------------------------------
+  # 4. Date & Time Formats (日付と時刻の表示形式)
+  # ------------------------------------------------------------------
+  date:
+    formats:
+      default: "%Y/%m/%d" # 2024/06/05
+      long: "%Y年%m月%d日(%a)" # 2024年06月05日(水)
+      short: "%m/%d" # 06/05
+    day_names: ["日曜日", "月曜日", "火曜日", "水曜日", "木曜日", "金曜日", "土曜日"]
+    abbr_day_names: ["日", "月", "火", "水", "木", "金", "土"]
+    month_names: [nil, "1月", "2月", "3月", "4月", "5月", "6月", "7月", "8月", "9月", "10月", "11月", "12月"]
+    abbr_month_names: [nil, "1月", "2月", "3月", "4月", "5月", "6月", "7月", "8月", "9月", "10月", "11月", "12月"]
+    
+
+  time:
+    formats:
+      default: "%Y/%m/%d %H:%M:%S" # 2024/06/05 07:00:00
+      long: "%Y年%m月%d日(%a) %H時%M分%S秒 %z"
+      short: "%m/%d %H:%M" # 06/05 07:00
+    am: "午前"
+    pm: "午後"
+
+  datetime:
+    distance_in_words:
+      half_a_minute: "30秒前後"
+      less_than_x_seconds: "%{count}秒未満"
+      x_seconds: "%{count}秒"
+      less_than_x_minutes: "%{count}分未満"
+      x_minutes: "%{count}分"
+      about_x_hours: "約%{count}時間"
+      x_days: "%{count}日"
+      about_x_months: "約%{count}ヶ月"
+      x_months: "%{count}ヶ月"
+      about_x_years: "約%{count}年"
+      x_years: "%{count}年"
+      over_x_years: "%{count}年以上"
+      almost_x_years: "%{count}年弱"
+    prompts:
+      year: "年"
+      month: "月"
+      day: "日"
+      hour: "時"
+      minute: "分"
+      second: "秒"
+
+  # ------------------------------------------------------------------
+  # 5. Number Helpers (数値の表示形式)
+  # ------------------------------------------------------------------
+  number:
+    format:
+      # 数値のフォーマット (例: 1,000.00)
+      delimiter: ","
+      separator: "."
+      precision: 3
+      significant: false
+      strip_insignificant_zeros: false
+    currency:
+      # 通貨のフォーマット (例: ¥1,000)
+      format: "%n%u" # 数字の後に単位
+      unit: "円"
+      delimiter: ","
+      separator: "."
+      precision: 0 # 小数点以下を表示しない場合
+    percentage:
+      format: "%n%" # 100%
+      separator: "."
+      delimiter: ","
+    precision:
+      format: "%n"
+      delimiter: ","
+      separator: "."
+    human:
+      format:
+        delimiter: ""
+        precision: 1
+        significant: true
+        strip_insignificant_zeros: true
+      storage_units:
+        format: "%n%u"
+        units:
+          byte: "バイト"
+          kb: "KB"
+          mb: "MB"
+          gb: "GB"
+          tb: "TB"
+      decimal_units:
+        format: "%n %u"
+        units:
+          thousand: "千"
+          million: "百万"
+          billion: "十億"
+          trillion: "兆"
+          quadrillion: "千兆"
+
+  # ------------------------------------------------------------------
+  # 6. Flash メッセージ (application.html.haml で表示するもの)
+  # ------------------------------------------------------------------
+  flash:
+    # 削除成功時に表示するメッセージ
+    events:
+      destroy:
+        notice: "イベントを削除しました！"
+        alert: "イベントの削除に失敗しました。"
+      create:
+        notice: "イベントを作成しました！"
+      update:
+        notice: "イベントを更新しました！"
+    # 他のコントローラやアクションにも追加
+    # posts:
+    #   create:
+    #     notice: "投稿を作成しました。"
+
+  # ------------------------------------------------------------------
+  # 7. その他の汎用的なテキストやビュー固有のテキスト
+  # ------------------------------------------------------------------
+  common:
+    edit: "編集"
+    delete: "削除"
+    show: "詳細"
+    back: "戻る"
+    submit: "送信"
+    save: "保存"
+    cancel: "キャンセル"
+    confirm: "本当に削除しますか？"
+
+  # ビュー固有のテキスト (例: ヘッダーのリンクなど)
+  # app/views/shared/_header.html.haml などで t('views.header.login') のように呼び出す
+  views:
+    header:
+      login: "ログイン"
+      signup: "新規登録"
+      logout: "ログアウト"
+      my_page: "マイページ"
+      # ...
+
+    events:
+      index:
+        title: "イベント一覧"
+        no_events: "イベントはまだありません。"
+      show:
+        title: "イベント詳細"
+        buy_ticket: "チケットを購入する"
+        # ...

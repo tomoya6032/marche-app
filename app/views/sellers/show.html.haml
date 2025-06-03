@@ -6,7 +6,7 @@
   %table.seller-info-table
     %tbody
       %tr
-        %th 名前
+        %th アカウント名
         %td= @seller.name if @seller
 
       %tr
@@ -14,7 +14,7 @@
         %td= @seller.email if @seller
 
       %tr
-        %th 説明
+        %th 概要の説明
         %td= @seller.description if @seller
 
       %tr
@@ -30,6 +30,14 @@
         %td= link_to @seller.website, @seller.website, target: "_blank" if @seller&.website
 
       %tr
+        %th 営業時間
+        %td
+          %p= "曜日: #{@seller.business_hours_days}"
+          %p= "時間: #{@seller.business_hours_start&.strftime('%H:%M')} - #{@seller.business_hours_end&.strftime('%H:%M')}"
+      %tr
+        %th 店休日
+        %td= @seller.business_hours_days.present? ? @seller.business_hours_days : '未設定'
+      %tr
         %th ショップ紹介写真
         %td
           - if @seller.images.attached?
@@ -38,7 +46,7 @@
           - else
             = image_tag "no_image_square.jpg"
 
-  %h2 開催したイベント
+  %h2 出店したイベント
   - if @seller.events.present?
     %table.event-info-table
       %thead

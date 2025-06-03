@@ -1,3 +1,23 @@
+- content_for :title do
+  = @event.title + " | Marche イベント詳細"
+
+- content_for :description do
+  = truncate(@event.description, length: 150, omission: "...") # 説明文を150文字で切り詰め
+
+- content_for :canonical_url do
+  = request.original_url
+
+- content_for :og_title do
+  = @event.title + " | Marcheイベント"
+
+- content_for :og_description do
+  = truncate(@event.description, length: 200)
+
+- if @event.images.attached? && @event.images.first.present?
+  - content_for :og_image do
+    = url_for(@event.images.first.variant(resize_to_limit: [1200, 630])) # OGP推奨サイズにリサイズ
+  
+
 %body
   = render 'header/header' # ヘッダーのパーシャルを呼び出す
   
@@ -29,8 +49,9 @@
         - else
           出店者 未設定
     %tr
-      %th 説明
+      %th 概要の説明
       %td= @event.description
+    
     %tr
       %th 開始日時
       %td= @event.start_time.present? ? @event.start_time.strftime('%Y年%-m月%-d日 %H時%M分') : '未定'
@@ -48,13 +69,14 @@
       %td= @event.capacity
     %tr
       %th オンライン開催
-      %td= @event.is_online ? 'はい' : 'いいえ'
+      %td= @event.is_online ? 'オンライン開催あり' : 'オンライン開催なし'
     %tr
       %th オンラインURL
-      %td= @event.online_url
+      -# %td= @event.online_url
+      %td= link_to @event.online_url, @event.online_url, target: "_blank" if @event&.online_url
     %tr
       %th 有料イベント
-      %td= @event.is_free ? '参加費用あり' : '無料'
+      %td= @event.is_free ? '参加費用がかかります' : '無料'
     %tr
       %th 参加費
       %td= @event.price
@@ -63,19 +85,20 @@
       %td= @event.contact_info
     %tr
       %th ウェブサイト
-      %td= @event.website
+      -# %td= @event.website
+      %td= link_to @event.website, @event.website, target: "_blank" if @event&.website
     -# %tr
     -#   %th 動画URL
     -#   %td= @event.video
 
-- if (seller_signed_in? && current_seller == @event.seller && current_seller.editable) || (host_signed_in? && current_host == @event.host && current_host.editable)
+- if (seller_signed_in? && current_seller == @event.seller) || (host_signed_in? && current_host == @event.host)
   .edit-links
     - if host_signed_in? && current_host == @event.host
       = link_to '編集', edit_host_event_path(@event.host, @event), class: 'operation-button'
-      = link_to '削除', host_event_path(@event.host, @event), data: { turbo_method: :delete, turbo_confirm: '本当に削除しますか？' }, class: 'operation-button'
+      = button_to '削除',host_event_path(@event.host, @event), method: :delete, data: { confirm: '本当に削除しますか？' }, class: 'button-delete'
     - elsif seller_signed_in? && current_seller == @event.seller
       = link_to '編集', edit_event_path(@event), class: 'operation-button'
-      = link_to '削除', event_path(@event), data: { turbo_method: :delete, confirm: '本当に削除してもよろしいですか？' }, class: 'operation-button'
+      = button_to '削除', event_path(@event), method: :delete, data: { turbo_method: :delete, turbo_confirm: '本当に削除してもよろしいですか？' }, class: 'button-delete' # ★ここを修正★
 
 = link_to 'イベント一覧へ戻る', events_path, class: 'operation-button'
 

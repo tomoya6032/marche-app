@@ -1,10 +1,10 @@
 class HostsController < ApplicationController
   before_action :authenticate_host!, only: [ :edit, :update, :destroy, :new_event, :create_event]
-  before_action :set_host, only: [:show, :edit, :update, :destroy, :new_event, :create_event]
+  before_action :set_host, only: [ :show, :edit, :update, :destroy, :new_event, :create_event]
   before_action :set_event, only: [:edit_event, :update_event, :destroy_event]
 
   def index
-        @host = current_host
+       @host = current_host
        @comments = @host.comments.order(created_at: :desc) # 管理者からのコメントを取得
       #  @events = @host.events.order(created_at: :desc) # ホストが出店したイベントを取得
        @events = @host.events if @host # ホストに紐づくイベントを取得する場合
@@ -14,8 +14,10 @@ class HostsController < ApplicationController
     @events = @host.events.order(start_time: :desc).limit(5) # 開催日が近い順に直近5件を取得
     @topics_text = @host.topics # トピックスのテキストを取得
     @news_text = @host.news # 新着ニュースのテキストを取得
+    @events = @host.events
     @goods_introduction_text = @host.goods_introduction # 商品紹介のテキストを取得
     @events = @host.events.order(start_time: :asc) # ホストに関連するイベントを取得し、開催日順に並べる
+    @events = @host.events.order(created_at: :desc).limit(10) # 最新の10件を取得
   end
 
   def edit
@@ -104,7 +106,7 @@ class HostsController < ApplicationController
   end
 
   def host_params
-    params.require(:host).permit(:name, :email, :description, :address, :phone_number, :website, :top_image, :news, :topics, :goods_introduction, images: [])
+    params.require(:host).permit(:name, :email, :description, :venue, :address, :phone_number, :website, :top_image, :news, :topics, :goods_introduction, images: [])
   end
 
   def event_params
@@ -121,6 +123,6 @@ class HostsController < ApplicationController
       :goods_introduction_3, :goods_image_3,
       :goods_introduction_4, :goods_image_4,
       images: []
-  )
-end
+     )
+   end
 end      

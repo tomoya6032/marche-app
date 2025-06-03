@@ -77,4 +77,9 @@ end
 
   # アプリケーションのルート
   root "home#index"
+
+  # config/routes.rb
+  get '/.well-known/appspecific/com.chrome.devtools.json', to: proc { [404, {}, ['Not Found']] }
+
+
 end
