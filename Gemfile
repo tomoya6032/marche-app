@@ -32,7 +32,7 @@ gem "activerecord-session_store"
 # アセットパイプラインの新しい仕組み
 # gem 'sprockets-rails'
 
-
+gem 'kaminari', '~> 1.2.2'
 
 # CSS・JSバンドラー
 
@@ -79,7 +79,7 @@ group :development, :test do
   # better_errorsの画面上にirb/pry(PERL)を表示する
   gem 'binding_of_caller'
 
-  gem 'kaminari', '~> 1.2.2'
+  
 
   gem 'rails-i18n'
 
