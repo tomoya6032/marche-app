@@ -79,7 +79,7 @@ group :development, :test do
   # better_errorsの画面上にirb/pry(PERL)を表示する
   gem 'binding_of_caller'
 
-  
+   gem 'haml-rails'
 
   gem 'rails-i18n'
 
@@ -91,7 +91,7 @@ end
 group :development do
   # Use console on exceptions pages [https://github.com/rails/web-console]
   gem "web-console"
-  gem 'haml-rails'
+ 
   gem 'erb2haml'
   gem "haml-lint"
   gem "html2haml"
