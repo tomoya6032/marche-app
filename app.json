@@ -1,0 +1,16 @@
+{
+    "name": "marche",
+    "description": "A blog application for sharing ideas and stories.",
+    "keywords": ["blog", "rails", "heroku", "webapp", "postgresql"],
+    "website": "",
+    "repository": "https://github.com/tomoya6032/marche-app",
+    "env": {},
+    "addons": [
+      "heroku-postgresql:hobby-dev"
+    ],
+    "buildpacks": [{
+      "url": "heroku/nodejs"
+    }, {
+      "url": "heroku/ruby"
+    }]
+  }

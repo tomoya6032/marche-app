@@ -21,8 +21,17 @@ gem "jbuilder"
 
 gem "sassc-rails"
 
+# Active Storage for S3
+gem 'aws-sdk-s3', require: false
+
+
+# Use Active Record for session storage [https://guides.rubyonrails.org/action_controller_overview.html#session]
+gem "activerecord-session_store"
+
+# Use Redis for caching and background jobs [
 # アセットパイプラインの新しい仕組み
 # gem 'sprockets-rails'
+
 
 
 # CSS・JSバンドラー
@@ -73,6 +82,8 @@ group :development, :test do
   gem 'kaminari', '~> 1.2.2'
 
   gem 'rails-i18n'
+
+  gem "dotenv-rails" # 環境変数を管理するためのgem
   
   
 end
