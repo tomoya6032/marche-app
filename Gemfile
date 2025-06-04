@@ -106,6 +106,10 @@ group :test do
   gem "selenium-webdriver"
 end
 
+<<<<<<< HEAD
+=======
+
+>>>>>>> 327287c8557b0334b5e2f3061384cfd16e09793b
 # Heroku (本番環境) でのみ PostgreSQL を使用するため、production グループに入れる
 group :production do
   gem "pg", "~> 1.1"
