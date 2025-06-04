@@ -13,7 +13,7 @@ module Marche
 
     if Rails.env.development? || Rails.env.test?
       Bundler.require(*Rails.groups)
-      Dotenv::Railtie.load
+      Dotenv::Rails.load
     end
 
     config.i18n.default_locale = :ja
@@ -22,9 +22,9 @@ module Marche
     # Sassファイルの自動コンパイルを有効化
     config.assets.precompile += %w( .js .css .scss .sass )
     # アセットパイプラインでSassを使用
-    config.sass.preferred_syntax = :scss
-    config.sass.line_comments = false
-    config.sass.cache = true
+    
+   
+    
     
     # Please, add to the `ignore` list any other `lib` subdirectories that do
     # not contain `.rb` files, or that should not be reloaded or eager loaded.

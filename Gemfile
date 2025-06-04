@@ -19,7 +19,8 @@ gem "stimulus-rails"
 # Build JSON APIs with ease [https://github.com/rails/jbuilder]
 gem "jbuilder"
 
-gem "sassc-rails"
+# gem "sassc-rails"
+gem 'dartsass-rails' # Propshaft (Rails 7+) と互換性あり
 
 # Active Storage for S3
 gem 'aws-sdk-s3', require: false
@@ -29,8 +30,7 @@ gem 'aws-sdk-s3', require: false
 gem "activerecord-session_store"
 
 # Use Redis for caching and background jobs [
-# アセットパイプラインの新しい仕組み
-# gem 'sprockets-rails'
+
 
 gem 'kaminari', '~> 1.2.2'
 

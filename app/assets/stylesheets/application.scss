@@ -706,7 +706,7 @@ nav ul li a {
 
 .top-container {
     background-size: contain;
-    background-image: url("/assets/top-page-image2.png");
+    
     background-repeat: no-repeat; /* 通常は繰り返しをなくします */
     background-position: right; /* 画像を中央に配置 */
     // margin-bottom: 10px;
@@ -722,13 +722,18 @@ nav ul li a {
     height: 600px;/* 親要素の高さをビューポートの高さに合わせる（必要に応じて） */
     // text-align: center;
     margin: 10px auto;
+    // display: flex !important; /* 強制的に表示する */
+    background-image: image-url("top-page-image2.png");
 }
+
+
 
 .top-container-message {
     width: 700px;
     text-align: center;
     margin-left: auto;
     padding: 30px;
+    
     padding-right: 90px;
     margin-top: 20px;
     margin-bottom: 20px;
@@ -1706,6 +1711,7 @@ table.account-comparison {
   
   }
 }
+
 
 
 
