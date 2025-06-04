@@ -25,12 +25,15 @@ gem 'dartsass-rails' # Propshaft (Rails 7+) と互換性あり
 # Active Storage for S3
 gem 'aws-sdk-s3', require: false
 
+gem "pg", "~> 1.1"
 
 # Use Active Record for session storage [https://guides.rubyonrails.org/action_controller_overview.html#session]
 gem "activerecord-session_store"
 
 # Use Redis for caching and background jobs [
 
+
+gem 'haml-rails'
 
 gem 'kaminari', '~> 1.2.2'
 
@@ -79,7 +82,7 @@ group :development, :test do
   # better_errorsの画面上にirb/pry(PERL)を表示する
   gem 'binding_of_caller'
 
-   gem 'haml-rails'
+   
 
   gem 'rails-i18n'
 
@@ -107,7 +110,3 @@ group :test do
 end
 
 
-# Heroku (本番環境) でのみ PostgreSQL を使用するため、production グループに入れる
-group :production do
-  gem "pg", "~> 1.1"
-end
