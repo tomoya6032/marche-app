@@ -50,17 +50,17 @@
       <br>
       .organizer-container
       .h4 会社概要
-      - if administrator_signed_in?
-        %p ログイン中: #{current_administrator.email}
-        = link_to "ログアウト", destroy_administrator_session_path, method: :delete
-      - else
-        = link_to "ログイン", new_session_path(:administrator)
-        = link_to "サインアップ", new_registration_path(:administrator)
+      -# - if administrator_signed_in?
+      -#   %p ログイン中: #{current_administrator.email}
+      -#   = link_to "ログアウト", destroy_administrator_session_path, method: :delete
+      -# - else
+      -#   = link_to "ログイン", new_session_path(:administrator)
+      -#   = link_to "サインアップ", new_registration_path(:administrator)
 
-      - if flash.present?
-        .flash
-          - flash.each do |message_type, message|
-            %div{ class: "alert alert-#{message_type}" }= message
+      -# - if flash.present?
+      -#   .flash
+      -#     - flash.each do |message_type, message|
+      -#       %div{ class: "alert alert-#{message_type}" }= message
 
       %p 会社名: みまもりlab
       %p 代表者: 篠原　智哉
