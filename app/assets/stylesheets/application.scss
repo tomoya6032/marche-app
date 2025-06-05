@@ -97,7 +97,7 @@ body {
   font-family: 'Arial', sans-serif;
   line-height: 1.6;
   color: #333;
-  background-color: #ffffff;
+  // background-color: #ffffff;
   margin: auto;
   // line-break: strict;
 }
@@ -130,6 +130,7 @@ a:hover {
   font-weight: bold; /* ホバー時に太文字にする */
 }
 
+ 
 
 .header-left {
   display: flex;
@@ -704,13 +705,16 @@ nav ul li a {
   }
 }
 
+
+
 .top-container {
+  // background-image: url("/assets/top-page-image2.png");
     background-size: contain;
     
     background-repeat: no-repeat; /* 通常は繰り返しをなくします */
     background-position: right; /* 画像を中央に配置 */
     // margin-bottom: 10px;
-    display: flex; /* 子要素を横並びにする */
+    // display: flex; /* 子要素を横並びにする */
     flex-direction: column; /* 子要素を縦に並べる */
     align-items: flex-start; /* 子要素を左寄せにする */
     position: relative; /* 子要素の基準となるように */
@@ -722,9 +726,22 @@ nav ul li a {
     height: 600px;/* 親要素の高さをビューポートの高さに合わせる（必要に応じて） */
     // text-align: center;
     margin: 10px auto;
-    // display: flex !important; /* 強制的に表示する */
-    background-image: image-url("top-page-image2.png");
+    display: flex !important; /* 強制的に表示する */
+    
+
 }
+
+.top-image {
+      // <img>タグを使用する場合は、SCSSのbackground-imageは不要です
+      // こちらのスタイルは、もし<img>タグを維持する場合のみ必要です
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      z-index: -1;
+  }
 
 
 
@@ -740,7 +757,7 @@ nav ul li a {
     font-size: 32px;
     color: #ffffff;
     font-weight: bold;
-    text-shadow: 2px 2px 0 $text-light, -2px -2px 0 $text-light, 2px -2px 0 $text-light, -2px 2px 0 $text-light;
+    text-shadow: 1px 1px 0 $text-light, -1px -1px 0 $text-light, 1px -1px 0 $text-light, -1px 1px 0 $text-light;
   
     h1 {
       color: #ffffff;
@@ -748,7 +765,10 @@ nav ul li a {
       text-shadow: 4px 4px 5px rgba(0, 0, 0, 0.9); /* h1 にも影をつける */
     }
 
+  
 }
+
+
 
 .event-container,
 .facility-container,
@@ -836,18 +856,18 @@ nav ul li a {
     }
 }
 
-.top-image {
+// .top-image {
    
-    width: 40%;
-    overflow: hidden; /* スライダーの幅を超えた画像を隠す */
-    position: relative; /* ナビゲーションボタンの配置基準 */
-    text-align: center;
-    // border: 1px solid #000;
-    // height: 350px;
-    margin: 0 auto;
-    margin-top: 60px;
+//     width: 40%;
+//     overflow: hidden; /* スライダーの幅を超えた画像を隠す */
+//     position: relative; /* ナビゲーションボタンの配置基準 */
+//     text-align: center;
+//     // border: 1px solid #000;
+//     // height: 350px;
+//     margin: 0 auto;
+//     margin-top: 60px;
 
-}
+// }
 
 .pickup-contaner {
   margin-top: 100px;
@@ -879,12 +899,12 @@ nav ul li a {
   
 }
 
-// .slider-nav-container {
-//   padding: 20px;
-//   margin: 60px;
-//   width: 700px;
+.slider-nav-container {
+  padding: 20px;
+  margin: 60px;
+  width: 700px;
 
-// }
+}
 
 .slider-navigation {
   width: 800px; /* スライダーの幅 */
@@ -1837,7 +1857,7 @@ table.account-comparison {
 
 
 
-    .top-container {
+    .top-container  {
       background-size: cover; /* 画像を画面幅に合わせる */
       align-items: center; /* 中央揃え */
       margin: 0;
