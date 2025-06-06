@@ -80,18 +80,26 @@ test:
 #
 production:
   primary: &primary_production
-    <<: *default
-    database: marche_production
-    username: marche
-    password: <%= ENV["MARCHE_DATABASE_PASSWORD"] %>
+    # Herokuが自動的に設定する DATABASE_URL 環境変数を使用します
+    url: <%= ENV['DATABASE_URL'] %>
+    adapter: postgresql
+    encoding: unicode
+    pool: <%= ENV.fetch("RAILS_MAX_THREADS") { 5 } %>
+    # database, username, password の行は削除またはコメントアウトしてください
+    # database: marche_production  <- 削除またはコメントアウト
+    # username: marche            <- 削除またはコメントアウト
+    # password: <%= ENV["MARCHE_DATABASE_PASSWORD"] %> <- 削除またはコメントアウト
+
   cache:
     <<: *primary_production
     database: marche_production_cache
     migrations_paths: db/cache_migrate
+
   queue:
     <<: *primary_production
     database: marche_production_queue
     migrations_paths: db/queue_migrate
+
   cable:
     <<: *primary_production
     database: marche_production_cable
