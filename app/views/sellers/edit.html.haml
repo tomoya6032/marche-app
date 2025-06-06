@@ -66,3 +66,5 @@
     -#       = text_field_tag "seller[sns_accounts_urls][]", (@seller.sns_accounts_urls&.split(',') || [])[value], placeholder: 'URL'
     .actions
       = form.submit '更新'
+
+= link_to '戻る', sellers_path, class: 'operation-button'

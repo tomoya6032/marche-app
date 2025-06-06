@@ -2229,11 +2229,38 @@ table.account-comparison {
       }
     }
 
+    .datetime-fields  {
+     
+      .datetime-select-container {
+        width: 60%;
+        text-align: center;
+        margin: auto;
+        display: flex;       // フレックスボックスを有効に
+        flex-wrap: wrap;     // 画面幅を超えたら折り返す
+        align-items: center; // 垂直方向の中央揃え
+        gap: 8px;            // 各要素間の間隔
   
-      // .footer-button {
-      //   width: 100%; /* ボタンを画面幅に合わせる */
-      //   margin: auto; /* 中央揃え */
-      // }
+        // .date-select {
+        //   flex-grow: 1;      // 利用可能なスペースがあれば広がる
+        //   flex-shrink: 1;    // 狭ければ縮む
+        //   min-width: 60px;   // 最低限の幅を確保
+        //   max-width: 120px;  // 大きくなりすぎないように調整
+        //   height: 38px;      // 高さの統一（任意）
+        //   box-sizing: border-box;
+        // }
+  
+        span {
+          flex-grow: 0;      // 幅は内容に合わせる
+          flex-shrink: 0;
+          white-space: nowrap; // 改行しない
+          margin-right: 5px;   // セレクトボックスと単位の間の余白
+        }
+      }
+      // width: 100%;
+    }
+    
+
+
     .section.recruitment {
       width: auto; /* セクションの幅を調整 */
       text-align: center;
