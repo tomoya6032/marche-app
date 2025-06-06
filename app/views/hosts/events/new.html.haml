@@ -57,11 +57,11 @@
     = f.label :capacity, '定員の目安'
     = f.number_field :capacity
   .field
-    = f.label :is_online, 'オンライン開催'
+    = f.label :is_online, '↓オンライン開催があればチェック'
     = f.check_box :is_online
   .field
     = f.label :online_url, 'オンラインURL'
-    = f.text_field :online_url
+    = f.text_field :online_url, placeholder: '例: https://example.com'
   .field
     = f.label :is_free, '有料イベント'
     = f.check_box :is_free
@@ -76,11 +76,11 @@
     = f.text_field :contact_info
   .field
     = f.label :website, 'ウェブサイト'
-    = f.text_field :website
-  .field
-    = f.label :video, '動画URL'
-    = f.text_field :video
+    = f.text_field :website, placeholder: '例: https://example.com'
+  -# .field
+  -#   = f.label :video, '動画URL'
+  -#   = f.text_field :video
   .actions
     = f.submit '作成'
 
-= link_to '戻る', hosts_path, class: 'btn btn-secondary'
+= link_to '戻る', hosts_path, class: 'operation-button'

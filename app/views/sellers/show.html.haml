@@ -32,7 +32,7 @@
       %tr
         %th 営業時間
         %td
-          %p= "曜日: #{@seller.business_hours_days}"
+          -# %p= "曜日: #{@seller.business_hours_days}"
           %p= "時間: #{@seller.business_hours_start&.strftime('%H:%M')} - #{@seller.business_hours_end&.strftime('%H:%M')}"
       %tr
         %th 店休日
