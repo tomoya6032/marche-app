@@ -105,24 +105,23 @@ class HostsController < ApplicationController
     @event = @host.events.find(params[:id])
   end
 
-  def host_params
-    params.require(:host).permit(:name, :email, :description, :venue, :address, :phone_number, :website, :top_image, :news, :topics, :goods_introduction, images: [])
-  end
+  # def host_params
+  #   params.require(:host).permit(:name, :email, :description, :venue, :address, :phone_number, :website, :top_image, :news, :topics, :goods_introduction, images: [])
+  # end
 
   def event_params
     params.require(:event).permit(:title, :description, :start_time, :end_time, :venue, :address, :latitude, :longitude, :capacity, :is_online, :online_url, :is_free, :price, :organizer, :contact_info, :website, :status, :image, :video, :category_id)
   end
 
 
-    def host_params
-      params.require(:host).permit(
-      :name, :email, :description, :address, :phone_number, :website, :top_image, :news, :topics, :goods_introduction,
-      :goods_introduction,
+  def host_params
+    params.require(:host).permit(
+      :name, :email, :description, :address, :phone_number, :website, :top_image, :news, :topics, :business_hours_days, :business_hours_start, :business_hours_end,
       :goods_introduction_1, :goods_image_1,
       :goods_introduction_2, :goods_image_2,
       :goods_introduction_3, :goods_image_3,
       :goods_introduction_4, :goods_image_4,
-      images: []
-     )
-   end
+      images: [] # 複数画像添付用
+    )
+  end
 end      

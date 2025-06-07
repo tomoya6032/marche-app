@@ -23,14 +23,14 @@
             %span= @host.created_at.strftime('%Y/%m/%d') if @host.created_at
             .free-acccount-date
             - if @host.created_at
-              - remaining_days = 21 - (Date.today - @host.created_at.to_date).to_i
+              - remaining_days =  21 - (Date.today - @host.created_at.to_date).to_i
               - if remaining_days > 0
                 %span.text-muted 無料アカウント期間：残り#{remaining_days}日
               - else
                 %span.text-muted 無料アカウント期間は終了しました。決済登録をお願いします。
-                .payment
-                  %form{ action: "https://www.kaihipay.jp/forms?form_code=9300764061642479", method: "get", target: "_blank" }
-                    = link_to "決済登録", "https://www.kaihipay.jp/forms?form_code=9300764061642479", class: "payment-button", target: "_blank"
+            .payment
+              %form{ action: "https://www.kaihipay.jp/forms?form_code=9300764061642479", method: "get", target: "_blank" }
+                = link_to "決済登録", "https://www.kaihipay.jp/forms?form_code=9300764061642479", class: "payment-button", target: "_blank"
         
       %tr
         %th アカウント名
@@ -70,9 +70,11 @@
       %tr
         %th 営業時間
         %td
-          %p= "曜日: #{@host.business_hours_days}"
+          -# %p= "曜日: #{@host.business_hours_days}"
           %p= "時間: #{@host.business_hours_start&.strftime('%H:%M')} - #{@host.business_hours_end&.strftime('%H:%M')}"
-
+      %tr
+        %th 店休日
+        %td= @host.business_hours_days.present? ? @host.business_hours_days : '未設定'
       %tr
         %th 過去の主催実績
         %td

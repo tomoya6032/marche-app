@@ -28,9 +28,9 @@
                 %span.text-muted 無料アカウント期間：残り#{remaining_days}日
               - else
                 %span.text-muted 無料アカウント期間は終了しました。決済登録をお願いします。
-                .payment
-                  %form{ action: "https://www.kaihipay.jp/forms?form_code=7064409617634745", method: "get", target: "_blank" }
-                    = link_to "決済登録", "https://www.kaihipay.jp/forms?form_code=7064409617634745", class: "payment-button", target: "_blank"
+            .payment
+              %form{ action: "https://www.kaihipay.jp/forms?form_code=7064409617634745", method: "get", target: "_blank" }
+                = link_to "決済登録", "https://www.kaihipay.jp/forms?form_code=7064409617634745", class: "payment-button", target: "_blank"
       
       %tr
         %th アカウント名
