@@ -16,7 +16,7 @@
      
     .field
       = form.label :name, '名前'
-      = form.text_area :name
+      = form.text_field :name
 
     .field
       = form.label :description, '私たちについて'
@@ -35,35 +35,35 @@
     -#   = form.text_area :goods_introduction
 
     .field
-      = form.label :goods_introduction, '商品紹介1'
+      = form.label :goods_introduction, 'goods1'
       = form.text_area :goods_introduction_1
       = form.file_field :goods_image_1
 
     .field
-      = form.label :goods_introduction_1, '商品紹介2'
+      = form.label :goods_introduction_1, 'goods2'
       = form.text_area :goods_introduction_2
       = form.file_field :goods_image_2
 
     .field
-      = form.label :goods_introduction_2, '商品紹介3'
+      = form.label :goods_introduction_2, 'goods3'
       = form.text_area :goods_introduction_3
       = form.file_field :goods_image_3
 
     .field
-      = form.label :goods_introduction_3, '商品紹介4'
+      = form.label :goods_introduction_3, 'goods4'
       = form.text_area :goods_introduction_4
       = form.file_field :goods_image_4
 
     .field
-      = form.label :address, '法人概要 - 住所'
+      = form.label :address, '事業所 - 住所'
       = form.text_field :address
 
     .field
-      = form.label :phone_number, '法人概要 - 電話番号'
+      = form.label :phone_number, '電話番号'
       = form.text_field :phone_number
 
     .field
-      = form.label :website, '法人概要 - ウェブサイト'
+      = form.label :website, 'ウェブサイト'
       = form.text_field :website
 
     .field

@@ -6,16 +6,24 @@
       %h1.host-name-with-breaks= @host.name.presence || '名称未設定'
       
       
-    .host-contact-info
-      .contact-items
-        %p.host-website= "ウェブサイト: #{link_to @host.website.presence || '未設定', @host.website, target: '_blank'}"
-        %p.host-address= "所在地: #{@host.address.presence || '未設定'}"
-        %p.host-phone= "TEL: #{@host.phone_number.presence || '未設定'}"
+    -# .host-contact-info
+    -#   .contact-items
+    -#     %p.host-website= "ウェブサイト: #{link_to @host.website.presence || '未設定', @host.website, target: '_blank'}"
+    -#     %p.host-address= "所在地: #{@host.address.presence || '未設定'}"
+    -#     %p.host-phone= "TEL: #{@host.phone_number.presence || '未設定'}"
   
   .host-top-image
   - if @host&.top_image&.attached?
     .top-image-container
       = image_tag @host.top_image, class: 'host-top-image'
+
+  .host-contact-info
+    .contact-items
+      %p.host-website= "ウェブサイト: #{link_to @host.website.presence || '未設定', @host.website, target: '_blank'}"
+      %p.host-address= "所在地: #{@host.address.presence || '未設定'}"
+      %p.host-phone= "TEL: #{@host.phone_number.presence || '未設定'}"
+      %p.host-hours= "営業時間: #{@host.business_hours_start&.strftime('%H:%M')} - #{@host.business_hours_end&.strftime('%H:%M')}"
+      %p.host-closed-days= "店休日: #{@host.business_hours_days.presence || '未設定'}"
 
   .host-events
     %h2 出店イベント一覧
