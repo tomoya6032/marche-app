@@ -1,0 +1,132 @@
+.host-mypage {
+  font-family: Arial, sans-serif;
+  background-color: #f9f9f9;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+.host-mypage .button, .host-mypage .button-delete {
+  color: white !important;
+}
+.host-mypage h1 {
+  font-size: 24px;
+  margin-bottom: 20px;
+  color: #333;
+}
+.host-mypage p {
+  margin-bottom: 10px;
+  font-size: 16px;
+  color: #555;
+}
+.host-mypage p strong {
+  font-weight: bold;
+  color: #333;
+}
+.host-mypage a {
+  color: #007bff;
+  text-decoration: none;
+}
+.host-mypage a:hover {
+  text-decoration: underline;
+}
+.host-mypage table {
+  width: 100%;
+  border-collapse: collapse;
+  margin-bottom: 20px;
+}
+.host-mypage table th, .host-mypage table td {
+  padding: 10px;
+  text-align: left;
+  border: 1px solid #ddd;
+}
+.host-mypage table th {
+  background-color: #f5f5f5;
+  font-weight: bold;
+  color: #333;
+}
+.host-mypage table td {
+  color: #555;
+}
+.host-mypage table td p {
+  margin-bottom: 5px;
+  font-size: 14px;
+}
+.host-mypage table td img {
+  max-width: 200px;
+  height: auto;
+  margin-right: 5px;
+  vertical-align: middle;
+}
+.host-mypage table td .admin-comment {
+  margin-bottom: 10px;
+  padding: 10px;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  background-color: #fff;
+}
+.host-mypage table td .admin-comment p.comment-date {
+  font-size: 12px;
+  color: #777;
+  margin-bottom: 5px;
+}
+.host-mypage table td .admin-comment p {
+  font-size: 14px;
+  color: #333;
+  margin-bottom: 0;
+}
+.host-mypage .host-info-table {
+  margin-bottom: 30px;
+}
+.host-mypage .facility-info-table {
+  margin-top: 20px;
+}
+.host-mypage .facility-info-table th {
+  background-color: #cce5ff;
+}
+.host-mypage .host-profile-info img {
+  margin-bottom: 20px;
+}
+.host-mypage .host-btn {
+  display: flex;
+  gap: 10px;
+  margin-bottom: 20px;
+}
+.host-mypage .host-btn a {
+  text-decoration: none;
+}
+.host-mypage .host-btn a .link_inner {
+  background-color: #66aaff;
+  color: white;
+  padding: auto;
+  padding: 10px 15px;
+  text-align: center;
+  transition: background-color 0.3s ease;
+}
+.host-mypage .host-btn a .link_inner p {
+  font-size: 16px;
+  margin: 0;
+}
+.host-mypage .host-btn a .link_inner:hover {
+  background-color: #3c93df;
+  color: black;
+}
+
+.acccount-date {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+.acccount-date span {
+  font-size: 14px;
+  color: #555;
+}
+.acccount-date .text-muted {
+  font-style: italic;
+  color: #999;
+}
+
+.host-events .a {
+  color: #007bff;
+  text-decoration: none;
+}
+.host-events .a:hover {
+  text-decoration: underline;
+}/*# sourceMappingURL=index.css.map */

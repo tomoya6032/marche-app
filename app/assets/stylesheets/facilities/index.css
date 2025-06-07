@@ -1,0 +1,52 @@
+.section-index {
+  margin: 20px 0;
+  margin-bottom: 60px;
+}
+.section-index h2 {
+  font-size: 24px;
+  margin-bottom: 15px;
+  color: #333;
+  text-align: left;
+}
+.section-index table {
+  width: 100%;
+  border-collapse: collapse;
+  margin: 20px 0;
+  font-size: 16px;
+  text-align: left;
+  table-layout: fixed;
+}
+.section-index thead {
+  background-color: #f4f4f4;
+}
+.section-index thead th {
+  padding: 10px;
+  border-bottom: 2px solid #ddd;
+  text-align: left;
+  width: 33.33%;
+}
+.section-index tbody tr:nth-child(even) {
+  background-color: #f9f9f9;
+}
+.section-index tbody tr:hover {
+  background-color: #f1f1f1;
+}
+.section-index tbody td {
+  padding: 10px;
+  border-bottom: 1px solid #ddd;
+  text-align: left;
+  width: 33.33%;
+}
+.section-index .btn {
+  display: inline-block;
+  margin-top: 20px;
+  padding: 10px 20px;
+  background-color: #007bff;
+  color: #fff;
+  text-align: center;
+  border-radius: 5px;
+  text-decoration: none;
+}
+.section-index .btn:hover {
+  background-color: #0056b3;
+}/*# sourceMappingURL=index.css.map */

@@ -1,0 +1,261 @@
+.host-lp-page {
+  background-color: #fdf3ff;
+  color: #41404a;
+  font-family: "Noto Sans JP", sans-serif;
+  line-height: 1.6;
+  padding: 2rem;
+  border-radius: 8px;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+}
+.host-lp-page .top-section {
+  text-align: center;
+  padding-bottom: 2rem;
+  border-bottom: 1px solid #d3d3d3;
+  margin-bottom: 2rem;
+}
+.host-lp-page .top-section .host-name {
+  font-size: 2.5rem;
+  color: #41404a;
+  margin-bottom: 1rem;
+  font-weight: 700;
+}
+.host-lp-page .top-section .top-image {
+  max-width: 80%;
+  margin: 0 auto 1rem;
+  border-radius: 8px;
+  overflow: hidden;
+}
+.host-lp-page .top-section .top-image img {
+  display: block;
+  width: 100%;
+  height: auto;
+}
+.host-lp-page .top-section .top-image p {
+  color: #716f81;
+  font-style: italic;
+}
+.host-lp-page .top-section .button.edit-button {
+  display: inline-block;
+  padding: 0.75rem 1.5rem;
+  background-color: #edcaff;
+  color: #41404a;
+  text-decoration: none;
+  border-radius: 6px;
+  font-weight: 600;
+  transition: background-color 0.3s ease;
+}
+.host-lp-page .top-section .button.edit-button:hover {
+  background-color: #dc97ff;
+}
+.host-lp-page .about-us-section,
+.host-lp-page .company-info-section,
+.host-lp-page .access-map-section,
+.host-lp-page .gallery-section,
+.host-lp-page .event-list-section {
+  padding: 1.5rem 0;
+  border-bottom: 1px solid #d3d3d3;
+  margin-bottom: 1.5rem;
+}
+.host-lp-page .about-us-section:last-child,
+.host-lp-page .company-info-section:last-child,
+.host-lp-page .access-map-section:last-child,
+.host-lp-page .gallery-section:last-child,
+.host-lp-page .event-list-section:last-child {
+  border-bottom: none;
+  margin-bottom: 0;
+}
+.host-lp-page .about-us-section h2,
+.host-lp-page .company-info-section h2,
+.host-lp-page .access-map-section h2,
+.host-lp-page .gallery-section h2,
+.host-lp-page .event-list-section h2 {
+  font-size: 2rem;
+  color: #41404a;
+  margin-bottom: 1rem;
+  font-weight: 600;
+}
+.host-lp-page .about-us-section .host-description,
+.host-lp-page .company-info-section .host-description,
+.host-lp-page .access-map-section .host-description,
+.host-lp-page .gallery-section .host-description,
+.host-lp-page .event-list-section .host-description {
+  line-height: 1.8;
+  margin-bottom: 1rem;
+  color: #595865;
+}
+.host-lp-page .about-us-section .company-info-table,
+.host-lp-page .company-info-section .company-info-table,
+.host-lp-page .access-map-section .company-info-table,
+.host-lp-page .gallery-section .company-info-table,
+.host-lp-page .event-list-section .company-info-table {
+  width: 100%;
+  border-collapse: collapse;
+  margin-bottom: 1rem;
+}
+.host-lp-page .about-us-section .company-info-table tbody tr,
+.host-lp-page .company-info-section .company-info-table tbody tr,
+.host-lp-page .access-map-section .company-info-table tbody tr,
+.host-lp-page .gallery-section .company-info-table tbody tr,
+.host-lp-page .event-list-section .company-info-table tbody tr {
+  border-bottom: 1px solid #d3d3d3;
+}
+.host-lp-page .about-us-section .company-info-table tbody tr:last-child,
+.host-lp-page .company-info-section .company-info-table tbody tr:last-child,
+.host-lp-page .access-map-section .company-info-table tbody tr:last-child,
+.host-lp-page .gallery-section .company-info-table tbody tr:last-child,
+.host-lp-page .event-list-section .company-info-table tbody tr:last-child {
+  border-bottom: none;
+}
+.host-lp-page .about-us-section .company-info-table th,
+.host-lp-page .about-us-section .company-info-table td,
+.host-lp-page .company-info-section .company-info-table th,
+.host-lp-page .company-info-section .company-info-table td,
+.host-lp-page .access-map-section .company-info-table th,
+.host-lp-page .access-map-section .company-info-table td,
+.host-lp-page .gallery-section .company-info-table th,
+.host-lp-page .gallery-section .company-info-table td,
+.host-lp-page .event-list-section .company-info-table th,
+.host-lp-page .event-list-section .company-info-table td {
+  padding: 0.75rem;
+  text-align: left;
+}
+.host-lp-page .about-us-section .company-info-table th,
+.host-lp-page .company-info-section .company-info-table th,
+.host-lp-page .access-map-section .company-info-table th,
+.host-lp-page .gallery-section .company-info-table th,
+.host-lp-page .event-list-section .company-info-table th {
+  font-weight: 600;
+  color: #41404a;
+  width: 30%;
+}
+.host-lp-page .about-us-section .company-info-table td a,
+.host-lp-page .company-info-section .company-info-table td a,
+.host-lp-page .access-map-section .company-info-table td a,
+.host-lp-page .gallery-section .company-info-table td a,
+.host-lp-page .event-list-section .company-info-table td a {
+  color: #41404a;
+  text-decoration: none;
+  transition: color 0.3s ease;
+}
+.host-lp-page .about-us-section .company-info-table td a:hover,
+.host-lp-page .company-info-section .company-info-table td a:hover,
+.host-lp-page .access-map-section .company-info-table td a:hover,
+.host-lp-page .gallery-section .company-info-table td a:hover,
+.host-lp-page .event-list-section .company-info-table td a:hover {
+  color: #29282f;
+}
+.host-lp-page .about-us-section .map-container,
+.host-lp-page .company-info-section .map-container,
+.host-lp-page .access-map-section .map-container,
+.host-lp-page .gallery-section .map-container,
+.host-lp-page .event-list-section .map-container {
+  margin-bottom: 1rem;
+}
+.host-lp-page .about-us-section .map-container p,
+.host-lp-page .company-info-section .map-container p,
+.host-lp-page .access-map-section .map-container p,
+.host-lp-page .gallery-section .map-container p,
+.host-lp-page .event-list-section .map-container p {
+  color: #595865;
+}
+.host-lp-page .about-us-section .map-container p a,
+.host-lp-page .company-info-section .map-container p a,
+.host-lp-page .access-map-section .map-container p a,
+.host-lp-page .gallery-section .map-container p a,
+.host-lp-page .event-list-section .map-container p a {
+  color: #41404a;
+  text-decoration: none;
+  transition: color 0.3s ease;
+}
+.host-lp-page .about-us-section .map-container p a:hover,
+.host-lp-page .company-info-section .map-container p a:hover,
+.host-lp-page .access-map-section .map-container p a:hover,
+.host-lp-page .gallery-section .map-container p a:hover,
+.host-lp-page .event-list-section .map-container p a:hover {
+  color: #29282f;
+}
+.host-lp-page .about-us-section .image-gallery .row,
+.host-lp-page .company-info-section .image-gallery .row,
+.host-lp-page .access-map-section .image-gallery .row,
+.host-lp-page .gallery-section .image-gallery .row,
+.host-lp-page .event-list-section .image-gallery .row {
+  display: flex;
+  flex-wrap: wrap;
+  margin-right: -1rem;
+  margin-left: -1rem;
+}
+.host-lp-page .about-us-section .image-gallery .col-md-3,
+.host-lp-page .company-info-section .image-gallery .col-md-3,
+.host-lp-page .access-map-section .image-gallery .col-md-3,
+.host-lp-page .gallery-section .image-gallery .col-md-3,
+.host-lp-page .event-list-section .image-gallery .col-md-3 {
+  padding-right: 1rem;
+  padding-left: 1rem;
+  margin-bottom: 1rem;
+  width: calc(25% - 2rem);
+}
+.host-lp-page .about-us-section .image-gallery .gallery-image,
+.host-lp-page .company-info-section .image-gallery .gallery-image,
+.host-lp-page .access-map-section .image-gallery .gallery-image,
+.host-lp-page .gallery-section .image-gallery .gallery-image,
+.host-lp-page .event-list-section .image-gallery .gallery-image {
+  border-radius: 6px;
+  overflow: hidden;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+}
+.host-lp-page .about-us-section .image-gallery .gallery-image img,
+.host-lp-page .company-info-section .image-gallery .gallery-image img,
+.host-lp-page .access-map-section .image-gallery .gallery-image img,
+.host-lp-page .gallery-section .image-gallery .gallery-image img,
+.host-lp-page .event-list-section .image-gallery .gallery-image img {
+  display: block;
+  width: 100%;
+  height: auto;
+  transition: transform 0.3s ease-in-out;
+}
+.host-lp-page .about-us-section .image-gallery .gallery-image img:hover,
+.host-lp-page .company-info-section .image-gallery .gallery-image img:hover,
+.host-lp-page .access-map-section .image-gallery .gallery-image img:hover,
+.host-lp-page .gallery-section .image-gallery .gallery-image img:hover,
+.host-lp-page .event-list-section .image-gallery .gallery-image img:hover {
+  transform: scale(1.05);
+}
+.host-lp-page .event-list-section h2 {
+  font-size: 2rem;
+  color: #edcaff;
+  margin-bottom: 1rem;
+  font-weight: 600;
+}
+.host-lp-page .event-list-section .event-info-table {
+  width: 100%;
+  border-collapse: collapse;
+}
+.host-lp-page .event-list-section .event-info-table thead th {
+  background-color: #8b8a99;
+  color: #41404a;
+  padding: 0.75rem;
+  text-align: left;
+  border-bottom: 2px solid #41404a;
+}
+.host-lp-page .event-list-section .event-info-table tbody tr {
+  border-bottom: 1px solid #d3d3d3;
+}
+.host-lp-page .event-list-section .event-info-table tbody tr:last-child {
+  border-bottom: none;
+}
+.host-lp-page .event-list-section .event-info-table tbody tr td {
+  padding: 0.75rem;
+}
+.host-lp-page .event-list-section .event-info-table tbody tr td a {
+  color: #41404a;
+  text-decoration: none;
+  font-weight: 500;
+  transition: color 0.3s ease;
+}
+.host-lp-page .event-list-section .event-info-table tbody tr td a:hover {
+  color: #29282f;
+}
+.host-lp-page .event-list-section p {
+  color: #716f81;
+  font-style: italic;
+}/*# sourceMappingURL=show.css.map */
