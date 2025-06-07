@@ -8,7 +8,7 @@
     %meta{ content: "yes", name: "mobile-web-app-capable" }
 
     -# ページタイトル
-    %title= content_for?(:title) ? yield(:title) : "Marche - あなたのイベントを見つけよう"
+    %title= content_for?(:title) ? yield(:title) : "つながるマルシェ - あなたのイベントを見つけよう"
 
     -# メタディスクリプション
     %meta{name: "description", content: (content_for?(:description) ? yield(:description) : "Marcheは、地域のイベントを簡単に検索・発見できるプラットフォームです。新しい体験を見つけましょう！")}
@@ -32,6 +32,15 @@
     %meta{name: "twitter:description", content: (content_for?(:twitter_description) ? yield(:twitter_description) : (content_for?(:og_description) ? yield(:og_description) : (content_for?(:description) ? yield(:description) : "Marcheは、地域のイベントを簡単に検索・発見できるプラットフォームです。新しい体験を見つけましょう！")))}
     %meta{name: "twitter:image", content: (content_for?(:twitter_image) ? yield(:twitter_image) : (content_for?(:og_image) ? yield(:og_image) : asset_url('marchelogo2.png')))}
 
+    <!-- Google tag (gtag.js) -->
+    <!-- Google tag (gtag.js) -->
+    %script{ async: true, src: "https://www.googletagmanager.com/gtag/js?id=G-L0FTFKE4G4" }
+    %script
+      :plain
+        window.dataLayer = window.dataLayer || [];
+        function gtag(){dataLayer.push(arguments);}
+        gtag('js', new Date());
+        gtag('config', 'G-L0FTFKE4G4');
 
     = csrf_meta_tags
     = csp_meta_tag
