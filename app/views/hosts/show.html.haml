@@ -60,32 +60,32 @@
     %p= simple_format(@host.description.presence || 'トピックスはありません。')
 
   .goods-section
-    %h2 商品紹介
+    %h2 goods紹介
     .goods-list
       -#   .good-item
       -#     %h3 商品説明
       -#     %p= @host.goods_introduction.presence || '商品紹介はありません。'
 
       .good-item
-        %h3 商品紹介①
+        %h3 goods①
         - if @host.goods_image_1.attached?
           = image_tag @host.goods_image_1, class: 'good-image'
         %p= simple_format(@host.goods_introduction_1.presence || '商品紹介はありません。')
 
       .good-item
-        %h3 商品紹介②
+        %h3 goods②
         - if @host.goods_image_2.attached?
           = image_tag @host.goods_image_2, class: 'good-image'
         %p= simple_format(@host.goods_introduction_2.presence || '商品紹介はありません。')
 
       .good-item
-        %h3 商品紹介③
+        %h3 goods③
         - if @host.goods_image_3.attached?
           = image_tag @host.goods_image_3, class: 'good-image'
         %p= simple_format(@host.goods_introduction_3.presence || '商品紹介はありません。')
 
       .good-item
-        %h3 商品紹介④
+        %h3 goods④
         - if @host.goods_image_4.attached?
           = image_tag @host.goods_image_4, class: 'good-image'
         %p= simple_format(@host.goods_introduction_4.presence || '商品紹介はありません。')

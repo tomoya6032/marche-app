@@ -42,7 +42,7 @@
         %td
           - if @seller.images.attached?
             - @seller.images.uniq.each do |image|
-              = image_tag image
+              = image_tag image, class: "shop-image"
           - else
             = image_tag "no_image_square.jpg"
 
@@ -60,3 +60,5 @@
             %td= event.start_time.strftime('%Y/%m/%d') if event.start_time
   - else
     %p このセラーはまだイベントを開催していません。
+
+= render 'footer/footer' # フッターのパーシャルを呼び出す
