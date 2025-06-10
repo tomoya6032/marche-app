@@ -9,9 +9,10 @@ test:
   adapter: test
 
 production:
-  adapter: solid_cable
-  connects_to:
-    database:
-      writing: cable
-  polling_interval: 0.1.seconds
-  message_retention: 1.day
+  # config/database.yml の production 設定を使用するように変更
+  # Rails 7 以降では、デフォルトで production 環境のデータベース接続を Action Cable に使用するため、
+  # 特に指定がなければこれだけで良いことが多いです。
+  # 明示的に adapter を指定する場合:
+  adapter: postgresql
+  # URL を直接指定する場合（通常は database.yml の production 設定から自動解決されるため不要）
+  # url: <%= ENV['DATABASE_URL'] %>
