@@ -65,7 +65,18 @@
     .field
       = form.label :website, 'ウェブサイト'
       = form.text_field :website
-
+    .field
+      = form.label :business_hours_days, '店休日'
+      = form.text_field :business_hours_days, placeholder: '例:元旦以外毎日営業（不定休）'
+    .field
+      = form.label :business_hours_start, '営業開始時間を入力してください'
+      = form.time_select :business_hours_start
+    .field
+      = form.label :business_hours_end, '営業終了時間を入力してください'
+      = form.time_select :business_hours_end
+    .field
+      = form.label :contact_link, 'お問い合わせリンクまたはメールアドレスを入力してください'
+      = form.text_field :contact_link, class: 'form-control', placeholder: '例: https://forms.gle/your-google-form-link または example@example.com'
     .field
       = form.label :images, '活動風景・施設外観 (複数選択可)'
       - if @host.images.attached?

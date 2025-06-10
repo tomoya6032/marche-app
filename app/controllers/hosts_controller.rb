@@ -121,6 +121,7 @@ class HostsController < ApplicationController
       :goods_introduction_2, :goods_image_2,
       :goods_introduction_3, :goods_image_3,
       :goods_introduction_4, :goods_image_4,
+      :contact_link, # 新しいカラムを許可
       images: [] # 複数画像添付用
     )
   end

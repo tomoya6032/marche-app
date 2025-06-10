@@ -245,7 +245,7 @@
     .host-images {
       margin: 40px 0; 
       padding: 10px 0;
-      height: 600px;
+      min-height: 600px;
     
       h2 {
         font-size: 20px;
@@ -257,6 +257,7 @@
         display: grid;
         grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
         gap: 10px;
+        margin-bottom: 10px;
       }
   
       .host-image {
@@ -307,16 +308,20 @@
   
       .contact-link {
         display: inline-block;
+        width: 200px;
         margin-top: 10px;
         padding: 10px 20px;
-        background-color: #007bff;
+        background-color: #4dca98;
         color: #fff;
         text-decoration: none;
         border-radius: 5px;
         transition: background-color 0.3s;
-  
+        a {
+          color: #fff;
+          text-decoration: none;
+        }
         &:hover {
-          background-color: #0056b3;
+          background-color: #7ae9bc;
         }
       }
     }
@@ -392,9 +397,11 @@
     //   height: auto;
     // }
   }
-
-  .host-images {
-    height: auto;
+  .host-details {
+    .host-images {
+      min-height: 800px; /* 高さを調整 */
+      margin-bottom: 40px; 
+    }
   }
 }
 
