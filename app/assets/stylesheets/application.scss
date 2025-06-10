@@ -238,6 +238,20 @@ a:hover {
   }
 }
 
+.contact-link {
+  display: inline-block;
+  text-align: center;
+  margin: 6px;
+  padding: 4px;
+ 
+  width: 120px;
+  border: none;
+  border-radius: 4px;
+  background-color: $secondary-teal;
+  color: white;
+  cursor: pointer;
+  text-decoration: none;
+}
 
 
 .button-delete {

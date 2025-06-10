@@ -96,7 +96,14 @@
                   -# = image_tag "#{sns_type}.png" # カラーアイコン
           - else
             %p 設定なし
-
+          
+      %tr
+        %th お問い合わせリンク
+        %td
+          - if @host.contact_link.present?
+            = link_to @host.contact_link, @host.contact_link, target: '_blank', rel: 'noopener noreferrer'
+          - else
+            %p.contact-link お問い合わせリンクが設定されていません。
       %tr
         %th 活動風景・施設外観
         %td

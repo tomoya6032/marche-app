@@ -109,8 +109,13 @@
 
   .contact-section
     %h2 コンタクト
-    
     %p.contact-message お問い合わせはこちらから:
-    -# = link_to 'お問い合わせフォーム', contact_path, class: 'contact-link'
-
+    - if @host.contact_link.present?
+      %p.contact-link
+        - if @host.contact_link.include?('@') # メールアドレスの場合
+          = link_to "メールを送る", "mailto:#{@host.contact_link}", class: 'contact-link-text'
+        - else # URLの場合
+          = link_to "ショップ問い合わせフォームへ", @host.contact_link, target: '_blank', rel: 'noopener noreferrer', class: 'contact-link-text'
+    - else
+      %p.contact-link お問い合わせリンクが設定されていません。
 = render 'footer/footer'
