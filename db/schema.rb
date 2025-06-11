@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[8.0].define(version: 2025_06_10_001233) do
+ActiveRecord::Schema[8.0].define(version: 2025_06_11_213115) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "pg_catalog.plpgsql"
 
@@ -209,23 +209,6 @@ ActiveRecord::Schema[8.0].define(version: 2025_06_10_001233) do
     t.index ["email"], name: "index_sellers_on_email", unique: true
     t.index ["facility_id"], name: "index_sellers_on_facility_id"
     t.index ["reset_password_token"], name: "index_sellers_on_reset_password_token", unique: true
-  end
-
-  create_table "solid_queue_jobs", force: :cascade do |t|
-    t.string "queue", null: false
-    t.string "job_class", null: false
-    t.json "arguments", default: [], null: false
-    t.datetime "scheduled_at"
-    t.datetime "started_at"
-    t.datetime "finished_at"
-    t.datetime "failed_at"
-    t.integer "attempts", default: 0, null: false
-    t.text "error_message"
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
-    t.index ["job_class"], name: "index_solid_queue_jobs_on_job_class"
-    t.index ["queue"], name: "index_solid_queue_jobs_on_queue"
-    t.index ["scheduled_at"], name: "index_solid_queue_jobs_on_scheduled_at"
   end
 
   create_table "topics", force: :cascade do |t|
