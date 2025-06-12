@@ -57,10 +57,11 @@ Rails.application.configure do
   
 
 
-  # 一時的にActive JobのキューアダプターをSolid Queueからasyncに変更します。
-  # これは、Solid Queue と Active Storage の間に現在発生している問題を回避するためです。
-  # Solid Queue の問題が解決したら、元の設定に戻すことを検討してください。
-  config.active_job.queue_adapter = :async
+  # WARNING: 画像の自動分析を無効にします。
+  # これにより、Active Storage が画像サイズなどのメタデータを保存しなくなります。
+  # この設定は、Active Storage の分析ジョブのエラーを回避するための一時的な手段です。
+  # 必要に応じて、後でこの設定を元に戻し、Solid Queue の問題を調査してください。
+  config.active_storage.analyze = false
 
   # Solid Queue 関連の設定は、一旦全てコメントアウトするか削除します。
   # config.solid_queue.connects_to = { database: { writing: :queue } } # この行をコメントアウトまたは削除
