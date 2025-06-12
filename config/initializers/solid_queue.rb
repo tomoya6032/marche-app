@@ -5,7 +5,7 @@
 # end
 
 # 代わりに、直接 SolidQueue モジュールを設定する
-SolidQueue.connects_to = { database: { writing: :queue } }
+# SolidQueue.connects_to = { database: { writing: :queue } }
 
 # もし将来的に Solid Queue の他の設定（例: max_threads）を追加する場合は、
 # ここに直接記述します。
