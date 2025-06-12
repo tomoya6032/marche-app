@@ -50,9 +50,9 @@ gem 'devise'
 gem "tzinfo-data", platforms: %i[ windows jruby ]
 
 # Use the database-backed adapters for Rails.cache, Active Job, and Action Cable
-# gem "solid_cache"
+gem "solid_cache"
 # gem 'solid_queue', '~> 1.1' # Rails 8 と Solid Queue 1.1.x の互換性を考慮
-# gem "solid_cable"
+gem "solid_cable"
 
 # Reduces boot times through caching; required in config/boot.rb
 gem "bootsnap", require: false

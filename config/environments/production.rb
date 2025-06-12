@@ -63,6 +63,9 @@ Rails.application.configure do
   # 必要に応じて、後でこの設定を元に戻し、Solid Queue の問題を調査してください。
   config.active_storage.analyze = false
 
+  # Active Job アダプターの変更
+  config.active_job.queue_adapter = :async
+
   # Solid Queue 関連の設定は、一旦全てコメントアウトするか削除します。
   # config.solid_queue.connects_to = { database: { writing: :queue } } # この行をコメントアウトまたは削除
   # config.cache_store = :solid_cache_store # Solid Cacheも使わない場合
