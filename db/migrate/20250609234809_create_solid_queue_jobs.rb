@@ -1,9 +1,9 @@
-class CreateSolidQueueJobs < ActiveRecord::Migration[7.1]
+class CreateSolidQueueJobs < ActiveRecord::Migration[8.0] # ここを 8.0 に変更
   def change
     create_table :solid_queue_jobs do |t|
-      t.string :queue, null: false
-      t.string :job_class, null: false
-      t.json :arguments, null: false, default: []
+      t.string :queue_name, null: false # Solid Queue 1.1.5 では :queue_name がデフォルト。もし現在のマイグレーションが :queue ならそのまま
+      t.string :class_name, null: false # Solid Queue 1.1.5 では :class_name がデフォルト。もし現在のマイグレーションが :job_class ならそのまま
+      t.json :arguments # null: false と default: [] を削除
       t.datetime :scheduled_at
       t.datetime :started_at
       t.datetime :finished_at
@@ -13,8 +13,8 @@ class CreateSolidQueueJobs < ActiveRecord::Migration[7.1]
       t.timestamps
     end
 
-    add_index :solid_queue_jobs, :queue
-    add_index :solid_queue_jobs, :job_class
+    add_index :solid_queue_jobs, :queue_name # 同上
+    add_index :solid_queue_jobs, :class_name # 同上
     add_index :solid_queue_jobs, :scheduled_at
   end
 end
