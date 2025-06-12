@@ -56,11 +56,16 @@ Rails.application.configure do
   # config.solid_queue.connects_to = { database: { writing: :queue } }
   
 
-  # Active Storage の AnalyzeJob のみ、インラインで実行するように設定します。
-  # これにより、Solid Queue のエンキュー時の問題を回避します。
-  # これは問題の根本解決ではなく、一時的な回避策です。
-  # Solid Queue の問題が完全に解決したら、この行は削除できます。
-  config.active_storage.queue_adapter = :inline
+
+  # 一時的にActive JobのキューアダプターをSolid Queueからasyncに変更します。
+  # これは、Solid Queue と Active Storage の間に現在発生している問題を回避するためです。
+  # Solid Queue の問題が解決したら、元の設定に戻すことを検討してください。
+  config.active_job.queue_adapter = :async
+
+  # Solid Queue 関連の設定は、一旦全てコメントアウトするか削除します。
+  # config.solid_queue.connects_to = { database: { writing: :queue } } # この行をコメントアウトまたは削除
+  # config.cache_store = :solid_cache_store # Solid Cacheも使わない場合
+  # config.solid_cache.connects_to = { database: { writing: :primary } } # Solid Cacheも使わない場合
 
   # Ignore bad email addresses and do not raise email delivery errors.
   # Set this to true and configure the email server for immediate delivery to raise delivery errors.
