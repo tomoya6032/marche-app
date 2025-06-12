@@ -60,7 +60,7 @@ Rails.application.configure do
   # これにより、Solid Queue のエンキュー時の問題を回避します。
   # これは問題の根本解決ではなく、一時的な回避策です。
   # Solid Queue の問題が完全に解決したら、この行は削除できます。
-  config.active_storage.queues.analysis = :inline
+  config.active_storage.queue_adapter = :inline
 
   # Ignore bad email addresses and do not raise email delivery errors.
   # Set this to true and configure the email server for immediate delivery to raise delivery errors.
