@@ -41,6 +41,6 @@ module Marche
     config.active_record.default_timezone = :local # データベースの時間もローカル時間に合わせる
     # config.eager_load_paths << Rails.root.join("extras")
     config.active_job.queue_adapter = :solid_queue
-    config.solid_queue.connects_to = { database: { writing: :queue } }
+   
   end
 end
