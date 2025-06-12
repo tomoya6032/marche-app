@@ -211,6 +211,23 @@ ActiveRecord::Schema[8.0].define(version: 2025_06_11_213115) do
     t.index ["reset_password_token"], name: "index_sellers_on_reset_password_token", unique: true
   end
 
+  create_table "solid_queue_jobs", force: :cascade do |t|
+    t.string "queue_name", null: false
+    t.string "class_name", null: false
+    t.json "arguments"
+    t.datetime "scheduled_at"
+    t.datetime "started_at"
+    t.datetime "finished_at"
+    t.datetime "failed_at"
+    t.integer "attempts", default: 0, null: false
+    t.text "error_message"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["class_name"], name: "index_solid_queue_jobs_on_class_name"
+    t.index ["queue_name"], name: "index_solid_queue_jobs_on_queue_name"
+    t.index ["scheduled_at"], name: "index_solid_queue_jobs_on_scheduled_at"
+  end
+
   create_table "topics", force: :cascade do |t|
     t.string "title"
     t.text "content"
