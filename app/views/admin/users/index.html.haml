@@ -18,11 +18,44 @@
             %td= truncate(notice.content, length: 200) # 内容を200文字に切り詰めて表示
             %td= notice.published_at.strftime('%Y/%m/%d %H:%M') if notice.published_at
             %td
-              = link_to '編集', edit_admin_notice_path(notice), class: "admin-button"
-              = button_to '削除', admin_notice_path(notice), method: :delete, data: { confirm: '本当に削除しますか？' }, class: "admin-button"
+              .button-group-actions
+                = link_to '編集', edit_admin_notice_path(notice), class: "admin-button"
+                = button_to '削除', admin_notice_path(notice), method: :delete, data: { confirm: '本当に削除しますか？' }, class: "admin-button"
       - else
         %tr
           %td{ colspan: 3 } お知らせはありません。
+
+%section.admin-section
+  -# 例: app/views/admin/users/index.html.haml の適切な場所
+  %h2 よくある質問 (FAQ) 管理
+  = link_to '新しいFAQを追加', new_admin_faq_path, class: 'admin-button'
+  %table.admin-table
+    %thead
+      %tr
+        %th 質問
+        %th Note URL
+        %th 表示順
+        %th 操作
+    %tbody
+      - if @faqs.any?
+        - @faqs.each do |faq|
+          %tr
+            %td= faq.question
+            %td= link_to faq.note_url, faq.note_url, target: '_blank', rel: 'noopener noreferrer'
+            %td= faq.order
+            %td
+              = link_to '編集', edit_admin_faq_path(faq), class: 'admin-button'
+              = button_to '削除', admin_faq_path(faq), method: :delete, data: { confirm: '本当に削除しますか？' }, class: 'admin-button'
+      - else
+        %tr
+          %td{ colspan: 4 } 現在、FAQ項目は登録されていません。   
+  -# %ul
+  -#   %li= link_to 'FAQ管理', admin_faqs_path
+  -#   %li= link_to 'お知らせ管理', admin_notices_path
+  -#   %li= link_to 'ホスト管理', admin_hosts_path
+  -#   %li= link_to 'セラー管理', admin_sellers_path
+  -#   %li= link_to 'イベント管理', admin_events_path
+  -#   -# ...その他の管理リンク...
 
 %section.admin-section
   %h2.admin-section-title 個人会員情報

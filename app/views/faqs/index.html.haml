@@ -1,0 +1,22 @@
+-# app/views/faqs/index.html.haml
+%body
+  = render 'header/header'
+%h1 よくある質問 (FAQ)
+%p サイトを利用する際に疑問に感じることや不明点について解説します。
+
+.faq-list
+  - if @faqs.any?
+    %ul
+      - @faqs.each do |faq|
+        %li
+          %h2.faq-question= faq.question
+          %p.faq-link
+            詳細はこちら：
+            = link_to faq.note_url, faq.note_url, target: '_blank', rel: 'noopener noreferrer'
+            -# %i.fa.fa-external-link-alt # Font Awesomeなどのアイコンライブラリを導入していれば表示されます。
+  - else
+    %p 現在、FAQ項目は登録されていません。
+
+
+
+= render 'footer/footer'

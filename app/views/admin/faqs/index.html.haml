@@ -1,0 +1,30 @@
+-# app/views/admin/faqs/index.html.haml
+%section.admin-section
+  %h2 FAQ 管理
+
+  = link_to '新しいFAQ項目を追加', new_admin_faq_path, class: "admin-button"
+
+%table.admin-table
+  %thead
+    %tr
+      %th 質問
+      %th Note URL
+      %th 表示順
+      %th 操作
+  %tbody
+    - if @faqs.any?
+      - @faqs.each do |faq|
+        %tr
+          %td= faq.question
+          %td= link_to faq.note_url, faq.note_url, target: '_blank', rel: 'noopener noreferrer'
+          %td= faq.order
+          %td
+            = link_to '編集', edit_admin_faq_path(faq), class: "admin-button"
+            = link_to '削除', admin_faq_path(faq), method: :delete, data: { confirm: '本当に削除しますか？' }, class: "admin-button"
+    - else
+      %tr
+        %td{colspan: 4} まだFAQ項目は登録されていません。
+
+-# = link_to administrator_path do
+= link_to '管理画面トップに戻る', administrator_path, class: "admin-button"
+-#   管理画面トップに戻る

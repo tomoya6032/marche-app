@@ -42,7 +42,15 @@
         font-style: italic;
       }
     }
-  }
+    
+}
+
+.button-group-actions {
+  display: flex; // Flexboxを有効にする
+  gap: 10px; // ボタン間のスペースを設定
+  align-items: center; // ボタンを垂直方向の中央に揃える (任意)
+  justify-content: flex-start; // ボタンを左寄せにする (任意)
+}
   
   .admin-button {
     display: inline-block;

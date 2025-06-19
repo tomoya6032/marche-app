@@ -30,7 +30,8 @@
           = link_to recruitment_path do
             出展するには？
         %li
-          %a{href: "#"} FAQ & Tips　<br>　"comming soon"
+          = link_to faqs_index_path do
+            よくある質問
 
     .sp-login-btn
     
@@ -117,7 +118,8 @@
         = link_to recruitment_path do
           出展するには？
       %li
-        %a{href: "#"} FAQ & Tips　<br>　"comming soon"
+        = link_to faqs_index_path do
+          よくある質問
 
 
 :javascript

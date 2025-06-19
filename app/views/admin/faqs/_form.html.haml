@@ -1,0 +1,29 @@
+-# app/views/admin/faqs/_form.html.haml
+
+= form_with(model: [:admin, faq], local: true) do |form|
+  - if faq.errors.any?
+    #error_explanation.alert.alert-danger 
+      %h2= "#{faq.errors.count} 件のエラーがあります:"
+      %ul
+        - faq.errors.full_messages.each do |message|
+          %li= message
+
+  .form-group 
+    = form.label :question, '質問'
+    = form.text_field :question, class: 'form-control', placeholder: '例：アカウント登録は必要ですか？' # Bootstrapクラス例
+
+  .form-group 
+    = form.label :note_url, 'Note URL'
+    = form.url_field :note_url, class: 'form-control', placeholder: '例：https://note.com/your_account/n/xxxxxxxxxx' # Bootstrapクラス例
+    %small.form-text.text-muted 
+      note.com の記事の完全なURLを入力してください。
+
+  .form-group
+    = form.label :order, '表示順'
+    = form.number_field :order, class: 'form-control', placeholder: '数字（例：1, 2, 3...）' # Bootstrapクラス例
+    %small.form-text.text-muted
+      表示順序を数字で指定します（小さい順に表示されます）。
+
+  .actions.mt-3
+    = form.submit '保存', class: 'btn btn-success' # Bootstrapクラス例
+    = link_to 'キャンセル', admin_faqs_path, class: 'btn btn-secondary ml-2' # Bootstrapクラス例

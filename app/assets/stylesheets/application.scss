@@ -1747,6 +1747,33 @@ table.account-comparison {
 }
 
 
+.faq-list {
+  padding-left: 6px;
+  // リストの先頭の点を削除
+  ul {
+    list-style: none; // デフォルトのリストマーカーを非表示にする
+    padding-left: 0; // ulのデフォルトの左パディングを削除（ブラウザによって異なるため）
+  }
+
+  // h2.faq-question の文字サイズを28pxに設定
+  .faq-question {
+    font-size: 22px;
+    margin-bottom: 6px; // 必要に応じて下マージンを調整
+  }
+
+  // その他のスタイル（もしあれば）
+  .faq-link {
+    margin-top: 5px; // 質問とリンクの間のスペース
+    a {
+      color: #007bff; // リンクの色（Bootstrapのprimary colorなど）
+      text-decoration: none; // 下線をなくす（任意）
+      &:hover {
+        text-decoration: underline; // ホバー時に下線を表示（任意）
+      }
+    }
+  }
+}
+
 
 
 
