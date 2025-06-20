@@ -27,6 +27,7 @@ end
 
   # `/administrator`をダッシュボードに設定
     get 'administrator', to: 'admin/users#index'
+    
 
   # devise_for :administrators, path: "administrators", controllers: {
   #   sessions: "admin/sessions",
@@ -64,7 +65,8 @@ end
       
       resources :comments, only: [:create], module: :users
     end
-    # root to: "users#index"
+    root to: "users#index"
+    get 'admin', to: 'admin/users#index'
   end
 
   # 出展者募集のページ
@@ -90,6 +92,5 @@ end
 
   # config/routes.rb
   get '/.well-known/appspecific/com.chrome.devtools.json', to: proc { [404, {}, ['Not Found']] }
-
-
+  get 'administrator', to: 'admin/users#index', as: :administrator_dashboard
 end

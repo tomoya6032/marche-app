@@ -2,6 +2,7 @@ class Admin::SessionsController < Devise::SessionsController
   # ログイン後のリダイレクト先をカスタマイズ
   def after_sign_in_path_for(resource)
     admin_root_path # 管理者用のダッシュボードにリダイレクト
+    '/administrator' # または administrator_dashboard_path (もし設定していれば)
   end
 
   # ログアウト後のリダイレクト先をカスタマイズ

@@ -44,8 +44,9 @@
             %td= link_to faq.note_url, faq.note_url, target: '_blank', rel: 'noopener noreferrer'
             %td= faq.order
             %td
-              = link_to '編集', edit_admin_faq_path(faq), class: 'admin-button'
-              = button_to '削除', admin_faq_path(faq), method: :delete, data: { confirm: '本当に削除しますか？' }, class: 'admin-button'
+              .button-group-actions
+                = link_to '編集', edit_admin_faq_path(faq), class: 'admin-button'
+                = button_to '削除', admin_faq_path(faq), method: :delete, data: { confirm: '本当に削除しますか？' }, class: 'admin-button'
       - else
         %tr
           %td{ colspan: 4 } 現在、FAQ項目は登録されていません。   
