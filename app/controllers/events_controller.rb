@@ -8,7 +8,7 @@ class EventsController < ApplicationController
     @events = Event.all
 
   # フィルタリング: 開催日の近い順
-  if params[:filter] == 'recent'
+  if params[:filter] == "recent"
     @events = @events.order(:start_time)
   end
 
@@ -46,6 +46,14 @@ class EventsController < ApplicationController
     set_prefectures
     @event = current_seller.events.build(event_params)
     combine_datetime_parts(@event) # 開始日時と終了日時を結合
+
+    # SolidQueueJobの使用箇所を確認
+    if params[:solid_queue_job].present?
+      solid_queue_job = SolidQueueJob.new(params[:solid_queue_job])
+      # 修正前: solid_queue_job.arguments = JSON.parse(params[:arguments])
+      solid_queue_job.arguments = params[:arguments] # JSON型カラムには直接代入可能
+      solid_queue_job.save
+    end
 
     if @event.save
       flash[:notice] = "\u30A4\u30D9\u30F3\u30C8\u304C\u4F5C\u6210\u3055\u308C\u307E\u3057\u305F"
@@ -111,22 +119,22 @@ class EventsController < ApplicationController
 
     # 削除権限のチェック (重要: 誰でも削除できないようにする)
     unless current_seller == @event.seller || current_host == @event.host
-      redirect_to root_path, alert: 'イベントを削除する権限がありません。'
+      redirect_to root_path, alert: "\u30A4\u30D9\u30F3\u30C8\u3092\u524A\u9664\u3059\u308B\u6A29\u9650\u304C\u3042\u308A\u307E\u305B\u3093\u3002"
       return
     end
 
     if @event.destroy
-      flash[:notice] = 'イベントを削除しました。'
+      flash[:notice] = "\u30A4\u30D9\u30F3\u30C8\u3092\u524A\u9664\u3057\u307E\u3057\u305F\u3002"
       # イベントを削除した後、どこにリダイレクトするか
       if @event.seller.present? # セラーに紐づくイベントならセラーのイベント一覧、またはセラーの詳細へ
         redirect_to seller_path(@event.seller) # 例: セラーの詳細ページ
       elsif @event.host.present? # ホストに紐づくイベントならホストのイベント一覧、またはホストの詳細へ
         redirect_to host_path(@event.host) # 例: ホストの詳細ページ
       else
-        redirect_to root_path, alert: 'イベントを削除しました。' # どちらにも紐づかない場合（まれ）
+        redirect_to root_path, alert: "\u30A4\u30D9\u30F3\u30C8\u3092\u524A\u9664\u3057\u307E\u3057\u305F\u3002" # どちらにも紐づかない場合（まれ）
       end
     else
-      flash[:alert] = 'イベントの削除に失敗しました。'
+      flash[:alert] = "\u30A4\u30D9\u30F3\u30C8\u306E\u524A\u9664\u306B\u5931\u6557\u3057\u307E\u3057\u305F\u3002"
       redirect_to event_path(@event) # 削除失敗時はイベント詳細ページへ
     end
   end
@@ -173,7 +181,6 @@ class EventsController < ApplicationController
 
   def set_event
     @event = Event.find(params[:id])
-
   end
 
   def set_prefectures

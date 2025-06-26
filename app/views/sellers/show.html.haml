@@ -44,7 +44,7 @@
             - @seller.images.uniq.each do |image|
               = image_tag image, class: "shop-image"
           - else
-            = image_tag "no_image_square.jpg"
+            = image_tag "no_image_square.jpg", class: "shop-image"
 
   %h2 出店したイベント
   - if @seller.events.present?
