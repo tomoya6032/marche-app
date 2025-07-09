@@ -12,21 +12,25 @@ Rails.application.configure do
   # Show full error reports.
   config.consider_all_requests_local = true
 
+  config.active_storage.service_urls_expire_in = 1.hour
+
+  config.active_storage.variant_processor = :mini_magick
+
   # Enable server timing.
   config.server_timing = true
 
   # Enable/disable Action Controller caching. By default Action Controller caching is disabled.
   # Run rails dev:cache to toggle Action Controller caching.
   if Rails.root.join("tmp/caching-dev.txt").exist?
-    config.action_controller.perform_caching = false  #ここfalseにした
+    config.action_controller.perform_caching = true  #ここfalseにした
     config.action_controller.enable_fragment_cache_logging = true
-    # config.public_file_server.headers = { "cache-control" => "public, max-age=#{2.days.to_i}" }　ここコメントアウトした
+    config.public_file_server.headers = { "cache-control" => "public, max-age=#{2.days.to_i}" } #ここコメントインした
   else
     config.action_controller.perform_caching = false
   end
 
   # Change to :null_store to avoid any caching.
-  config.cache_store = :null_store
+  config.cache_store =  :memory_store #null_store
 
   # Store uploaded files on the local file system (see config/storage.yml for options).
   config.active_storage.service = :local
@@ -47,10 +51,13 @@ Rails.application.configure do
   config.active_record.migration_error = :page_load
 
   # Highlight code that triggered database queries in logs.
-  config.active_record.verbose_query_logs = true
+  config.active_record.verbose_query_logs = false  #trueだったところ
 
   # Append comments with runtime information tags to SQL queries in logs.
   config.active_record.query_log_tags_enabled = true
+
+  # ActiveRecord のキャッシュバージョニングを有効化
+  config.active_record.cache_versioning = true
 
   # Highlight code that enqueued background job in logs.
   config.active_job.verbose_enqueue_logs = true
@@ -62,7 +69,7 @@ Rails.application.configure do
   config.action_view.annotate_rendered_view_with_filenames = true
 
   # Uncomment if you wish to allow Action Cable access from any origin.
-  # config.action_cable.disable_request_forgery_protection = true
+  config.action_cable.disable_request_forgery_protection = true  #コメントインした
 
   # Raise error when a before_action's only/except options reference missing actions.
   config.action_controller.raise_on_missing_callback_actions = true

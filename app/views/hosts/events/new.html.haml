@@ -1,4 +1,4 @@
-= render 'header/header' # ヘッダーのパーシャルを呼び出す
+-# = render 'header/header' # ヘッダーのパーシャルを呼び出す
 
 %h1 ショップ会員の新しいイベントを作成
 
@@ -7,7 +7,7 @@
     - @event.errors.full_messages.each do |message|
       %li= message
 
-= form_with model: [@event], url: host_events_path(@host), local: true, class: 'event-form' do |f|
+= form_with model: [@host, @event], url: host_events_path(@host.slug || @host.id), local: true do |f|
   .field
     = f.label :title, 'タイトル'
     = f.text_field :title
@@ -49,7 +49,7 @@
   .prefectures-field
     .field
       = f.label :venue, '開催都道府県'
-      = f.select :venue, @prefectures, include_blank: '選択してください'
+      = f.select :venue, @prefectures || [], include_blank: '選択してください'
   .field
     = f.label :address, '開催場所の住所'
     = f.text_field :address

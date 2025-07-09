@@ -1,5 +1,79 @@
 = render 'header/header' # ヘッダーのパーシャルを呼び出す
 
+.seller-lp-page 
+  .seller-details
+    .seller-header
+      -# ★★★ セラー本人用の情報とボタン ★★★
+      - if seller_signed_in? && @seller == current_seller
+        .seller-management-section
+          %h2 セラーマイページ：プロフィール情報確認
+
+          .seller-actions
+            = link_to edit_seller_path(@seller), class: 'sellers-button' do
+              %p プロフィールを編集する
+
+            = link_to new_seller_event_path(@seller), class: 'sellers-button' do
+              %p 新規イベントを作成する
+
+          -# 管理者からのコメント
+          .admin-comments-section
+            - if @admin_comments.present?
+              %h3 運営からのコメント
+              %ul
+                - @admin_comments.each do |comment|
+                  %li
+                    %p.comment-date= l comment.created_at, format: :long
+                    %p= comment.body
+            - else
+              %p 運営からのコメントはまだありません。
+
+          -# 登録済みイベント一覧（管理用）
+          .seller-events-management
+            - if @seller_events_for_management.present?
+              %h3 登録済みイベント一覧
+              %table
+                %thead
+                  %tr
+                    %th イベント名
+                    %th 開催日
+                    %th 操作
+                %tbody
+                  - @seller_events_for_management.each do |event|
+                    %tr
+                      %td= link_to event.title, event_path(event) # IDベースのイベント詳細へリンク
+                      %td= event.start_time.strftime('%Y/%m/%d') if event.start_time
+                      %td
+                        = link_to '編集', edit_event_path(event), class: 'button'
+                        = button_to '削除', event_path(event), method: :delete, data: { confirm: '本当に削除しますか？' }, class: 'button-delete'
+            - else
+              %p イベントがありません。
+          
+          .seller-profile-info
+            %h3 アカウント取得日
+            %table.seller-info-table
+              %tbody
+                %tr
+                  %th アカウント作成日
+                  %td= @seller.created_at.strftime('%Y/%m/%d') if @seller.created_at
+                %tr
+                  %th 無料アカウント期間
+                  %td
+                    - if @seller.created_at
+                      - remaining_days = 21 - (Date.today - @seller.created_at.to_date).to_i
+                      - if remaining_days > 0
+                        %span.text-muted 残り#{remaining_days}日
+                      - else
+                        %span.text-muted 無料アカウント期間は終了しました。決済登録をお願いします。
+                %tr
+                  %th 決済登録
+                  %td
+                    %form{ action: "https://www.kaihipay.jp/forms?form_code=7064409617634745", method: "get", target: "_blank" }
+                      = link_to "決済登録", "https://www.kaihipay.jp/forms?form_code=7064409617634745", class: "payment-button", target: "_blank"
+      
+          
+      -# ★★★ セラー本人用の情報ここまで ★★★
+
+
 .seller-details
   %h1 個人ショップ詳細ページ
 
@@ -15,7 +89,7 @@
 
       %tr
         %th 概要の説明
-        %td= @seller.description if @seller
+        %td= simple_format(@seller.description) if @seller
 
       %tr
         %th 住所
@@ -42,7 +116,7 @@
         %td
           - if @seller.images.attached?
             - @seller.images.uniq.each do |image|
-              = image_tag image, class: "shop-image"
+              = image_tag image.variant(resize_to_limit: [800, 600]), class: "shop-image"
           - else
             = image_tag "no_image_square.jpg", class: "shop-image"
 

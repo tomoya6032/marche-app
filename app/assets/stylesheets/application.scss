@@ -22,6 +22,10 @@ $background-light: #ffffff;
 $border-light: #ddd;
 $link-color: $primary-pink;
 $link-hover-font-weight: bold;
+a {
+  color: inherit; /* 親要素の色を継承する */
+  text-decoration: none; /* デフォルトの下線も消すことが多いです */
+}
 
 .operation-button {
   display: inline-block;
@@ -259,7 +263,8 @@ a:hover {
   background-color: #ff4d4d; /* 赤色 */
   color: white;
   text-align: center;
-  padding: 4px;
+  padding: 8px;
+  margin: 8px;
   width: 120px;
   border: none;
   border-radius: 4px;
@@ -1091,14 +1096,16 @@ nav ul li a {
   justify-content: center;
   align-items: center;
   // background-color: #e0e0e0; /* デフォルト画像の背景色 */
-  width: 80%;
+  width: 100%;
   max-height: 200px;
   border-radius: 5px;
   
   margin: 0 auto; /* 中央に配置 */
-  margin-top: 20px;
+  // margin-top: 20px;
   
 }
+
+
 
 .section.recruitment {
   text-align: center;
@@ -2141,6 +2148,63 @@ table.account-comparison {
       }
 
     }
+
+    .host-lp-page {
+      padding: 8px;
+
+      .host-management-section {
+        .host-actions {
+          display: flex;
+          flex-direction: column; /* 子要素を縦並びにする */
+          gap: 10px; 
+        }
+        
+        h2 {
+          font-size: 1.5em; /* 見出しのフォントサイズを調整 */
+        }
+      }
+    }
+    
+    .host-events-management {
+      table {
+        width: 100%; /* テーブル全体の幅を100%に設定 */
+        border-collapse: collapse; /* セルの境界線を重ねる */
+      }
+  
+      th, td {
+        padding: 10px; /* セル内の余白を統一 */
+        text-align: left; /* テキストを左揃え */
+        vertical-align: middle; /* テキストを中央揃え */
+        // border: 1px solid #ddd; /* セルの境界線を追加 */
+        height: auto; /* 各セルの高さを統一 */
+      }
+      td {
+        border: none; /* セルの境界線を非表示にする */
+        
+      }
+      tr {
+        border-bottom: 1px solid #ddd; /* 行全体に下線を引く */
+      }
+    }
+
+    .content-grid {
+      min-height: 800px; /* コンテンツの最小高さを設定 */
+      .right-column {
+        .topics-section{
+          min-height: 200px;
+        }
+      }
+    }
+
+    .description-section {
+      min-height: 600px; /* セクションの最小高さを設定 */
+    }
+    
+
+
+
+
+
 
     .seller-mypage {
       h1 {

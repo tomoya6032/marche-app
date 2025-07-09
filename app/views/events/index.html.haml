@@ -34,7 +34,7 @@
         = link_to event_path(event) do
           - if event.images.present? && event.images.attached?
             .index-event-image
-              = image_tag url_for(event.images.first), class: 'event-image'
+              = image_tag event.images.first.variant(resize_to_limit: [800, 600]), class: 'event-image'
           - else
             .event-no-image
               = image_tag asset_path("no_image_square.jpg"), class: 'event-no-img'
@@ -45,7 +45,11 @@
           - if event&.seller.present?
             = link_to event.seller.name, seller_path(event.seller)
           - elsif event&.host.present?
-            = link_to event.host.name, host_path(event.host)
+            -# ホストのスラッグが存在すればスラッグを、なければIDを渡すロジック
+            - if event.host.slug.present?
+              = link_to event.host.name, public_host_profile_path(event.host.slug) # ここを修正 (event.host.nameは正しい)
+            - else
+              = link_to event.host.name, public_host_profile_path(event.host.id)   # ここを修正
           - else
             主催者 未設定
           %p 概要

@@ -45,7 +45,9 @@ module Admin
     
 
     def set_host
-      @host = Host.find(params[:id])
+      @host = Host.find_by!(slug: params[:id]) # `id` パラメータを `slug` として検索
+    rescue ActiveRecord::RecordNotFound
+      redirect_to admin_hosts_path, alert: "指定されたホストが見つかりませんでした。"
     end
 
     def host_params

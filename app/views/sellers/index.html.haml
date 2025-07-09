@@ -83,9 +83,9 @@
         %td
           - if @seller.images.attached?
             - @seller.images.uniq.each do |image|
-              = image_tag image
+              = image_tag image.variant(resize_to_limit: [800, 600])
           - else
-            = image_tag "no_image_square.jpg"
+            = image_tag .variant(resize_to_limit: [800, 600]), class: "no_image_square.jpg"
       %tr
         %th 動画
         %td= @seller.video

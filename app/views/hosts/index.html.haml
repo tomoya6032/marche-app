@@ -1,152 +1,18 @@
 = render 'header/header' # ヘッダーのパーシャルを呼び出す
 
-.host-mypage
-  %h1 ショップマイベージ：プロフィール情報
+.hosts-index
+  %h1 ショップ一覧
 
-  .host-btn
-    - if @host.editable
-      = link_to edit_host_path(@host) do
-        .link_inner
-          %p プロフィール編集
-
-      = link_to new_host_event_path(@host), class: 'new-button' do
-        %p 新規イベントを作成する
-
-  .host-profile-info
-    %h2 
-
-    %table
-      %tr
-        %th アカウント取得日
-        %td
-          .acccount-date
-            %span= @host.created_at.strftime('%Y/%m/%d') if @host.created_at
-            .free-acccount-date
-            - if @host.created_at
-              - remaining_days =  21 - (Date.today - @host.created_at.to_date).to_i
-              - if remaining_days > 0
-                %span.text-muted 無料アカウント期間：残り#{remaining_days}日
-              - else
-                %span.text-muted 無料アカウント期間は終了しました。決済登録をお願いします。
-            .payment
-              %form{ action: "https://www.kaihipay.jp/forms?form_code=9300764061642479", method: "get", target: "_blank" }
-                = link_to "決済登録", "https://www.kaihipay.jp/forms?form_code=9300764061642479", class: "payment-button", target: "_blank"
-        
-      %tr
-        %th アカウント名
-        %td= @host.name
-      
-      %tr
-        %th 私たちについて
-        %td= @host.description
-      %tr
-        %th 住所
-        %td= @host.address
-
-      %tr
-        %th 電話番号
-        %td= @host.phone_number
-      %tr
-        %th メールアドレス
-        %td= @host.email
-      %tr
-        %th ウェブサイト
-        %td= @host.website
-    
-        -#   -# ホスト固有の情報 (例: 対応可能なイベントの種類)
-        -#   %tr
-        -#     %th 対応可能なイベント
-        -#     %td
-        -#       - if @host.supported_event_types.present?
-        -#         %p= @host.supported_event_types
-        -#       - else
-        -#         %p 設定なし
-
-        -#   -# ホスト固有の情報 (例: 会場の数)
-        -#   %tr
-        -#     %th 登録会場数
-        -#     %td= @host.facilities.count
-
-      %tr
-        %th 営業時間
-        %td
-          -# %p= "曜日: #{@host.business_hours_days}"
-          %p= "時間: #{@host.business_hours_start&.strftime('%H:%M')} - #{@host.business_hours_end&.strftime('%H:%M')}"
-      %tr
-        %th 店休日
-        %td= @host.business_hours_days.present? ? @host.business_hours_days : '未設定'
-      %tr
-        %th 過去の主催実績
-        %td
-          - if @host.past_exhibitions_names.present?
-            - @host.past_exhibitions_names.split(',').each_with_index do |name, index|
-              %p= "#{name}: #{(@host.past_exhibitions_dates&.split(',')[index])}"
-          - else
-            %p 設定なし
-
-      %tr
-        %th SNSアカウント
-        %td
-          - if @host.sns_accounts_types.present?
-            - @host.sns_accounts_types.split(',').each_with_index do |type, index|
-              - sns_type = Host.sns_types.keys[type.to_i]
-              - url = @host.sns_accounts_urls&.split(',')[type.to_i]
-              - if url.present?
-                = link_to url do
-                  -# = image_tag "#{sns_type}.png" # カラーアイコン
-          - else
-            %p 設定なし
-          
-      %tr
-        %th お問い合わせリンク
-        %td
-          - if @host.contact_link.present?
-            = link_to @host.contact_link, @host.contact_link, target: '_blank', rel: 'noopener noreferrer'
-          - else
-            %p.contact-link お問い合わせリンクが設定されていません。
-      %tr
-        %th 活動風景・施設外観
-        %td
-          - if @host.images.any?
-            - @host.images.each do |image|
-              = image_tag image
-          - else
-            = image_tag "no_image_square.jpg"
-      %tr
-        %th 動画
-        -# %td= @host.video
-        %td
-          %p comming soon...
-
-      %tr
-        %th 運営からのコメント
-        %td
-          - if @comments.present?
-            - @comments.each do |comment|
-              .admin-comment
-                %p.comment-date= l comment.created_at, format: :long
-                %p= comment.body
-          - else
-            %p まだ運営からのコメントはありません。
-
-  .host-events
-    %h2 出店イベント一覧
-    - if @events.present?
-      %table
-        %thead
-          %tr
-            %th イベント名
-            %th 開催日
-            %th 操作
-        %tbody
-          - @events.each do |event|
-            %tr
-              %td= link_to event.title, event_path(event)
-              %td= event.start_time.strftime('%Y/%m/%d') if event.start_time
-              %td
-                = link_to '編集', edit_host_event_path(@host, event), class: 'button'
-                = link_to '削除', host_event_path(@host, event), method: :delete, data: { confirm: '本当に削除しますか？' }, class: 'button-delete'
-    - else
-      %p イベントがありません。
+  - if @hosts.present?
+    .hosts-list
+      - @hosts.each do |host|
+        .host-item
+          %h2= link_to host.name, host_profile_show_host_profile_path(host) # ★ホスト詳細へのリンク
+          %p= host.description.truncate(100) # 説明を短く表示
+          - if host.top_image.attached?
+            = image_tag host.top_image, size: "100x100"
+          = link_to '詳細を見る', host_profile_show_host_profile_path(host), class: 'btn btn-secondary'
+  - else
+    %p 登録されているショップはまだありません。
 
 = render 'footer/footer'

@@ -1,233 +1,471 @@
-$primary-color: #41404a; // 明るい水色 (温かみと信頼感)
+$primary-color: #efdf64; 
 $secondary-color: #41404a; // 濃い青色 (落ち着きとプロフェッショナル)
 $accent-color: #edcaff; // 淡い黄色 (明るさと親しみやすさ)
-$text-color: #41404a; // 濃い灰色 (読みやすさ)
+$text-color: #4e4e52; // 濃い灰色 (読みやすさ)
 $light-text-color: #f8f9fa; // 白に近い色 (背景とのコントラスト)
 $border-color: #d3d3d3; // 薄い灰色 (区切り)
 $background-color: #fdf3ff; // 温かみのある薄いベージュ
+a {
+  color: inherit; /* 親要素の色を継承する */
+  text-decoration: none; /* デフォルトの下線も消すことが多いです */
+}
 
-.host-lp-page {
-  background-color: $background-color;
+.host-lp-page { // 全体的なLPページのスタイル（Hamlで追加）
+  // background-color: $background-color;
   color: $text-color;
-  font-family: 'Noto Sans JP', sans-serif; // 日本語と相性の良いフォント例
+  font-family: 'Noto Sans JP', sans-serif;
   line-height: 1.6;
   padding: 2rem;
   border-radius: 8px;
   box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
 
-  .top-section {
-    text-align: center;
-    padding-bottom: 2rem;
-    border-bottom: 1px solid $border-color;
-    margin-bottom: 2rem;
+  .host-details { // Hamlの .host-lp-page の直下にある
+    // 必要に応じて、.host-lp-page 内での .host-details の個別の調整をここに記述
 
-    .host-name {
-      font-size: 2.5rem;
-      color: $secondary-color;
-      margin-bottom: 1rem;
-      font-weight: 700;
-    }
+    .host-header { // Hamlの .host-details の直下にある
+      // display: flex; // 必要に応じてフレックスボックス
+      // justify-content: space-between; // 左右に要素を配置
+      // align-items: flex-start; // 上揃え
+      text-align: left; // ★これを適用します！
+      margin-bottom: 50px;
 
-    .top-image {
-      max-width: 80%;
-      margin: 0 auto 1rem;
-      border-radius: 8px;
-      overflow: hidden;
+      // ★★★ ホスト管理セクションのスタイル ★★★
+      .host-management-section { // Hamlの .host-header の中にある
+        background-color: lighten($accent-color, 8%);
+        border: 1px solid #dc3545;
+        border-radius: 8px;
+        padding: 1.5rem;
+        margin-bottom: 40px;
+        box-shadow: 0 2px 4px rgba(0, 0, 0, 0.08);
+        margin: auto;
+        width: 90%;
+        h2 {
+          font-size: 1.8rem;
+          color: $text-color;
+          margin-bottom: 1rem;
+          font-weight: 600;
+          border-bottom: 2px solid lighten(#41404a, 20%);
+          padding-bottom: 0.5rem;
+        }
 
-      img {
-        display: block;
-        width: 100%;
-        height: auto;
+        .host-slug {
+          margin-bottom: 1rem;
+          font-size: 0.95rem;
+          color: lighten($text-color, 15%);
+          strong {
+            color: $secondary-color;
+          }
+        }
+
+        
+
+        .host-actions {
+          display: flex;
+          gap: 1rem;
+          margin-bottom: 1.5rem;
+
+          .hosts-button {
+            display: inline-block;
+            text-align: center;
+            margin: 6px;
+            padding: 8px;
+            padding-left: 8px;  
+            // width: 100px;
+            border: none;
+            border-radius: 4px;
+            background-color: #efb064;
+            color: #ffffff !important; // 好きな色を指定（例: 青色）
+            text-decoration: none; // 必要に応じて下線を削除
+            cursor: pointer;
+            
+            &:hover {
+              background-color: #ef972c; /* ホバー時の色 */
+              font-weight: bold; /* ホバー時に太文字にする */
+            }
+          }
+
+          // .hosts-button {
+          //   padding: 0.75rem 1.5rem;
+          //   border-radius: 6px;
+          //   font-weight: 600;
+          //   text-decoration: none;
+          //   text-align: center;
+          //   transition: background-color 0.3s ease, color 0.3s ease;
+          //   flex-grow: 1;
+          //   background-color: #efb064;
+          //   color: $light-text-color;
+
+             
+          // }
+          // &:hover {
+          //   background-color: darken(#efb064, 10%);
+          // }
+
+            // &.btn-success {
+            //   background-color: $secondary-color;
+            //   color: $light-text-color;
+
+            //   &:hover {
+            //     background-color: darken($secondary-color, 10%);
+            //   }
+            // }
+          p {
+            margin: 0;
+            white-space: nowrap;
+          }
+          // }
+        }
+
+        // 管理者からのコメント
+        .admin-comments-section {
+          margin-bottom: 1.5rem;
+          h3 {
+            font-size: 1.25rem;
+            color: $text-color;
+            margin-bottom: 0.8rem;
+          }
+          ul {
+            list-style: none;
+            padding: 0;
+            margin: 0;
+            border: 1px solid $border-color;
+            border-radius: 4px;
+            background-color: #fff;
+
+            li {
+              padding: 0.75rem;
+              border-bottom: 1px dashed lighten($border-color, 5%);
+              &:last-child {
+                border-bottom: none;
+              }
+              p {
+                margin: 0;
+                font-size: 0.9rem;
+              }
+              .comment-date {
+                font-size: 0.8rem;
+                color: lighten($text-color, 30%);
+                margin-bottom: 0.3rem;
+              }
+            }
+          }
+          p {
+            font-style: italic;
+            color: lighten($text-color, 20%);
+          }
+        }
+
+        // ★★★ 登録済みイベント一覧（管理用）のスタイル ★★★
+        .host-events-management {
+          margin-top: 2rem;
+          margin-bottom: 2rem; // 境界線の下にスペースを追加
+          // border-bottom: 1px solid #d3d3d3; // 境界線を追加
+          padding-bottom: 1rem; // 境界線の内側に余白を追加
+          h3 {
+            font-size: 1.25rem;
+            color: $text-color;
+            margin-bottom: 1rem;
+          }
+
+          table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 1rem;
+            background-color: #fff;
+            border: 1px solid $border-color;
+            border-radius: 8px;
+            overflow: hidden;
+
+            thead th {
+              background-color: lighten($primary-color, 40%);
+              color: $secondary-color;
+              padding: 0.8rem;
+              text-align: left;
+              border-bottom: 2px solid $primary-color;
+              font-size: 0.95rem;
+            }
+
+            tbody td {
+              padding: 0.8rem;
+              border-bottom: 1px solid lighten($border-color, 5%);
+              font-size: 0.9rem;
+
+              &:last-child {
+                display: flex;
+                gap: 0.5rem;
+                flex-wrap: wrap;
+              }
+            }
+
+            tbody tr:last-child {
+              td {
+                border-bottom: none;
+              }
+            }
+
+            a.button {
+              display: inline-block;
+              padding: 0.4rem 0.8rem;
+              background-color: $primary-color;
+              color: $light-text-color;
+              border-radius: 4px;
+              text-decoration: none;
+              font-size: 0.85rem;
+              transition: background-color 0.3s ease;
+
+              &:hover {
+                background-color: darken($primary-color, 10%);
+              }
+            }
+
+            a.button-delete {
+              display: inline-block;
+              padding: 0.4rem 0.8rem;
+              background-color: #de7a84;
+              color: $light-text-color;
+              border-radius: 4px;
+              text-decoration: none;
+              font-size: 0.85rem;
+              transition: background-color 0.3s ease;
+
+              &:hover {
+                background-color: darken(#dc3545, 10%);
+              }
+            }
+          }
+          p {
+            font-style: italic;
+            color: lighten($text-color, 20%);
+            margin-top: 1rem;
+          }
+       
+
+        }
       }
 
+      .host-identity { // Hamlの .host-header の中にあり、SCSSでもここで定義
+        flex-grow: 1;
+        text-align: center; // ★これを適用します！
+
+        h1.host-name-with-breaks {
+          font-size: 2.5rem;
+          color: red; // テスト用の色ですね
+          margin-bottom: 1rem;
+          font-weight: 700;
+          word-break: break-word;
+        }
+      }
+    }
+
+    // .host-top-image から .contact-section まで、
+    // 全て .host-details の中にネストされます。
+    // SCSSでもその構造に合わせて記述してください。
+    .host-top-image {
+      margin-top: 2rem; // ヘッダーとの間にスペース
+      .top-image-container {
+        max-width: 80%; // 画像コンテナの幅
+        margin: 0 auto 1rem; // 中央寄せ
+        border-radius: 8px;
+        overflow: hidden;
+        img {
+          display: block;
+          width: 100%;
+          height: auto;
+          box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+        }
+      }
+    }
+
+    .host-contact-info {
+      padding: 1.5rem 0;
+      border-bottom: 1px solid $border-color;
+      margin-bottom: 1.5rem;
+      .contact-items {
+        p {
+          margin-bottom: 0.5rem;
+          font-size: 0.95rem;
+          color: lighten($text-color, 10%);
+          a {
+            color: $primary-color;
+            text-decoration: none;
+            &:hover {
+              text-decoration: underline;
+            }
+          }
+        }
+      }
+    }
+
+    .host-events {
+      padding: 1.5rem 0;
+      border-bottom: 1px solid $border-color;
+      margin-bottom: 1.5rem;
+      h2 {
+        font-size: 2rem;
+        color: $text-color;
+        margin-bottom: 1rem;
+      }
+      table {
+        width: 100%;
+        border-collapse: collapse;
+        thead th {
+          background-color: lighten($primary-color, 30%);
+          color: $text-color;
+          padding: 0.75rem;
+          text-align: left;
+          border-bottom: 2px solid $primary-color;
+        }
+        tbody tr {
+          border-bottom: 1px solid $border-color;
+          &:last-child {
+            border-bottom: none;
+          }
+          td {
+            padding: 0.75rem;
+            a {
+              color: $secondary-color;
+              text-decoration: none;
+              font-weight: 500;
+              transition: color 0.3s ease;
+              &:hover {
+                color: darken($secondary-color, 10%);
+              }
+            }
+          }
+        }
+      }
       p {
         color: lighten($text-color, 20%);
         font-style: italic;
       }
     }
 
-    .button.edit-button {
-      display: inline-block;
-      padding: 0.75rem 1.5rem;
-      background-color: $accent-color;
-      color: $text-color;
-      text-decoration: none;
-      border-radius: 6px;
-      font-weight: 600;
-      transition: background-color 0.3s ease;
-
-      &:hover {
-        background-color: darken($accent-color, 10%);
-      }
-    }
-  }
-
-  .about-us-section,
-  .company-info-section,
-  .access-map-section,
-  .gallery-section,
-  .event-list-section {
-    padding: 1.5rem 0;
-    border-bottom: 1px solid $border-color;
-    margin-bottom: 1.5rem;
-
-    &:last-child {
-      border-bottom: none;
-      margin-bottom: 0;
-    }
-
-    h2 {
-      font-size: 2rem;
-      color: $primary-color;
-      margin-bottom: 1rem;
-      font-weight: 600;
-    }
-
-    .host-events {
-      
-    }
-
-    .host-description {
-      line-height: 1.8;
-      margin-bottom: 1rem;
-      color: lighten($text-color, 10%);
-    }
-
-    .company-info-table {
-      width: 100%;
-      border-collapse: collapse;
-      margin-bottom: 1rem;
-
-      tbody tr {
-        border-bottom: 1px solid $border-color;
-
-        &:last-child {
-          border-bottom: none;
+    .content-grid {
+      display: flex;
+      gap: 2rem;
+      padding: 1.5rem 0;
+      border-bottom: 1px solid $border-color;
+      margin-bottom: 1.5rem;
+      .left-column, .right-column {
+        flex: 1;
+        h2 {
+          font-size: 2rem;
+          color: $text-color;
+          margin-bottom: 1rem;
         }
-      }
-
-      th,
-      td {
-        padding: 0.75rem;
-        text-align: left;
-      }
-
-      th {
-        font-weight: 600;
-        color: $secondary-color;
-        width: 30%;
-      }
-
-      td a {
-        color: $primary-color;
-        text-decoration: none;
-        transition: color 0.3s ease;
-
-        &:hover {
-          color: darken($primary-color, 10%);
+        p {
+          line-height: 1.8;
+          color: lighten($text-color, 10%);
         }
       }
     }
 
-    .map-container {
-      margin-bottom: 1rem;
-
-      p {
-        color: lighten($text-color, 10%);
-
-        a {
-          color: $primary-color;
-          text-decoration: none;
-          transition: color 0.3s ease;
-
-          &:hover {
-            color: darken($primary-color, 10%);
-          }
-        }
-      }
-    }
-
-    .image-gallery {
-      .row {
-        display: flex;
-        flex-wrap: wrap;
-        margin-right: -1rem;
-        margin-left: -1rem;
-      }
-
-      .col-md-3 {
-        padding-right: 1rem;
-        padding-left: 1rem;
-        margin-bottom: 1rem;
-        width: calc(25% - 2rem); // 4列配置の例
-      }
-
-      .gallery-image {
-        border-radius: 6px;
-        overflow: hidden;
-        box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
-
-        img {
-          display: block;
-          width: 100%;
-          height: auto;
-          transition: transform 0.3s ease-in-out;
-
-          &:hover {
-            transform: scale(1.05);
-          }
-        }
-      }
-    }
-  }
-
-  .event-list-section {
-    h2 {
-      font-size: 2rem;
-      color: $accent-color;
-      margin-bottom: 1rem;
-      font-weight: 600;
-    }
-
-    .event-info-table {
-      width: 100%;
-      border-collapse: collapse;
-
-      thead th {
-        background-color: lighten($primary-color, 30%);
+    .description-section {
+      padding: 1.5rem 0;
+      border-bottom: 1px solid $border-color;
+      margin-bottom: 1.5rem;
+      h2 {
+        font-size: 2rem;
         color: $text-color;
-        padding: 0.75rem;
-        text-align: left;
-        border-bottom: 2px solid $primary-color;
+        margin-bottom: 1rem;
       }
+      p {
+        line-height: 1.8;
+        color: lighten($text-color, 10%);
+      }
+    }
 
-      tbody tr {
-        border-bottom: 1px solid $border-color;
-
-        &:last-child {
-          border-bottom: none;
-        }
-
-        td {
-          padding: 0.75rem;
-        }
-
-        td a {
-          color: $secondary-color;
-          text-decoration: none;
-          font-weight: 500;
-          transition: color 0.3s ease;
-
-          &:hover {
-            color: darken($secondary-color, 10%);
+    .goods-section {
+      padding: 1.5rem;
+      border-bottom: 1px solid $border-color;
+      margin-bottom: 1.5rem;
+      h2 {
+        font-size: 2rem;
+        color: $text-color;
+        margin-bottom: 1rem;
+      }
+      .goods-list {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); // レスポンシブなグリッド
+        gap: 1.5rem;
+        .good-item {
+          text-align: center;
+          border: 1px solid $border-color;
+          border-radius: 8px;
+          padding: 1rem;
+          background-color: #fff;
+          h3 {
+            font-size: 1.2rem;
+            color: $text-color;
+            margin-bottom: 0.8rem;
+          }
+          .good-image {
+            max-width: 100%;
+            height: auto;
+            border-radius: 4px;
+            margin-bottom: 0.8rem;
+          }
+          p {
+            font-size: 0.9rem;
+            color: lighten($text-color, 15%);
           }
         }
       }
     }
 
-    p {
-      color: lighten($text-color, 20%);
-      font-style: italic;
+    .host-images {
+      padding: 1.5rem 0;
+      border-bottom: 1px solid $border-color;
+      margin-bottom: 1.5rem;
+      h2 {
+        font-size: 2rem;
+        color: $text-color;
+        margin-bottom: 1rem;
+      }
+      .image-gallery {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(150px, 1fr)); // レスポンシブなギャラリー
+        gap: 1rem;
+        .host-image {
+          width: 100%;
+          height: 150px; // 固定の高さ
+          object-fit: cover; // 画像が縦横比を保ちつつコンテナに収まるように
+          border-radius: 8px;
+          box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+        }
+      }
+      p {
+        font-style: italic;
+        color: lighten($text-color, 20%);
+      }
+    }
+
+    .contact-section {
+      padding: 1.5rem 0;
+      h2 {
+        font-size: 2rem;
+        color: $text-color;
+        margin-bottom: 1rem;
+      }
+      .contact-message {
+        margin-bottom: 1rem;
+        color: lighten($text-color, 10%);
+      }
+      .contact-link {
+        font-size: 1.1rem;
+        .contact-link-text {
+          display: inline-block;
+          padding: 0.75rem 1.5rem;
+          background-color: $secondary-color;
+          color: $light-text-color;
+          text-decoration: none;
+          border-radius: 6px;
+          transition: background-color 0.3s ease;
+          &:hover {
+            background-color: darken($secondary-color, 10%);
+          }
+        }
+      }
     }
   }
 }

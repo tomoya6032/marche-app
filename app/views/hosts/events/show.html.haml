@@ -42,12 +42,12 @@
         - if @event&.seller.present?
           = link_to @event.seller.name, seller_path(@event.seller)
         - elsif @event&.host.present?
-          = link_to @event.host.name, host_path(@event.host)
+          = link_to @event.host.name, public_host_profile_path(@event.host.slug || @event.host.id)
         - else
           主催者 未設定
     %tr
       %th 説明
-      %td= @event.description
+      %td= simple_format(@event.description)
     %tr
       %th 開始日時
       %td= @event.start_time.present? ? @event.start_time.strftime('%Y年%-m月%-d日 %H時%M分') : '未定'
@@ -89,8 +89,9 @@
   - if (seller_signed_in? && current_seller == @event.seller) || (host_signed_in? && current_host == @event.host)
     .edit-links
       - if host_signed_in? && current_host == @event.host
-        = link_to '編集', edit_host_event_path(@event.host, @event), class: 'operation-button'
-        = button_to '削除', host_event_path(@host, @event), method: :delete, data: { confirm: '本当に削除しますか？' }, class: 'button-delete'
+        = link_to '編集', edit_host_event_path(@event.host.slug || @event.host.id, @event), class: 'operation-button'
+        
+        = button_to '削除', destroy_host_event_path(@event.host.slug || @event.host.id, @event), method: :delete, data: { confirm: '本当に削除しますか？' }, class: 'button-delete'
       - elsif seller_signed_in? && current_seller == @event.seller
         = link_to '編集', edit_event_path(@event), class: 'operation-button'
         = link_to '削除', event_path(@event), data: { turbo_method: :delete, turbo_confirm: '本当に削除してもよろしいですか？' }, class: 'operation-button'

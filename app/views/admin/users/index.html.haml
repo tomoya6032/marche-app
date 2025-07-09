@@ -119,7 +119,7 @@
             
 
             %td
-              = link_to "コメント", edit_admin_host_path(host), class: "admin-button"
+              = link_to "コメント", edit_admin_host_path(host.slug), class: "admin-button"
       - else
         %tr
           %td{ colspan: 3 } 最近登録されたホストはありません。

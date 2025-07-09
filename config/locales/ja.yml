@@ -166,7 +166,7 @@ ja:
   time:
     formats:
       default: "%Y/%m/%d %H:%M:%S" # 2024/06/05 07:00:00
-      long: "%Y年%m月%d日(%a) %H時%M分%S秒 %z"
+      long: "%Y年%m月%d日(%a) %H時%M分%S秒"
       short: "%m/%d %H:%M" # 06/05 07:00
     am: "午前"
     pm: "午後"

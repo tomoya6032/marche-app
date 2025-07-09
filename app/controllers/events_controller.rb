@@ -5,8 +5,8 @@ class EventsController < ApplicationController
 
   def index
     # 基本のイベント取得
-    @events = Event.all
-
+    
+    @events = Event.includes(:host, :seller, images_attachments: :blob).order(created_at: :desc).limit(10)
   # フィルタリング: 開催日の近い順
   if params[:filter] == "recent"
     @events = @events.order(:start_time)
@@ -124,17 +124,17 @@ class EventsController < ApplicationController
     end
 
     if @event.destroy
-      flash[:notice] = "\u30A4\u30D9\u30F3\u30C8\u3092\u524A\u9664\u3057\u307E\u3057\u305F\u3002"
-      # イベントを削除した後、どこにリダイレクトするか
-      if @event.seller.present? # セラーに紐づくイベントならセラーのイベント一覧、またはセラーの詳細へ
-        redirect_to seller_path(@event.seller) # 例: セラーの詳細ページ
-      elsif @event.host.present? # ホストに紐づくイベントならホストのイベント一覧、またはホストの詳細へ
-        redirect_to host_path(@event.host) # 例: ホストの詳細ページ
+      # 修正: 削除成功時のリダイレクト先とメッセージ
+      flash[:notice] = "イベントを削除しました。" # 成功メッセージに変更
+      if @event.seller.present?
+        redirect_to seller_path(@event.seller) # セラーに紐づくイベントならセラーの詳細へ
+      elsif @event.host.present?
+        redirect_to public_host_profile_path(@event.host.slug || @event.host.id) # ホストに紐づくイベントならホストの詳細へ
       else
-        redirect_to root_path, alert: "\u30A4\u30D9\u30F3\u30C8\u3092\u524A\u9664\u3057\u307E\u3057\u305F\u3002" # どちらにも紐づかない場合（まれ）
+        redirect_to root_path, alert: "イベントを削除しました。" # どちらにも紐づかない場合
       end
     else
-      flash[:alert] = "\u30A4\u30D9\u30F3\u30C8\u306E\u524A\u9664\u306B\u5931\u6557\u3057\u307E\u3057\u305F\u3002"
+      flash[:alert] = "イベントの削除に失敗しました。" # 失敗メッセージ
       redirect_to event_path(@event) # 削除失敗時はイベント詳細ページへ
     end
   end

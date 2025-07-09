@@ -38,7 +38,7 @@
             %p コメントはまだありません。
 
   %h2 管理者コメント
-  = form_with model: [@user, Comment.new], url: admin_user_comments_path(@user), method: :post, local: true do |f|
+  = form_with model: [@user, Comment.new], url: admin_host_comments_path(@user.slug), method: :post, local: true do |f|
     .form-group
       = f.label :body, "コメント"
       = f.text_area :body, rows: 5, class: "form-control"

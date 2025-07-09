@@ -32,7 +32,8 @@
     - if @event.images.attached?
       - @event.images.uniq.each do |image| # 重複を防ぐために uniq を使用
         .event-image
-          = image_tag image
+          = image_tag image.variant(resize_to_limit: [800, 600])
+
     - else
       .event-no-image
         = image_tag "no_image_square.jpg", class: 'event-no-image' # デフォルト画像を表示
@@ -43,14 +44,18 @@
         出店者
       %td
         - if @event&.seller.present?
-          = link_to @event.seller.name, seller_path(@event.seller)
+          = link_to @event.seller.name, seller_path(@event.seller) # seller_pathは通常IDベース
         - elsif @event&.host.present?
-          = link_to @event.host.name, host_path(@event.host)
+          -# ここでホストのスラッグの有無を確認
+          - if @event.host.slug.present?
+            = link_to @event.host.name, public_host_profile_path(@event.host.slug) # ★ここを修正★
+          - else
+            = link_to @event.host.name, public_host_profile_path(@event.host.id) # ★ここを修正★
         - else
           出店者 未設定
     %tr
       %th 概要の説明
-      %td= @event.description
+      %td= simple_format(@event.description)
     
     %tr
       %th 開始日時
@@ -92,13 +97,16 @@
     -#   %td= @event.video
 
 - if (seller_signed_in? && current_seller == @event.seller) || (host_signed_in? && current_host == @event.host)
-  .edit-links
+  .edit-links.edit-links-horizontal
     - if host_signed_in? && current_host == @event.host
-      = link_to '編集', edit_host_event_path(@event.host, @event), class: 'operation-button'
-      = button_to '削除',host_event_path(@event.host, @event), method: :delete, data: { confirm: '本当に削除しますか？' }, class: 'button-delete'
+      -# ★★★ ここを修正します ★★★
+      -# スラッグベースの編集パスを使用するために、@event.host のスラッグを渡す
+      = link_to '編集', edit_host_event_path(@event.host&.slug || @event.host&.id, @event), class: 'operation-button'
+      -# 削除ボタンも同様に修正 (以前も修正しましたが、念のため確認)
+      = button_to '削除', destroy_host_event_path(@event.host&.slug || @event.host&.id, @event), method: :delete, data: { confirm: '本当に削除しますか？' }, class: 'button-delete'
     - elsif seller_signed_in? && current_seller == @event.seller
       = link_to '編集', edit_event_path(@event), class: 'operation-button'
-      = button_to '削除', event_path(@event), method: :delete, data: { turbo_method: :delete, turbo_confirm: '本当に削除してもよろしいですか？' }, class: 'button-delete' # ★ここを修正★
+      = button_to '削除', event_path(@event), method: :delete, data: { confirm: '本当に削除してもよろしいですか？' }, class: 'button-delete'
 
 = link_to 'イベント一覧へ戻る', events_path, class: 'operation-button'
 

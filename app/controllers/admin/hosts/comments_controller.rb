@@ -4,18 +4,20 @@ module Admin
       before_action :set_host
 
       def create
-        @comment = @host.comments.new(comment_params)
+        @comment = @host.comments.build(comment_params)
         if @comment.save
-          redirect_to edit_admin_host_path(@host), notice: "\u30B3\u30E1\u30F3\u30C8\u304C\u8FFD\u52A0\u3055\u308C\u307E\u3057\u305F\u3002"
+          redirect_to edit_admin_host_path(@host.slug), notice: "コメントを保存しました。"
         else
-          redirect_to edit_admin_host_path(@host), alert: "\u30B3\u30E1\u30F3\u30C8\u306E\u8FFD\u52A0\u306B\u5931\u6557\u3057\u307E\u3057\u305F\u3002"
+          redirect_to edit_admin_host_path(@host.slug), alert: "コメントの保存に失敗しました。"
         end
       end
 
       private
 
       def set_host
-        @host = Host.find(params[:host_id])
+        @host = Host.find_by!(slug: params[:host_id]) # `host_id` を `slug` として検索
+      rescue ActiveRecord::RecordNotFound
+        redirect_to admin_hosts_path, alert: "指定されたホストが見つかりませんでした。"
       end
 
       def comment_params

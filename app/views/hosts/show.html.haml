@@ -1,121 +1,180 @@
 = render 'header/header' # ヘッダーのパーシャルを呼び出す
 
-.host-details
-  .host-header
-    .host-identity
+.host-lp-page 
+  .host-details
+    .host-header
+      -# ★★★ ホスト本人用の情報とボタン ★★★
+      - if host_signed_in? && @host == current_host
+        .host-management-section
+          %h2 ホストマイページ：プロフィール情報確認
+
+          -# スラッグの確認
+          %p.host-slug
+            %strong プロフィールURLスラッグ:
+            = @current_slug_for_display # コントローラで設定した変数
+
+          .host-actions
+            = link_to edit_host_profile_path(@host.slug), class: 'hosts-button' do
+              %p プロフィールを編集する
+
+            = link_to new_host_event_path(@host.slug), class: 'hosts-button' do
+              %p 新規イベントを作成する
+
+          -# 管理者からのコメント
+          .admin-comments-section
+            - if @admin_comments.present?
+              %h3 運営からのコメント
+              %ul
+                - @admin_comments.each do |comment|
+                  %li
+                    %p.comment-date= l comment.created_at, format: :long
+                    %p= comment.body
+            - else
+              %p 運営からのコメントはまだありません。
+
+          -# 登録済みイベント一覧（管理用）
+          .host-events-management
+            - if @host_events_for_management.present?
+              %h3 登録済みイベント一覧
+              %table
+                %thead
+                  %tr
+                    %th イベント名
+                    %th 開催日
+                    %th 操作
+                %tbody
+                  - @host_events_for_management.each do |event|
+                    %tr
+                      %td= link_to event.title, host_event_path(@host.slug, event) # スラッグベースのイベント詳細へリンク
+                      %td= event.start_time.strftime('%Y/%m/%d') if event.start_time
+                      %td
+                        = link_to '編集', edit_host_event_path(@host.slug || @host.id, event), class: 'button'
+                        = button_to '削除', destroy_host_event_path(@host.slug || @host.id, event), method: :delete, data: { confirm: '本当に削除しますか？' }, class: 'button-delete'
+            - else
+              %p イベントがありません。
+
+          .host-events-management
+            %h3 アカウント情報
+            %table
+              %thead
+                %tr
+                  %th 項目
+                  %th 詳細
+              %tbody
+                %tr
+                  %td アカウント作成日
+                  %td= @host.created_at.strftime('%Y/%m/%d') if @host.created_at
+                %tr
+                  %td 無料アカウント期間
+                  %td
+                    - if @host.created_at
+                      - remaining_days = 21 - (Date.today - @host.created_at.to_date).to_i
+                      - if remaining_days > 0
+                        %span.text-muted 残り#{remaining_days}日
+                      - else
+                        %span.text-muted 無料アカウント期間は終了しました。決済登録をお願いします。
+                %tr
+                  %td 決済登録
+                  %td
+                    %form{ action: "https://example.com/host-payment", method: "get", target: "_blank" }
+                      = link_to "決済登録", "https://example.com/host-payment", class: "payment-button", target: "_blank"
+          
+      -# ★★★ ホスト本人用の情報ここまで ★★★
+
+    .host-identity 
       %h1.host-name-with-breaks= @host.name.presence || '名称未設定'
-      
-      
-    -# .host-contact-info
-    -#   .contact-items
-    -#     %p.host-website= "ウェブサイト: #{link_to @host.website.presence || '未設定', @host.website, target: '_blank'}"
-    -#     %p.host-address= "所在地: #{@host.address.presence || '未設定'}"
-    -#     %p.host-phone= "TEL: #{@host.phone_number.presence || '未設定'}"
-  
-  .host-top-image
-  - if @host&.top_image&.attached?
-    .top-image-container
-      = image_tag @host.top_image, class: 'host-top-image'
 
-  .host-contact-info
-    .contact-items
-      %p.host-website= "ウェブサイト: #{link_to @host.website.presence || '未設定', @host.website, target: '_blank'}"
-      %p.host-address= "所在地: #{@host.address.presence || '未設定'}"
-      %p.host-phone= "TEL: #{@host.phone_number.presence || '未設定'}"
-      %p.host-hours= "営業時間: #{@host.business_hours_start&.strftime('%H:%M')} - #{@host.business_hours_end&.strftime('%H:%M')}"
-      %p.host-closed-days= "店休日: #{@host.business_hours_days.presence || '未設定'}"
+    .host-top-image
+      - if @host&.top_image&.attached?
+        .top-image-container
+          = image_tag @host.top_image.variant(resize_to_limit: [800, 600]), class: 'host-top-image'
 
-  .host-events
-    %h2 出店イベント一覧
-    - if @events.present?
-      %table
-        %thead
-          %tr
-            %th イベント名
-            %th 開催日
-            %th 開催地域
-            
-        %tbody
-          - @events.each do |event|
+    .host-contact-info
+      .contact-items
+        %p.host-website= "ウェブサイト: #{link_to (@host.website.presence || '未設定'), @host.website, target: '_blank', rel: 'noopener noreferrer' if @host.website.present?}"
+        %p.host-address= "所在地: #{@host.address.presence || '未設定'}"
+        %p.host-phone= "TEL: #{@host.phone_number.presence || '未設定'}"
+        %p.host-hours= "営業時間: #{@host.business_hours_start&.strftime('%H:%M')} - #{@host.business_hours_end&.strftime('%H:%M')}"
+        %p.host-closed-days= "店休日: #{@host.business_hours_days.presence || '未設定'}"
+
+    .host-events
+      %h2 出店イベント一覧
+      - if @public_events.present? # ★ public_events を使用
+        %table
+          %thead
             %tr
-              %td= link_to event.title, event_path(event)
-              %td= event.start_time.strftime('%Y/%m/%d') if event.start_time
-              %td= event.venue.present? ? event.venue : '未設定'
-    - else
-      %p イベントがありません。
+              %th イベント名
+              %th 開催日
+              %th 開催地域
 
-  .content-grid
-    .left-column
-      .host-news-section
-        %h2 新着ニュース
-        %p= simple_format(@news_text.presence || '新しいニュースはありません。')
-      
-    .right-column
-      .topics-section
-        %h2 トピックス
-        %p= simple_format(@topics_text.presence || 'トピックスはありません。')
+          %tbody
+            - @public_events.each do |event| # ★ public_events を使用
+              %tr
+                %td= link_to event.title, host_event_path(event.host.slug || event.host.id, event) # リンクをスラッグ対応
+                %td= event.start_time.strftime('%Y/%m/%d') if event.start_time
+                %td= event.venue.present? ? event.venue : '未設定'
+      - else
+        %p イベントがありません。
 
-  .description-section
-    %h2 私たちについて
-    %p= simple_format(@host.description.presence || 'トピックスはありません。')
+    .content-grid
+      .left-column
+        .host-news-section
+          %h2 新着ニュース
+          %p= simple_format(@news_text.presence || '新しいニュースはありません。') # ★変数名確認
+      .right-column
+        .topics-section
+          %h2 トピックス
+          %p= simple_format(@topics_text.presence || 'トピックスはありません。') # ★変数名確認
 
-  .goods-section
-    %h2 goods紹介
-    .goods-list
-      -#   .good-item
-      -#     %h3 商品説明
-      -#     %p= @host.goods_introduction.presence || '商品紹介はありません。'
+    .description-section
+      %h2 私たちについて
+      %p= simple_format(@description_text.presence || '記載がありません。') # ★変数名確認
 
-      .good-item
-        %h3 goods①
-        - if @host.goods_image_1.attached?
-          = image_tag @host.goods_image_1, class: 'good-image'
-        %p= simple_format(@host.goods_introduction_1.presence || '商品紹介はありません。')
+    .goods-section
+      %h2 goods紹介
+      .goods-list
+        .good-item
+          %h3 goods①
+          - if @host.goods_image_1.attached?
+            = image_tag @host.goods_image_1.variant(resize_to_limit: [800, 600]), class: 'good-image'
+          %p= simple_format(@goods_introduction_1_text.presence || '商品紹介はありません。') # ★変数名確認
 
-      .good-item
-        %h3 goods②
-        - if @host.goods_image_2.attached?
-          = image_tag @host.goods_image_2, class: 'good-image'
-        %p= simple_format(@host.goods_introduction_2.presence || '商品紹介はありません。')
+        .good-item
+          %h3 goods②
+          - if @host.goods_image_2.attached?
+            = image_tag @host.goods_image_2.variant(resize_to_limit: [800, 600]), class: 'good-image'
+          %p= simple_format(@goods_introduction_2_text.presence || '商品紹介はありません。') # ★変数名確認
 
-      .good-item
-        %h3 goods③
-        - if @host.goods_image_3.attached?
-          = image_tag @host.goods_image_3, class: 'good-image'
-        %p= simple_format(@host.goods_introduction_3.presence || '商品紹介はありません。')
+        .good-item
+          %h3 goods③
+          - if @host.goods_image_3.attached?
+            = image_tag @host.goods_image_3.variant(resize_to_limit: [800, 600]), class: 'good-image'
+          %p= simple_format(@goods_introduction_3_text.presence || '商品紹介はありません。') # ★変数名確認
 
-      .good-item
-        %h3 goods④
-        - if @host.goods_image_4.attached?
-          = image_tag @host.goods_image_4, class: 'good-image'
-        %p= simple_format(@host.goods_introduction_4.presence || '商品紹介はありません。')
+        .good-item
+          %h3 goods④
+          - if @host.goods_image_4.attached?
+            = image_tag @host.goods_image_4.variant(resize_to_limit: [800, 600]), class: 'good-image'
+          %p= simple_format(@goods_introduction_4_text.presence || '商品紹介はありません。') # ★変数名確認
 
-  .host-images
-    %h2 画像ギャラリー
-    - if @host.images.attached?
-      .image-gallery
-        - @host.images.each_with_index do |image, index|
-          = image_tag image, class: 'host-image', style: "order: #{index};"
-    - else
-      %p 画像がありません。
+    .host-images
+      %h2 画像ギャラリー
+      - if @host.images.attached?
+        .image-gallery
+          - @host.images.each_with_index do |image, index|
+            = image_tag image.variant(resize_to_limit: [800, 600]), class: 'host-image', style: "order: #{index};"
+      - else
+        %p 画像がありません。
 
-    -#   .host-video
-    -#     %h2 動画
-    -#     - if @host.video.attached?
-    -#       .video-container
-    -#         = video_tag @host.video, controls: true, class: 'host-video'
-    -#     - else
-    -#       %p 動画がありません。
-
-  .contact-section
-    %h2 コンタクト
-    %p.contact-message お問い合わせはこちらから:
-    - if @host.contact_link.present?
-      %p.contact-link
-        - if @host.contact_link.include?('@') # メールアドレスの場合
-          = link_to "メールを送る", "mailto:#{@host.contact_link}", class: 'contact-link-text'
-        - else # URLの場合
-          = link_to "ショップ問い合わせフォームへ", @host.contact_link, target: '_blank', rel: 'noopener noreferrer', class: 'contact-link-text'
-    - else
-      %p.contact-link お問い合わせリンクが設定されていません。
-= render 'footer/footer'
+    .contact-section
+      %h2 コンタクト
+      %p.contact-message お問い合わせはこちらから:
+      - if @host.contact_link.present?
+        %p.contact-link
+          - if @host.contact_link.include?('@') # メールアドレスの場合
+            = link_to "メールを送る", "mailto:#{@host.contact_link}", class: 'contact-link-text'
+          - else # URLの場合
+            = link_to "ショップ問い合わせフォームへ", @host.contact_link, target: '_blank', rel: 'noopener noreferrer', class: 'contact-link-text'
+      - else
+        %p.contact-link お問い合わせリンクが設定されていません。
+= render 'footer/footer' # ★ここも .host-lp-page の外側にする

@@ -1,3 +1,5 @@
+-# app/views/layouts/_header.html.haml または app/views/shared/_header.html.haml など
+
 .header
   .header-inner
     .header-left
@@ -6,7 +8,7 @@
           %img(src="#{asset_path('marchelogo.png')}" alt="マルシェロゴ")
 
     .header-logo
-    
+      -# ここにサイトのメインロゴやタイトルを入れることができます
 
     .header-right
       %button.menu-toggle{ type: "button", aria_label: "メニューを開閉" }
@@ -14,65 +16,69 @@
         %span
         %span
 
+  -# スマートフォン用ナビゲーション (spnav)
   .spnav
     %nav
       %ul
         %li
-          
-          %a{href: "#"} イベントタイプから選択　<br>　"comming soon"
-
+          %a{href: "#"} イベントタイプから選択<br>　"comming soon"
         %li
           = link_to events_path do
             イベント地域から選択
         %li
-          %a{href: "#"} 日程から選択　<br>　"comming soon"
+          %a{href: "#"} 日程から選択<br>　"comming soon"
         %li
           = link_to recruitment_path do
             出展するには？
         %li
-          = link_to faqs_index_path do
+          -# faqs_index_path は存在しない可能性があります。public_faqs_path を推奨
+          = link_to public_faqs_path do
             よくある質問
 
+    -# スマートフォン用ログイン・登録ボタン (個人出店)
     .sp-login-btn
-    
-    - if seller_signed_in?
-      = link_to sellers_path, class: 'button logged-in' do
-        個人出店<br>マイページ
-      = link_to 'ログアウト', destroy_seller_session_path, method: :delete,  class: 'button'
+      - if seller_signed_in?
+        = link_to seller_path(current_seller), class: 'button logged-in' do # ★ current_seller の show ページへ
+          個人出店<br>マイページ
+        = link_to 'ログアウト', destroy_seller_session_path, data: { turbo_method: :delete }, class: 'button' # Turbo対応
 
-    - else
-      = link_to new_seller_session_path, class: 'button', id: 'seller-login-btn' do
-        個人出店
-        %br
-        ログイン
+      - else
+        = link_to new_seller_session_path, class: 'button', id: 'sp-seller-login-btn' do # IDにsp-プレフィックスを追加
+          個人出店
+          %br
+          ログイン
 
-      = link_to recruitment_path, class: 'button', id: 'seller-signup-btn' do
-        個人出店
-        %br
-        ＼新規会員登録／
+        = link_to recruitment_path, class: 'button', id: 'sp-seller-signup-btn' do # IDにsp-プレフィックスを追加
+          個人出店
+          %br
+          ＼新規会員登録／
 
+    -# スマートフォン用ログイン・登録ボタン (ショップ出店)
     .sp-signup-btn
-    
-    - if host_signed_in?
-      = link_to hosts_path, method: :delete, class: 'button logged-in' do
-        ショップ出店<br>マイページ
-      = link_to 'ログアウト', destroy_host_session_path, method: :delete, class: 'button'
-    - else
-      = link_to new_host_session_path, class: 'button', id: 'host-login-btn' do
-        ショップ出店
-        %br
-        ログイン
+      - if host_signed_in?
+        -# ここが最も重要な変更点: current_host の show ページへ遷移
+        = link_to (current_host.slug.present? ? public_host_profile_path(current_host.slug) : host_path(current_host)), class: 'button logged-in' do
+          = current_host.name # HAMLでHTMLタグを生成しない場合は=を先頭につける
+          マイページ
+        = link_to 'ログアウト', destroy_host_session_path, data: { turbo_method: :delete }, class: 'button' # Turbo対応
 
-      = link_to recruitment_path, class: 'button', id: 'host-signup-btn' do
-        ショップ出店
-        %br
-        ＼新規会員登録／
-    
+      - else
+        = link_to new_host_session_path, class: 'button', id: 'sp-host-login-btn' do # IDにsp-プレフィックスを追加
+          ショップ出店
+          %br
+          ログイン
+
+        = link_to recruitment_path, class: 'button', id: 'sp-host-signup-btn' do # IDにsp-プレフィックスを追加
+          ショップ出店
+          %br
+          ＼新規会員登録／
+
+  -# PC用ログイン・登録ボタン (個人出店)
   .login-btn
     - if seller_signed_in?
-      = link_to sellers_path, class: 'button logged-in' do
+      = link_to seller_path(current_seller), class: 'button logged-in' do # ★ current_seller の show ページへ
         個人出店<br>マイページ
-      = link_to 'ログアウト', destroy_seller_session_path, method: :delete,  class: 'button'
+      = link_to 'ログアウト', destroy_seller_session_path, data: { turbo_method: :delete }, class: 'button'
 
     - else
       = link_to new_seller_session_path, class: 'button', id: 'seller-login-btn' do
@@ -85,11 +91,15 @@
         %br
         ＼新規会員登録／
 
+  -# PC用ログイン・登録ボタン (ショップ出店)
   .signup-btn
     - if host_signed_in?
-      = link_to hosts_path, method: :delete, class: 'button logged-in' do
-        ショップ出店<br>マイページ
-      = link_to 'ログアウト', destroy_host_session_path, method: :delete, class: 'button'
+      -# ここが最も重要な変更点: current_host の show ページへ遷移
+      = link_to (current_host.slug.present? ? public_host_profile_path(current_host.slug) : host_path(current_host)), class: 'button logged-in' do
+        = current_host.name # HAMLでHTMLタグを生成しない場合は=を先頭につける
+        マイページ
+      = link_to 'ログアウト', destroy_host_session_path, data: { turbo_method: :delete }, class: 'button'
+
     - else
       = link_to new_host_session_path, class: 'button', id: 'host-login-btn' do
         ショップ出店
@@ -101,35 +111,37 @@
         %br
         ＼新規会員登録／
 
-  
-
-
+-# PC用ナビゲーション (nav)
 .nav
   %nav
     %ul
-      %li      
-        %a{href: "#"} イベントタイプから選択　<br>　"comming soon"
+      %li
+        %a{href: "#"} イベントタイプから選択<br>　"comming soon"
       %li
         = link_to events_path do
           イベント地域から選択
       %li
-        %a{href: "#"} 日程から選択　<br>　"comming soon"
+        %a{href: "#"} 日程から選択<br>　"comming soon"
       %li
         = link_to recruitment_path do
           出展するには？
       %li
-        = link_to faqs_index_path do
+        -# faqs_index_path は存在しない可能性があります。public_faqs_path を推奨
+        = link_to public_faqs_path do
           よくある質問
+
 
 
 :javascript
   document.addEventListener("DOMContentLoaded", () => {
-    const menuToggle = document.querySelector(".menu-toggle");
+    const menuToggle = document.querySelectorAll(".menu-toggle"); // 全ての menu-toggle を取得
     const spnav = document.querySelector(".spnav");
 
-    if (menuToggle && spnav) {
-      menuToggle.addEventListener("click", () => {
-        spnav.classList.toggle("active");
+    if (menuToggle.length > 0 && spnav) { // 少なくとも1つ以上の menu-toggle が存在するか確認
+      menuToggle.forEach(toggle => { // 各 menu-toggle にイベントリスナーを設定
+        toggle.addEventListener("click", () => {
+          spnav.classList.toggle("active");
+        });
       });
     }
   });

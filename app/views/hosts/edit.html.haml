@@ -3,7 +3,7 @@
 .host-edit
   %h1 プロフィール編集
 
-  = form_with model: @host, local: true, multipart: true do |form|
+  = form_with model: @host, url: update_host_profile_path(@host.slug), local: true, multipart: true do |form|
     .field
       = form.label :top_image, 'トップ画像'
       = form.file_field :top_image
@@ -17,6 +17,14 @@
     .field
       = form.label :name, '名前'
       = form.text_field :name
+
+    -# ★★★ ここにスラッグ入力フィールドを追加します ★★★
+    .field
+      = form.label :slug, 'カスタムURL (半角英数字とハイフンのみ)'
+      = form.text_field :slug, class: 'form-control', placeholder: '例: your-marche-lab-profile'
+      %small.form-text.text-muted
+        ショップ詳細（ホームページ）のURLの一部になります。空欄の場合、IDベースのURLが使用されます。
+    -# ★★★ ここまで ★★★
 
     .field
       = form.label :description, '私たちについて'

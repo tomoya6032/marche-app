@@ -7,7 +7,8 @@
     - @event.errors.full_messages.each do |message|
       %li= message
 
-= form_with model: [@host, @event], url: host_event_path(@host, @event), local: true, class: 'event-form' do |f|
+= form_with model: @event, url: "/#{@host.slug}/events/#{@event.id}", method: :patch, local: true, class: 'event-form' do |f|
+  -# ... フォームの内容はそのまま ...
   .field
     = f.label :title, 'タイトル'
     = f.text_field :title
@@ -24,11 +25,10 @@
         - @event.images.each do |image|
           .image-preview
             = image_tag image, size: "100x100"
-            = check_box_tag "event[keep_images][]", image.signed_id, true # 保持用チェックボックス
-            = label_tag "event_keep_images_#{image.signed_id}", "保持" # 保持ラベル
-            -# = check_box_tag "event[remove_images][]", image.signed_id, false # 削除用チェックボックス
-            -# = label_tag "event_remove_images_#{image.signed_id}", "削除" # 削除ラベル
-    = f.file_field :images, multiple: true, accept: "image/*", value: nil # 新しい画像を追加
+            -# ★ここが重要: name属性を`event[keep_images][]`にし、valueを`image.signed_id`にする
+            = check_box_tag "event[keep_images][]", image.signed_id, true, id: "event_keep_images_#{image.signed_id}"
+            = label_tag "event_keep_images_#{image.signed_id}", "保持"
+    = f.file_field :images, multiple: true, accept: "image/*" # value: nil は不要、削除してください
 
   .datetime-fields
     .field

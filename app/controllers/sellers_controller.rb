@@ -37,7 +37,7 @@ class SellersController < ApplicationController
         end
       end
 
-      redirect_to sellers_path, notice: 'セラー情報が更新されました。'
+      redirect_to seller_path(@seller), notice: 'プロフィールを更新しました。'
     else
       flash[:alert] = 'セラー情報の更新に失敗しました。'
       render :index

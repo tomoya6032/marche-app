@@ -1,8 +1,212 @@
+$primary-color: #efdf64; 
+$secondary-color: #41404a; // 濃い青色 (落ち着きとプロフェッショナル)
+$accent-color: #edcaff; // 淡い黄色 (明るさと親しみやすさ)
+$text-color: #4e4e52; // 濃い灰色 (読みやすさ)
+$light-text-color: #f8f9fa; // 白に近い色 (背景とのコントラスト)
+$border-color: #d3d3d3; // 薄い灰色 (区切り)
+$background-color: #fdf3ff; // 温かみのある薄いベージュ
 body {
     width: 95%;
     margin: auto;
 
 }
+
+.seller-lp-page {
+  color: $text-color;
+  font-family: 'Noto Sans JP', sans-serif;
+  line-height: 1.6;
+  padding: 2rem;
+  border-radius: 8px;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+
+  .seller-details { // Hamlの .seller-lp-page の直下にある
+    // 必要に応じて、.seller-lp-page 内での .seller-details の個別の調整をここに記述
+
+    .seller-header { // Hamlの .seller-details の直下にある
+      // display: flex; // 必要に応じてフレックスボックス
+      // justify-content: space-between; // 左右に要素を配置
+      // align-items: flex-start; // 上揃え
+      text-align: left; // ★これを適用します！
+      margin-bottom: 50px;
+
+      // ★★★ ホスト管理セクションのスタイル ★★★
+      .seller-management-section { // Hamlの .seller-header の中にある
+        background-color: lighten($accent-color, 8%);
+        border: 1px solid #dc3545;
+        border-radius: 8px;
+        padding: 1.5rem;
+        margin-bottom: 40px;
+        box-shadow: 0 2px 4px rgba(0, 0, 0, 0.08);
+        margin: auto;
+        width: 90%;
+        h2 {
+          font-size: 1.8rem;
+          color: $text-color;
+          margin-bottom: 1rem;
+          font-weight: 600;
+          border-bottom: 2px solid lighten(#41404a, 20%);
+          padding-bottom: 0.5rem;
+        }
+
+        
+
+        
+
+        .seller-actions {
+          display: flex;
+          gap: 1rem;
+          margin-bottom: 1.5rem;
+
+          .sellers-button {
+            display: inline-block;
+            text-align: center;
+            margin: 6px;
+            padding: 8px;
+            padding-left: 8px;  
+            // width: 100px;
+            border: none;
+            border-radius: 4px;
+            background-color: #efb064;
+            color: #ffffff !important; // 好きな色を指定（例: 青色）
+            text-decoration: none; // 必要に応じて下線を削除
+            cursor: pointer;
+            
+            &:hover {
+              background-color: #ef972c; /* ホバー時の色 */
+              font-weight: bold; /* ホバー時に太文字にする */
+            }
+          }
+          
+        }
+
+        // 管理者からのコメント
+        .admin-comments-section {
+          margin-bottom: 1.5rem;
+          h3 {
+            font-size: 1.25rem;
+            color: $primary-color;
+            margin-bottom: 0.8rem;
+          }
+          ul {
+            list-style: none;
+            padding: 0;
+            margin: 0;
+            border: 1px solid $border-color;
+            border-radius: 4px;
+            background-color: #fff;
+
+            li {
+              padding: 0.75rem;
+              border-bottom: 1px dashed lighten($border-color, 5%);
+              &:last-child {
+                border-bottom: none;
+              }
+              p {
+                margin: 0;
+                font-size: 0.9rem;
+              }
+              .comment-date {
+                font-size: 0.8rem;
+                color: lighten($text-color, 30%);
+                margin-bottom: 0.3rem;
+              }
+            }
+          }
+          p {
+            font-style: italic;
+            color: lighten($text-color, 20%);
+          }
+        }
+
+        // ★★★ 登録済みイベント一覧（管理用）のスタイル ★★★
+        .seller-events-management {
+          margin-top: 2rem;
+          margin-bottom: 2rem; // 境界線の下にスペースを追加
+          // border-bottom: 1px solid #d3d3d3; // 境界線を追加
+          padding-bottom: 1rem; // 境界線の内側に余白を追加
+          h3 {
+            font-size: 1.5rem;
+            color: $text-color;
+            margin-bottom: 1rem;
+          }
+
+          table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 1rem;
+            background-color: #fff;
+            border: 1px solid $border-color;
+            border-radius: 8px;
+            overflow: hidden;
+
+            thead th {
+              background-color: lighten($primary-color, 40%);
+              color: $secondary-color;
+              padding: 0.8rem;
+              text-align: left;
+              border-bottom: 2px solid $primary-color;
+              font-size: 0.95rem;
+            }
+
+            tbody td {
+              padding: 0.8rem;
+              border-bottom: 1px solid lighten($border-color, 5%);
+              font-size: 0.9rem;
+
+              &:last-child {
+                display: flex;
+                gap: 0.5rem;
+                flex-wrap: wrap;
+              }
+            }
+
+            tbody tr:last-child {
+              td {
+                border-bottom: none;
+              }
+            }
+
+            a.button {
+              display: inline-block;
+              padding: 0.4rem 0.8rem;
+              background-color: $primary-color;
+              color: $light-text-color;
+              border-radius: 4px;
+              text-decoration: none;
+              font-size: 0.85rem;
+              transition: background-color 0.3s ease;
+
+              &:hover {
+                background-color: darken($primary-color, 10%);
+              }
+            }
+
+            a.button-delete {
+              display: inline-block;
+              padding: 0.4rem 0.8rem;
+              background-color: #de7a84;
+              color: $light-text-color;
+              border-radius: 4px;
+              text-decoration: none;
+              font-size: 0.85rem;
+              transition: background-color 0.3s ease;
+
+              &:hover {
+                background-color: darken(#dc3545, 10%);
+              }
+            }
+          }
+          p {
+            font-style: italic;
+            color: lighten($text-color, 20%);
+            margin-top: 1rem;
+          }
+        }
+      }
+    }
+  }
+}
+
 
 .event-no-image {
 //   width: 300px; /* 他の画像と同じ幅にする */
@@ -76,6 +280,11 @@ table.event-details th {
 
 .edit-links {
   margin-top: 20px;
+}
+
+.edit-links-horizontal {
+  display: flex;
+  gap: 10px; /* ボタン間のスペースを調整 */
 }
 
 .edit-links a {
