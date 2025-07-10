@@ -45,11 +45,11 @@
                 %tbody
                   - @host_events_for_management.each do |event|
                     %tr
-                      %td= link_to event.title, host_event_path(@host.slug, event) # スラッグベースのイベント詳細へリンク
+                      %td= link_to event.title, host_event_path(@host.to_param, event) # スラッグベースのイベント詳細へリンク
                       %td= event.start_time.strftime('%Y/%m/%d') if event.start_time
                       %td
-                        = link_to '編集', edit_host_event_path(@host.slug || @host.id, event), class: 'button'
-                        = button_to '削除', destroy_host_event_path(@host.slug || @host.id, event), method: :delete, data: { confirm: '本当に削除しますか？' }, class: 'button-delete'
+                        = link_to '編集', edit_host_event_path(@host.to_param, event), class: 'button'
+                        = button_to '削除', destroy_host_event_path(@host.to_param, event), method: :delete, data: { confirm: '本当に削除しますか？' }, class: 'button-delete'
             - else
               %p イベントがありません。
 
