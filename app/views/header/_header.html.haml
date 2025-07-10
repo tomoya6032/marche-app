@@ -57,7 +57,7 @@
     .sp-signup-btn
       - if host_signed_in?
         -# ここが最も重要な変更点: current_host の show ページへ遷移
-        = link_to (current_host.slug.present? ? public_host_profile_path(current_host.slug) : host_path(current_host)), class: 'button logged-in' do
+        = link_to public_host_profile_path(current_host), class: 'button logged-in' do
           = current_host.name # HAMLでHTMLタグを生成しない場合は=を先頭につける
           マイページ
         = link_to 'ログアウト', destroy_host_session_path, data: { turbo_method: :delete }, class: 'button' # Turbo対応

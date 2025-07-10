@@ -116,7 +116,7 @@ Rails.application.routes.draw do
   # 他の固定パス（例: /about, /contact）との衝突を避けるため、
   # これらの固定パスより「後」に配置してください。
   # ==============================
-  get ':id_or_slug', to: 'hosts#show', as: :public_host_profile, constraints: { id_or_slug: /[a-zA-Z0-9\-_]+/ }
+  get ':id_or_slug', to: 'hosts#show', as: :public_host_profile, constraints: { id_or_slug: /[a-zA-Z0-9_\-]+|\d+/ }
 
 
   # アプリケーションのルート
