@@ -50,7 +50,7 @@ Rails.application.routes.draw do
   # ==============================
   # ホストのネストされたイベント関連ルート (as: :host_profile は削除済み)
   # ==============================
-  scope ':host_id', constraints: { host_id: /[a-zA-Z0-9_-]+/ } do
+  scope ':host_id', constraints: { host_id: /[a-zA-Z0-9_\-]+|\d+/ } do
     get 'events/new', to: 'hosts#new_event', as: :new_host_event
     post 'events', to: 'hosts#create_event', as: :host_events
 

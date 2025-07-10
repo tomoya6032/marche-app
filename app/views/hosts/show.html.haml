@@ -14,10 +14,10 @@
             = @current_slug_for_display # コントローラで設定した変数
 
           .host-actions
-            = link_to edit_host_profile_path(@host.slug), class: 'hosts-button' do
+            = link_to edit_host_profile_path(@host.to_param), class: 'hosts-button' do
               %p プロフィールを編集する
 
-            = link_to new_host_event_path(@host.slug), class: 'hosts-button' do
+            = link_to new_host_event_path(@host.to_param), class: 'hosts-button' do
               %p 新規イベントを作成する
 
           -# 管理者からのコメント
