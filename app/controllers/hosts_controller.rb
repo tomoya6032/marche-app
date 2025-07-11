@@ -56,6 +56,7 @@ class HostsController < ApplicationController
   end
 
   def edit
+    @host = Host.find_by(slug: params[:host_id]) || Host.find(params[:host_id])
     # authenticate_host! により、ログイン中のホスト自身のページしか編集できないようになっているはず
     unless @host == current_host
       redirect_to root_path, alert: "他のホストのプロフィールは編集できません。"

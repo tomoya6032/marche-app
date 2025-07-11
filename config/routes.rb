@@ -39,12 +39,12 @@ Rails.application.routes.draw do
   post 'hosts', to: 'hosts#create', as: :create_host # ヘルパー名を hosts にしても衝突する可能性があるため
 
   # ホストプロフィール編集・更新ルート (host_id を使う)
-  get ':host_id/edit_profile', to: 'hosts#edit', as: :edit_host_profile, constraints: { host_id: /[a-zA-Z0-9_-]+/ }
-  patch ':host_id', to: 'hosts#update', as: :update_host_profile, constraints: { host_id: /[a-zA-Z0-9_-]+/ }
-  put ':host_id', to: 'hosts#update', constraints: { host_id: /[a-zA-Z0-9_-]+/ } # PATCHとPUT両方に対応するため
+  get ':host_id/edit_profile', to: 'hosts#edit', as: :edit_host_profile, constraints: { host_id: /[a-zA-Z0-9_-]+|\d+/ }
+  patch ':host_id', to: 'hosts#update', as: :update_host_profile, constraints: { host_id: /[a-zA-Z0-9_-]+|\d+/ }
+  put ':host_id', to: 'hosts#update', constraints: { host_id: /[a-zA-Z0-9_-]+|\d+/ } # PATCHとPUT両方に対応するため
 
   # ホストの削除アクション
-  delete ':host_id', to: 'hosts#destroy', as: :destroy_host_profile, constraints: { host_id: /[a-zA-Z0-9_-]+/ }
+  delete ':host_id', to: 'hosts#destroy', as: :destroy_host_profile, constraints: { host_id: /[a-zA-Z0-9_-]+|\d+/ }
 
 
   # ==============================
