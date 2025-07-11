@@ -42,7 +42,7 @@
         - if @event&.seller.present?
           = link_to @event.seller.name, seller_path(@event.seller)
         - elsif @event&.host.present?
-          = link_to @event.host.name, public_host_profile_path(@event.host.slug || @event.host.id)
+          = link_to @event.host.name, public_host_profile_path(@event.host.slug.presence || @event.host.id)
         - else
           主催者 未設定
     %tr

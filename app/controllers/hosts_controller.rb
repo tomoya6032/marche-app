@@ -57,7 +57,7 @@ class HostsController < ApplicationController
 
   def edit
     @host = Host.find_by(slug: params[:host_id]) || Host.find_by(id: params[:host_id])
-    # authenticate_host! により、ログイン中のホスト自身のページしか編集できないようになっているはず
+# authenticate_host! により、ログイン中のホスト自身のページしか編集できないようになっているはず
     unless @host == current_host
       redirect_to root_path, alert: "他のホストのプロフィールは編集できません。"
     end
@@ -109,10 +109,12 @@ class HostsController < ApplicationController
 
   # ★★★ ここに show_event アクションを追加 ★★★
   def show_event
-    # set_host と set_event_for_nested_actions が既に実行されているため、
-    # @host と @event はここで利用可能です。
-    # 特に表示する追加ロジックがなければ、単にビューをレンダリングします。
-    render 'hosts/events/show' # イベント詳細表示用のビューファイルを指定
+    @host = Host.find_by(slug: params[:host_id]) || Host.find(params[:host_id])
+    @event = @host.events.find(params[:id])
+
+    unless @host && @event
+      redirect_to root_path, alert: "イベントが見つかりませんでした。"
+    end
   end
 
   # ★★★ イベントの新規作成アクションの修正（リダイレクト先） ★★★
@@ -160,7 +162,7 @@ class HostsController < ApplicationController
     @event = @host.events.find(params[:id])
 
     unless @host == current_host
-      redirect_to root_path, alert: "他のホストのイベントは編集できません。"
+  redirect_to root_path, alert: "他のホストのイベントは編集できません。"
     end
     # 都道府県のリストが必要な場合
     @prefectures = [

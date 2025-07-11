@@ -7,8 +7,7 @@
     - @event.errors.full_messages.each do |message|
       %li= message
 
-= form_with model: @event, url: update_host_event_path(@host.slug || @host.id, @event), method: :patch, local: true, class: 'event-form' do |f|
-  -# ... フォームの内容はそのまま ...
+= form_with model: @host, url: update_host_profile_path(@host.slug.presence || @host.id), local: true, multipart: true do |f|
   .field
     = f.label :title, 'タイトル'
     = f.text_field :title
