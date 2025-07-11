@@ -120,7 +120,7 @@ class HostsController < ApplicationController
     unless @host == current_host
       redirect_to root_path, alert: "他のホストのイベントは作成できません。" and return
     end
-    @event = @host.events.build
+    @event = @host.events.build(start_time: Time.zone.now, end_time: Time.zone.now + 1.hour)
     
     
     # ★ここを追加！都道府県のリストを設定します★
@@ -293,14 +293,14 @@ class HostsController < ApplicationController
 
    # ★★★ set_event_for_nested_actions メソッドの修正 ★★★
    def set_event_for_nested_actions
-    # @host が set_host で既に設定されていることを前提とします。
-    # イベントIDは `params[:id]` で渡されます (resources :events の慣習)
-    @event = @host.events.find(params[:id]) 
-  rescue ActiveRecord::RecordNotFound
-    # イベントが見つからなかった場合のリダイレクト先
-    # 修正: host_path を public_host_profile_path に変更
-    redirect_to public_host_profile_path(@host.slug || @host.id), alert: "指定されたイベントは見つかりませんでした。"
-  end
+     # @host が set_host で既に設定されていることを前提とします。
+     # イベントIDは `params[:id]` で渡されます (resources :events の慣習)
+     @event = @host.events.find(params[:id]) 
+     rescue ActiveRecord::RecordNotFound
+     # イベントが見つからなかった場合のリダイレクト先
+     # 修正: host_path を public_host_profile_path に変更
+     redirect_to public_host_profile_path(@host.slug || @host.id), alert: "指定されたイベントは見つかりませんでした。"
+   end
 
   def event_params
     # ★★★ ここを修正・確認 ★★★
