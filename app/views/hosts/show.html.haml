@@ -110,7 +110,7 @@
           %tbody
             - @public_events.each do |event| # ★ public_events を使用
               %tr
-                %td= link_to event.title, host_event_path(event.host.slug || event.host.id, event) # リンクをスラッグ対応
+                %td= link_to event.title, host_event_path(event.host&.slug.presence || event.host&.id, event) if event.host # リンクをスラッグ対応
                 %td= event.start_time.strftime('%Y/%m/%d') if event.start_time
                 %td= event.venue.present? ? event.venue : '未設定'
       - else

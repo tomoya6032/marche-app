@@ -93,7 +93,7 @@ class HostsController < ApplicationController
       end
       # ★★★ リダイレクト先のヘルパー修正 ★★★
       # update 後は、更新された @host の情報を使って show_host_profile_path にリダイレクト
-      redirect_to public_host_profile_path(@host.slug || @host.id), notice: 'プロフィールを更新しました。' # 修正
+      redirect_to public_host_profile_path(@host.slug.presence || @host.id), notice: 'プロフィールを更新しました。' # 修正
     else
       render :edit
     end
