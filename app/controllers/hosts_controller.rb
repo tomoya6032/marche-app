@@ -56,7 +56,7 @@ class HostsController < ApplicationController
   end
 
   def edit
-    @host = Host.find_by(slug: params[:host_id]) || Host.find(params[:host_id])
+    @host = Host.find_by(slug: params[:host_id]) || Host.find_by(id: params[:host_id])
     # authenticate_host! により、ログイン中のホスト自身のページしか編集できないようになっているはず
     unless @host == current_host
       redirect_to root_path, alert: "他のホストのプロフィールは編集できません。"
@@ -156,7 +156,10 @@ class HostsController < ApplicationController
   # ★★★ イベントの編集・更新・削除アクションの修正 ★★★
   # `set_host` で @host が既に設定されていることを前提とします。
   def edit_event
-    unless @host == current_host && @event.host == current_host
+    @host = Host.find_by(slug: params[:host_id]) || Host.find(params[:host_id])
+    @event = @host.events.find(params[:id])
+
+    unless @host == current_host
       redirect_to root_path, alert: "他のホストのイベントは編集できません。"
     end
     # 都道府県のリストが必要な場合
