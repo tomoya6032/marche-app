@@ -3,7 +3,7 @@
 .host-edit
   %h1 プロフィール編集
 
-  = form_with model: @host, url: update_host_profile_path(@host.slug), local: true, multipart: true do |form|
+  = form_with model: @host, url: update_host_profile_path(@host.slug || @host.id), local: true, multipart: true do |form|
     .field
       = form.label :top_image, 'トップ画像'
       = form.file_field :top_image
