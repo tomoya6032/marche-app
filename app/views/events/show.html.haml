@@ -101,9 +101,9 @@
     - if host_signed_in? && current_host == @event.host
       -# ★★★ ここを修正します ★★★
       -# スラッグベースの編集パスを使用するために、@event.host のスラッグを渡す
-      = link_to '編集', edit_host_event_path(@event.host&.slug || @event.host&.id, @event), class: 'operation-button'
+      = link_to '編集', edit_host_event_path(@event.host.to_param, @event), class: 'operation-button'
       -# 削除ボタンも同様に修正 (以前も修正しましたが、念のため確認)
-      = button_to '削除', destroy_host_event_path(@event.host&.slug || @event.host&.id, @event), method: :delete, data: { confirm: '本当に削除しますか？' }, class: 'button-delete'
+      = button_to '削除', destroy_host_event_path(@event.host.to_param, @event), method: :delete, data: { confirm: '本当に削除しますか？' }, class: 'button-delete'
     - elsif seller_signed_in? && current_seller == @event.seller
       = link_to '編集', edit_event_path(@event), class: 'operation-button'
       = button_to '削除', event_path(@event), method: :delete, data: { confirm: '本当に削除してもよろしいですか？' }, class: 'button-delete'

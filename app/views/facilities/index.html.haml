@@ -20,7 +20,7 @@
           %tr
             %td
               - if host.name.present?
-                = link_to host.name, public_host_profile_path(host.slug || host.id)
+                = link_to host.name, public_host_profile_path(host.to_param)
               - else
                 %span 未設定
             -# %td= host.email.presence || 'メールアドレス未設定'
