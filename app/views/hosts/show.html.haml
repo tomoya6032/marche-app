@@ -45,7 +45,7 @@
                 %tbody
                   - @host_events_for_management.each do |event|
                     %tr
-                      %td= link_to event.title, host_event_path(@host.to_param, event) # スラッグベースのイベント詳細へリンク
+                      %td= link_to event.title, host_event_path(@host.slug.presence || @host.id, event) # スラッグベースのイベント詳細へリンク
                       %td= event.start_time.strftime('%Y/%m/%d') if event.start_time
                       %td
                         = link_to '編集', edit_host_event_path(@host.to_param, event), class: 'button'

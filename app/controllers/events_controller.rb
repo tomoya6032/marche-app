@@ -34,7 +34,11 @@ class EventsController < ApplicationController
   end
 
   def show
-    # @event = Event.find(params[:id]) # set_eventで読み込んでいるので、表示させる必要がない
+    @event = Event.find(params[:id])
+  
+    unless @event.host
+      redirect_to root_path, alert: "イベントの主催者情報が見つかりません。"
+    end
   end
 
   def new
