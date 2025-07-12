@@ -61,11 +61,11 @@
           %p 開催場所
           = event.venue.present? ? event.venue : 'その他'
           
-          - if @event&.host.present?
-            = link_to '編集', edit_host_event_path(@event.host.slug.presence || @event.host.id, @event), class: 'operation-button'
-            = button_to '削除', destroy_host_event_path(@event.host.slug.presence || @event.host.id, @event), method: :delete, data: { confirm: '本当に削除しますか？' }, class: 'button-delete'
-          - else
-            主催者情報が不足しています。
+          -# - if @event&.host.present?
+          -#   = link_to '編集', edit_host_event_path(@event.host.slug.presence || @event.host.id, @event), class: 'operation-button'
+          -#   = button_to '削除', destroy_host_event_path(@event.host.slug.presence || @event.host.id, @event), method: :delete, data: { confirm: '本当に削除しますか？' }, class: 'button-delete'
+          -# - else
+          -#   主催者情報が不足しています。
 
 %nav.pagination
   = paginate @events

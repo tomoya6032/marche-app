@@ -107,14 +107,22 @@ class HostsController < ApplicationController
     redirect_to root_path, notice: 'アカウントを削除しました。'
   end
 
-  # ★★★ ここに show_event アクションを追加 ★★★
+  # ★★★ イベント詳細表示アクション ★★★
   def show_event
+    # まずホストを特定します (スラッグまたはIDで)
     @host = Host.find_by(slug: params[:host_id]) || Host.find(params[:host_id])
+
+    # そのホストに紐づくイベントを特定します
     @event = @host.events.find(params[:id])
 
+    # ホストまたはイベントが見つからなかった場合の処理
     unless @host && @event
       redirect_to root_path, alert: "イベントが見つかりませんでした。"
+      return # リダイレクト後はここで処理を終了
     end
+
+    # ★★★ ここを修正: events/show.html.haml を明示的にレンダリングする ★★★
+    render 'events/show'
   end
 
   # ★★★ イベントの新規作成アクションの修正（リダイレクト先） ★★★
