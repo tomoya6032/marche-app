@@ -1868,6 +1868,7 @@ table.account-comparison {
       align-items: center; /* 中央揃え */
       width: 88%;
       background-color: #e0f8c8; /* 背景色を設定 */
+      
       padding: 10px;
       ul {
         list-style: none; /* デフォルトのリストマーカーを非表示 */
@@ -1879,11 +1880,33 @@ table.account-comparison {
           
         }
       }
+      .sp-login-btn,
+      .sp-signup-btn {
+        display: block; /* ボタンを表示 */
+        width: 80%; /* ボタンの幅を調整 */
+        margin: 10px auto; /* ボタン間の余白を追加 */
+        text-align: center; /* テキストを中央揃え */
+      }
 
       .sp-login-btn a,
       .sp-signup-btn a {
-        margin: auto;         
+        display: block;
+        padding: 10px;
+        
+        background-color: #4dca98; /* ボタンの背景色 */
+        color: white; /* テキストの色 */
+        border-radius: 5px; /* ボタンの角を丸く */
+        text-decoration: none; /* 下線を削除 */
+        font-size: 14px; /* フォントサイズを調整 */       
       }
+
+      .sp-login-btn .button.logged-in,
+      .sp-signup-btn .button.logged-in {
+        background-color: $primary-pink; /* ログイン時の背景色 */
+        color: white; /* テキストの色 */
+        border: 2px solid #ff1493; /* ボーダーを追加 */
+      }
+
     }
     
 
@@ -1891,6 +1914,7 @@ table.account-comparison {
     .button {
       width: 80%;
       font-size: 12px;
+      margin-bottom: 20px;
       &.logged-in {
         background-color: $primary-pink; /* ログイン時の色 */
         color: white;
