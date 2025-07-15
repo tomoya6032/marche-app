@@ -26,7 +26,7 @@
     %meta{property: "og:site_name", content: "Marche"}
 
     -# Twitter Card 設定
-    %meta{name: "twitter:card", content: "summary_large_image"}
+    %meta{name: "twitter:card", content: "summary"}
     %meta{name: "twitter:site", content: "@mimamirihouse"}  
     %meta{name: "twitter:title", content: (content_for?(:twitter_title) ? yield(:twitter_title) : (content_for?(:og_title) ? yield(:og_title) : (content_for?(:title) ? yield(:title) : "Marche - あなたのイベントを見つけよう")))}
     %meta{name: "twitter:description", content: (content_for?(:twitter_description) ? yield(:twitter_description) : (content_for?(:og_description) ? yield(:og_description) : (content_for?(:description) ? yield(:description) : "Marcheは、地域のイベントを簡単に検索・発見できるプラットフォームです。新しい体験を見つけましょう！")))}
