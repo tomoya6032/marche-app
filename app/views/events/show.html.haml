@@ -16,7 +16,8 @@
 - if @event.images.attached? && @event.images.first.present?
   - content_for :og_image do
     = url_for(@event.images.first.variant(resize_to_limit: [1200, 630])) # OGP推奨サイズにリサイズ
-  
+  - content_for :twitter_image do
+    = url_for(@event.images.first.variant(resize_to_limit: [1200, 630])) # Twitter用画像
 
 %body
   = render 'header/header' # ヘッダーのパーシャルを呼び出す
