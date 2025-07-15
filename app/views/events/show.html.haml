@@ -2,7 +2,7 @@
   = @event.title + " | Marche イベント詳細"
 
 - content_for :description do
-  = truncate(@event.description, length: 150, omission: "...") # 説明文を150文字で切り詰め
+  = truncate(@event.description, length: 100, omission: "...") # 説明文を100文字で切り詰め
 
 - content_for :canonical_url do
   = request.original_url
@@ -11,7 +11,7 @@
   = @event.title + " | Marcheイベント"
 
 - content_for :og_description do
-  = truncate(@event.description, length: 200)
+  = truncate(@event.description, length: 100)
 
 - if @event.images.attached? && @event.images.first.present?
   - content_for :og_image do
@@ -21,9 +21,19 @@
 %body
   = render 'header/header' # ヘッダーのパーシャルを呼び出す
   
-  
-  .index-btn
-    %p 出店詳細ページ
+  .event-index
+    .index-btn
+      %p 出店詳細ページ
+    .share-buttons
+      %a{ href: "https://twitter.com/intent/tweet?text=#{ERB::Util.url_encode(@event.title)}&url=#{ERB::Util.url_encode(request.original_url)}", target: "_blank", rel: "noopener noreferrer", class: "share-button twitter-share" }
+        %img{ src: asset_path("logo-black.png"), alt: "Share on X", width: "32", height: "32" }
+        Xでシェア
+      %a{ href: "https://social-plugins.line.me/lineit/share?url=#{ERB::Util.url_encode(request.original_url)}", target: "_blank", rel: "noopener noreferrer", class: "share-button line-share" }
+        %img{ src: asset_path("LINE_icon.png"), alt: "Share on LINE", width: "32", height: "32" }
+        LINEでシェア
+      %a{ href: "https://www.facebook.com/sharer/sharer.php?u=#{ERB::Util.url_encode(request.original_url)}", target: "_blank", rel: "noopener noreferrer", class: "share-button facebook-share" }
+        %img{ src: asset_path("Facebook_Logo_Primary.png"), alt: "Share on Facebook", width: "32", height: "32" }
+        Facebookでシェア
   
   .event-title
     %h2= @event.title

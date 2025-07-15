@@ -277,6 +277,37 @@ a:hover {
   background-color: #cc0000; /* 濃い赤色 */
 }
 
+.share-buttons {
+  display: flex;
+  gap: 10px;
+  margin-top: 20px;
+
+  .share-button {
+    display: flex;
+    align-items: center;
+    text-decoration: none;
+    color: #333;
+    font-size: 14px;
+    margin-left: 20px;
+
+    img {
+      margin-right: 5px;
+    }
+
+    &:hover {
+      opacity: 0.8;
+    }
+  }
+
+  .twitter-share {
+    color: #1da1f2;
+  }
+
+  .line-share {
+    color: #00c300;
+  }
+}
+
 // サインインページの全体的なスタイル
 .sign-in-page {
   display: flex;
@@ -696,6 +727,13 @@ nav ul li a {
   padding: 10px;
   text-decoration: none; /* リンクの下線を削除 */
   color: #333; /* リンクの文字色 */
+}
+
+.event-index {
+  display: flex;
+  flex-wrap: wrap; /* 子要素を折り返す */
+  
+  margin: 20px auto; /* 上下の余白と中央揃え */
 }
 
 .index-btn {
