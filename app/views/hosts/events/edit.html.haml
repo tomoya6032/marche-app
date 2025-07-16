@@ -7,7 +7,7 @@
     - @event.errors.full_messages.each do |message|
       %li= message
 
-= form_with model: @event, url: update_host_event_path(@host.slug, @event.id), local: true, class: 'event-form', multipart: true do |f|
+= form_with model: @event, url: update_host_event_path(@host.slug.presence || @host.id, @event.id), local: true, class: 'event-form', multipart: true do |f|
   .field
     = f.label :title, 'タイトル'
     = f.text_field :title, value: @event.title

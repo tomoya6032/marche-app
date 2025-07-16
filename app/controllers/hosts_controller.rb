@@ -156,7 +156,7 @@ class HostsController < ApplicationController
     @event = @host.events.build(event_params)
     if @event.save
       # イベント作成後、ホストのホームページ（show）にリダイレクト
-      redirect_to public_host_profile_path(@host.slug), notice: 'イベントが作成されました。'
+      redirect_to public_host_profile_path(@host.slug.presence || @host.id), notice: 'イベントが作成されました。'
     else
       # エラー時の再描画も明示的にビューパスを指定
       render 'hosts/events/new' # new_event.html.haml が hosts/events/new.html.haml の場合
@@ -243,7 +243,7 @@ class HostsController < ApplicationController
     end
     @event.destroy
     # イベント削除後、ホストのホームページ（show）にリダイレクト
-    redirect_to public_host_profile_path(@host.slug || @host.id), notice: 'イベントが削除されました。' # 修正
+    redirect_to public_host_profile_path(id_or_slug: @host.slug.presence || @host.id), notice: 'イベントが削除されました。'
   end
 
   private
