@@ -60,6 +60,8 @@ Rails.application.routes.draw do
     get 'events/:id', to: 'hosts#show_event', as: :host_event
   end
 
+
+
   # ==============================
   # セラー関連のルート
   # ==============================

@@ -1,6 +1,6 @@
 = render 'header/header' # ヘッダーのパーシャルを呼び出す
 
-%h1 新しいイベントを作成。
+%h1 ショップ会員の新しいイベントを作成。
 
 - if @event.errors.any?
   %ul.error-messages
@@ -82,4 +82,4 @@
   .actions
     = f.submit '作成', class: 'btn btn-primary'
 
-= link_to '戻る', hosts_path, class: 'btn btn-secondary'
+= link_to '戻る', hosts_path, class: 'operation-button'

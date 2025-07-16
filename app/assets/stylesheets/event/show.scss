@@ -60,8 +60,10 @@ body {
           .sellers-button {
             display: inline-block;
             text-align: center;
+            // align-items: center;
+            height: 40px;
             margin: 6px;
-            padding: 8px;
+            padding: auto;
             padding-left: 8px;  
             // width: 100px;
             border: none;
@@ -70,7 +72,10 @@ body {
             color: #ffffff !important; // 好きな色を指定（例: 青色）
             text-decoration: none; // 必要に応じて下線を削除
             cursor: pointer;
-            
+            p {
+              padding: auto; // pタグのマージンを削除
+              font-size: 16px; // フォントサイズを調整
+            }
             &:hover {
               background-color: #ef972c; /* ホバー時の色 */
               font-weight: bold; /* ホバー時に太文字にする */

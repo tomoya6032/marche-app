@@ -1200,7 +1200,7 @@ nav ul li a {
     width: 60%;
     margin: auto;
     color: $text-dark;
-    // text-align: center;
+    
     p {
       margin-top: 20px;
       text-align: left;
@@ -1491,6 +1491,7 @@ nav ul li a {
 
 .datetime-select-container {
   display: flex; /* 横並びにする */
+  
   align-items: center; /* 縦方向の中央揃え */
   width: 600px;
 }
@@ -1827,13 +1828,36 @@ table.account-comparison {
 @media (max-width: 480px) {
     /* 全体の調整 */
     body {
-      padding: 10px; 
+      padding: 4px; 
     }
     /* ボタンの調整 */
     .button, .operation-button {
       width: 90%; /* ボタンを画面幅に合わせる */
       margin: 10px auto; /* ボタン間の余白を追加 */
       
+    }
+
+    .host-identity h1 {
+      font-size: 24px;
+    }
+
+    
+    h1 {
+      font-size: 24px;
+    }
+   
+    
+    .host-management-section h2,
+    .host-events h2,
+    .host-news-section h2,
+    .topics-section h2,
+    .description-section h2,
+    .goods-section h2,
+    .host-images h2,
+    .contact-section h2,
+    .seller-details h2,
+    .seller-management-section h2 {
+      font-size: 20px !important; /* 強制的に適用 */
     }
 
     
@@ -2067,7 +2091,7 @@ table.account-comparison {
       margin-top: 50px;
   
       h2 {
-        font-size: 1.5em; /* 見出しのフォントサイズを調整 */
+        font-size: 1em; /* 見出しのフォントサイズを調整 */
       }
     }
   
@@ -2105,7 +2129,7 @@ table.account-comparison {
       margin-top: 40px;
   
       h2 {
-        font-size: 1.5em;
+        font-size: 1em;
       }
   
       .section.news ul {
@@ -2212,7 +2236,8 @@ table.account-comparison {
     }
 
     .host-lp-page {
-      padding: 8px;
+      width: 100%; /* LPページの幅を100%に設定 */
+      padding: 2px;
 
       .host-management-section {
         .host-actions {
@@ -2397,9 +2422,9 @@ table.account-comparison {
       }
     }
 
-    .datetime-fields  {
      
-      .datetime-select-container {
+     
+    .datetime-select-container {
         width: 60%;
         text-align: center;
         margin: auto;
@@ -2407,25 +2432,15 @@ table.account-comparison {
         flex-wrap: wrap;     // 画面幅を超えたら折り返す
         align-items: center; // 垂直方向の中央揃え
         gap: 8px;            // 各要素間の間隔
-  
-        // .date-select {
-        //   flex-grow: 1;      // 利用可能なスペースがあれば広がる
-        //   flex-shrink: 1;    // 狭ければ縮む
-        //   min-width: 60px;   // 最低限の幅を確保
-        //   max-width: 120px;  // 大きくなりすぎないように調整
-        //   height: 38px;      // 高さの統一（任意）
-        //   box-sizing: border-box;
-        // }
-  
-        span {
-          flex-grow: 0;      // 幅は内容に合わせる
-          flex-shrink: 0;
-          white-space: nowrap; // 改行しない
-          margin-right: 5px;   // セレクトボックスと単位の間の余白
-        }
+
+      span {
+        flex-grow: 0;      // 幅は内容に合わせる
+        flex-shrink: 0;
+        white-space: nowrap; // 改行しない
+        margin-right: 5px;   // セレクトボックスと単位の間の余白
       }
-      // width: 100%;
     }
+     
     
 
 
@@ -2474,7 +2489,7 @@ table.account-comparison {
       text-align: left; /* テキストを左揃え */
       padding: 20px; /* パディングを追加 */
       h2 {
-        font-size: 24px; /* 見出しのフォントサイズを調整 */
+        font-size: 22px; /* 見出しのフォントサイズを調整 */
         margin-top: 40px;
         text-align: center;
       }

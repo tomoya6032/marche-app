@@ -79,11 +79,17 @@
     .top-image-container {
       margin-bottom: 50px;
       text-align: center;
+      img {
+        width: 100%;
+        height: auto;
+        border-radius: 10px;
+        box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+      }
     }
     
 
     .host-top-image {
-      width: 90%;
+      width: 100%;
       margin: auto;
       text-align: center;
       // height: auto;
@@ -94,7 +100,7 @@
         width: 100%;
         margin: 20px 0;
         border-radius: 10px;
-        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        // box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
       }
     }
 
@@ -369,14 +375,13 @@
     }
   }  
   
-  .host-top-image {
-    width: 100% !important;;
-    .host-top-image {
-      width: 100% !important; /* 横幅を100%に */
-      height: auto; /* 高さは自動調整 */
-      margin: 0 auto; /* 中央揃え */
-    }
-  }  
+  
+  .host-top-image-custom {
+    width: 100% !important; /* 横幅を100%に */
+    height: auto; /* 高さは自動調整 */
+    margin: 0 auto; /* 中央揃え */
+  }
+    
 
   .content-grid {
     p {
@@ -390,7 +395,14 @@
   .left-column, .right-column {
     width: 100%; /* 子要素の幅を100%に設定 */
     text-align: center; /* テキストを中央揃えに設定 */
+    
   }
+
+  .left-column {
+    
+    border-right: none !important; /* 右側のボーダーを削除 */
+  }
+
 
   .description-section {
     padding: 30px 0;

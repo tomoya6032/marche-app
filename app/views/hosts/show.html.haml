@@ -87,7 +87,7 @@
     .host-top-image
       - if @host&.top_image&.attached?
         .top-image-container
-          = image_tag @host.top_image.variant(resize_to_limit: [800, 600]), class: 'host-top-image'
+          = image_tag @host.top_image.variant(resize_to_limit: [800, 600]), class: 'host-top-image-custom'
 
     .host-contact-info
       .contact-items

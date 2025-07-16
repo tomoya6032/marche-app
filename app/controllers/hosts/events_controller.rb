@@ -30,7 +30,7 @@ module Hosts
 
     def edit
       set_prefectures
-      # イベント編集フォームを表示
+      @event = Event.find(params[:id]) # イベントを正しく取得
     end
 
     def update

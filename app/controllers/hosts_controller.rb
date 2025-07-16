@@ -196,7 +196,7 @@ class HostsController < ApplicationController
       return
     end
   
-    combine_datetime_parts(@event)
+    # combine_datetime_parts(@event)
   
     # ユーザーが保持したいと明示的に指定した画像のsigned_idの配列
     requested_keep_signed_ids = Array(params[:event][:keep_images]).compact
@@ -275,35 +275,35 @@ class HostsController < ApplicationController
     end
   end
 
-  def combine_datetime_parts(event)
-    if params[:event][:start_time_year].present? &&
-       params[:event][:start_time_month].present? &&
-       params[:event][:start_time_day].present? &&
-       params[:event][:start_time_hour].present? &&
-       params[:event][:start_time_minute].present?
-      event.start_time = Time.zone.local(
-        params[:event][:start_time_year].to_i,
-        params[:event][:start_time_month].to_i,
-        params[:event][:start_time_day].to_i,
-        params[:event][:start_time_hour].to_i,
-        params[:event][:start_time_minute].to_i
-      )
-    end
+  # def combine_datetime_parts(event)
+  #   if params[:event][:start_time_year].present? &&
+  #      params[:event][:start_time_month].present? &&
+  #      params[:event][:start_time_day].present? &&
+  #      params[:event][:start_time_hour].present? &&
+  #      params[:event][:start_time_minute].present?
+  #     event.start_time = Time.zone.local(
+  #       params[:event][:start_time_year].to_i,
+  #       params[:event][:start_time_month].to_i,
+  #       params[:event][:start_time_day].to_i,
+  #       params[:event][:start_time_hour].to_i,
+  #       params[:event][:start_time_minute].to_i
+  #     )
+  #   end
 
-    if params[:event][:end_time_year].present? &&
-       params[:event][:end_time_month].present? &&
-       params[:event][:end_time_day].present? &&
-       params[:event][:end_time_hour].present? &&
-       params[:event][:end_time_minute].present?
-      event.end_time = Time.zone.local(
-        params[:event][:end_time_year].to_i,
-        params[:event][:end_time_month].to_i,
-        params[:event][:end_time_day].to_i,
-        params[:event][:end_time_hour].to_i,
-        params[:event][:end_time_minute].to_i
-      )
-    end
-  end
+  #   if params[:event][:end_time_year].present? &&
+  #      params[:event][:end_time_month].present? &&
+  #      params[:event][:end_time_day].present? &&
+  #      params[:event][:end_time_hour].present? &&
+  #      params[:event][:end_time_minute].present?
+  #     event.end_time = Time.zone.local(
+  #       params[:event][:end_time_year].to_i,
+  #       params[:event][:end_time_month].to_i,
+  #       params[:event][:end_time_day].to_i,
+  #       params[:event][:end_time_hour].to_i,
+  #       params[:event][:end_time_minute].to_i
+  #     )
+  #   end
+  # end
 
    # ★★★ set_event_for_nested_actions メソッドの修正 ★★★
    def set_event_for_nested_actions
@@ -316,36 +316,73 @@ class HostsController < ApplicationController
      redirect_to public_host_profile_path(@host.slug || @host.id), alert: "指定されたイベントは見つかりませんでした。"
    end
 
+ # ★★★ ここを修正します: event_params メソッド (create_event 用) ★★★
+  # このメソッドに日時結合のロジックを含めます
   def event_params
-    # ★★★ ここを修正・確認 ★★★
-    # remove_image を permit に追加 (必要であれば)
-    # ただし、ActiveStorageの削除は `purge` で行われるため、モデルの属性としては不要
-    # params[:event][:remove_image] は単なるフラグなので、ここでは除外したままでOK
-    params.require(:event).permit(
-      :title, :description, :start_time, :end_time, :venue, :address, :latitude, :longitude,
-      :capacity, :is_online, :online_url, :is_free, :price, :organizer, :contact_info,
-      :website, :status, :image, :video, :category_id, :prefecture # prefecture は含める
+    # まず、日時コンポーネントを含まない基本的なパラメータを許可
+    permitted_params = params.require(:event).permit(
+      :title, :description, :venue, :address, :latitude, :longitude,
+      :capacity, :is_online, :online_url, :is_free, :price, :organizer,
+      :contact_info, :website, :status, :video, :category_id, :prefecture,
+      images: [] # create_event で画像アップロードを許可
     )
+
+    # 各日時コンポーネントを params から取得し、結合して permitted_params に追加
+    [:start_time, :end_time].each do |time_field|
+      year = params[:event]["#{time_field}_year"]&.to_i
+      month = params[:event]["#{time_field}_month"]&.to_i
+      day = params[:event]["#{time_field}_day"]&.to_i
+      hour = params[:event]["#{time_field}_hour"]&.to_i
+      minute = params[:event]["#{time_field}_minute"]&.to_i
+    
+      if year.present? && month.present? && day.present? && hour.present? && minute.present?
+        begin
+          time_object = Time.zone.local(year, month, day, hour, minute)
+          permitted_params[time_field] = time_object
+        rescue ArgumentError => e
+          Rails.logger.warn "Invalid date/time for #{time_field}: #{e.message} - Params: #{params[:event].slice("#{time_field}_year", "#{time_field}_month", "#{time_field}_day", "#{time_field}_hour", "#{time_field}_minute")}"
+          permitted_params[time_field] = nil
+        end
+      else
+        permitted_params[time_field] = nil
+      end
+    end
+    permitted_params # 結合された日時が含まれたパラメータハッシュを返す
   end
 
-  # Strong Parametersから`keep_images`を削除し、`images`もここで許可しない
-  # `images`は`update_event`アクション内で手動で処理するため。
-  def update_event_params 
-    params.require(:event).permit(
-      :title, :description, :start_time, :end_time, :venue, :address, :latitude, :longitude,
-      :capacity, :is_online, :online_url, :is_free, :price, :organizer, :contact_info,
-      :website, :status, :video, :category_id, :prefecture 
+   # ★★★ update_event_params メソッド (update_event 用) ★★★
+   # これは既に正しく修正されているようです
+  def update_event_params
+    # まず、日時コンポーネントを含まない基本的なパラメータを許可
+    permitted_params = params.require(:event).permit(
+      :title, :description, :venue, :address, :latitude, :longitude,
+      :capacity, :is_online, :online_url, :is_free, :price, :organizer,
+      :contact_info, :website, :status, :video, :category_id, :prefecture
+      # images: [] と keep_images: [] はここで permit しない。
+      # update_event アクション内で手動で処理するため。
     )
-  end
 
-  # create_event 用の params も同様に images: [] を許可する
-  def event_params # create_event など他のアクションで使う場合はこちら
-    params.require(:event).permit(
-      :title, :description, :start_time, :end_time, :venue, :address, :latitude, :longitude,
-      :capacity, :is_online, :online_url, :is_free, :price, :organizer, :contact_info,
-      :website, :status, :video, :category_id, :prefecture, # prefecture は含める
-      images: [] # ★★★ ここも修正！複数画像を許可します ★★★
-    )
+    # 各日時コンポーネントを params から取得し、結合して permitted_params に追加
+    [:start_time, :end_time].each do |time_field|
+      year = params[:event]["#{time_field}_year"]&.to_i
+      month = params[:event]["#{time_field}_month"]&.to_i
+      day = params[:event]["#{time_field}_day"]&.to_i
+      hour = params[:event]["#{time_field}_hour"]&.to_i
+      minute = params[:event]["#{time_field}_minute"]&.to_i
+    
+      if year.present? && month.present? && day.present? && hour.present? && minute.present?
+        begin
+          time_object = Time.zone.local(year, month, day, hour, minute)
+          permitted_params[time_field] = time_object
+        rescue ArgumentError => e
+          Rails.logger.warn "Invalid date/time for #{time_field}: #{e.message} - Params: #{params[:event].slice("#{time_field}_year", "#{time_field}_month", "#{time_field}_day", "#{time_field}_hour", "#{time_field}_minute")}"
+          permitted_params[time_field] = nil
+        end
+      else
+        permitted_params[time_field] = nil
+      end
+    end
+    permitted_params # 結合された日時が含まれたパラメータハッシュを返す
   end
 
   def host_params
@@ -360,4 +397,7 @@ class HostsController < ApplicationController
       remove_top_image: [] # top_imageの削除フラグも許可
     )
   end
+
+
+
 end

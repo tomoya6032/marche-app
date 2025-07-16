@@ -1,20 +1,20 @@
 = render 'header/header' # ヘッダーのパーシャルを呼び出す
 
-%h1 ショップ会員のイベント編集
+%h1 ショップ会員のイベント編集。
 
 - if @event.errors.any?
   %ul.error-messages
     - @event.errors.full_messages.each do |message|
       %li= message
 
-= form_with model: @host, url: update_host_profile_path(@host.slug.presence || @host.id), local: true, class: 'event-form', multipart: true do |f|
+= form_with model: @event, url: update_host_event_path(@host.slug, @event.id), local: true, class: 'event-form', multipart: true do |f|
   .field
     = f.label :title, 'タイトル'
-    = f.text_field :title
+    = f.text_field :title, value: @event.title
 
   .field
     = f.label :description, '説明'
-    = f.text_area :description
+    = f.text_area :description, value: @event.description
 
   .field
     = f.label :images, '画像 (複数選択可)'
@@ -106,5 +106,4 @@
   .actions
     = f.submit '更新'
 
--# = link_to '詳細', event_path(@event), class: 'operation-button'
 = link_to '戻る', events_path, class: 'operation-button'

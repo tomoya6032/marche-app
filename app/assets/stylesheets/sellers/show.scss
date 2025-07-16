@@ -88,7 +88,14 @@
 /* SPデザイン */
 @media (max-width: 480px) {
   .seller-details {
-     
+    .seller-management-section {
+      .seller-actions {
+        display: flex;
+        
+        flex-direction: column; /* 子要素を縦並びにする */
+        gap: 10px; 
+      }
+    }
     
     .seller-info-table {
       width: 100%; /* テーブル全体の幅を100%に設定 */
