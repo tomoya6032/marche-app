@@ -91,60 +91,30 @@
           %td{ colspan: 3 } 最近登録された個人会員はありません。
 
 %section.admin-section
-  %h2.admin-section-title ショップ会員情報
-  %p.admin-section-summary 合計ショップ会員数: #{@total_hosts}
-  %h3.admin-section-subtitle 最近登録されたショップ会員
-  %table.admin-table
-    %thead
-      %tr
-        %th 名前
-        %th メールアドレス
-        %th アカウント取得日
-        %th 無料期間終了日
-        %th 編集可能
-        %th コメント
-    %tbody
-      - if @recent_hosts.present?
-        - @recent_hosts.each do |host|
-          %tr
-            %td= host.name
-            %td= host.email
-            %td= host.created_at.strftime('%Y/%m/%d') if host.created_at
-            %td= (host.created_at + 21.days).strftime('%Y/%m/%d') if host.created_at
-            
-            %td
-              = form_with url: toggle_editable_admin_host_path(host), method: :patch, local: true do |f|
-                = f.check_box :editable, checked: host.editable # デフォルトでチェックをオン
-                = f.submit "更新", class: "admin-button"
-            
-
-            %td
-              = link_to "コメント", edit_admin_host_path(host.to_param), class: "admin-button"
-      - else
-        %tr
-          %td{ colspan: 3 } 最近登録されたホストはありません。
-
-%section.admin-section
-  %h2.admin-section-title イベント情報
+  -# ここを「全イベント一覧」に修正
+  %h2.admin-section-title 全イベント一覧
   %p.admin-section-summary 合計イベント数: #{@total_events}
-  %h3.admin-section-subtitle 最近作成されたイベント
-  = form_with url: featured_admin_events_path, method: :post, local: true do |form|
+  %h3.admin-section-subtitle 注目イベント設定
+  -# フォームのURLとメソッドを修正
+  = form_with url: update_event_features_admin_events_path, method: :patch, local: true do |form|
     %table.admin-table
       %thead
         %tr
-          %th チェック
+          %th 注目
           %th イベント名
           %th 開催日
           %th 都道府県
           %th 開催者名
           %th アカウント種別
-          %th コメント
       %tbody
-        - if @recent_events.present?
-          - @recent_events.each do |event|
+        -# 変数名を @all_events に変更
+        - if @all_events.present?
+          - @all_events.each do |event|
             %tr
               %td
-                = check_box_tag "featured_event_ids[]", event.id, event.is_featured
+                -# チェックボックスのname属性を配列形式に変更し、hiddenフィールドでidも送信
+                = form.check_box "events[#{event.id}][is_featured]", { checked: event.is_featured }, true, false
+                = form.hidden_field "events[#{event.id}][id]", value: event.id
               %td= link_to event.title, event_path(event)
               %td= event.start_time.strftime('%Y/%m/%d') if event.start_time
               %td= event.venue || "未設定"
@@ -164,8 +134,16 @@
                   未設定
         - else
           %tr
-            %td{ colspan: 7 } 最近作成されたイベントはありません。
+            %td{ colspan: 6 } イベントはありません。
     .actions
       = form.submit "注目イベントを更新", class: "admin-button"
 
-  = paginate @recent_events
+  -# ★★★ イベント一覧のページネーションをここに配置し、@all_events に変更 ★★★
+  %nav.pagination
+    = paginate @all_events, params: { event_page: params[:event_page] }
+    -# params: { event_page: params[:event_page] } を指定することで、
+    -# @users のページネーション（もしあれば）と競合しないようにします。
+
+-# @users のページネーションが他のセクションにある場合、その下にも同様に記述
+%nav.pagination
+  = paginate @users, params: { page: params[:page] }

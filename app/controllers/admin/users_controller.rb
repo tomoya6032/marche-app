@@ -7,7 +7,7 @@ class Admin::UsersController < Admin::BaseController
     @recent_sellers = Seller.order(created_at: :desc).limit(5)
     @recent_hosts = Host.order(created_at: :desc).limit(5)
     @total_events = Event.count
-    @recent_events = Event.includes(:seller, :host).order(created_at: :desc).limit(5) # セラーとホストを含めて取得
+    # @recent_events = Event.includes(:seller, :host).order(created_at: :desc).limit(5) # セラーとホストを含めて取得
     @total_notices = Notice.count
     @recent_notices = Notice.order(published_at: :desc).limit(10)
     @notices = Notice.order(published_at: :desc).limit(10) # 最新5件のお知らせを取得
@@ -15,6 +15,18 @@ class Admin::UsersController < Admin::BaseController
     @users = User.all.page(params[:page]).per(10) # usersのページネーションも確認
     @recent_events = Event.where(is_featured: true).order(created_at: :desc).page(params[:recent_events_page]).per(5) # 例えば5件表示
     # 他のデータ取得処理...
+    # ★★★ ここを修正：全てのイベントをページネーション付きで取得する ★★★
+    # 変数名を @all_events のように変更し、kaminariを適用
+    @all_events = Event.includes(:seller, :host).order(created_at: :desc).page(params[:event_page]).per(10)
+
+    # 注目イベントのチェックボックス更新用のダミーオブジェクト
+    # フォームヘルパーを使うために必要です。実態はデータベースには保存しません。
+    # このオブジェクト自体はページネーションには影響しません。
+    @event_for_form = Event.new
+
+    # @recent_events の定義が2回あったので、もし「注目イベント一覧」として別表示が必要なら、
+    # 別の変数名（例: @featured_events）にして、適切な場所でページネーションを適用してください。
+    # 例： @featured_events = Event.where(is_featured: true).order(created_at: :desc).page(params[:featured_events_page]).per(5)
   end
 
   def edit_seller

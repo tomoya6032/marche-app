@@ -1,10 +1,15 @@
+# app/controllers/admin/events_controller.rb
 module Admin
   class EventsController < ApplicationController
     before_action :set_event, only: [:show, :edit, :update, :destroy]
 
     def index
-      @events = Event.all
-      @recent_events = Event.order(created_at: :desc).page(params[:page]).per(10)
+      # @events は Admin::UsersController#index で @all_events として扱われるため、
+      # ここでの @events や @recent_events の定義は、
+      # もし Admin::EventsController#index が独立して使われる場合にのみ必要です。
+      # 現状のダッシュボード統合の文脈では、Admin::UsersController#index がメインなので、
+      # このコントローラーの index アクションはあまり使われないかもしれません。
+      @events = Event.all.page(params[:page]).per(10) # 全イベントをページネーション
     end
 
     def show
@@ -39,15 +44,24 @@ module Admin
       redirect_to admin_events_path, notice: "イベントを削除しました。"
     end
 
-    # 注目イベントを更新するアクション
-    def featured
-      Event.update_all(is_featured: false) # すべてのイベントの注目フラグをリセット
-
-      if params[:featured_event_ids].present?
-        Event.where(id: params[:featured_event_ids]).update_all(is_featured: true)
-        flash[:notice] = "注目イベントを更新しました。"
+    # ★★★ 注目イベントを更新するアクションの修正 ★★★
+    # アクション名を 'featured' から 'update_event_features' に変更し、
+    # params[:events] の構造に対応します。
+    def update_event_features # <-- ここを修正
+      # params[:events] は { "イベントID1" => { "is_featured" => "true/false", "id" => "イベントID1" }, ... } の形式
+      if params[:events].present?
+        params[:events].each do |event_id, attributes| # id を event_id に変更して明確化
+          event = Event.find_by(id: event_id)
+          if event
+            # チェックボックスの値 "true" / "false" をブーリアンに変換
+            new_is_featured = (attributes[:is_featured] == 'true')
+            # 変更がある場合のみ更新してDBアクセスを減らす
+            event.update(is_featured: new_is_featured) unless event.is_featured == new_is_featured
+          end
+        end
+        flash[:notice] = "注目イベントの設定を更新しました。"
       else
-        flash[:alert] = "注目イベントが選択されていません。"
+        flash[:alert] = "更新するイベントが選択されていません。"
       end
 
       # 管理画面ダッシュボードにリダイレクト
@@ -61,6 +75,9 @@ module Admin
     end
 
     def event_params
+      # `update_event_features` アクションでは `params[:events]` を直接処理するため、
+      # この `event_params` は使われません。
+      # ただし、`create` や `update` アクションで `is_featured` を扱いたい場合は残します。
       params.require(:event).permit(:title, :description, :start_time, :venue, :is_featured)
     end
   end

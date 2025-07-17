@@ -19,36 +19,71 @@ Rails.application.routes.draw do
   }
   devise_for :users
 
+  # --- ★★★ ここからが修正箇所です！ ★★★ ---
+
+  # ==============================
+  # 管理者関連のルート（他の汎用ルートより優先）
+  # ==============================
+  # 管理者ダッシュボードへの直接アクセスルート
+  get 'administrator', to: 'admin/users#index', as: :administrator_dashboard
+
+  namespace :admin do
+    # デフォルトのルート（/admin にアクセスした時の動作）
+    root to: "users#index" # /admin にアクセスすると admin/users#index へ
+
+    # FAQ管理ルート
+    resources :faqs, except: [:show]
+
+    # Users管理ルート（コメント機能を含む）
+    resources :users, only: [:index, :show, :edit, :update] do
+      resources :comments, only: [:create], module: :users
+    end
+
+    # Events管理ルート（注目イベント更新アクションを含む）
+    resources :events, only: [:index, :edit, :update, :destroy] do
+      collection do
+        # 注目イベントの更新は、部分的な更新のため PATCH メソッドが適切です。
+        patch :update_event_features # /admin/events/update_event_features (PATCH)
+      end
+    end
+
+    # Sellers管理ルート（コメント、編集可能トグル）
+    resources :sellers, controller: 'admin_sellers', only: [:index, :show, :edit, :update] do
+      patch :toggle_editable, on: :member # /admin/sellers/:id/toggle_editable (PATCH)
+      resources :comments, only: [:create], module: :sellers
+    end
+
+    # Hosts管理ルート（コメント、編集可能トグル、destroy）
+    resources :hosts, controller: 'admin_hosts', only: [:index, :show, :edit, :update, :destroy] do
+      patch :toggle_editable, on: :member # /admin/hosts/:id/toggle_editable (PATCH)
+      resources :comments, only: [:create], module: :hosts
+    end
+
+    # Notices管理ルート
+    resources :notices
+  end
+  # --- ★★★ 管理者関連のルートはここまで移動 ★★★ ---
+
   # ==============================
   # グローバルなイベント一覧・詳細
   # ==============================
-  resources :events
+  resources :events # これは `admin/events` と衝突しないのでこのままでOK
 
   # ==============================
   # ホスト関連のカスタムルート (スラッグベースより先に定義)
-  # ★★★ resources :hosts を削除したため、必要なアクションを明示的に定義します ★★★
   # ==============================
-
-  # ホストの一覧ページ (もし必要なら)
-  get 'hosts', to: 'hosts#index', as: :hosts # hosts_path を明示的に定義
-
-  # ホストの新規作成ページ
+  get 'hosts', to: 'hosts#index', as: :hosts
   get 'hosts/new', to: 'hosts#new', as: :new_host
-
-  # ホストの作成アクション
-  post 'hosts', to: 'hosts#create', as: :create_host # ヘルパー名を hosts にしても衝突する可能性があるため
+  post 'hosts', to: 'hosts#create', as: :create_host
 
   # ホストプロフィール編集・更新ルート (host_id を使う)
   get ':host_id/edit_profile', to: 'hosts#edit', as: :edit_host_profile, constraints: { host_id: /[a-zA-Z0-9_-]+|\d+/ }
   patch ':host_id', to: 'hosts#update', as: :update_host_profile, constraints: { host_id: /[a-zA-Z0-9_-]+|\d+/ }
-  put ':host_id', to: 'hosts#update', constraints: { host_id: /[a-zA-Z0-9_-]+|\d+/ } # PATCHとPUT両方に対応するため
-
-  # ホストの削除アクション
+  put ':host_id', to: 'hosts#update', constraints: { host_id: /[a-zA-Z0-9_-]+|\d+/ }
   delete ':host_id', to: 'hosts#destroy', as: :destroy_host_profile, constraints: { host_id: /[a-zA-Z0-9_-]+|\d+/ }
 
-
   # ==============================
-  # ホストのネストされたイベント関連ルート (as: :host_profile は削除済み)
+  # ホストのネストされたイベント関連ルート
   # ==============================
   scope ':host_id', constraints: { host_id: /[a-zA-Z0-9_\-]+|\d+/ } do
     get 'events/new', to: 'hosts#new_event', as: :new_host_event
@@ -60,12 +95,10 @@ Rails.application.routes.draw do
     get 'events/:id', to: 'hosts#show_event', as: :host_event
   end
 
-
-
   # ==============================
   # セラー関連のルート
   # ==============================
-  resources :sellers, only: [:index, :show, :edit, :update] do # index を追加 (必要に応じて)
+  resources :sellers, only: [:index, :show, :edit, :update] do
     resources :events, only: [:new, :create]
   end
 
@@ -76,50 +109,17 @@ Rails.application.routes.draw do
   resource :facility, only: [:show, :new, :create, :edit, :update, :destroy], controller: 'facility'
 
   # ==============================
-  # 管理者関連のルート
-  # ==============================
-  get 'administrator', to: 'admin/users#index', as: :administrator_dashboard
-  namespace :admin do
-    resources :faqs, except: [:show]
-    resources :users
-    resources :notices
-
-    resources :sellers, controller: 'admin_sellers', only: [:index, :show, :edit, :update] do
-      patch :toggle_editable, on: :member
-      resources :comments, only: [:create], module: :sellers
-    end
-
-    resources :hosts, controller: 'admin_hosts', only: [:index, :show, :edit, :update, :destroy] do # destroy も追加
-      resources :comments, only: [:create], module: :hosts
-      patch :toggle_editable, on: :member
-    end
-
-    resources :events, only: [:index, :edit, :update, :destroy] do
-      collection do
-        post :featured
-      end
-    end
-
-    resources :users, only: [:index, :show, :edit, :update] do
-      resources :comments, only: [:create], module: :users
-    end
-
-    root to: "users#index"
-  end
-
-  # ==============================
   # その他アプリケーション固有のルート
   # ==============================
   get 'recruitment', to: 'home#recruitment', as: 'recruitment'
 
   # ==============================
-  # ★★★ 最重要: ホストのスラッグベースのプロフィールルート ★★★
+  # ★★★ 最重要: ホストのスラッグベースのプロフィールルート (最も汎用的なので最後に) ★★★
   # これが `/mimamoru-lab` のようなURLを処理します。
   # 他の固定パス（例: /about, /contact）との衝突を避けるため、
   # これらの固定パスより「後」に配置してください。
   # ==============================
   get ':id_or_slug', to: 'hosts#show', as: :public_host_profile, constraints: { id_or_slug: /[a-zA-Z0-9_\-]+|\d+/ }
-
 
   # アプリケーションのルート
   root "home#index"
