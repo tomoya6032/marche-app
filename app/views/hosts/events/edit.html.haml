@@ -106,4 +106,6 @@
   .actions
     = f.submit '更新'
 
-= link_to '戻る', events_path, class: 'operation-button'
+= link_to '戻る', public_host_profile_path(@host.slug.presence || @host.id), class: 'operation-button'
+
+= render 'footer/footer' # フッターのパーシャルを呼び出す
