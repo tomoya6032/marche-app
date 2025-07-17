@@ -12,6 +12,8 @@ class Admin::UsersController < Admin::BaseController
     @recent_notices = Notice.order(published_at: :desc).limit(10)
     @notices = Notice.order(published_at: :desc).limit(10) # 最新5件のお知らせを取得
     @faqs = Faq.all
+    @users = User.all.page(params[:page]).per(10) # usersのページネーションも確認
+    @recent_events = Event.where(is_featured: true).order(created_at: :desc).page(params[:recent_events_page]).per(5) # 例えば5件表示
     # 他のデータ取得処理...
   end
 
