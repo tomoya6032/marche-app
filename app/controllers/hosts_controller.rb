@@ -232,7 +232,7 @@ class HostsController < ApplicationController
     # `images`を削除したパラメーターと、構築した画像配列を使って更新
     # ここで `images: event_images_param` を直接渡します。
     if @event.update(event_params_without_images.merge(images: event_images_param))
-      redirect_to host_event_path(@host.slug, @event), notice: 'イベントが更新されました。'
+      redirect_to host_event_path(id_or_slug: @host.slug.presence || @host.id, id: @event.id), notice: 'イベントが更新されました。'
     else
       @prefectures = [ # 都道府県リストを再設定
         '北海道', '青森県', '岩手県', '宮城県', '秋田県', '山形県', '福島県',
