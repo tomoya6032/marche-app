@@ -31,6 +31,26 @@ class HostsController < ApplicationController
       return # ★★★ return を追加 ★★★
     end
 
+
+    # # OGP画像を設定
+    # @og_image = @host.images.attached? ? url_for(@host.images.first) : asset_url('marchelogo2.png')
+
+    # # OGPタグを設定
+    # set_meta_tags(
+    #   title: @host.name,
+    #   description: @host.description,
+    #   og: {
+    #     title: @host.name,
+    #     description: @host.description,
+    #     image: @og_image
+    #   },
+    #   twitter: {
+    #     card: "summary_large_image",
+    #     image: @og_image
+    #   }
+    # )
+  
+
     # --- ホスト本人（current_host）にのみ表示する情報 ---
     if host_signed_in? && @host == current_host
       @admin_comments = @host.comments.order(created_at: :desc) # 管理者からのコメント（本人用）
@@ -114,6 +134,9 @@ class HostsController < ApplicationController
 
     # そのホストに紐づくイベントを特定します
     @event = @host.events.find(params[:id])
+
+     # イベントの最初の画像を取得
+    @og_image = @event.images.attached? ? url_for(@event.images.first) : asset_url('marchelogo2.png')
 
     # ホストまたはイベントが見つからなかった場合の処理
     unless @host && @event
@@ -285,48 +308,20 @@ class HostsController < ApplicationController
     end
   end
 
-  # def combine_datetime_parts(event)
-  #   if params[:event][:start_time_year].present? &&
-  #      params[:event][:start_time_month].present? &&
-  #      params[:event][:start_time_day].present? &&
-  #      params[:event][:start_time_hour].present? &&
-  #      params[:event][:start_time_minute].present?
-  #     event.start_time = Time.zone.local(
-  #       params[:event][:start_time_year].to_i,
-  #       params[:event][:start_time_month].to_i,
-  #       params[:event][:start_time_day].to_i,
-  #       params[:event][:start_time_hour].to_i,
-  #       params[:event][:start_time_minute].to_i
-  #     )
-  #   end
 
-  #   if params[:event][:end_time_year].present? &&
-  #      params[:event][:end_time_month].present? &&
-  #      params[:event][:end_time_day].present? &&
-  #      params[:event][:end_time_hour].present? &&
-  #      params[:event][:end_time_minute].present?
-  #     event.end_time = Time.zone.local(
-  #       params[:event][:end_time_year].to_i,
-  #       params[:event][:end_time_month].to_i,
-  #       params[:event][:end_time_day].to_i,
-  #       params[:event][:end_time_hour].to_i,
-  #       params[:event][:end_time_minute].to_i
-  #     )
-  #   end
-  # end
+  
+  # ★★★ set_event_for_nested_actions メソッドの修正 ★★★
+  def set_event_for_nested_actions
+    # @host が set_host で既に設定されていることを前提とします。
+    # イベントIDは `params[:id]` で渡されます (resources :events の慣習)
+    @event = @host.events.find(params[:id]) 
+    rescue ActiveRecord::RecordNotFound
+    # イベントが見つからなかった場合のリダイレクト先
+    # 修正: host_path を public_host_profile_path に変更
+    redirect_to public_host_profile_path(id_or_slug: @host.slug.presence || @host.id), alert: "指定されたイベントは見つかりませんでした。"
+  end
 
-   # ★★★ set_event_for_nested_actions メソッドの修正 ★★★
-   def set_event_for_nested_actions
-     # @host が set_host で既に設定されていることを前提とします。
-     # イベントIDは `params[:id]` で渡されます (resources :events の慣習)
-     @event = @host.events.find(params[:id]) 
-     rescue ActiveRecord::RecordNotFound
-     # イベントが見つからなかった場合のリダイレクト先
-     # 修正: host_path を public_host_profile_path に変更
-     redirect_to public_host_profile_path(id_or_slug: @host.slug.presence || @host.id), alert: "指定されたイベントは見つかりませんでした。"
-   end
-
- # ★★★ ここを修正します: event_params メソッド (create_event 用) ★★★
+  # ★★★ ここを修正します: event_params メソッド (create_event 用) ★★★
   # このメソッドに日時結合のロジックを含めます
   def event_params
     # まず、日時コンポーネントを含まない基本的なパラメータを許可

@@ -3,6 +3,10 @@ class EventsController < ApplicationController
   before_action :set_event, only: [ :show, :edit, :update, :destroy ]
   before_action :set_prefectures, only: [ :index, :new, :edit, :create ]
 
+  include ActionController::Helpers
+  include ActionView::Helpers::AssetUrlHelper
+
+
   def index
     # 基本のイベント取得
     
@@ -34,7 +38,23 @@ class EventsController < ApplicationController
   end
 
   def show
-    
+    # イベントの最初の画像を取得
+    @og_image = @event.images.attached? ? url_for(@event.images.first) : asset_url('marchelogo2.png')
+
+    # OGPタグを設定
+    set_meta_tags(
+      title: @event.title,
+      description: @event.description,
+      og: {
+        title: @event.title,
+        description: @event.description,
+        image: @og_image
+      },
+      twitter: {
+        card: "summary_large_image",
+        image: @og_image
+      }
+    )
   end
 
   def new
@@ -182,6 +202,8 @@ class EventsController < ApplicationController
   def set_event
     @event = Event.find(params[:id])
   end
+
+ 
 
   def set_prefectures
     @prefectures = %w[

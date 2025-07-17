@@ -39,7 +39,7 @@ gem 'kaminari', '~> 1.2.2'
 
 # CSS・JSバンドラー
 
-
+gem 'meta-tags'
 gem 'devise'
 
 

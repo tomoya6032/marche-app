@@ -4,6 +4,8 @@ class ApplicationController < ActionController::Base
 
 # Devise のヘルパーメソッドを使用可能にする
   include Devise::Controllers::Helpers
+  include MetaTags::ControllerHelper
+  
   helper_method :seller_signed_in?, :host_signed_in?, :current_host
 
   def seller_signed_in?
