@@ -162,10 +162,10 @@
                   ショップ
                 - else
                   未設定
-              -# %td
-              -#   = link_to "編集", edit_admin_event_path(event), class: "admin-button"
         - else
           %tr
             %td{ colspan: 7 } 最近作成されたイベントはありません。
     .actions
       = form.submit "注目イベントを更新", class: "admin-button"
+
+  = paginate @recent_events

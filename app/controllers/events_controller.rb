@@ -9,32 +9,43 @@ class EventsController < ApplicationController
 
   def index
     # 基本のイベント取得
-    
-    @events = Event.includes(:host, :seller, images_attachments: :blob).order(created_at: :desc).limit(10)
-  # フィルタリング: 開催日の近い順
-  if params[:filter] == "recent"
-    @events = @events.order(:start_time)
-  end
+    @events = Event.includes(:host, :seller, images_attachments: :blob)
+    # フィルタリング: 開催日の近い順
+    if params[:filter] == "recent" && params[:sort].blank? # sortが指定されていない場合にのみ適用する例
+      @events = @events.order(:start_time)
+    end
 
-  # フィルタリング: 都道府県
-  if params[:prefecture].present?
-    @events = @events.where(venue: params[:prefecture])
-  end
+    # フィルタリング: 都道府県
+    if params[:prefecture].present?
+      @events = @events.where(venue: params[:prefecture])
+    end
 
-  # 並び替え処理
-  case params[:sort]
-  when "start_time_asc"
-    @events = @events.order(:start_time) # 開始日時の昇順
-  when "start_time_desc"
-    @events = @events.order(start_time: :desc) # 開始日時の降順
-  else
-    @events = @events.order(created_at: :desc) # デフォルトは作成日時の降順
-  end
+    # ★★★ 並び替え処理の修正：新しいソートオプションを追加 ★★★
+    case params[:sort]
+    when "start_time_asc"
+      @events = @events.order(Arel.sql('DATE(start_time) ASC, start_time ASC'))
+    when "start_time_desc"
+      @events = @events.order(Arel.sql('DATE(start_time) DESC, start_time DESC'))
+    when "upcoming_first" # ★追加：未開催イベント優先
+      # 未開催のイベントを先に、開催済みのイベントを後に表示し、それぞれ開始日時でソート
+      # 現在時刻を取得
+      now = Time.zone.now
 
+      # SQLのCASE文を使って条件付きソート
+      # CASE WHEN start_time >= '#{now.iso8601}' THEN 0 ELSE 1 END で未開催を0、開催済みを1に割り当てて、未開催が先に来るようにする
+      # その後、未開催イベントはstart_time昇順、開催済みイベントもstart_time昇順で並べる
+      @events = @events.order(
+        Arel.sql("CASE WHEN start_time >= '#{now.iso8601}' THEN 0 ELSE 1 END ASC"),
+        Arel.sql("start_time ASC")
+      )
+    when "created_at_desc", nil, ""
+      @events = @events.order(created_at: :desc)
+    else
+      @events = @events.order(created_at: :desc)
+    end
+
+    # ★★★ ページネーションを最後に適用 ★★★
     @events = @events.page(params[:page]).per(10)
-
-    # puts "params[:prefecture]: #{params[:prefecture]}"
-    # puts "params[:sort]: #{params[:sort]}"
   end
 
   def show
