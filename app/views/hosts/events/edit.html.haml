@@ -7,7 +7,7 @@
     - @event.errors.full_messages.each do |message|
       %li= message
 
-= form_with model: @event, url: update_host_event_path(@host.slug, @event.id), local: true, class: 'event-form', multipart: true do |f|
+= form_with model: @event, url: update_host_event_path(@host.slug.presence || @host.id, @event.id), local: true, class: 'event-form', multipart: true do |f|
   .field
     = f.label :title, 'タイトル'
     = f.text_field :title, value: @event.title
@@ -106,4 +106,6 @@
   .actions
     = f.submit '更新'
 
-= link_to '戻る', events_path, class: 'operation-button'
+= link_to '戻る', public_host_profile_path(@host.slug.presence || @host.id), class: 'operation-button'
+
+= render 'footer/footer' # フッターのパーシャルを呼び出す
