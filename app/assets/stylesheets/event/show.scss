@@ -264,7 +264,8 @@ img {
 }
 
 table.event-details {
-    width: 100%;
+    width: 92%;
+    margin: auto;
     border-collapse: collapse;
     margin-bottom: 20px;
 }
@@ -278,7 +279,7 @@ table.event-details td {
 }
   
 table.event-details th {
-  width: 20%;
+  width: 30%;
   font-weight: bold;
   background-color: #f2f2f2;
 }

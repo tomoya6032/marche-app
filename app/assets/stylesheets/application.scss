@@ -147,7 +147,7 @@ a:hover {
     font-size: 12px;
     width: 200px;
     img {
-      height: 100px; /* ロゴの高さを調整 */
+      height: 80px; /* ロゴの高さを調整 */
       margin-right: 20px; /* ロゴとテキストの間隔を調整 */
       border-radius: 14px;
     }
@@ -157,7 +157,7 @@ a:hover {
   display: flex;
   align-items: center;
   justify-content: space-between;
-  padding: 10px;
+  padding: 4px;
 }
 
 .header-logo {
@@ -226,8 +226,8 @@ a:hover {
 .button {
   display: inline-block;
   text-align: center;
-  margin: 6px;
-  padding: 4px;
+  margin: 2px;
+  padding: 2px;
  
   width: 120px;
   border: none;
@@ -1049,8 +1049,6 @@ nav ul li a {
 
 .sns-container {
     width: 40%;
-    // padding: 12px;
-    // margin: 10px;
     background-color: #fff8f0; /* 薄いベージュ */
     border-left: 1px solid #ccc; /* 左側に線を追加 */
 }
@@ -1089,7 +1087,7 @@ nav ul li a {
   background-color: #f1f0f0; /* カードの背景色 */
   border-radius: 8px; /* カードの角を丸くする */
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* カードに影をつける */
-  padding: 20px; /* 内側の余白 */
+  padding: 10px; /* 内側の余白 */
   margin: 10px; /* 外側の余白 */
   padding: auto;
   text-align: left;
@@ -1098,7 +1096,9 @@ nav ul li a {
   p {
     text-align: left;
     color: #ffffff;
-    padding: 4px;
+    padding: 0px;
+    margin-top: 4px;
+    margin-bottom: 4px;
     padding-left: 12px;
     background-color: $third-color;
     font-size: 12px;
@@ -1117,30 +1117,26 @@ nav ul li a {
   text-align: center;
   margin: 0 auto;
   border-radius: 5px; /* 画像の角を少し丸くする */
-  margin-bottom: 10px; /* 画像とテキストの間に余白を追加 */
+  margin-bottom: 5px; /* 画像とテキストの間に余白を追加 */
   object-fit: cover; /* 画像を親要素に収めつつ、縦横比を維持 */
 }
 
 .event-item h3 {
-  font-size: 18px;
+  font-size: 16px;
   color: #333;
-  margin-bottom: 10px;
+  margin-bottom: 5px;
+  margin-top: 0;
 }
 
 
 
 .event-no-img {
-  // display: flex;
   justify-content: center;
   align-items: center;
-  // background-color: #e0e0e0; /* デフォルト画像の背景色 */
   width: 100%;
   max-height: 200px;
   border-radius: 5px;
-  
   margin: 0 auto; /* 中央に配置 */
-  // margin-top: 20px;
-  
 }
 
 
@@ -1393,7 +1389,7 @@ nav ul li a {
   
 .event-card {
   width: 300px;
-  margin: 20px;
+  margin: 10px;
   padding: 8px;
   background-color: #fff8f0;
   // border: 1px solid #ddd;
@@ -1413,11 +1409,12 @@ nav ul li a {
 .event-no-image {
   max-width: 300px;
   height: 200px;
-  // background-color: #f2f2f2;
+  
   display: flex;
   justify-content: center;
   align-items: center;
   border-bottom: solid 1px #d3d5d3;
+  
 }
 
 
@@ -1431,10 +1428,11 @@ nav ul li a {
   p {
     text-align: left;
     color: #ffffff;
-    padding: 4px;
+    padding: 2px;
     padding-left: 12px;
-    width: 90%;
-    margin-top: 30px;
+    width: 100%;
+    margin-top: 4px;
+    margin-bottom: 4px;
     background-color: $third-color;
     font-size: 12px;
     border-radius: 8px;
@@ -1879,10 +1877,13 @@ table.account-comparison {
         margin-right: 10px;
       }
   
-      .header-left {
+      .header-left .link_inner {
         h1 {
           font-size: 22px; /* フォントサイズを調整 */
           // margin: 0; /* マージンをリセット */
+        }
+        img {
+          height: 60px;
         }
       }
       
@@ -2112,10 +2113,10 @@ table.account-comparison {
   
     .event-item {
       width: 80%; /* カードを画面幅に合わせる */
-      margin: auto; /* 中央揃え */
-      padding: 20px;
+      margin: 0 auto; /* 中央揃え */
+      padding: 10px;
       text-align: left; /* テキストを中央揃え */
-      margin-bottom: 30px;
+      margin-bottom: 10px;
     
     }
   
@@ -2575,7 +2576,7 @@ table.account-comparison {
         margin: 8px;
       }
       .event-image, .event-no-image {
-        margin: 14px;
+        margin: 10px;
         width: 90%;
         height: 200px; /* 画像の高さを固定 */
         img {

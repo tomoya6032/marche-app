@@ -42,8 +42,9 @@
               = link_to event_path(event) do
                 = image_tag event.images.first, alt: event.title, class: 'event-image'
             - else
-              .event-no-image
-                = image_tag "no_image_square.jpg", alt: "no image", class: 'event-no-image'
+              = link_to event_path(event) do
+                .event-no-image
+                  = image_tag "no_image_square.jpg", alt: "no image", class: 'event-no-image'
             %h3
               = link_to event.title, event_path(event)
             %p 開催日
