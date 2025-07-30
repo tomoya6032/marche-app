@@ -91,6 +91,37 @@
           %td{ colspan: 3 } 最近登録された個人会員はありません。
 
 %section.admin-section
+  %h2.admin-section-title ショップ会員情報
+  %p.admin-section-summary 合計ショップ会員数: #{@total_hosts}
+  %h3.admin-section-subtitle 最近登録されたショップ会員
+  %table.admin-table
+    %thead
+      %tr
+        %th 名前
+        %th メールアドレス
+        %th アカウント取得日
+        %th 無料期間終了日
+        %th 編集可能
+        %th コメント
+    %tbody
+      - if @recent_hosts.present?
+        - @recent_hosts.each do |host|
+          %tr
+            %td= host.name
+            %td= host.email
+            %td= host.created_at.strftime('%Y/%m/%d') if host.created_at
+            %td= (host.created_at + 21.days).strftime('%Y/%m/%d') if host.created_at
+            %td
+              = form_with url: toggle_editable_admin_host_path(host), method: :patch, local: true do |f|
+                = f.check_box :editable, checked: host.editable
+                = f.submit "更新", class: "admin-button"
+            %td
+              = link_to "コメント", edit_admin_host_path(host), class: "admin-button"
+      - else
+        %tr
+          %td{ colspan: 5 } 最近登録されたショップ会員はありません。
+
+%section.admin-section
   -# ここを「全イベント一覧」に修正
   %h2.admin-section-title 全イベント一覧
   %p.admin-section-summary 合計イベント数: #{@total_events}
@@ -139,11 +170,5 @@
       = form.submit "注目イベントを更新", class: "admin-button"
 
   -# ★★★ イベント一覧のページネーションをここに配置し、@all_events に変更 ★★★
-  %nav.pagination
-    = paginate @all_events, params: { event_page: params[:event_page] }
-    -# params: { event_page: params[:event_page] } を指定することで、
-    -# @users のページネーション（もしあれば）と競合しないようにします。
-
--# @users のページネーションが他のセクションにある場合、その下にも同様に記述
 %nav.pagination
-  = paginate @users, params: { page: params[:page] }
+  = paginate @all_events, param_name: :event_page
