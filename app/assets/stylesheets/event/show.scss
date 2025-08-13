@@ -17,7 +17,7 @@ body {
   line-height: 1.6;
   padding: 2rem;
   border-radius: 8px;
-  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+  // box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
 
   .seller-details { // Hamlの .seller-lp-page の直下にある
     // 必要に応じて、.seller-lp-page 内での .seller-details の個別の調整をここに記述
@@ -31,12 +31,12 @@ body {
 
       // ★★★ ホスト管理セクションのスタイル ★★★
       .seller-management-section { // Hamlの .seller-header の中にある
-        background-color: lighten($accent-color, 8%);
+        // background-color: lighten($accent-color, 8%);
         border: 1px solid #dc3545;
         border-radius: 8px;
         padding: 1.5rem;
         margin-bottom: 40px;
-        box-shadow: 0 2px 4px rgba(0, 0, 0, 0.08);
+        // box-shadow: 0 2px 4px rgba(0, 0, 0, 0.08);
         margin: auto;
         width: 90%;
         h2 {

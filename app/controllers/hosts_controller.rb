@@ -32,25 +32,6 @@ class HostsController < ApplicationController
     end
 
 
-    # # OGP画像を設定
-    # @og_image = @host.images.attached? ? url_for(@host.images.first) : asset_url('marchelogo2.png')
-
-    # # OGPタグを設定
-    # set_meta_tags(
-    #   title: @host.name,
-    #   description: @host.description,
-    #   og: {
-    #     title: @host.name,
-    #     description: @host.description,
-    #     image: @og_image
-    #   },
-    #   twitter: {
-    #     card: "summary_large_image",
-    #     image: @og_image
-    #   }
-    # )
-  
-
     # --- ホスト本人（current_host）にのみ表示する情報 ---
     if host_signed_in? && @host == current_host
       @admin_comments = @host.comments.order(created_at: :desc) # 管理者からのコメント（本人用）
@@ -136,7 +117,11 @@ class HostsController < ApplicationController
     @event = @host.events.find(params[:id])
 
      # イベントの最初の画像を取得
-    @og_image = @event.images.attached? ? url_for(@event.images.first) : asset_url('marchelogo2.png')
+    @og_image = if @event.images.attached?
+      url_for(@event.images.first)
+    else
+      view_context.asset_url('marchelogo2.png')
+    end
 
     # ホストまたはイベントが見つからなかった場合の処理
     unless @host && @event

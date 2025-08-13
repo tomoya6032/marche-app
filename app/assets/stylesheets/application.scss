@@ -1035,7 +1035,7 @@ nav ul li a {
 .section.news {
     width: 100%;
     text-align: center;
-    margin-top: 30px;
+    margin-top: 10px;
     margin-bottom: 30px;
     
 }
@@ -1051,6 +1051,12 @@ nav ul li a {
     width: 40%;
     background-color: #fff8f0; /* 薄いベージュ */
     border-left: 1px solid #ccc; /* 左側に線を追加 */
+    h3 {
+      text-align: center;
+      font-size: 24px;
+      font-weight: bold;
+      margin-bottom: 15px;
+    }
 }
 
 
@@ -1625,10 +1631,11 @@ nav ul li a {
 
 .column-section {
   .section.news {
-    margin-top: 20px;
-    padding: 30px;
+    margin-top: 10px;
+    padding: 10px;
 
     h3 {
+      margin-top: 0;
       font-size: 24px;
       font-weight: bold;
       margin-bottom: 15px;
@@ -1684,6 +1691,14 @@ nav ul li a {
 
     p {
       text-align: left;
+    }
+
+    .news-list-scroll {
+      border-radius: 8px;
+      border: 2px solid #ddd; // 枠線を追加
+      max-height: 480px; // お好みの高さに調整
+      overflow-y: auto;
+      padding-right: 8px; // スクロールバー分の余白
     }
   }
 }
@@ -2154,6 +2169,13 @@ table.account-comparison {
         margin: 20px auto; /* 中央揃え */
         background-color: #e1fbed; /* 薄いベージュ */
         border-left: none; /* 左側に線を追加 */
+
+        h3 {
+          text-align: center;
+          font-size: 24px;
+          font-weight: bold;
+          margin-bottom: 15px;
+        }
       }
     }
     .sns-inner {
@@ -2311,6 +2333,8 @@ table.account-comparison {
       }
 
       .seller-profile-info {
+          background-color: #fff;
+
         .text-muted {
           margin: 8px;
           margin-right: 10px;
@@ -2331,7 +2355,6 @@ table.account-comparison {
           min-width: 90px;
         }
         td {
-          
           font-size: 12px; /* フォントサイズを調整 */
           padding: 5px; /* セルのパディングを調整 */
         }

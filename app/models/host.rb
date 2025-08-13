@@ -81,19 +81,6 @@ class Host < ApplicationRecord
     slug.presence || id.to_s # slug があればそれを使う。なければデフォルトの id を使う
   end
 
-  # (必要に応じて) SNSアカウントの選択肢
-  # def sns_types_for_select
-  #   self.class.sns_types.keys.map { |k| [I18n.t("activerecord.attributes.host.sns_type.#{k}"), k] } # host 用の翻訳キーを使用
-  #   self.class.sns_types.keys.map { |k| [I18n.t("activerecord.attributes.host.sns_type.#{k}"), k] } # host 用の翻訳キーを使用
-  # end
-
-  # def image_url
-  # def image_urlnt?  image : "no_image_square.jpg" # デフォルトの画像ファイル名を指定
-  #   image.present? ? image : "no_image_square.jpg" # デフォルトの画像ファイル名を指定
-  # end
-  # (必要に応じて) SNSアカウントのバリデーション
-  # (必要に応じて) SNSアカウントのバリデーションpes_and_urls_length
-  # validate :sns_accounts_types_and_urls_length
   private
   
   def set_slug
@@ -115,16 +102,4 @@ class Host < ApplicationRecord
 
  
 
-
-
-
-  # (必要に応じて) SNSアカウントのバリデーションメソッド
-  # (必要に応じて) SNSアカウントのバリデーションメソッド_length
-  # def sns_accounts_types_and_urls_lengthsent? & sns_accounts_urls.present?
-  #   return unless sns_accounts_types.present? & sns_accounts_urls.present?
-  #   types = sns_accounts_types.split(',')
-  #   types = sns_accounts_types.split(',')
-  #   urls = sns_accounts_urls.split(',')
-  #   errors.add(:sns_accounts_urls, 'SNSアカウントの種類とURLの数が一致しません') unless types.length == urls.length
-  #   errors.add(:sns_accounts_urls, 'SNSアカウントの種類とURLの数が一致しません') unless types.length == urls.length
-  end
+end

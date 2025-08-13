@@ -65,34 +65,36 @@
   .column-section 
     .section.news
       %h3 NEWS
-      %ul
-        - if @notices.present?
-          - @notices.each do |notice|
-            %li
-              .news-contaier 
-                .news-contaier-date
-                  = notice.published_at.strftime('%Y/%m/%d') if notice.published_at
-                %strong= notice.title
-              -# %small 公開日時: 
-              
-              %p= truncate(notice.content, length: 100) # 内容を100文字に切り詰めて表示
-              
-        - else
-          %p お知らせはありません。
+      .news-list-scroll
+        %ul
+          - if @notices.present?
+            - @notices.each do |notice|
+              %li
+                .news-contaier 
+                  .news-contaier-date
+                    = notice.published_at.strftime('%Y/%m/%d') if notice.published_at
+                  %strong= notice.title
+                -# %small 公開日時: 
+                
+                %p= truncate(notice.content)
+                
+          - else
+            %p お知らせはありません。
         
     .sns-container
+      %h3 SNSセクション
       .sns-inner 
-        .h3 インスタグラムセクション
+        .h4 インスタグラムセクション
         -# = image_tag "/images/instagram_icon.png", alt: "公式アカウントロゴ"
         %img(src="#{asset_path('instagram_icon.png')}" alt="公式アカウントロゴ")
       
       .sns-inner
-        .h3 エックスセクション
+        .h4 エックスセクション
         -# = image_tag "/images/",lt: "公式アカウントロゴ"
         %img(src="#{asset_path('twitter.png')}" alt="公式アカウントロゴ")
         
       .sns-inner 
-        .h3 フェイスブックセクション
+        .h4 フェイスブックセクション
         -# = image_tag "/images/mimamorifavicon.png", alt: "公式アカウントロゴ"
         %img(src="#{asset_path('Facebook_Logo_Primary.png')}" alt="公式アカウントロゴ")
     

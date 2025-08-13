@@ -88,7 +88,6 @@
       %td= @event.is_online ? 'オンライン開催あり' : 'オンライン開催なし'
     %tr
       %th オンラインURL
-      -# %td= @event.online_url
       %td= link_to @event.online_url, @event.online_url, target: "_blank" if @event&.online_url
     %tr
       %th 有料イベント
@@ -96,6 +95,9 @@
     %tr
       %th 参加費
       %td= @event.price
+    %tr
+      %th 主催者
+      %td= @event.organizer.presence || '未設定'
     %tr
       %th 連絡先
       %td= @event.contact_info

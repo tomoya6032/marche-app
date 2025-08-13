@@ -37,14 +37,14 @@
   %table.event-details
     %tr
       %th.organizer-label 
-        主催者
+        出店者
       %td
         - if @event&.seller.present?
           = link_to @event.seller.name, seller_path(@event.seller)
         - elsif @event&.host.present?
           = link_to @event.host.name, public_host_profile_path(@event.host.slug.presence || @event.host.id)
         - else
-          主催者 未設定
+          出店者 未設定
     %tr
       %th 説明
       %td= simple_format(@event.description)
@@ -75,6 +75,9 @@
     %tr
       %th 参加費
       %td= @event.price
+    %tr
+      %th 主催者
+      %td= @event.organizer.presence || '未設定'
     %tr
       %th 連絡先
       %td= @event.contact_info
