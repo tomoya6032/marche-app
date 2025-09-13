@@ -76,7 +76,7 @@
                   %strong= notice.title
                 -# %small 公開日時: 
                 
-                %p= truncate(notice.content)
+                %p= simple_format(notice.content)
                 
           - else
             %p お知らせはありません。

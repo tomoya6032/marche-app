@@ -11,8 +11,11 @@ class EventsController < ApplicationController
     # 基本のイベント取得
     @events = Event.includes(:host, :seller, images_attachments: :blob)
     # フィルタリング: 開催日の近い順
-    if params[:filter] == "recent" && params[:sort].blank? # sortが指定されていない場合にのみ適用する例
-      @events = @events.order(:start_time)
+    if params[:filter] == "recent"
+      now = Time.zone.now
+      @events = @events.where('start_time >= ?', now)
+                      .order(start_time: :asc)
+      # sortパラメータがある場合は後で上書きされる
     end
 
     # フィルタリング: 都道府県
@@ -26,18 +29,17 @@ class EventsController < ApplicationController
       @events = @events.order(Arel.sql('DATE(start_time) ASC, start_time ASC'))
     when "start_time_desc"
       @events = @events.order(Arel.sql('DATE(start_time) DESC, start_time DESC'))
-    when "upcoming_first" # ★追加：未開催イベント優先
-      # 未開催のイベントを先に、開催済みのイベントを後に表示し、それぞれ開始日時でソート
-      # 現在時刻を取得
+    when "upcoming_first" # ★修正：未開催かつ開催日が近い順
       now = Time.zone.now
-
-      # SQLのCASE文を使って条件付きソート
-      # CASE WHEN start_time >= '#{now.iso8601}' THEN 0 ELSE 1 END で未開催を0、開催済みを1に割り当てて、未開催が先に来るようにする
-      # その後、未開催イベントはstart_time昇順、開催済みイベントもstart_time昇順で並べる
-      @events = @events.order(
-        Arel.sql("CASE WHEN start_time >= '#{now.iso8601}' THEN 0 ELSE 1 END ASC"),
-        Arel.sql("start_time ASC")
-      )
+      # 1. 未開催のイベントのみ取得
+      # 2. 開催日が近い順（昇順）で並べる
+      @events = @events.where('start_time >= ?', now)
+                      .order(start_time: :asc)
+    when "recent" # ★追加：開催日が近い順（未開催のみ）
+      now = Time.zone.now
+      # 未開催のイベントを開催日が近い順で表示
+      @events = @events.where('start_time >= ?', now)
+                      .order(start_time: :asc)
     when "created_at_desc", nil, ""
       @events = @events.order(created_at: :desc)
     else

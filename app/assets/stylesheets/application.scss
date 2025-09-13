@@ -2074,16 +2074,10 @@ table.account-comparison {
     }
     
     .top-container-message {
-      // width: 60%;            /* SPでは幅を100%にする */
-      // padding: 10px; 
-      // text-align: right;         /* SPでのパディング調整 */
+     
       margin-left: 0;  
       height: 380px;       /* SPでは左マージンをリセット */
-      // font-size: 24px;        /* SPでのフォントサイズ調整 */
-      // padding-right: 20px;    /* SPでのパディング調整 */
-      // .sp-hide {
-      //   display: none;
-      // }
+     
       h1 {
         width: 100%;
         text-align: left;
@@ -2096,9 +2090,7 @@ table.account-comparison {
         font-size: 14px;      /* SPでのパラグラフフォントサイズ調整 */
       }
     }
-    .link_inner {
-      
-    }
+    
     
   
   
