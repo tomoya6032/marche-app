@@ -82,7 +82,9 @@ class EventsController < ApplicationController
 
   def create
     set_prefectures
-    @event = current_seller.events.build(event_params)
+    # 日時フィールドを除外したパラメータでイベントを作成
+    safe_params = event_params.except(:start_time_year, :start_time_month, :start_time_day, :start_time_hour, :start_time_minute, :end_time_year, :end_time_month, :end_time_day, :end_time_hour, :end_time_minute)
+    @event = current_seller.events.build(safe_params)
     combine_datetime_parts(@event) # 開始日時と終了日時を結合
 
     # SolidQueueJobの使用箇所を確認
