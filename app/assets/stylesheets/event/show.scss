@@ -270,22 +270,40 @@ img {
     margin-bottom: 20px;
 }
   
+table.event-details {
+  width: 100%;
+  border-collapse: collapse;
+  margin: 20px 0;
+  background-color: #fff;
+  border: 1px solid #ddd;
+  border-radius: 8px;
+  overflow: hidden;
+}
+
 table.event-details th,
 table.event-details td {
   border: 1px solid #ddd;
-  padding: 8px;
+  padding: 12px;
   text-align: left;
-
+  vertical-align: top;
 }
   
 table.event-details th {
   width: 30%; // スマホ画面のデフォルト（3:7）
   font-weight: bold;
   background-color: #f2f2f2;
+  white-space: nowrap; // 項目名の改行を防ぐ
   
   // PC画面では2:8の比率に変更
   @media (min-width: 768px) {
     width: 20%;
+  }
+}
+
+table.event-details td {
+  // PC画面では8割の幅を確保
+  @media (min-width: 768px) {
+    width: 80%;
   }
 }
 
