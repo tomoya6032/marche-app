@@ -272,38 +272,77 @@ img {
   
 table.event-details {
   width: 100%;
-  border-collapse: collapse;
+  max-width: 100%; // 画面幅を超えないように制限
+  border-collapse: separate; // 外側の枠線を確実に表示するためseparateに変更
+  border-spacing: 0; // セル間のスペースは0に
   margin: 20px 0;
   background-color: #fff;
   border: 1px solid #ddd;
   border-radius: 8px;
   overflow: hidden;
+  
+  // SP画面専用の設定
+  @media (max-width: 767px) {
+    margin: 10px 0;
+    font-size: 14px; // SP画面では文字サイズを小さく
+    table-layout: fixed; // 固定レイアウトで確実に比率を維持
+  }
+  
+  // PC画面での設定
+  @media (min-width: 768px) {
+    font-size: 16px;
+  }
 }
 
 table.event-details th,
 table.event-details td {
   border: 1px solid #ddd;
-  padding: 12px;
   text-align: left;
   vertical-align: top;
+  word-wrap: break-word; // 長い文字列を改行
+  
+  // SP画面でのパディング調整
+  @media (max-width: 767px) {
+    padding: 8px 6px; // SP画面では小さめのパディング
+  }
+  
+  // PC画面でのパディング
+  @media (min-width: 768px) {
+    padding: 12px;
+  }
 }
   
 table.event-details th {
-  width: 30%; // スマホ画面のデフォルト（3:7）
   font-weight: bold;
   background-color: #f2f2f2;
-  white-space: nowrap; // 項目名の改行を防ぐ
   
-  // PC画面では2:8の比率に変更
+  // SP画面での設定（3:7の比率を明確に）
+  @media (max-width: 767px) {
+    width: 30%; // 3割
+    min-width: 30%; // 最小幅も3割で固定
+    max-width: 30%; // 最大幅も3割で固定
+    white-space: normal; // SP画面では改行を許可
+    font-size: 13px; // SP画面では項目名を少し小さく
+  }
+  
+  // PC画面での設定（2:8の比率）
   @media (min-width: 768px) {
-    width: 20%;
+    width: 20%; // 2割
+    white-space: nowrap; // PC画面では改行を防ぐ
   }
 }
 
 table.event-details td {
-  // PC画面では8割の幅を確保
+  // SP画面での設定（3:7の比率を明確に）
+  @media (max-width: 767px) {
+    width: 70%; // 7割
+    min-width: 70%; // 最小幅も7割で固定
+    max-width: 70%; // 最大幅も7割で固定
+  }
+  
+  // PC画面での設定（2:8の比率）
   @media (min-width: 768px) {
-    width: 80%;
+    width: 80%; // 8割
   }
 }
 
