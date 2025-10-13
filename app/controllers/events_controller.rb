@@ -13,7 +13,7 @@ class EventsController < ApplicationController
     # フィルタリング: 開催日の近い順
     if params[:filter] == "recent"
       now = Time.zone.now
-      @events = @events.where('start_time >= ?', now)
+      @events = @events.where("start_time >= ?", now)
                       .order(start_time: :asc)
       # sortパラメータがある場合は後で上書きされる
     end
@@ -26,19 +26,19 @@ class EventsController < ApplicationController
     # ★★★ 並び替え処理の修正：新しいソートオプションを追加 ★★★
     case params[:sort]
     when "start_time_asc"
-      @events = @events.order(Arel.sql('DATE(start_time) ASC, start_time ASC'))
+      @events = @events.order(Arel.sql("DATE(start_time) ASC, start_time ASC"))
     when "start_time_desc"
-      @events = @events.order(Arel.sql('DATE(start_time) DESC, start_time DESC'))
+      @events = @events.order(Arel.sql("DATE(start_time) DESC, start_time DESC"))
     when "upcoming_first" # ★修正：未開催かつ開催日が近い順
       now = Time.zone.now
       # 1. 未開催のイベントのみ取得
       # 2. 開催日が近い順（昇順）で並べる
-      @events = @events.where('start_time >= ?', now)
+      @events = @events.where("start_time >= ?", now)
                       .order(start_time: :asc)
     when "recent" # ★追加：開催日が近い順（未開催のみ）
       now = Time.zone.now
       # 未開催のイベントを開催日が近い順で表示
-      @events = @events.where('start_time >= ?', now)
+      @events = @events.where("start_time >= ?", now)
                       .order(start_time: :asc)
     when "created_at_desc", nil, ""
       @events = @events.order(created_at: :desc)
@@ -51,8 +51,13 @@ class EventsController < ApplicationController
   end
 
   def show
-    # イベントの最初の画像を取得
-    @og_image = @event.images.attached? ? url_for(@event.images.first) : asset_url('marchelogo2.png')
+    # 閲覧数を記録（同じIPアドレスからは1日1回のみ）
+    EventView.record_view!(@event, request.remote_ip)
+
+    # イベントの最初の画像を取得（N+1対策済みのincludesを活用）
+    @og_image = @event.images.attached? && @event.images.any? ?
+                url_for(@event.images.first) :
+                asset_url("marchelogo2.png")
 
     # OGPタグを設定
     set_meta_tags(
@@ -105,41 +110,55 @@ class EventsController < ApplicationController
   def update
     set_prefectures
     if @event.seller == current_seller
-      combine_datetime_parts(@event) # 開始日時と終了日時を結合
+      begin
+        combine_datetime_parts(@event) # 開始日時と終了日時を結合
 
-      # 削除対象の画像を処理
-      if params[:event][:remove_images].present?
-        params[:event][:remove_images].each do |signed_id|
-          image = ActiveStorage::Blob.find_signed(signed_id)
-          @event.images.find_by(blob_id: image.id)&.purge if image
-        end
-      end
+        # トランザクション内で安全に画像を管理
+        ActiveRecord::Base.transaction do
+          # まず他のフィールドを更新（画像以外）
+          safe_params = event_params.except(:images, :keep_images, :remove_images)
+          raise ActiveRecord::Rollback unless @event.update!(safe_params)
 
-      if @event.update(event_params)
-        # 既存の画像を保持
-        if params[:event][:keep_images].present?
-          params[:event][:keep_images].each do |signed_id|
-            image = ActiveStorage::Blob.find_signed(signed_id)
-            unless @event.images.map(&:blob_id).include?(image.id) # 重複を防ぐ
-              @event.images.attach(image) if image
+          # 画像の削除処理：keep_imagesにないものを削除
+          if @event.images.attached? && params.dig(:event, :keep_images).present?
+            kept_signed_ids = params[:event][:keep_images]
+
+            @event.images.each do |attachment|
+              begin
+                # チェックされていない（保持リストにない）画像を削除
+                unless kept_signed_ids.include?(attachment.signed_id)
+                  attachment.purge_later
+                end
+              rescue => e
+                Rails.logger.error "画像削除エラー: #{e.message}"
+                # 個別の画像削除エラーは無視して処理継続
+              end
             end
           end
         end
 
-        # 新しい画像がアップロードされた場合のみ追加
-        if params[:event][:images].present?
-          valid_images = params[:event][:images].reject(&:blank?) # 空のファイルフィールドを除外
+        # 新しい画像の追加処理
+        if params.dig(:event, :images).present?
+          valid_images = params[:event][:images].reject(&:blank?)
           valid_images.each do |image|
-            unless @event.images.map(&:filename).include?(image.original_filename) # 重複を防ぐ
-              @event.images.attach(image)
+            begin
+              # 重複チェックしてから追加
+              existing_filenames = @event.images.map { |img| img.blob&.filename&.to_s }.compact
+              unless existing_filenames.include?(image.original_filename)
+                @event.images.attach(image)
+              end
+            rescue => e
+              Rails.logger.error "画像追加エラー: #{e.message}"
+              # 個別の画像追加エラーは無視
             end
           end
         end
 
         flash[:notice] = "イベントが更新されました"
         redirect_to @event
-      else
-        flash[:alert] = @event.errors.full_messages.join(", ")
+      rescue => e
+        Rails.logger.error "イベント更新エラー: #{e.message}"
+        flash[:alert] = "更新中にエラーが発生しました。もう一度お試しください。"
         render :edit
       end
     else
@@ -208,15 +227,18 @@ class EventsController < ApplicationController
     params.require(:event).permit(
       :title, :description, :venue, :address, :latitude, :longitude,
       :capacity, :is_online, :online_url, :is_free, :price, :organizer,
-      :contact_info, :business_hours_days, :website, :status, :video, :category_id, images: [], remove_images: []
+      :contact_info, :business_hours_days, :website, :status, :video, :category_id,
+      :start_time_year, :start_time_month, :start_time_day, :start_time_hour, :start_time_minute,
+      :end_time_year, :end_time_month, :end_time_day, :end_time_hour, :end_time_minute,
+      images: [], remove_images: [], keep_images: []
     )
   end
 
   def set_event
-    @event = Event.find(params[:id])
+    @event = Event.includes(:host, :seller, images_attachments: :blob).find(params[:id])
   end
 
- 
+
 
   def set_prefectures
     @prefectures = %w[

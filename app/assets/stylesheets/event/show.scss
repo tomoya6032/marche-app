@@ -279,9 +279,14 @@ table.event-details td {
 }
   
 table.event-details th {
-  width: 30%;
+  width: 30%; // スマホ画面のデフォルト（3:7）
   font-weight: bold;
   background-color: #f2f2f2;
+  
+  // PC画面では2:8の比率に変更
+  @media (min-width: 768px) {
+    width: 20%;
+  }
 }
 
 .edit-links {

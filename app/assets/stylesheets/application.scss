@@ -2630,12 +2630,258 @@ table.account-comparison {
     
     }
 
+}
 
-    
+// 人気イベントランキングのスタイル
+.popular-events-container {
+  background-color: $background-light;
+  border-radius: 8px;
+  padding: 20px;
+  margin-bottom: 20px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
 
+  h3 {
+    color: $primary-pink;
+    font-size: 1.2em;
+    margin-bottom: 15px;
+    text-align: center;
+    border-bottom: 2px solid $primary-pink;
+    padding-bottom: 8px;
+  }
 
+  .popular-events-list {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+    gap: 20px;
+    justify-items: center;
+  }
 
+  .popular-event-item {
+    display: flex;
+    flex-direction: column;
+    width: 230px;
+    background-color: #f1f0f0;
+    border-radius: 8px;
+    border-top: 6px solid transparent;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    padding: 15px;
+    margin: 10px;
+    text-align: center;
+    font-size: 14px;
+    transition: transform 0.2s ease, box-shadow 0.2s ease;
+    position: relative;
 
+    &.rank-1 {
+      border-top-color: #FFD700; // ゴールド
+      background-color: #FFFBF0;
+      
+      .rank-badge {
+        background: linear-gradient(135deg, #FFD700, #FFA500);
+        color: #8B4513;
+        
+        &::before {
+          content: "👑";
+          margin-right: 4px;
+        }
+      }
+    }
 
+    &.rank-2 {
+      border-top-color: #C0C0C0; // シルバー
+      background-color: #F8F8FF;
+      
+      .rank-badge {
+        background: linear-gradient(135deg, #C0C0C0, #A9A9A9);
+        color: #2F4F4F;
+        
+        &::before {
+          content: "🥈";
+          margin-right: 4px;
+        }
+      }
+    }
+
+    &.rank-3 {
+      border-top-color: #CD7F32; // ブロンズ
+      background-color: #FFF8DC;
+      
+      .rank-badge {
+        background: linear-gradient(135deg, #CD7F32, #A0522D);
+        color: white;
+        
+        &::before {
+          content: "🥉";
+          margin-right: 4px;
+        }
+      }
+    }
+
+    &:hover {
+      transform: translateY(-5px);
+      box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
+    }
+
+    .rank-badge {
+      position: absolute;
+      top: -3px;
+      right: 15px;
+      padding: 8px 16px;
+      border-radius: 0 0 12px 12px;
+      font-size: 1.1em;
+      font-weight: bold;
+      text-align: center;
+      min-width: 60px;
+      box-shadow: 0 2px 6px rgba(0, 0, 0, 0.2);
+    }
+
+    .event-content {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      text-align: center;
+      gap: 15px;
+      padding-top: 10px;
+    }
+
+    .event-image-container {
+      width: 100%;
+      margin-bottom: 10px;
+      
+      a {
+        display: block;
+        width: 100%;
+      }
+
+      .popular-event-image {
+        width: 100%;
+        height: 150px;
+        object-fit: cover;
+        border-radius: 5px;
+        margin-bottom: 5px;
+        transition: transform 0.3s ease;
+        
+        &:hover {
+          transform: scale(1.02);
+        }
+      }
+    }
+
+    .event-info {
+      width: 100%;
+      text-align: left;
+
+      .event-title-link {
+        color: #333;
+        text-decoration: none;
+        font-weight: bold;
+        font-size: 16px;
+        line-height: 1.4;
+        display: block;
+        margin-bottom: 8px;
+        margin-top: 0;
+        
+        &:hover {
+          color: $primary-pink;
+        }
+      }
+
+      .event-prefecture, .event-date, .views-count {
+        font-size: 12px;
+        color: #ffffff;
+        padding: 3px 8px;
+        margin: 4px 0;
+        border-radius: 8px;
+        background-color: $third-color;
+        text-align: left;
+        padding-left: 12px;
+        display: block;
+      }
+
+      .event-prefecture {
+        background-color: $primary-pink;
+        font-weight: 500;
+      }
+
+      .views-count {
+        background-color: $secondary-teal;
+        font-weight: 500;
+      }
+    }
+  }
+
+  .no-popular-events {
+    text-align: center;
+    padding: 30px 20px;
+    color: $text-light;
+
+    p {
+      margin: 8px 0;
+      line-height: 1.5;
+    }
+  }
+}
+
+// レスポンシブ対応
+@media (max-width: 768px) {
+  .popular-events-container {
+    padding: 15px;
+
+    .popular-events-list {
+      grid-template-columns: 1fr;
+      gap: 15px;
+    }
+
+    .popular-event-item {
+      padding: 15px;
+
+      .rank-badge {
+        font-size: 1em;
+        padding: 6px 12px;
+        min-width: 50px;
+      }
+
+      .event-image-container {
+        max-width: 150px;
+
+        .popular-event-image {
+          height: 120px;
+        }
+      }
+
+      .event-info {
+        .event-title-link {
+          font-size: 1em;
+        }
+
+        .event-prefecture, .event-date, .views-count {
+          font-size: 0.85em;
+        }
+      }
+    }
+  }
+}
+
+@media (max-width: 480px) {
+  .popular-events-container {
+    .popular-event-item {
+      .event-image-container {
+        max-width: 120px;
+
+        .popular-event-image {
+          height: 100px;
+        }
+      }
+
+      .event-info {
+        .event-title-link {
+          font-size: 0.95em;
+        }
+
+        .event-prefecture, .event-date, .views-count {
+          font-size: 0.8em;
+        }
+      }
+    }
+  }
 }
 

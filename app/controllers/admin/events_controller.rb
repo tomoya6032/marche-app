@@ -1,15 +1,15 @@
 # app/controllers/admin/events_controller.rb
 module Admin
   class EventsController < ApplicationController
-    before_action :set_event, only: [:show, :edit, :update, :destroy]
+    before_action :set_event, only: [ :show, :edit, :update, :destroy ]
 
     def index
-      # @events は Admin::UsersController#index で @all_events として扱われるため、
-      # ここでの @events や @recent_events の定義は、
-      # もし Admin::EventsController#index が独立して使われる場合にのみ必要です。
-      # 現状のダッシュボード統合の文脈では、Admin::UsersController#index がメインなので、
-      # このコントローラーの index アクションはあまり使われないかもしれません。
       @events = Event.all.page(params[:page]).per(10) # 全イベントをページネーション
+
+      # 人気イベント統計も表示
+      @popular_events_this_week = Event.popular_this_week(5)
+      @total_views_this_week = EventView.where(viewed_at: 1.week.ago..Time.current).count
+      @total_views_today = EventView.where(viewed_at: Date.current.beginning_of_day..Date.current.end_of_day).count
     end
 
     def show
@@ -54,7 +54,7 @@ module Admin
           event = Event.find_by(id: event_id)
           if event
             # チェックボックスの値 "true" / "false" をブーリアンに変換
-            new_is_featured = (attributes[:is_featured] == 'true')
+            new_is_featured = (attributes[:is_featured] == "true")
             # 変更がある場合のみ更新してDBアクセスを減らす
             event.update(is_featured: new_is_featured) unless event.is_featured == new_is_featured
           end

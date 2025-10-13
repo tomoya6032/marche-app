@@ -1,6 +1,7 @@
 class Event < ApplicationRecord
   has_many_attached :images, dependent: :purge_later
-  
+  has_many :event_views, dependent: :destroy
+
   belongs_to :seller, optional: true # セラーとの関連
   belongs_to :host, optional: true   # ホストとの関連
 
@@ -10,6 +11,39 @@ class Event < ApplicationRecord
   validates :description, presence: true
   paginates_per 5 # デフォルトで1ページに5件表示
   scope :featured, -> { where(is_featured: true) }
+
+  # 直近1週間で閲覧数の多いイベントを取得（画像のみpreload）
+  scope :popular_this_week, ->(limit = 3) {
+    joins(:event_views)
+      .includes(images_attachments: :blob)
+      .where(event_views: { viewed_at: 1.week.ago..Time.current })
+      .group("events.id")
+      .select("events.*, COUNT(event_views.id) as views_count_this_week")
+      .order("COUNT(event_views.id) DESC")
+      .limit(limit)
+  }
+
+  # キャッシュ機能付きの人気イベント取得
+  def self.cached_popular_this_week(limit = 3)
+    Rails.cache.fetch("popular_events_week_#{Date.current}", expires_in: 10.minutes) do
+      popular_this_week(limit).to_a
+    end
+  end
+
+  # 直近1週間の閲覧数を取得（scope結果を優先）
+  def views_count_this_week
+    # scope結果にviews_count_this_week属性がある場合はそれを使用
+    if respond_to?(:read_attribute) && has_attribute?(:views_count_this_week)
+      read_attribute(:views_count_this_week)
+    else
+      event_views.where(viewed_at: 1.week.ago..Time.current).count
+    end
+  end
+
+  # 総閲覧数を取得
+  def total_views_count
+    event_views.count
+  end
 
   private
 
@@ -40,5 +74,4 @@ class Event < ApplicationRecord
   def image_url
     images.attached? ? Rails.application.routes.url_helpers.rails_blob_url(images.first, only_path: true) : nil
   end
-
 end

@@ -1,8 +1,7 @@
 %body
-  = render 'header/header' # ヘッダーのパーシャルを呼び出す
-    
+  = render "header/header"
+
   .top-container
-    
     .top-container-message
       %img{ src: asset_path("top-page-image2.png"), alt: "Top Page Image", class: "top-image" }
       %h1 ようこそマルシェへ
@@ -10,27 +9,25 @@
       %p イベントを通じて、楽しいお出かけと思い出を作りませんか？
       %p 楽しい出会いを見つけにいこう！
 
-
     .top-btn-container
       .event-container 
         .event-btn
-          = link_to events_path, class: 'btn-primary' do
+          = link_to events_path, class: "btn-primary" do
             .link_inner
               %h3 イベント一覧
 
       .facility-container 
         .facility-btn
-          = link_to facilities_path, class: 'btn-secondary' do
+          = link_to facilities_path, class: "btn-secondary" do
             .link_inner
               %h3 出店一覧
 
       .upcoming-events-container
         .upcoming-events-button
-          = link_to events_path(filter: 'recent'), class: 'btn-secondary' do
+          = link_to events_path(filter: "recent"), class: "btn-secondary" do
             .link_inner
               %h3 開催間近の<br>イベント
 
-  
   .pickup-contaner
     %h2 注目イベントピックアップ
   .pickup-top
@@ -38,18 +35,18 @@
       - if @featured_events.present?
         - @featured_events.each do |event|
           .event-item
-            - if event.images.present? && event.images.attached?
+            - if event.images.attached? && event.images.any?
               = link_to event_path(event) do
-                = image_tag event.images.first, alt: event.title, class: 'event-image'
+                = image_tag event.images.first, alt: event.title, class: "event-image"
             - else
               = link_to event_path(event) do
                 .event-no-image
-                  = image_tag "no_image_square.jpg", alt: "no image", class: 'event-no-image'
+                  = image_tag "no_image_square.jpg", alt: "no image", class: "event-no-image"
             %h3
               = link_to event.title, event_path(event)
             %p 開催日
             - if event.start_time.present?
-              = event.start_time.strftime('%Y/%m/%d')
+              = event.start_time.strftime("%Y/%m/%d")
             - else
               未定
             %p 詳細
@@ -59,7 +56,6 @@
 
     = paginate @featured_events
 
-   
   .news-section
     %h2 お知らせ   
   .column-section 
@@ -72,32 +68,50 @@
               %li
                 .news-contaier 
                   .news-contaier-date
-                    = notice.published_at.strftime('%Y/%m/%d') if notice.published_at
+                    = notice.published_at.strftime("%Y/%m/%d") if notice.published_at
                   %strong= notice.title
-                -# %small 公開日時: 
-                
                 %p= simple_format(notice.content)
-                
           - else
             %p お知らせはありません。
         
-    .sns-container
-      %h3 SNSセクション
-      .sns-inner 
-        .h4 インスタグラムセクション
-        -# = image_tag "/images/instagram_icon.png", alt: "公式アカウントロゴ"
-        %img(src="#{asset_path('instagram_icon.png')}" alt="公式アカウントロゴ")
-      
-      .sns-inner
-        .h4 エックスセクション
-        -# = image_tag "/images/",lt: "公式アカウントロゴ"
-        %img(src="#{asset_path('twitter.png')}" alt="公式アカウントロゴ")
-        
-      .sns-inner 
-        .h4 フェイスブックセクション
-        -# = image_tag "/images/mimamorifavicon.png", alt: "公式アカウントロゴ"
-        %img(src="#{asset_path('Facebook_Logo_Primary.png')}" alt="公式アカウントロゴ")
-    
+    .popular-events-container
+      %h3 今週の人気イベントランキング
+      .popular-events-list
+        - if @popular_events.present?
+          - @popular_events.each_with_index do |event, index|
+            .popular-event-item{ class: "rank-#{index + 1}" }
+              .rank-badge
+                = "第#{index + 1}位"
+              .event-content
+                .event-image-container
+                  - if event.images.attached? && event.images.any?
+                    = link_to event_path(event) do
+                      = image_tag event.images.first, alt: event.title, class: "popular-event-image"
+                  - else
+                    = link_to event_path(event) do
+                      = image_tag "no_image_square.jpg", alt: "no image", class: "popular-event-image"
+                .event-info
+                  = link_to event.title, event_path(event), class: "event-title-link"
+                  %p.event-prefecture
+                    📍 開催地：
+                    - if event.prefecture.present?
+                      = event.prefecture
+                    - else
+                      未定
+                  %p.event-date
+                    📅 開催日：
+                    - if event.start_time.present?
+                      = event.start_time.strftime("%Y/%m/%d")
+                    - else
+                      未定
+                  %p.views-count
+                    🔍 今週の閲覧数：
+                    = event.try(:[], 'views_count_this_week') || event.attributes['views_count_this_week'] || 0
+                    回
+        - else
+          .no-popular-events
+            %p 今週はまだ人気イベントがありません。
+            %p イベントをチェックして、人気ランキングを作り上げましょう！
 
   .section.events
     %h2 近日開催のイベント
@@ -105,17 +119,17 @@
       - if @recent_events.present?
         - @recent_events.each do |event|
           .event-item
-            - if event.images.present? && event.images.attached?
+            - if event.images.attached? && event.images.any?
               = link_to event_path(event) do
-                = image_tag event.images.first, alt: event.title, class: 'event-image'
+                = image_tag event.images.first, alt: event.title, class: "event-image"
             - else
               .event-no-image
-                = image_tag "no_image_square.jpg", alt: "no image", class: 'event-no-image'
+                = image_tag "no_image_square.jpg", alt: "no image", class: "event-no-image"
             %h3
               = link_to event.title, event_path(event)
             %p 開催日
             - if event.start_time.present?
-              = event.start_time.strftime('%Y/%m/%d')
+              = event.start_time.strftime("%Y/%m/%d")
             - else
               未定
             %p 詳細
@@ -132,7 +146,6 @@
           出店者募集要項へ
     .recruitment-image
       = image_tag "slider1.png", alt: "出店者募集のイメージ", class: "recruitment-image"
-      
 
   .section.description
     %h2 つながるマルシェについて
@@ -143,7 +156,4 @@
       %p このマルシェに掲載されているお店に出かけてみましょう。
       楽しいイベントが開催されています。きっと新しい発見が見つかるはずです。
 
-  = render 'footer/footer'
-  
-  
-
+  = render "footer/footer"

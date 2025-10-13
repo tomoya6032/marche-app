@@ -72,6 +72,9 @@ group :development, :test do
 
   gem 'byebug'
 
+  # N+1クエリ問題を検出
+  gem 'bullet'
+
   # Static analysis for security vulnerabilities [https://brakemanscanner.org/]
   gem "brakeman", require: false
 

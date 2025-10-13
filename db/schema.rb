@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[8.0].define(version: 2025_06_26_213018) do
+ActiveRecord::Schema[8.0].define(version: 2025_10_13_055543) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "pg_catalog.plpgsql"
 
@@ -78,6 +78,17 @@ ActiveRecord::Schema[8.0].define(version: 2025_06_26_213018) do
     t.bigint "seller_id"
     t.bigint "host_id"
     t.index ["user_id"], name: "index_comments_on_user_id"
+  end
+
+  create_table "event_views", force: :cascade do |t|
+    t.bigint "event_id", null: false
+    t.string "ip_address"
+    t.datetime "viewed_at"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["event_id", "ip_address", "viewed_at"], name: "index_event_views_on_event_id_and_ip_address_and_viewed_at"
+    t.index ["event_id"], name: "index_event_views_on_event_id"
+    t.index ["viewed_at"], name: "index_event_views_on_viewed_at"
   end
 
   create_table "events", force: :cascade do |t|
@@ -264,6 +275,7 @@ ActiveRecord::Schema[8.0].define(version: 2025_06_26_213018) do
 
   add_foreign_key "active_storage_attachments", "active_storage_blobs", column: "blob_id"
   add_foreign_key "active_storage_variant_records", "active_storage_blobs", column: "blob_id"
+  add_foreign_key "event_views", "events"
   add_foreign_key "events", "facilities"
   add_foreign_key "events", "hosts"
   add_foreign_key "events", "sellers"
