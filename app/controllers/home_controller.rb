@@ -31,4 +31,36 @@ class HomeController < ApplicationController
   def recruitment
     # 必要に応じてデータを取得
   end
+
+  def features
+    # 機能一覧ページ
+  end
+
+  def pricing
+    # 料金についてページ
+  end
+
+  def plan_comparison
+    # プラン比較ページ
+  end
+
+  def flow
+    # 掲載までの流れページ（既存のrecruitmentページを改修）
+  end
+
+  def use_cases
+    # 利用事例ページ
+  end
+
+  def terms
+    # 利用規約ページ
+  end
+
+  def privacy
+    # プライバシーポリシーページ
+  end
+
+  def commercial_law
+    # 特定商取引法に基づく表示ページ
+  end
 end

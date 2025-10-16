@@ -1,0 +1,97 @@
+-# app/views/home/features.html.haml
+%body
+  = render 'header/header'
+  
+  .features-page
+    %section.hero-section
+      %h1.page-title 機能一覧
+      %p.subtitle つながるマルシェで利用できる豊富な機能をご紹介します。
+    
+    .features-container
+      .feature-category
+        %h2.category-title
+          %i.icon.fas.fa-user-circle
+          マイページ機能
+        .features-grid
+          .feature-card
+            %h3 プロフィール管理
+            %p 出店者情報や事業内容を詳しく紹介できる専用プロフィールページがあります。
+          .feature-card
+            %h3 イベント履歴
+            %p 過去のイベント参加履歴を一覧で確認・管理・保存することができます。
+          .feature-card
+            %h3 簡単編集
+            %p 直感的なインターフェースで簡単にページを更新することができます。
+
+      .feature-category
+        %h2.category-title
+          %i.icon.fas.fa-list
+          一覧ページ機能
+        .features-grid
+          .feature-card
+            %h3 地域別検索
+            %p 都道府県や地域から出店イベントを簡単に検索することができます。
+          .feature-card
+            %h3 カテゴリー検索
+            %p イベントタイプや業種で絞り込んで検索することができます。
+          .feature-card
+            %h3 日程検索
+            %p 開催日時でイベントを検索することができます。
+
+      .feature-category
+        %h2.category-title
+          %i.icon.fas.fa-share-alt
+          SNSシェア機能
+        .features-grid
+          .feature-card
+            %h3 SNS連携
+            %p X（旧Twitter）、Facebook、LINEで簡単シェアすることができるので、出店情報を広めることができます。
+          .feature-card
+            %h3 告知拡散
+            %p イベント情報をSNSで効果的に告知・集客に繋げることができます。
+          .feature-card
+            %h3 友人招待
+            %p LINEリンクで友人を簡単にイベントに招待することができます。
+
+      .feature-category
+        %h2.category-title
+          %i.icon.fas.fa-globe
+          出店者情報（ホームページ機能）
+        .features-grid
+          .feature-card
+            %h3 独自ページ作成
+            %p マルシェサイト内で自分だけのオリジナルページを作成することができます。
+          .feature-card
+            %h3 自由なカスタマイズ
+            %p 紹介文や画像を配置してオリジナルブランドを作り上げることができます。
+          .feature-card
+            %h3 オリジナルURL
+            %p 任意で独自のURLに変更することができるのでブランドの認知度アップに繋がります。
+          .feature-card
+            %h3 SEO対策
+            %p 検索エンジンに最適化されたページ構造で集客効果の向上が期待できます。
+
+      .feature-category
+        %h2.category-title
+          %i.icon.fas.fa-images
+          画像・コンテンツ管理
+        .features-grid
+          .feature-card
+            %h3 豊富な画像掲載
+            %p イベントの魅力を写真で効果的にアピールすることができます。
+          .feature-card
+            %h3 レスポンシブ対応
+            %p PC・スマートフォン両方で美しく表示することができます。
+          .feature-card
+            %h3 高速表示
+            %p 最適化された画像で快適な閲覧体験を提供します。
+
+    .cta-section
+      %h3 これらの機能を期間限定無料で利用開始
+      .cta-buttons
+        = link_to new_seller_registration_path, class: 'cta-button' do
+          個人会員で始める
+        = link_to new_host_registration_path, class: 'cta-button primary' do
+          ショップ会員で始める
+
+= render 'footer/footer'

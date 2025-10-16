@@ -1,0 +1,145 @@
+-# app/views/home/pricing.html.haml
+%body
+  = render 'header/header'
+  
+  .pricing-page
+    %section.hero-section
+      %h1.page-title 利用料金について
+      %p.subtitle イベントを探している人は無料で使えます。出店を掲載したい人も現在無料で掲載可能です！！
+    
+    .pricing-container
+      .access-info
+        %h2.section-title
+          %i.fas.fa-search
+          イベントを探したい方
+        .info-card.free-access
+          %h3 無料で利用が可能です
+          %p すべてのイベント情報を無料で閲覧・検索できます
+          %ul
+            %li 地域・カテゴリー別検索
+            %li イベント詳細情報の閲覧
+            %li SNSシェア機能の利用
+            -# %li お気に入り登録
+          .note ※ 会員登録不要でご利用いただけます
+
+      .publisher-info
+        %h2.section-title
+          %i.icon.fas.fa-store
+          イベント出店を掲載したい方
+        
+        .pricing-plans
+          .plan-card.individual-plan
+            .plan-header
+              %h3 個人会員
+              .price-display
+                %span.original-price ¥480
+                %span.period /月（税込）
+              .special-offer
+                %span.free-badge 期間限定無料！
+            .plan-features
+              %ul
+                %li 月2回まで イベント掲載
+                %li 3枚まで 画像アップロード/イベント
+                %li SNSシェア機能
+                %li 基本プロフィールページ
+                %li サイトオリジナルURL
+            .plan-suitable
+              %h4 こんな方におすすめ
+              %ul
+                %li 個人での出店が中心
+                %li 試してみたい方
+                %li 月1-2回程度の出店
+
+          .plan-card.shop-plan.recommended
+            .plan-header
+              %span.recommended-badge おすすめ
+              %h3 ショップ会員
+              .price-display
+                %span.original-price ¥880
+                %span.period /月（税込）
+              .special-offer
+                %span.free-badge 期間限定無料！
+            .plan-features
+              %ul
+                %li 制限なし イベント掲載
+                %li 10枚まで 画像アップロード/イベント
+                %li SNSシェア機能
+                %li 充実したホームページ機能
+                %li カスタムURL対応
+                %li 注目ピックアップ掲載
+                %li 高度なSEO対策
+            .plan-suitable
+              %h4 こんな方におすすめ
+              %ul
+                %li 事業としてイベント出店
+                %li 頻繁なイベント参加
+                %li 本格的な集客を希望
+
+      .payment-info
+        %h2.section-title
+          %i.icon.fas.fa-credit-card
+          お支払い方法
+        .payment-methods
+          .payment-method
+            %h3
+              %i.icon.fas.fa-credit-card
+              クレジットカード決済
+            %p VISA、MasterCard、JCB、American Express対応
+          .payment-method
+            %h3
+              %i.icon.fas.fa-university
+              口座振替
+            %p 指定の銀行口座から自動引き落とし
+
+        .payment-security
+          %h3
+            %i.icon.fas.fa-shield-alt
+            セキュリティについて
+          %p 
+            決済には
+            = link_to "会費ペイ", "https://kaihipay.jp/", target: "_blank", rel: "noopener noreferrer"
+            という外部の専門サービスを利用しています。
+          %ul
+            %li つながるマルシェ側では決済情報を保存いたしません
+            %li 業界標準のセキュリティ対策を実施
+            %li 個人情報の安全な管理を徹底
+
+      .special-offer-section
+        %h2.section-title
+          %i.icon.fas.fa-gift
+          期間限定特別キャンペーン
+        .campaign-card
+          %h3 今登録で永年無料！
+          %p 現在、サービス開始記念として、今登録していただいた方は
+          %strong 永年無料
+          %p でご利用いただけます。
+          .campaign-features
+            %ul
+              %li 月額料金が永続的に無料
+              %li すべての機能を制限なく利用
+              %li 追加料金は一切発生しません
+          .campaign-note
+            %p.small ※ このキャンペーンは予告なく終了する場合があります
+
+    .faq-section
+      %h2.section-title よくある料金に関する質問
+      .faq-items
+        .faq-item
+          %h4 無料期間中に解約したらどうなりますか？
+          %p アカウントは停止されますが、掲載済みのイベント情報は引き続き閲覧可能です。
+        .faq-item
+          %h4 途中で プラン変更はできますか？
+          %p はい、マイページからいつでもプラン変更が可能です。
+        .faq-item
+          %h4 返金はありますか？
+          %p 月の途中での解約による返金は承っておりません。
+
+    .cta-section
+      %h3 今すぐ期間限定無料で始めましょう
+      .cta-buttons
+        = link_to new_seller_registration_path, class: 'cta-button' do
+          個人会員で始める
+        = link_to new_host_registration_path, class: 'cta-button primary' do
+          ショップ会員で始める
+
+= render 'footer/footer'

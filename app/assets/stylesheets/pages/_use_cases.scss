@@ -1,0 +1,370 @@
+// app/assets/stylesheets/pages/_use_cases.scss
+// 利用事例ページのスタイル
+
+.use-cases-page {
+  font-family: 'Noto Sans JP', sans-serif;
+  line-height: 1.6;
+  color: #333;
+
+  .hero-section {
+    background: white;
+    border: 6px solid #f9d4c5;
+    color: #242424;
+    text-align: center;
+    padding: 60px 20px;
+    margin-bottom: 60px;
+    margin-top: 10px;
+    border-radius: 12px;
+
+    .page-title {
+      font-size: 2.5rem;
+      font-weight: bold;
+      margin-bottom: 20px;
+      text-shadow: 2px 2px 4px rgb(255, 255, 255);
+    }
+
+    .subtitle {
+      font-size: 1.5rem;
+      opacity: 0.9;
+    }
+  }
+
+  .use-cases-container {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 0 20px;
+  }
+
+  .use-case-category {
+    margin-bottom: 80px;
+
+    .category-title {
+      display: flex;
+      align-items: center;
+      font-size: 2rem;
+      color: #333;
+      margin-bottom: 40px;
+      padding-bottom: 15px;
+      border-bottom: 3px solid #4dca98;
+
+      .icon {
+        margin-right: 15px;
+        color: #4dca98;
+      }
+    }
+
+    .use-cases-grid {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 30px;
+
+      // スマートフォン表示では1列に
+      @media (max-width: 767px) {
+        grid-template-columns: 1fr;
+        gap: 20px;
+      }
+    }
+
+    .use-case-card {
+      background: white;
+      border-radius: 12px;
+      padding: 30px;
+      box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+      transition: transform 0.3s ease, box-shadow 0.3s ease;
+      border-left: 5px solid #4dca98;
+
+      &:hover {
+        transform: translateY(-5px);
+        box-shadow: 0 8px 25px rgba(0,0,0,0.15);
+      }
+
+      h3 {
+        font-size: 1.4rem;
+        color: #333;
+        margin-bottom: 15px;
+        font-weight: bold;
+        color: #4dca98;
+      }
+
+      > p {
+        color: #666;
+        line-height: 1.6;
+        margin-bottom: 20px;
+      }
+
+      .case-content {
+        display: flex;
+        gap: 2rem;
+        align-items: flex-start;
+        
+
+        // スマートフォン表示では縦に並べる
+        @media (max-width: 767px) {
+          flex-direction: column;
+          gap: 1.5rem;
+        }
+      }
+
+      .case-benefits {
+        flex: 1;
+
+        h4 {
+          font-size: 1.1rem;
+          color: #333;
+          margin-bottom: 10px;
+          margin-top: 20px;
+          padding-top: 20px;
+          border-top: 1px solid #f0f0f0;
+        }
+
+        ul {
+          list-style: none;
+          padding: 0;
+
+          li {
+            padding: 5px 0;
+            position: relative;
+            padding-left: 25px;
+            color: #666;
+            font-size: 0.95rem;
+
+            &:before {
+              content: '✓';
+              position: absolute;
+              left: 0;
+              color: #4dca98;
+              font-weight: bold;
+            }
+          }
+        }
+      }
+
+      .case-image {
+        flex: 0 0 250px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        width: 150px;
+
+        // スマートフォン表示では幅を調整
+        @media (max-width: 767px) {
+          flex: none;
+          width: 100%;
+        }
+
+        .image-placeholder {
+          
+          width: 150px;
+          height: 150px;
+          background: linear-gradient(135deg, #ffa8cc, #ff8db4);
+          border-radius: 8px;
+          display: flex;
+          align-items: center;
+          justify-content: center;
+          color: white;
+          font-size: 0.9rem;
+          text-align: center;
+          padding: 1rem;
+          line-height: 1.4;
+          font-weight: 500;
+          border: 2px solid #ff6b9d;
+        }
+
+        .use-case-img {
+          width: 100%;
+          height: 200px;
+          object-fit: cover;
+          border-radius: 8px;
+          border: 1px solid #333;
+        }
+      }
+    }
+  }
+
+  .success-stories {
+    background: #f8f9fa;
+    padding: 60px 20px;
+    margin: 80px 0;
+    border-radius: 12px;
+
+    .section-title {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 2rem;
+      color: #333;
+      margin-bottom: 40px;
+      text-align: center;
+
+      .icon {
+        margin-right: 15px;
+        color: #ffb595;
+      }
+    }
+
+    .success-points {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+      gap: 30px;
+      max-width: 1000px;
+      margin: 0 auto;
+
+      .success-point {
+        background: white;
+        padding: 30px;
+        border-radius: 12px;
+        text-align: center;
+        box-shadow: 0 4px 15px rgba(0,0,0,0.08);
+
+        h3 {
+          display: flex;
+          align-items: center;
+          justify-content: center;
+          font-size: 1.2rem;
+          color: #333;
+          margin-bottom: 15px;
+
+          .icon {
+            margin-right: 10px;
+            color: #ffb595;
+          }
+        }
+
+        p {
+          color: #666;
+          line-height: 1.6;
+        }
+      }
+    }
+  }
+
+  .cta-section {
+    background: white;
+    border: 3px solid #ff6b9d;
+    color: #333;
+    text-align: center;
+    padding: 60px 20px;
+    margin-top: 60px;
+    border-radius: 12px;
+
+    h3 {
+      font-size: 1.8rem;
+      margin-bottom: 15px;
+      color: #333;
+    }
+
+    > p {
+      font-size: 1.1rem;
+      margin-bottom: 30px;
+      color: #333;
+    }
+
+    .cta-buttons {
+      display: flex;
+      justify-content: center;
+      gap: 20px;
+      flex-wrap: wrap;
+
+      .cta-button {
+        display: inline-block;
+        padding: 15px 30px;
+        border-radius: 8px;
+        text-decoration: none;
+        font-weight: bold;
+        background: white;
+        color: #ff6b9d;
+        border: 2px solid #ff6b9d;
+        transition: all 0.3s ease;
+
+        &:hover {
+          background: #ff6b9d;
+          color: white;
+          transform: translateY(-2px);
+          box-shadow: 0 5px 15px rgba(0,0,0,0.2);
+        }
+
+        &.primary {
+          background: #ff6b9d;
+          color: white;
+          border: 2px solid #ff6b9d;
+
+          &:hover {
+            background: white;
+            color: #ff6b9d;
+          }
+        }
+      }
+    }
+  }
+
+  // 業種別の色分け
+  .use-case-category:nth-child(1) .use-case-card {
+    border-left-color: #ec7ca1;
+    h3 { color: #ec7ca1; }
+  }
+
+  .use-case-category:nth-child(2) .use-case-card {
+    border-left-color: #4dca98;
+    h3 { color: #4dca98; }
+  }
+
+  .use-case-category:nth-child(3) .use-case-card {
+    border-left-color: #ffb595;
+    h3 { color: #ffb595; }
+  }
+
+  .use-case-category:nth-child(4) .use-case-card {
+    border-left-color: #87ceeb;
+    h3 { color: #87ceeb; }
+  }
+
+  // レスポンシブ対応
+  @media (max-width: 768px) {
+    .hero-section {
+      padding: 40px 20px;
+
+      .page-title {
+        font-size: 2rem;
+      }
+    }
+
+    .use-case-category {
+      margin-bottom: 60px;
+
+      .category-title {
+        font-size: 1.5rem;
+      }
+
+      .use-cases-grid {
+        grid-template-columns: 1fr;
+        gap: 20px;
+      }
+
+      .use-case-card {
+        padding: 20px;
+      }
+    }
+
+    .success-stories {
+      padding: 40px 20px;
+
+      .success-points {
+        grid-template-columns: 1fr;
+        gap: 20px;
+
+        .success-point {
+          padding: 20px;
+        }
+      }
+    }
+
+    .cta-buttons {
+      flex-direction: column;
+      align-items: center;
+
+      .cta-button {
+        width: 200px;
+      }
+    }
+  }
+}

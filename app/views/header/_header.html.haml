@@ -21,19 +21,23 @@
     %nav
       %ul
         %li
-          %a{href: "#"} イベントタイプから選択<br>　"comming soon"
+          = link_to features_path do
+            機能について
         %li
-          = link_to events_path do
-            イベント地域から選択
+          = link_to pricing_path do
+            料金について
         %li
-          %a{href: "#"} 日程から選択<br>　"comming soon"
+          = link_to plan_comparison_path do
+            プラン比較
         %li
-          = link_to recruitment_path do
-            出展するには？
+          = link_to flow_path do
+            掲載までの流れ
         %li
-          -# faqs_index_path は存在しない可能性があります。public_faqs_path を推奨
+          = link_to use_cases_path do
+            活用事例
+        %li
           = link_to public_faqs_path do
-            よくある質問
+            Q&A
 
     -# スマートフォン用ログイン・登録ボタン (個人出店)
     .sp-login-btn
@@ -120,19 +124,23 @@
   %nav
     %ul
       %li
-        %a{href: "#"} イベントタイプから選択<br>　"comming soon"
+        = link_to features_path do
+          機能について
       %li
-        = link_to events_path do
-          イベント地域から選択
+        = link_to pricing_path do
+          料金について
       %li
-        %a{href: "#"} 日程から選択<br>　"comming soon"
+        = link_to plan_comparison_path do
+          プラン比較
       %li
-        = link_to recruitment_path do
-          出展するには？
+        = link_to flow_path do
+          掲載までの流れ
       %li
-        -# faqs_index_path は存在しない可能性があります。public_faqs_path を推奨
+        = link_to use_cases_path do
+          活用事例
+      %li
         = link_to public_faqs_path do
-          よくある質問
+          Q&A
 
 
 

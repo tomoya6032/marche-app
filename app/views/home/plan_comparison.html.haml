@@ -1,0 +1,137 @@
+-# app/views/home/plan_comparison.html.haml
+%body
+  = render 'header/header'
+  
+  .plan-comparison-page
+    %section.hero-section
+      %h1.page-title プラン比較
+      %p.subtitle 個人会員とショップ会員の機能面を詳しく比較してください
+    
+    .comparison-container
+      .comparison-table-wrapper
+        %table.plan-comparison-table
+          %thead
+            %tr
+              %th.feature-column 機能・サービス
+              %th.plan-column.individual-plan
+                .plan-header
+                  %h3 個人会員
+                  .price-info
+                    %span.original-price ￥480/月
+                    %span.free-badge 期間限定無料！
+              %th.plan-column.shop-plan
+                .plan-header
+                  %h3 ショップ会員
+                  .price-info
+                    %span.original-price ￥880/月
+                    %span.free-badge 期間限定無料！
+                  %span.recommended おすすめ
+          
+          %tbody
+            %tr.section-header
+              %td{ colspan: 3 }
+                %h4 基本機能
+            
+            %tr
+              %td サイト基本機能
+              %td
+                %span.check ○
+                %small イベント掲載・管理
+              %td
+                %span.check-plus ◎
+                %small 全機能利用可能
+            
+            %tr.homepage-feature-row
+              %td ホームページ機能
+              %td
+                %span.check ○
+                %small 基本的なプロフィール
+              %td
+                %span.check-plus ◎
+                %small 充実したページ作成
+            
+            %tr
+              %td SNSシェア機能
+              %td
+                %span.available ✓
+                %small X・LINE・Facebook
+              %td
+                %span.available ✓
+                %small X・LINE・Facebook
+            
+            %tr.section-header
+              %td{ colspan: 3 }
+                %h4 イベント掲載
+            
+            %tr
+              %td イベント告知頻度
+              %td
+                %span.limited 月2回まで
+              %td
+                %span.unlimited 制限なし
+            
+            %tr
+              %td イベント画像枚数
+              %td
+                %span.limited 3枚まで/イベント
+              %td
+                %span.unlimited 10枚まで/イベント
+            
+            %tr
+              %td 注目ピックアップ掲載
+              %td
+                %span.not-available ✗
+              %td
+                %span.available ✓
+                %small トップページ掲載
+            
+            %tr.section-header
+              %td{ colspan: 3 }
+                %h4 SEO・集客
+            
+            %tr
+              %td オリジナルURL
+              %td
+                %span.available ✓
+                %small 基本URL
+              %td
+                %span.available ✓
+                %small カスタムURL対応
+            
+            %tr
+              %td SEO対策
+              %td
+                %span.check ○
+                %small 基本対策
+              %td
+                %span.check-plus ◎
+                %small 高度なSEO対策
+        
+        .cta-section
+          %h3 どちらのプランがおすすめ？
+          .plan-recommendations
+            .recommendation-card
+              %h4 個人会員がおすすめの方
+              %ul
+                %li 個人での出店が中心
+                %li 月に1-2回程度のイベント参加
+                %li まずは試してみたい方
+                %li シンプルな機能で十分な方
+            
+            .recommendation-card
+              %h4 ショップ会員がおすすめの方
+              %ul
+                %li 事業としてイベント出店
+                %li 頻繁にイベントに参加
+                %li 充実したページを作りたい
+                %li 集客に力を入れたい方
+          
+          .cta-buttons
+            = link_to new_seller_registration_path, class: 'cta-button individual' do
+              %span 個人会員で始める
+              %small 期間限定無料
+            = link_to new_host_registration_path, class: 'cta-button shop' do
+              %span ショップ会員で始める
+              %small 期間限定無料・おすすめ
+
+= render 'footer/footer'

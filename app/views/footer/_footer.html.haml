@@ -1,7 +1,7 @@
 .footer 
   .footer-description 
     .stores-registration
-      .h4 出店者登録について
+      .h4 【出店者登録について】
       %p ▼マイページ
       = link_to new_host_session_path, class: 'footer-button' do
         ショップ出店
@@ -40,6 +40,12 @@
       %p 出店者案内は現在準備中です。<br>
       %p ご不明点がある場合は、運営事務局までお問い合わせください。
     
+      .legal-links
+        .h4 【規約などについて】
+        %p= link_to '利用規約', terms_path, class: 'footer-link'
+        %p= link_to 'プライバシーポリシー', privacy_path, class: 'footer-link'
+        %p= link_to '特定商取引法に基づく表示', commercial_law_path, class: 'footer-link'
+    
     .information-container
       .h4 【FAQについて】
       %p= link_to 'FAQはこちら', public_faqs_path # faq_path を適切なURLヘルパーに置き換えてください
@@ -48,7 +54,7 @@
       <br>
       <br>
       .organizer-container
-      .h4 会社概要
+      .h4 【会社概要】
       -# - if administrator_signed_in?
       -#   %p ログイン中: #{current_administrator.email}
       -#   = link_to "ログアウト", destroy_administrator_session_path, method: :delete
@@ -76,3 +82,29 @@
 
 .footer-copylight
   %p &copy; 2025 マルシェイベント
+
+-# ページトップに戻るボタン
+#scroll-to-top
+  %i.fas.fa-chevron-up
+
+:javascript
+  document.addEventListener('DOMContentLoaded', function() {
+    var scrollToTopBtn = document.getElementById('scroll-to-top');
+    
+    // スクロール位置に応じてボタンの表示/非表示を制御
+    window.addEventListener('scroll', function() {
+      if (window.pageYOffset > 300) {
+        scrollToTopBtn.classList.add('visible');
+      } else {
+        scrollToTopBtn.classList.remove('visible');
+      }
+    });
+    
+    // ボタンクリック時のスムーススクロール
+    scrollToTopBtn.addEventListener('click', function() {
+      window.scrollTo({
+        top: 0,
+        behavior: 'smooth'
+      });
+    });
+  });

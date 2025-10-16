@@ -1,0 +1,186 @@
+// app/assets/stylesheets/pages/_features.scss
+// 機能一覧ページのスタイル
+
+.features-page {
+  font-family: 'Noto Sans JP', sans-serif;
+  line-height: 1.6;
+  color: #333;
+
+  .hero-section {
+    background: white;
+    border: 6px solid #f9d4c5;
+    color: #242424;
+    text-align: center;
+    padding: 60px 20px;
+    margin-bottom: 60px;
+    margin-top: 10px;
+    border-radius: 12px;
+
+    .page-title {
+      font-size: 2.5rem;
+      font-weight: bold;
+      margin-bottom: 20px;
+      text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.1);
+    }
+
+    .subtitle {
+      font-size: 1.2rem;
+      opacity: 0.9;
+      max-width: 600px;
+      margin: 0 auto;
+    }
+  }
+
+  .features-container {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 0 20px;
+  }
+
+  .feature-category {
+    margin-bottom: 80px;
+
+    .category-title {
+      display: flex;
+      align-items: center;
+      font-size: 2rem;
+      color: #333;
+      margin-bottom: 40px;
+      padding-bottom: 15px;
+      border-bottom: 3px solid #ec7ca1;
+
+      .icon {
+        margin-right: 15px;
+        color: #ec7ca1;
+      }
+    }
+
+    .features-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+      gap: 30px;
+    }
+
+    .feature-card {
+      background: white;
+      border-radius: 12px;
+      padding: 30px;
+      box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+      transition: transform 0.3s ease, box-shadow 0.3s ease;
+
+      &:hover {
+        transform: translateY(-5px);
+        box-shadow: 0 8px 25px rgba(0,0,0,0.15);
+      }
+
+      h3 {
+        font-size: 1.3rem;
+        color: #333;
+        margin-bottom: 15px;
+        font-weight: bold;
+      }
+
+      p {
+        color: #666;
+        line-height: 1.6;
+      }
+    }
+  }
+
+  .cta-section {
+    background: #f8f9fa;
+    padding: 60px 20px;
+    text-align: center;
+    margin-top: 80px;
+
+    h3 {
+      font-size: 1.8rem;
+      color: #333;
+      margin-bottom: 30px;
+    }
+
+    .cta-buttons {
+      display: flex;
+      justify-content: center;
+      gap: 20px;
+      flex-wrap: wrap;
+
+      .cta-button {
+        display: inline-block;
+        padding: 15px 30px;
+        border-radius: 8px;
+        text-decoration: none;
+        font-weight: bold;
+        transition: all 0.3s ease;
+        border: 2px solid transparent;
+
+        &.primary {
+          background: #ec7ca1;
+          color: white;
+
+          &:hover {
+            background: #d87093;
+            transform: translateY(-2px);
+          }
+        }
+
+        &:not(.primary) {
+          background: white;
+          color: #ec7ca1;
+          border-color: #ec7ca1;
+
+          &:hover {
+            background: #ec7ca1;
+            color: white;
+            transform: translateY(-2px);
+          }
+        }
+      }
+    }
+  }
+
+  // レスポンシブ対応
+  @media (max-width: 768px) {
+    .hero-section {
+      padding: 40px 20px;
+
+      .page-title {
+        font-size: 2rem;
+      }
+
+      .subtitle {
+        font-size: 1rem;
+      }
+    }
+
+    .feature-category {
+      margin-bottom: 60px;
+
+      .category-title {
+        font-size: 1.5rem;
+      }
+
+      .features-grid {
+        grid-template-columns: 1fr;
+        gap: 20px;
+      }
+
+      .feature-card {
+        padding: 20px;
+      }
+    }
+
+    .cta-section {
+      padding: 40px 20px;
+
+      .cta-buttons {
+        flex-direction: column;
+        align-items: center;
+
+        .cta-button {
+          width: 200px;
+        }
+      }
+    }
+  }
+}

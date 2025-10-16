@@ -1,22 +1,70 @@
 -# app/views/faqs/index.html.haml
 %body
   = render 'header/header'
-%h1 よくある質問 (FAQ)
-%p サイトを利用する際に疑問に感じることや不明点について解説します。
+  
+  .faq-page
+    %section.hero-section
+      %h1.page-title よくある質問 (Q&A)
+      %p.subtitle サイトを利用する際の疑問や不明点について解説します
 
-.faq-list
-  - if @faqs.any?
-    %ul
-      - @faqs.each do |faq|
-        %li
-          %h2.faq-question= faq.question
-          %p.faq-link
-            詳細はこちら：
-            = link_to faq.note_url, faq.note_url, target: '_blank', rel: 'noopener noreferrer'
-            -# %i.fa.fa-external-link-alt # Font Awesomeなどのアイコンライブラリを導入していれば表示されます。
-  - else
-    %p 現在、FAQ項目は登録されていません。
+    .faq-container
+      - if @faqs && @faqs.any?
+        .faq-accordion
+          - @faqs.each_with_index do |faq, index|
+            .faq-item{ id: "faq-#{index}" }
+              .faq-question-wrapper{ data: { toggle: "faq-#{index}" } }
+                %h3.faq-question
+                  %i.icon.fas.fa-question-circle
+                  = faq.question
+                %i.icon.fas.fa-chevron-down.toggle-icon
+              .faq-answer{ id: "answer-#{index}" }
+                .faq-content
+                  %p 詳細な回答については、こちらのリンクをご確認ください：
+                  = link_to faq.note_url, target: '_blank', rel: 'noopener noreferrer', class: 'external-link' do
+                    %i.icon.fas.fa-external-link-alt
+                    詳細を見る
+      - else
+        .no-faqs
+          %i.icon.fas.fa-info-circle
+          %p 現在、FAQ項目は準備中です。ご不明点がございましたらお問い合わせください。
 
-
+:javascript
+  document.addEventListener('DOMContentLoaded', function() {
+    var faqItems = document.querySelectorAll('.faq-question-wrapper');
+    
+    faqItems.forEach(function(item) {
+      item.addEventListener('click', function() {
+        var target = this.getAttribute('data-toggle');
+        var targetId = target.split('-')[1];
+        var answer = document.getElementById('answer-' + targetId);
+        var icon = this.querySelector('.toggle-icon');
+        
+        if (!answer) return;
+        
+        var isActive = answer.classList.contains('active');
+        
+        // まず全てのアンサーを閉じる
+        var allAnswers = document.querySelectorAll('.faq-answer');
+        var allIcons = document.querySelectorAll('.toggle-icon');
+        
+        allAnswers.forEach(function(otherAnswer) {
+          otherAnswer.style.maxHeight = '0px';
+          otherAnswer.classList.remove('active');
+        });
+        
+        allIcons.forEach(function(otherIcon) {
+          otherIcon.style.transform = 'rotate(0deg)';
+        });
+        
+        // クリックしたものが閉じていた場合は開く
+        if (!isActive) {
+          var height = answer.scrollHeight;
+          answer.style.maxHeight = height + 'px';
+          answer.classList.add('active');
+          icon.style.transform = 'rotate(180deg)';
+        }
+      });
+    });
+  });
 
 = render 'footer/footer'

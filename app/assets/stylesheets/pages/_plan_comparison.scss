@@ -1,0 +1,337 @@
+// app/assets/stylesheets/pages/_plan_comparison.scss
+// プラン比較ページのスタイル
+
+.plan-comparison-page {
+  font-family: 'Noto Sans JP', sans-serif;
+  line-height: 1.6;
+  color: #333;
+
+  .hero-section {
+    background: white;
+    border: 6px solid #f9d4c5;
+    color: #242424;
+    text-align: center;
+    padding: 60px 20px;
+    margin-bottom: 60px;
+    margin-top: 10px;
+    border-radius: 12px;
+
+    .page-title {
+      font-size: 2.5rem;
+      font-weight: bold;
+      margin-bottom: 20px;
+      text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.1);
+    }
+
+    .subtitle {
+      font-size: 1.2rem;
+      opacity: 0.9;
+    }
+  }
+
+  .comparison-container {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 0 20px;
+  }
+
+  .comparison-table-wrapper {
+    background: white;
+    border-radius: 12px;
+    overflow: hidden;
+    box-shadow: 0 4px 20px rgba(0,0,0,0.1);
+    margin-bottom: 60px;
+
+    .plan-comparison-table {
+      width: 100%;
+      border-collapse: collapse;
+
+      thead tr {
+        background: #f7723e;
+        color: white;
+
+        th {
+          padding: 20px;
+          text-align: center;
+          font-weight: bold;
+
+          &.feature-column {
+            background: #4dca98;
+            width: 30%;
+            border-right: 1px solid #e9ecef;
+          }
+
+          &.plan-column {
+            width: 35%;
+            position: relative;
+
+            .plan-header {
+              h3 {
+                font-size: 1.5rem;
+                margin-bottom: 10px;
+              }
+
+              .price-info {
+                .original-price {
+                  font-size: 1.2rem;
+                  text-decoration: line-through;
+                  opacity: 0.8;
+                  margin-bottom: 5px;
+                }
+
+                .free-badge {
+                  background: #ff0000;
+                  padding: 5px 10px;
+                  border-radius: 15px;
+                  font-size: 0.8rem;
+                  font-weight: bold;
+                }
+              }
+
+              .recommended {
+                position: absolute;
+                top: 10px;
+                right: 0px;
+                background: #ff0000;
+                color: white;
+                padding: 5px 15px;
+                border-radius: 15px;
+                font-size: 0.8rem;
+                font-weight: bold;
+                transform: rotate(15deg);
+              }
+            }
+          }
+        }
+      }
+
+      tbody {
+        tr {
+          &:nth-child(even) {
+            background: #f8f9fa;
+          }
+
+          &.section-header {
+            td {
+              background: #ffffff !important;
+              font-weight: bold;
+              padding: 15px 20px;
+              color: #333;
+
+              h4 {
+                margin: 0;
+                color: #ec7ca1;
+              }
+            }
+          }
+
+          td {
+            padding: 15px 20px;
+            text-align: center;
+            border-bottom: 1px solid #e9ecef;
+            background: #f8f9fa;
+
+            &:first-child {
+              text-align: left;
+              font-weight: 500;
+              background: #f8f9fa;
+              border-right: 1px solid #e9ecef
+            }
+
+            .check, .check-plus {
+              font-size: 1.2rem;
+              font-weight: bold;
+              color: #4dca98;
+            }
+
+            .check-plus {
+              color: #ec7ca1;
+
+            }
+
+            .available {
+              color: #4dca98;
+              font-weight: bold;
+            }
+
+            .not-available {
+              color: #dc3545;
+              font-weight: bold;
+            }
+
+            .limited {
+              color: #ffa500;
+              font-weight: bold;
+            }
+
+            .unlimited {
+              color: #4dca98;
+              font-weight: bold;
+            }
+
+            small {
+              display: block;
+              font-size: 0.8rem;
+              color: #666;
+              margin-top: 5px;
+            }
+          }
+
+         
+        }
+      }
+    }
+  }
+
+  .cta-section {
+    text-align: center;
+    margin-bottom: 60px;
+
+    h3 {
+      font-size: 1.8rem;
+      color: #333;
+      margin-bottom: 40px;
+    }
+
+    .plan-recommendations {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+      gap: 30px;
+      margin-bottom: 40px;
+
+      .recommendation-card {
+        background: white;
+        padding: 30px;
+        border-radius: 12px;
+        box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+        text-align: left;
+
+        h4 {
+          color: #ec7ca1;
+          font-size: 1.3rem;
+          margin-bottom: 15px;
+          text-align: center;
+        }
+
+        ul {
+          list-style: none;
+          padding: 0;
+
+          li {
+            padding: 8px 0;
+            position: relative;
+            padding-left: 25px;
+
+            &:before {
+              content: '→';
+              position: absolute;
+              left: 0;
+              color: #ec7ca1;
+              font-weight: bold;
+            }
+          }
+        }
+      }
+    }
+
+    .cta-buttons {
+      display: flex;
+      justify-content: center;
+      gap: 20px;
+      flex-wrap: wrap;
+
+      .cta-button {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        padding: 20px 30px;
+        border-radius: 8px;
+        text-decoration: none;
+        font-weight: bold;
+        transition: all 0.3s ease;
+        min-width: 200px;
+
+        span {
+          font-size: 1.1rem;
+          margin-bottom: 5px;
+        }
+
+        small {
+          font-size: 0.9rem;
+          opacity: 0.8;
+        }
+
+        &.individual {
+          background: white;
+          color: #4dca98;
+          border: 2px solid #4dca98;
+
+          &:hover {
+            background: #4dca98;
+            color: white;
+            transform: translateY(-2px);
+          }
+        }
+
+        &.shop {
+          background: #ec7ca1;
+          color: white;
+
+          &:hover {
+            background: #d87093;
+            transform: translateY(-2px);
+          }
+        }
+      }
+    }
+  }
+
+  // レスポンシブ対応
+  @media (max-width: 768px) {
+    .hero-section {
+      padding: 40px 20px;
+
+      .page-title {
+        font-size: 2rem;
+      }
+    }
+
+    .comparison-table-wrapper {
+      overflow-x: auto;
+
+      .plan-comparison-table {
+        min-width: 600px;
+        font-size: 0.9rem;
+
+        th, td {
+          padding: 10px 8px;
+        }
+
+        .plan-header {
+          h3 {
+            font-size: 1.2rem;
+          }
+
+          .price-info {
+            .original-price {
+              font-size: 1rem;
+            }
+          }
+        }
+      }
+    }
+
+    .plan-recommendations {
+      grid-template-columns: 1fr;
+    }
+
+    .cta-buttons {
+      flex-direction: column;
+      align-items: center;
+
+      .cta-button {
+        width: 250px;
+      }
+    }
+  }
+}

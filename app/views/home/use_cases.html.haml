@@ -1,0 +1,223 @@
+-# app/views/home/use_cases.html.haml
+%body
+  = render 'header/header'
+  
+  .use-cases-page
+    %section.hero-section
+      %h1.page-title 活用事例
+      %p.subtitle さまざまな業種・事業者の活用例をご紹介します
+    
+    .use-cases-container
+      .use-case-category
+        %h2.category-title
+          %i.icon.fas.fa-heart
+          福祉系事業所
+        .use-cases-grid
+          .use-case-card
+            %h3 就労支援事業所
+            %p イベント出店を通じて利用者の社会参加を促進し、作業で制作した製品の販売機会を創出
+            .case-content
+              .case-benefits
+                %h4 活用メリット
+                %ul
+                  %li 利用者の就労訓練の場として活用
+                  %li 地域との交流促進
+                  %li 製品販売による収入確保
+                  %li 情報共有で他事業所との連携
+              .case-image
+                -# 画像をここに追加してください
+                = image_tag "marche.png", alt: "就労支援事業所のイメージ", class: "use-case-img"
+                -# .image-placeholder 就労支援事業所のイメージ画像
+
+          .use-case-card
+            %h3 社会福祉法人
+            %p 主催する地域イベントやチャリティイベントの告知・参加者募集に活用
+            .case-content
+              .case-benefits
+                %h4 活用メリット
+                %ul
+                  %li 地域住民への効果的な告知
+                  %li イベント参加者の事前把握
+                  %li 継続的な地域貢献活動のアピール
+                  %li ボランティア募集も併せて実施
+              .case-image
+                -# 画像をここに追加してください
+                = image_tag "event.png", alt: "社会福祉法人のイメージ", class: "use-case-img"
+                -# .image-placeholder 社会福祉法人のイメージ画像
+
+          .use-case-card
+            %h3 NPO事業所
+            %p 自施設で開催するワークショップや相談会などの情報を地域に発信
+            .case-content
+              .case-benefits
+                %h4 活用メリット
+                %ul
+                  %li 活動内容の透明性向上
+                  %li 新規利用者の獲得
+                  %li 地域ネットワークの構築
+                  %li 寄付・支援者の拡大
+              .case-image
+                -# 画像をここに追加してください
+                = image_tag "workshop.png", alt: "NPO事業所のイメージ", class: "use-case-img"
+                -# .image-placeholder NPO事業所のイメージ画像
+
+      .use-case-category
+        %h2.category-title
+          %i.icon.fas.fa-seedling
+          農業・食品関連
+        .use-cases-grid
+          .use-case-card
+            %h3 農家・農業従事者
+            %p 新鮮な採れたて野菜や季節の農産物の直売情報を消費者に直接届ける
+            .case-content
+              .case-benefits
+                %h4 活用メリット
+                %ul
+                  %li 中間マージンなしの直接販売
+                  %li 消費者との直接的なつながり
+                  %li 旬の情報をタイムリーに発信
+                  %li リピーター顧客の獲得
+              .case-image
+                -# 画像をここに追加してください
+                = image_tag "vegetables.png", alt: "農家・農業従事者のイメージ", class: "use-case-img"
+                -# .image-placeholder 農家・農業従事者のイメージ画像
+
+          .use-case-card
+            %h3 地域特産品生産者
+            %p 地域の伝統食品や加工品の魅力を広くアピール
+            .case-content
+              .case-benefits
+                %h4 活用メリット
+                %ul
+                  %li 地域ブランドの認知度向上
+                  %li 観光客への訴求
+                  %li 季節商品の効果的な告知
+                  %li 地域経済への貢献
+              .case-image
+                -# 画像をここに追加してください
+                = image_tag "vegetables2.png", alt: "地域特産品生産者のイメージ", class: "use-case-img"
+                -# .image-placeholder 地域特産品生産者のイメージ画像
+
+      .use-case-category
+        %h2.category-title
+          %i.icon.fas.fa-truck
+          移動販売・サービス業
+        .use-cases-grid
+          .use-case-card
+            %h3 キッチンカー運営者
+            %p 出店予定地域や販売メニューの情報を事前に告知し、顧客を集客
+            .case-content
+              .case-benefits
+                %h4 活用メリット
+                %ul
+                  %li 出店場所の事前告知による集客
+                  %li メニュー写真での訴求力向上
+                  %li 常連客とのコミュニケーション
+                  %li 悪天候時の中止連絡も簡単
+              .case-image
+                -# 画像をここに追加してください
+                = image_tag "kitchen car.png", alt: "キッチンカー運営者のイメージ", class: "use-case-img"
+                -# .image-placeholder キッチンカー運営者のイメージ画像
+
+          .use-case-card
+            %h3 ハンドメイド作家・販売者
+            %p イベント出店情報や新作商品の告知に活用
+            .case-content
+              .case-benefits
+                %h4 活用メリット
+                %ul
+                  %li 作品の紹介
+                  %li 出店情報の紹介
+                  %li 販売サイトへの誘導
+                  %li リピーター向け特典告知
+              .case-image
+                -# 画像をここに追加してください
+                = image_tag "handmade.png", alt: "ハンドメイド作家・販売者のイメージ", class: "use-case-img"
+                -# .image-placeholder ハンドメイド作家・販売者のイメージ画像
+
+      .use-case-category
+        %h2.category-title
+          %i.icon.fas.fa-waves
+          観光・宿泊業
+        .use-cases-grid
+          .use-case-card
+            %h3 海の家
+            %p 夏季限定のサービス内容や イベント情報、料金体系を詳しく紹介
+            .case-content
+              .case-benefits
+                %h4 活用メリット
+                %ul
+                  %li シーズン前からの予約獲得
+                  %li サービス内容の詳細アピール
+                  %li 天候に応じた営業情報の更新
+                  %li リピーター向けの特典案内
+              .case-image
+                -# 画像をここに追加してください
+                = image_tag "beach.jpg", alt: "海の家のイメージ", class: "use-case-img"
+                -# .image-placeholder 海の家のイメージ画像
+
+          .use-case-card
+            %h3 民宿・小規模宿泊施設
+            %p 地域の魅力と合わせて宿泊プランや体験サービスをアピール
+            .case-content
+              .case-benefits
+                %h4 活用メリット
+                %ul
+                  %li 大手予約サイトにない独自性
+                  %li 地域情報と合わせたPR
+                  %li 直接予約による手数料削減
+                  %li 常連客との関係構築
+              .case-image
+                -# 画像をここに追加してください
+                = image_tag "minsyuku.jpg", alt: "民宿・小規模宿泊施設のイメージ", class: "use-case-img"
+                -# .image-placeholder 民宿・小規模宿泊施設のイメージ画像
+
+          .use-case-card
+            %h3 体験型観光事業
+            %p 農業体験、工芸体験などの季節プログラムを効果的に告知
+            .case-content
+              .case-benefits
+                %h4 活用メリット
+                %ul
+                  %li 体験内容を写真で分かりやすく説明
+                  %li 参加者の声や感想の掲載
+                  %li 季節ごとのプログラム更新
+                  %li 地域観光との連携アピール
+              .case-image
+                -# 画像をここに追加してください
+                = image_tag "Rafting.jpg", alt: "体験型観光事業のイメージ", class: "use-case-img"
+                -# .image-placeholder 体験型観光事業のイメージ画像
+
+    .success-stories
+      %h2.section-title
+        %i.icon.fas.fa-trophy
+        成功事例のポイント
+      .success-points
+        .success-point
+          %h3
+            %i.icon.fas.fa-camera
+            魅力的な写真の活用
+          %p 商品やサービスの魅力が伝わる写真を複数枚掲載することで、参加者の興味を引きます
+        
+        .success-point
+          %h3
+            %i.icon.fas.fa-clock
+            タイムリーな情報更新
+          %p イベントや販売情報を定期的に更新し、フォロワーとの継続的な関係を築きます
+        
+        .success-point
+          %h3
+            %i.icon.fas.fa-users
+            地域コミュニティとの連携
+          %p 他の出店者や地域イベントとの協力により、相乗効果を生み出します
+
+    .cta-section
+      %h3 あなたの事業もつながるマルシェで始めませんか？
+      %p 多様な業種の方々が活用されています。まずは期間限定無料でお試しください。
+      .cta-buttons
+        = link_to new_seller_registration_path, class: 'cta-button' do
+          個人会員で始める
+        = link_to new_host_registration_path, class: 'cta-button primary' do
+          ショップ会員で始める
+
+= render 'footer/footer'

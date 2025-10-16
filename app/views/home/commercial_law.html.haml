@@ -1,0 +1,134 @@
+-# app/views/home/commercial_law.html.haml
+%body
+  = render 'header/header'
+  
+.commercial-law-page
+  %section.hero-section
+    %h1.page-title 特定商取引法に基づく表示
+    %p.subtitle 法令に基づく事業者情報の開示
+  
+  .commercial-law-container
+    .last-updated 最終更新日：2025年10月16日
+    
+    %article.commercial-content
+      %section.business-info
+        %h2 事業者情報
+        
+        .info-table
+          %table
+            %tr
+              %th 事業者名
+              %td つながるマルシェ運営事務局
+            %tr
+              %th 運営責任者
+              %td [運営責任者名]
+            %tr
+              %th 所在地
+              %td [事業者住所]
+            %tr
+              %th 連絡先
+              %td 
+                メール：[contact email]
+                %br
+                電話：[電話番号]（平日10:00-17:00）
+            %tr
+              %th ウェブサイト
+              %td 
+                = link_to root_url, root_url
+
+      %section.service-info
+        %h2 サービス内容
+        
+        .info-table
+          %table
+            %tr
+              %th 提供サービス
+              %td イベント情報掲載プラットフォームサービス
+            %tr
+              %th サービス内容
+              %td 
+                %ul
+                  %li イベント情報の掲載・管理
+                  %li 出展者プロフィールページの作成
+                  %li SNSシェア機能の提供
+                  %li SEO対策支援
+
+      %section.pricing-info
+        %h2 料金・支払い関係
+        
+        .info-table
+          %table
+            %tr
+              %th 利用料金
+              %td 
+                個人会員：月額480円（税込）
+                %br
+                ショップ会員：月額880円（税込）
+                %br
+                %span.campaign ※現在、期間限定で無料提供中
+            %tr
+              %th 支払い方法
+              %td 
+                %ul
+                  %li クレジットカード決済
+                  %li 口座振替
+                  %li 決済代行：会費ペイ（
+                  = link_to "https://kaihipay.jp/", "https://kaihipay.jp/", target: "_blank", rel: "noopener noreferrer"
+                  ）
+            %tr
+              %th 支払い時期
+              %td 月額制（毎月自動更新）
+            %tr
+              %th 返金について
+              %td 月の途中での解約による返金は承っておりません
+
+      %section.contract-info
+        %h2 契約関係
+        
+        .info-table
+          %table
+            %tr
+              %th 契約成立時期
+              %td 利用者の会員登録完了時
+            %tr
+              %th サービス提供時期
+              %td 契約成立後、即時利用可能
+            %tr
+              %th 契約期間
+              %td 月額制（自動更新）
+            %tr
+              %th 解約方法
+              %td マイページまたはお問い合わせフォームから申請
+
+      %section.other-info
+        %h2 その他
+        
+        .info-table
+          %table
+            %tr
+              %th 利用規約
+              %td 
+                = link_to "利用規約", terms_path
+                に準拠
+            %tr
+              %th 個人情報の取り扱い
+              %td 
+                = link_to "プライバシーポリシー", privacy_path
+                に準拠
+            %tr
+              %th 苦情・相談窓口
+              %td サイト内お問い合わせフォームまたは上記連絡先
+
+      %section.notes
+        %h2 注意事項
+        %ul
+          %li 本サービスはイベント情報の掲載プラットフォームであり、実際のイベント運営や商品販売には関与いたしません
+          %li 利用者間のトラブルについては当事者間で解決していただきます
+          %li サービス内容は予告なく変更する場合があります
+          %li システムメンテナンス等により一時的にサービスが利用できない場合があります
+
+    .contact-section
+      %h3 お問い合わせ
+      %p 特定商取引法に関するご質問やサービスについてのお問い合わせは、上記連絡先またはサイト内のお問い合わせフォームよりご連絡ください。
+
+= render 'footer/footer'

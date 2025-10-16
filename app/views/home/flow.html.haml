@@ -1,0 +1,174 @@
+-# app/views/home/flow.html.haml
+%body
+  = render 'header/header'
+  
+  .flow-page
+    %section.hero-section
+      %h1.page-title 会員登録から掲載までの流れについて
+      %p.subtitle 簡単3ステップで始められます
+      
+    .flow-container
+      .flow-steps
+        .step-card
+          .step-number 1
+          %h3 アカウント選択・会員登録
+          .step-content
+            %p まずは、個人会員またはショップ会員のいずれかを選択し、会員登録を行います。(決済登録はまだ不要です)
+
+            .plan-options
+              .plan-option
+                %h4 個人会員
+                %ul
+                  %li 個人での出店が中心
+                  %li 月2回まで イベント掲載
+                  %li 3枚まで 画像アップロード
+                  %li 基本プロフィールページ
+              .plan-option.recommended
+                %h4 ショップ会員（おすすめ）
+                %ul
+                  %li 事業としてイベント出店
+                  %li 制限なし イベント掲載
+                  %li 10枚まで 画像アップロード
+                  %li 充実したホームページ機能
+                  %li 注目ピックアップ掲載
+            .step-buttons
+              = link_to new_seller_registration_path, class: 'step-button individual' do
+                個人会員で登録
+              = link_to new_host_registration_path, class: 'step-button shop' do
+                ショップ会員で登録
+        
+        .step-card
+          .step-number 2
+          %h3 無料お試し期間
+          .step-content
+            %p 登録後、各会員区分の機能が期間限定で無料でご利用いただけます。
+            .trial-features
+              %h4 無料期間中にできること
+              %ul
+                %li プロフィールページの作成・カスタマイズ
+                %li イベント情報の掲載・編集
+                %li 画像のアップロード
+                %li SNSシェア機能の利用
+                %li 管理画面での操作確認
+            .trial-note
+              %p.highlight ※ 現在、期間限定キャンペーンにより永年無料でご利用いただけます
+
+        .step-card
+          .step-number 3
+          %h3 イベント掲載開始!! 
+          .step-content
+            %p マイページからイベント出店の告知を投稿しましょう。
+            .event-creation-steps
+              %h4 イベント掲載の手順
+              %ol
+                %li マイページにログイン
+                %li 「新しいイベント作成」をクリック
+                %li 
+                  イベント詳細情報を入力
+                  %ul
+                    %li イベント名・説明文
+                    %li 開催日時・場所
+                    %li 料金・定員情報
+                    %li 魅力的な写真をアップロード
+                %li 「作成」ボタンで掲載完了
+
+      .success-tips
+        %h2.section-title イベントを成功させるコツ
+        .tips-grid
+          .tip-card
+            %h4
+              %i.icon.fas.fa-clock
+              早めの告知
+            %p イベントの告知は、できるだけ早めに行いましょう。参加者が予定を立てやすくなります。
+          
+          .tip-card
+            %h4
+              %i.icon.fas.fa-share-alt
+              SNS活用
+            %p SNSや地域の掲示板などで積極的に宣伝しましょう。シェア機能を活用してください。
+          
+          .tip-card
+            %h4
+              %i.icon.fas.fa-camera
+              魅力的な写真
+            %p 商品やサービスの魅力が伝わる写真を複数枚掲載しましょう。
+          
+          .tip-card
+            %h4
+              %i.icon.fas.fa-users
+              コミュニケーション
+            %p イベント当日は、参加者とのコミュニケーションを大切にしましょう。
+
+          .tip-card
+            %h4
+              %i.icon.fas.fa-calendar-alt
+              イベント後のおすすめ作業
+            %p 次回のイベントのために、当日撮った画像を掲載し、イベントの履歴をアップデートしましょう。
+
+          .tip-card
+            %h4
+              %i.icon.fas.fa-desktop
+              ファン獲得のための施策
+            %p マイページを充実させ、どんなアカウントなのか知ってもらいましょう。さらに、特典なども用意してフォロワーを増やしていきましょう。
+
+
+      .payment-info-section
+        %h2.section-title 料金・お支払いについて
+        .payment-details
+          .current-campaign
+            %h3
+              %i.icon.fas.fa-gift
+              期間限定特別キャンペーン
+            %p.campaign-text 
+              現在、サービス開始記念として、今登録していただいた方は
+              %strong 永年無料
+              でご利用いただけます。
+            %ul.campaign-benefits
+              %li 月額料金が永続的に無料
+              %li すべての機能を制限なく利用
+              %li 追加料金は一切発生しません
+
+          .future-pricing
+            %h4 通常料金（キャンペーン終了後）
+            .pricing-table-small
+              %table
+                %tr
+                  %th 個人会員
+                  %td 月額480円（税込）
+                %tr
+                  %th ショップ会員  
+                  %td 月額880円（税込）
+            
+            %h4 お支払い方法
+            %ul
+              %li クレジットカード決済（VISA、MasterCard、JCB、American Express）
+              %li 口座振替
+              %li 
+                決済には
+                = link_to "会費ペイ", "https://kaihipay.jp/", target: "_blank", rel: "noopener noreferrer"
+                を利用（安全な決済システム）
+
+      .support-section
+        %h2.section-title サポートについて
+        .support-content
+          %p つながるマルシェでは、出店者の皆様が安心してご利用いただけるよう、充実したサポートを提供しています。
+          
+          %h4 利用可能なサポート
+          %ul
+            %li 操作方法に関するお問い合わせ対応  
+            %li イベント掲載のアドバイス
+            %li トラブル時の迅速な対応
+            %li 定期的な機能改善・追加
+
+          %p ご不明点やご質問がある場合は、お気軽にお問い合わせください。つながるマルシェの運営チームがサポートいたします。
+
+    .final-cta-section
+      %h3 今すぐ始めて、地域の魅力を発信しましょう！
+      %p 期間限定の永年無料キャンペーン実施中です
+      .cta-buttons
+        = link_to new_seller_registration_path, class: 'cta-button' do
+          個人会員で始める
+        = link_to new_host_registration_path, class: 'cta-button primary' do
+          ショップ会員で始める
+
+  = render 'footer/footer'

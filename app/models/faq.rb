@@ -7,5 +7,5 @@ class Faq < ApplicationRecord
   validates :order, presence: true, numericality: { only_integer: true, greater_than_or_equal_to: 0 }
 
   # デフォルトの並び順を設定（orderカラムの昇順）
-  default_scope { order(:order) }
+  # default_scope { order(:order) }  # 一旦コメントアウト
 end
