@@ -1,0 +1,187 @@
+.event-like {
+  margin-top: 8px;
+  display: flex;
+  align-items: center;
+  
+  gap: 12px;
+  flex-wrap: nowrap; /* force single-line layout */
+  white-space: nowrap; /* prevent inline wrapping of text */
+  .like-button {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    
+    padding: 6px 10px;
+    border-radius: 6px;
+    background: #f5f5f7;
+    border: 1px solid transparent;
+    cursor: pointer; /* default pointer for accessibility */
+    transition: background .15s ease, color .15s ease;
+  }
+  .like-button .emoji{ font-size: 18px }
+  .like-button .count{ margin-left: 6px; font-weight: 600 }
+
+  .like-button.liked {
+    background: linear-gradient(180deg,#ffefef,#ffdede);
+    color: #d33;
+    border-color: rgba(211,0,0,0.12);
+  }
+
+  .share-buttons {
+    display: flex;
+    gap: 6px;
+    align-items: center;
+    margin-top: 0 !important;
+    margin-left: 8px !important;
+  }
+
+  .event-like .share-buttons .share-button { 
+    display: inline-flex; 
+    align-items: center;
+    margin-left: 0 !important;
+  }
+
+  /* stronger hover pointer rule in case global rules override cursor */
+  .like-button:hover,
+  .like-button:focus {
+    cursor: pointer !important;
+  }
+}
+
+/* Stronger enforcement: ensure every direct child inside .event-like stays inline */
+.event-like > * {
+  display: inline-flex !important;
+  align-items: center !important;
+  white-space: nowrap !important;
+}
+
+.event-like .share-buttons {
+  flex-wrap: nowrap !important;
+  gap: 8px !important;
+}
+
+/* Protect against global rules that add margins to .share-button */
+// .event-like .share-buttons .share-button {
+//   margin-left: 0 !important;
+//   padding: 0 !important;
+// }
+
+/* Responsive: shrink gaps on very small screens to avoid wrapping */
+@media (max-width: 420px) {
+  .event-like { gap: 6px; }
+  .event-like > .share-buttons { margin-left: 6px !important; }
+  .event-like .share-buttons img { width: 20px; height: 20px; }
+}
+
+/* Share button styling - ホストページと同じスタイル */
+.share-buttons .share-button {
+  display: flex;
+  color: #ffffff !important;
+  align-items: center;
+  gap: 6px;
+  padding: 8px 12px;
+  border-radius: 8px;
+  text-decoration: none;
+  font-weight: 600;
+  font-size: 0.9em;
+  transition: all 0.18s ease;
+  box-shadow: 0 1px 3px rgba(0,0,0,0.08);
+  min-width: 92px;
+  justify-content: center;
+
+  i {
+    font-size: 1.05em;
+  }
+
+  &:hover {
+    transform: translateY(-1px);
+    box-shadow: 0 3px 6px rgba(0,0,0,0.12);
+  }
+}
+
+.share-buttons .line-share {
+  background: #00C300;
+  color: white;
+  &:hover {
+    background: #00A300;
+  }
+}
+
+.share-buttons .facebook-share {
+  background: #1877F2;
+  color: white;
+  &:hover {
+    background: #166FE5;
+  }
+}
+
+.share-buttons .twitter-share {
+  background: #000000;
+  color: white;
+  &:hover {
+    background: #333333;
+  }
+}
+
+/* モバイルでテキストを非表示、アイコンのみ表示 */
+@media (max-width: 480px) {
+  .event-like .share-buttons {
+    gap: 4px !important;
+  }
+
+  .event-like .share-buttons .share-button {
+    padding: 6px !important;
+    border-radius: 50% !important;
+    width: 30px !important;
+    height: 30px !important;
+    min-width: auto !important;
+    font-size: 0 !important;
+    text-indent: -9999px;
+    overflow: hidden;
+    
+    i {
+      font-size: 1.3em !important;
+      text-indent: 0;
+    }
+  }
+
+  /* モバイルではボタン内のテキストラベルを隠す（テキストが直接ノードでも対応） */
+  .event-like .share-buttons .share-button .label {
+    display: none !important;
+  }
+
+  /* 正しい DOM 構造（.share-buttons が親）の場合にも対応するセレクタ */
+  .share-buttons {
+    gap: 4px !important;
+  }
+
+  .share-buttons .share-button {
+    padding: 10px !important;
+    border-radius: 50% !important;
+    width: 30px !important;
+    height: 30px !important;
+    min-width: auto !important;
+    font-size: 0 !important;
+    overflow: hidden;
+    justify-content: center;
+  }
+
+  .share-buttons .share-button i {
+    color: white !important;
+    font-size: 18px !important;
+    line-height: 1 !important;
+    text-indent: 0 !important;
+  }
+
+  .share-buttons .share-button .label {
+    display: none !important;
+  }
+}
+
+
+
+
+          
+
+        
+      

@@ -2,6 +2,7 @@
 @import "admin/users";
 @import "admin/index";
 @import "event/show";
+@import "events/show"; // include plural-named overrides (custom view-specific styles)
 @import "sellers/show";
 @import "sellers/index";
 @import "facilities/index";

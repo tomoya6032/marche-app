@@ -1,3 +1,65 @@
+/* スライダー矢印・インジケータ */
+.slider-arrow {
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  z-index: 10 !important;
+  background: rgba(255, 255, 255, 0.9) !important;
+  border: 2px solid #333 !important;
+  border-radius: 50%;
+  width: 50px !important;
+  height: 50px !important;
+  font-size: 18px !important;
+  color: #333 !important;
+  box-shadow: 0 4px 12px rgba(0,0,0,0.2) !important;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  display: flex !important;
+  align-items: center;
+  justify-content: center;
+  outline: none;
+}
+
+.slider-arrow:hover {
+  background: rgba(255, 255, 255, 1) !important;
+  box-shadow: 0 6px 16px rgba(0,0,0,0.3) !important;
+  transform: translateY(-50%) scale(1.1);
+}
+
+.slider-arrow-left {
+  left: 10px !important;
+}
+
+.slider-arrow-right {
+  right: 10px !important;
+}
+
+.event-slider {
+  position: relative;
+}
+.slider-indicator {
+  width: 100%;
+  height: 6px;
+  margin: 8px 0 0 0;
+  background: #eee;
+  border-radius: 3px;
+  overflow: hidden;
+  position: relative;
+}
+.slider-indicator-bar {
+  height: 100%;
+  background: #007bff;
+  border-radius: 3px;
+  transition: width 0.2s;
+  position: absolute;
+  top: 0;
+  left: 0;
+}
+.event-slider.dragging {
+  cursor: grabbing;
+}
+
+
 .host-details {
     // padding: 20px;
     a {
@@ -21,9 +83,6 @@
       margin-bottom: 10px;
       padding-left: 20px;
       padding-right: 20px;
-  
-      
-      
       
       .host-identity {
         // display: flex;
@@ -50,35 +109,78 @@
   
       .host-contact-info {
         display: flex;
-        flex-direction: column;
-        text-align: left;
-       
-        /* 親要素全体の寄せはそのままにしておくか、削除 */
-        /* align-items: flex-end; /* ここはコメントアウトするか、flex-start に変更しない限り右寄せの影響を受ける */
-        /* gap: 5px; */
-      
-        .contact-items {
-          display: flex;
-          // padding: auto;
-          padding-left: 0;
-          flex-direction: column; /* 各p要素を縦に並べる */
-          align-items: flex-start; /* これが重要！子要素（pタグ）を左寄せにする */
-          // gap: 5px; /* 各p要素間の縦方向の間隔 */
-          text-align: left; /* 各p要素内のテキストを左寄せにする */
-          align-self: flex-start;
-          p {
-            margin-bottom: 0; /* gap を使うのでマージンは0にする */
-            font-size: 16px;
-            color: #555;
+        justify-content: center; /* テーブルを中央寄せ */
+        padding: 12px 0;
+
+        .contact-table {
+          width: 70%;
+          margin: 0 auto;
+          border-collapse: separate;
+          border-spacing: 0 10px; /* 行間を作ってカード風に見せる */
+          border: none; /* 枠線は使わない */
+
+          th, td {
+            padding: 12px 16px;
             text-align: left;
-            /* background-color: lightblue; /* デバッグ用に背景色を付けて、要素の範囲を確認すると良い */
+            vertical-align: middle;
+          }
+
+          th {
+            width: 30%;
+            font-weight: 700;
+            color: #333;
+            background: transparent;
+          }
+
+          td {
+            color: #444;
+          }
+
+          tbody tr {
+            border-radius: 8px;
+            overflow: hidden;
+          }
+
+          /* 行の背景色で見分けを付ける（枠線は使わない） */
+          tbody tr:nth-child(odd) {
+            background-color: #ffffff;
+          }
+
+          tbody tr:nth-child(even) {
+            background-color: #f8f8fb; /* 薄い示唆的な背景色 */
+          }
+
+          /* ホバーで少し強調 */
+          tbody tr:hover {
+            background-color: #f1f5ff;
+          }
+
+          /* モバイルでは幅100%かつ行をブロック表示にして読みやすくする */
+          @media (max-width: 768px) {
+            width: 100%;
+            border-spacing: 0 8px;
+            th, td {
+              display: block;
+              width: 100%;
+              padding: 10px 12px;
+            }
+            tbody tr {
+              display: block;
+              margin-bottom: 8px;
+            }
+            th {
+              font-weight: 600;
+              color: #333;
+            }
           }
         }
       }
     }
+
     .top-image-container {
-      margin-bottom: 50px;
+      // margin-bottom: 50px;
       text-align: center;
+      width: 100%;
       img {
         width: 100%;
         height: auto;
@@ -89,25 +191,229 @@
     
 
     .host-top-image {
-      width: 100%;
-      margin: auto;
+      width: 100vw;
+      position: relative;
+      left: 50%;
+      transform: translateX(-50%);
+      margin: 20px auto;
       text-align: center;
-      // height: auto;
       
-      border-radius: 6px;
-      img {
-        
+      .top-image-container {
         width: 100%;
-        margin: 20px 0;
-        border-radius: 10px;
-        // box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        overflow: hidden;
+      }
+      
+      img {
+        width: 100%;
+        height: auto;
+        border-radius: 0; /* 横幅いっぱいの場合は角丸なし */
+        display: block;
       }
     }
+
+    .share-section {
+      text-align: right;
+      // margin: 20px auto;
+      // padding: 10px;
+      background-color: #f8f9fa;
+      border-radius: 12px;
+      // width: 50%;
+
+      .share-buttons {
+        display: flex;
+        justify-content: right;
+        // gap: 16px;
+        flex-wrap: wrap;
+
+        .share-button {
+          // display: flex;
+          // text-align: right;
+          // gap: 8px;
+          // padding: 12px 20px;
+          // border-radius: 8px;
+          // text-decoration: none;
+          // font-weight: 600;
+          // font-size: 0.95em;
+          // transition: all 0.3s ease;
+          // box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+          // min-width: 120px;
+          // justify-content: center;
+
+          i {
+            font-size: 1.2em;
+          }
+
+          &:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 4px 8px rgba(0,0,0,0.15);
+          }
+        }
+
+        .line-share {
+          background: #00C300;
+          color: white;
+          border-radius: 12px;
+          padding: 12px;
+          &:hover {
+            background: #00A300;
+          }
+        }
+
+        .facebook-share {
+          background: #1877F2;
+          color: white;
+          border-radius: 12px;
+          padding: 12px;
+          &:hover {
+            background: #166FE5;
+          }
+        }
+
+        .twitter-share {
+          background: #000000;
+          color: white;
+          border-radius: 12px;
+          padding: 12px;
+          &:hover {
+            background: #333333;
+          }
+        }
+
+        
+      }
+    }
+  }
 
     .host-events {
       margin: 20px auto;
       height: auto;
       min-height: 200px;
+      position: relative !important; /* 矢印の絶対配置の基準にする */
+      overflow: visible; /* 矢印が切れないようにする */
+    
+      // イベントカード型スライダー
+      .event-slider {
+        display: flex;
+        overflow-x: auto;
+        gap: 24px;
+        padding: 16px 0;
+        scroll-snap-type: x mandatory;
+      }
+    
+      .event-card {
+        min-width: 320px;
+        max-width: 340px;
+        background: #ffffff;
+        border-radius: 16px;
+        box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+        display: flex;
+        flex-direction: column;
+        align-items: stretch;
+        scroll-snap-align: start;
+        transition: all 0.3s ease;
+        border: 1px solid rgba(0,0,0,0.05);
+        overflow: hidden;
+      }
+      .event-card:hover {
+        box-shadow: 0 8px 24px rgba(0,0,0,0.15);
+        transform: translateY(-2px);
+      }
+      .event-card-thumb {
+        width: 100%;
+        height: 200px;
+        object-fit: cover;
+        border-top-left-radius: 16px;
+        border-top-right-radius: 16px;
+        margin: 0 auto;
+        display: block;
+        background-color: #f8f9fa;
+      }
+      /* プレースホルダー画像（no_image）を実際のサムネイルと同じ寸法に揃える */
+      .event-card-thumb.no-image {
+        width: 100% !important;
+        height: 200px !important;
+        max-height: 200px !important;
+        object-fit: cover !important;
+        object-position: center !important;
+      }
+      .event-card-body {
+        padding: 20px;
+        display: flex;
+        flex-direction: column;
+        gap: 12px;
+        flex-grow: 1;
+      }
+      .event-card-title {
+        font-size: 1.2em;
+        font-weight: 600;
+        line-height: 1.3;
+        margin: 0 0 8px 0;
+        color: #2c3e50;
+        text-decoration: none;
+      }
+      .event-card-title a {
+        color: #2c3e50;
+        text-decoration: none;
+        transition: color 0.2s ease;
+      }
+      .event-card-title a:hover {
+        color: #3498db;
+      }
+      .event-card-date, .event-card-venue {
+        font-size: 0.9em;
+        color: #6c757d;
+        margin: 0;
+        line-height: 1.4;
+        display: flex;
+        align-items: center;
+        gap: 6px;
+      }
+      .event-card-date::before {
+        content: "📅";
+        font-size: 0.9em;
+        opacity: 0.8;
+      }
+      .event-card-venue::before {
+        content: "📍";
+        font-size: 0.9em;
+        opacity: 0.8;
+      }
+      @media (max-width: 600px) {
+        .event-card {
+          min-width: 280px;
+          max-width: 300px;
+        }
+        .event-card-thumb {
+          height: 160px;
+        }
+        .event-card-thumb.no-image {
+          height: 160px !important; /* モバイル時も合わせる */
+          max-height: 160px !important;
+        }
+        .event-card-body {
+          padding: 16px;
+          gap: 10px;
+        }
+        .event-card-title {
+          font-size: 1.1em;
+        }
+        .event-card-date, .event-card-venue {
+          font-size: 0.85em;
+        }
+      }
+
+      /* 強制上書き: 他のスタイルで縦並びになっている場合の保険 */
+      .host-details .host-events > .event-slider {
+        display: flex !important;
+        flex-direction: row !important;
+        overflow-x: auto !important;
+        white-space: nowrap !important;
+      }
+      .host-details .host-events > .event-slider > .event-card {
+        display: inline-flex !important;
+        flex: 0 0 auto !important;
+        vertical-align: top;
+      }
     
       h2 {
         text-align: center; /* タイトルを中央揃え */
@@ -334,7 +640,27 @@
         }
       }
     }
+
+
+
+/* PC画面でのみ矢印を表示 */
+@media (min-width: 769px) {
+  .slider-arrow {
+    display: flex !important;
+    visibility: visible !important;
+    opacity: 1 !important;
+  }
 }
+
+/* モバイルでは矢印を非表示 */
+@media (max-width: 768px) {
+  .slider-arrow {
+    display: none !important;
+  }
+  
+}
+
+
 
 
 /* SPデザイン */
@@ -350,15 +676,16 @@
       
     }
 
-
+  
     
   .host-header {
+    display: none !important; // ホストヘッダーを非表示
     flex-direction: column;
     
     margin: 5px;
     padding: 5px !important;
     h1 {
-      font-size: 18px !important; ; /* 見出しのフォントサイズを調整 */
+      font-size: 18px !important; /* 見出しのフォントサイズを調整 */
       text-align: center; /* テキストを中央揃え */
     }
     p {
@@ -374,12 +701,70 @@
       }
     }
   }  
+
+  .share-section {
+    text-align: end;
+    // height: 30px;
+    padding: 4px;
+    background-color: #d0d0d1;
+    // border-radius: 12px;
   
+    .share-buttons {
+      display: flex;
+      justify-content: right;
+      gap: 4px;
+      flex-wrap: wrap;
+      border-radius: 12px;
+      margin: 0;
+
+      .line-share {
+        background: #00C300;
+        color: white;
+        width: 50px;
+        &:hover {
+          background: #00A300;
+        }
+      }
+
+      .facebook-share {
+        background: #1877F2;
+        color: white;
+        width: 50px;
+        &:hover {
+          background: #166FE5;
+        }
+      }
+
+      .twitter-share {
+        background: #000000;
+        color: white;
+        width: 50px;
+        &:hover {
+          background: #333333;
+        }
+      }
+    }
+  }
+  
+  
+
+  .host-top-image {
+    width: 120vw !important; /* 幅を画面幅に合わせる */
+    margin-bottom : 0 !important; /* 余白をリセット */
+    // height: auto; /* 高さは自動調整 */
+    // margin: 0 auto; /* 中央揃え */
+  }
   
   .host-top-image-custom {
-    width: 100% !important; /* 横幅を100%に */
-    height: auto; /* 高さは自動調整 */
-    margin: 0 auto; /* 中央揃え */
+    // width: 100vw !important;
+    margin: 0 !important;
+    text-align: center;
+    
+    // position: relative;
+    // left: 50%;
+    // transform: translateX(-50%); /* 中央に配置 */
+    // max-width: none; /* 最大幅制限を解除 */
+    // object-fit: cover; /* アスペクト比を保持しながらフィット */
   }
     
 
@@ -419,6 +804,3 @@
     }
   }
 }
-
-
-

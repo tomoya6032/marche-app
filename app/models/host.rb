@@ -1,4 +1,7 @@
 class Host < ApplicationRecord
+  include AsyncVariantGenerator
+  VARIANT_ATTACHMENT_NAMES = [:top_image, :images, :goods_image_1, :goods_image_2, :goods_image_3, :goods_image_4]
+  VARIANT_COMMON_VARIANTS = [{ resize_to_limit: [800, 600] }]
   devise :database_authenticatable, :registerable,
          :recoverable, :rememberable, :validatable
 

@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[8.0].define(version: 2025_10_13_055543) do
+ActiveRecord::Schema[8.0].define(version: 2025_11_27_000002) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "pg_catalog.plpgsql"
 
@@ -80,6 +80,19 @@ ActiveRecord::Schema[8.0].define(version: 2025_10_13_055543) do
     t.index ["user_id"], name: "index_comments_on_user_id"
   end
 
+  create_table "event_likes", force: :cascade do |t|
+    t.bigint "event_id", null: false
+    t.string "visitor_token"
+    t.bigint "seller_id"
+    t.bigint "host_id"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["event_id", "host_id"], name: "index_event_likes_on_event_id_and_host_id"
+    t.index ["event_id", "seller_id"], name: "index_event_likes_on_event_id_and_seller_id"
+    t.index ["event_id", "visitor_token"], name: "index_event_likes_on_event_id_and_visitor_token"
+    t.index ["event_id"], name: "index_event_likes_on_event_id"
+  end
+
   create_table "event_views", force: :cascade do |t|
     t.bigint "event_id", null: false
     t.string "ip_address"
@@ -119,6 +132,7 @@ ActiveRecord::Schema[8.0].define(version: 2025_10_13_055543) do
     t.string "prefecture"
     t.bigint "host_id"
     t.boolean "is_featured", default: false, null: false
+    t.integer "likes_count", default: 0, null: false
     t.index ["facility_id"], name: "index_events_on_facility_id"
     t.index ["host_id"], name: "index_events_on_host_id"
     t.index ["seller_id"], name: "index_events_on_seller_id"
@@ -275,6 +289,7 @@ ActiveRecord::Schema[8.0].define(version: 2025_10_13_055543) do
 
   add_foreign_key "active_storage_attachments", "active_storage_blobs", column: "blob_id"
   add_foreign_key "active_storage_variant_records", "active_storage_blobs", column: "blob_id"
+  add_foreign_key "event_likes", "events"
   add_foreign_key "event_views", "events"
   add_foreign_key "events", "facilities"
   add_foreign_key "events", "hosts"

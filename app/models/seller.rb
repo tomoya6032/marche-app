@@ -1,4 +1,7 @@
 class Seller < ApplicationRecord
+  include AsyncVariantGenerator
+  VARIANT_ATTACHMENT_NAMES = [:image, :images]
+  VARIANT_COMMON_VARIANTS = [{ resize_to_limit: [800, 600] }]
   # Include default devise modules. Others available are:
   # :confirmable, :lockable, :timeoutable, :trackable and :omniauthable
   devise :database_authenticatable, :registerable,

@@ -17,7 +17,11 @@ class Admin::UsersController < Admin::BaseController
     # 他のデータ取得処理...
     # ★★★ ここを修正：全てのイベントをページネーション付きで取得する ★★★
     # 変数名を @all_events のように変更し、kaminariを適用
-    @all_events = Event.includes(:seller, :host).order(created_at: :desc).page(params[:event_page]).per(10) # 例えば10件表示
+    # パフォーマンス向上: 必要なカラムのみ選択し、関連 (seller, host) を eager-load する
+    @all_events = Event.select(:id, :title, :start_time, :venue, :likes_count, :seller_id, :host_id, :is_featured, :created_at)
+               .includes(:seller, :host)
+               .order(created_at: :desc)
+               .page(params[:event_page]).per(10) # 例えば10件表示
 
 
     # 注目イベントのチェックボックス更新用のダミーオブジェクト

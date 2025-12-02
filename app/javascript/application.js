@@ -1,19 +1,10 @@
 // app/javascript/application.js
 
-import "@hotwired/turbo-rails";
-import "controllers";
+// 純粋なJavaScriptで動作（jQuery, Turbo, Slick不使用）
+// event_likes と hosts_event_slider は個別にページで読み込む
 
-// jQuery をグローバルに設定 (必要なら残す)
-import $ from "jquery";
-window.$ = $;
-window.jQuery = $;
-
-// slick-carousel のJSをインポート (CSSはここではインポートしない)
-import "slick-carousel";
-
-// ここにメニュー切り替えとSlick Carouselの初期化コードを追加
-document.addEventListener("turbo:load", () => {
-  // menuToggle, spnav のコード
+// 純粋なJavaScriptでメニュー切り替え機能
+function initializeMenuToggle() {
   const menuToggle = document.querySelector(".menu-toggle");
   const spnav = document.querySelector(".spnav");
   if (menuToggle && spnav) {
@@ -21,22 +12,13 @@ document.addEventListener("turbo:load", () => {
       spnav.classList.toggle("active");
     });
   }
+}
 
-  // Slick Carousel の初期化コード
-  // `.top-slider` はあなたのHTML要素のセレクタに合わせてください
-  if ($('.top-slider').length) { // 要素が存在するか確認
-    $('.top-slider').slick({
-      autoplay: true,
-      autoplaySpeed: 3000,
-      speed: 1500,
-      infinite: true,
-      slidesToShow: 1,
-      slidesToScroll: 1,
-      arrows: true,
-      prevArrow: '.slider-navigation .prev', // もしこの要素が別にあるなら
-      nextArrow: '.slider-navigation .next', // もしこの要素が別にあるなら
-      dots: true
-    });
-  }
-});
+// DOMContentLoadedで初期化
+document.addEventListener("DOMContentLoaded", initializeMenuToggle);
+
+// 即座に実行（ページが既に読み込み済みの場合）
+if (document.readyState !== 'loading') {
+  initializeMenuToggle();
+}
 

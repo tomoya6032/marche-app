@@ -5,6 +5,10 @@ Rails.application.config.assets.version = "1.0"
 
 # config/initializers/assets.rb
 Rails.application.config.assets.paths << Rails.root.join('node_modules')
+Rails.application.config.assets.paths << Rails.root.join('app/javascript')
 
 # Add additional assets to the asset load path.
 # Rails.application.config.assets.paths << Emoji.images_path
+
+# Precompile additional assets.
+Rails.application.config.assets.precompile += %w( hosts_event_slider.js event_likes.js )

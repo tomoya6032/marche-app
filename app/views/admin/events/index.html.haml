@@ -1,0 +1,25 @@
+%h1 管理画面 — イベント一覧
+
+.events-table
+  %table
+    %thead
+      %tr
+        %th ID
+        %th タイトル
+        %th 開始日時
+        %th 表示回数
+        %th いいね数
+        %th 操作
+    %tbody
+      - @events.each do |event|
+        %tr
+          %td= event.id
+          %td= link_to(event.title, admin_event_path(event)) rescue event.title
+          %td= event.start_time ? event.start_time.strftime('%Y-%m-%d %H:%M') : '-'
+          %td= event.total_views_count
+          %td= event.likes_count || 0
+          %td
+            = link_to '編集', edit_admin_event_path(event), class: 'operation-button'
+            = link_to '削除', admin_event_path(event), method: :delete, data: { confirm: '本当に削除しますか？' }, class: 'button-delete'
+
+  = paginate @events

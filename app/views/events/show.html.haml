@@ -26,16 +26,7 @@
   .event-index
     .index-btn
       %p 出店詳細ページ
-    .share-buttons
-      %a{ href: "https://twitter.com/intent/tweet?text=#{ERB::Util.url_encode(@event.title)}&url=#{ERB::Util.url_encode(request.original_url)}", target: "_blank", rel: "noopener noreferrer", class: "share-button twitter-share" }
-        %img{ src: asset_path("logo-black.png"), alt: "Share on X", width: "32", height: "32" }
-        Xでシェア
-      %a{ href: "https://social-plugins.line.me/lineit/share?url=#{ERB::Util.url_encode(request.original_url)}", target: "_blank", rel: "noopener noreferrer", class: "share-button line-share" }
-        %img{ src: asset_path("LINE_icon.png"), alt: "Share on LINE", width: "32", height: "32" }
-        LINEでシェア
-      %a{ href: "https://www.facebook.com/sharer/sharer.php?u=#{ERB::Util.url_encode(request.original_url)}", target: "_blank", rel: "noopener noreferrer", class: "share-button facebook-share" }
-        %img{ src: asset_path("Facebook_Logo_Primary.png"), alt: "Share on Facebook", width: "32", height: "32" }
-        Facebookでシェア
+    -# share buttons moved beside like button
   
   .event-title
     %h2= @event.title
@@ -49,6 +40,84 @@
     - else
       .event-no-image
         = image_tag "no_image_square.jpg", class: 'event-no-image' # デフォルト画像を表示
+  .share-buttons
+    .event-like
+      -# 判定: 現在のビジターが既にいいねしているかを判定
+      - visitor_token = session[:visitor_token]
+      - existing_like = @event.event_likes.find_by(seller_id: current_seller&.id) if defined?(current_seller) && current_seller
+      - existing_like ||= @event.event_likes.find_by(host_id: current_host&.id) if defined?(current_host) && current_host
+      - existing_like ||= @event.event_likes.find_by(visitor_token: visitor_token) if visitor_token
+      - liked = existing_like.present?
+      %button.like-button{ type: 'button', data: { event_id: @event.id, liked: liked, like_id: (existing_like&.id || '') }, style: 'cursor: pointer;' }
+        %span.emoji 👍
+        %span.label
+          - if liked
+            いいねしました
+          - else
+            いいね
+        %span.count= @event.likes_count || 0
+      
+    %script{ type: 'module' }
+      :plain
+        (() => {
+          const btn = document.querySelector('.event-like .like-button');
+          if (!btn) return;
+          const eventId = btn.dataset.eventId;
+          const countEl = btn.querySelector('.count');
+          const labelEl = btn.querySelector('.label');
+          const csrf = document.querySelector('meta[name="csrf-token"]')?.content;
+
+          function setLikedState(isLiked){
+            btn.dataset.liked = isLiked ? 'true' : 'false';
+            btn.classList.toggle('liked', !!isLiked);
+            labelEl.textContent = isLiked ? 'いいねしました' : 'いいね';
+          }
+
+          btn.addEventListener('click', async (e) => {
+            e.preventDefault();
+            const liked = btn.dataset.liked === 'true';
+            try {
+              if (!liked){
+                const res = await fetch(`/events/${eventId}/event_likes`, {
+                  method: 'POST',
+                  headers: { 'Accept': 'application/json', 'X-CSRF-Token': csrf },
+                  credentials: 'same-origin'
+                });
+                if (!res.ok) throw new Error('HTTP ' + res.status);
+                const json = await res.json();
+                countEl.textContent = json.likes_count;
+                btn.dataset.likeId = json.like_id || '';
+                setLikedState(true);
+              } else {
+                const likeId = btn.dataset.likeId;
+                if (!likeId) return;
+                const res = await fetch(`/events/${eventId}/event_likes/${likeId}`, {
+                  method: 'DELETE',
+                  headers: { 'Accept': 'application/json', 'X-CSRF-Token': csrf },
+                  credentials: 'same-origin'
+                });
+                if (!res.ok) throw new Error('HTTP ' + res.status);
+                const json = await res.json();
+                countEl.textContent = json.likes_count;
+                btn.dataset.likeId = '';
+                setLikedState(false);
+              }
+            } catch (err) {
+              console.error('like action failed', err);
+            }
+          });
+        })();
+    
+    = link_to "https://line.me/R/msg/text/?#{CGI.escape("#{@event.title}のイベントページをチェック！ #{request.original_url}")}", target: '_blank', class: 'share-button line-share' do
+      %i.fab.fa-line
+      %span.label LINE
+    = link_to "https://www.facebook.com/sharer/sharer.php?u=#{CGI.escape(request.original_url)}", target: '_blank', class: 'share-button facebook-share' do
+      %i.fab.fa-facebook-f
+      %span.label Facebook
+    = link_to "https://twitter.com/intent/tweet?url=#{CGI.escape(request.original_url)}&text=#{CGI.escape("#{@event.title}のイベントページをチェック！")}", target: '_blank', class: 'share-button twitter-share' do
+      %i.fab.fa-twitter
+      %span.label エックス
+
 
   %table.event-details
     %tr

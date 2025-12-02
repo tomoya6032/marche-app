@@ -198,6 +198,70 @@
   border-radius: 5px;
   margin-bottom: 10px;
 }
+
+/* 新: contact-table 用のスタイル（既存 CSS を上書き） */
+.host-details .host-contact-info {
+  display: flex;
+  justify-content: center;
+  padding: 12px 0;
+}
+
+.host-details .host-contact-info .contact-table {
+  width: 70%;
+  margin: 0 auto;
+  border-collapse: separate;
+  border-spacing: 0 10px;
+  border: none;
+}
+
+.host-details .host-contact-info .contact-table th,
+.host-details .host-contact-info .contact-table td {
+  padding: 12px 16px;
+  text-align: left;
+  vertical-align: middle;
+}
+
+.host-details .host-contact-info .contact-table th {
+  width: 30%;
+  font-weight: 700;
+  color: #333;
+  background: transparent;
+}
+
+.host-details .host-contact-info .contact-table td {
+  color: #444;
+}
+
+.host-details .host-contact-info .contact-table tbody tr:nth-child(odd) {
+  background-color: #ffffff;
+  border-radius: 8px;
+}
+
+.host-details .host-contact-info .contact-table tbody tr:nth-child(even) {
+  background-color: #f8f8fb;
+  border-radius: 8px;
+}
+
+.host-details .host-contact-info .contact-table tbody tr:hover {
+  background-color: #f1f5ff;
+}
+
+@media (max-width: 768px) {
+  .host-details .host-contact-info .contact-table {
+    width: 100%;
+    border-spacing: 0 8px;
+  }
+  .host-details .host-contact-info .contact-table th,
+  .host-details .host-contact-info .contact-table td {
+    display: block;
+    width: 100%;
+    padding: 10px 12px;
+  }
+  .host-details .host-contact-info .contact-table tbody tr {
+    display: block;
+    margin-bottom: 8px;
+  }
+}
 .host-details .host-images {
   margin: 40px 0;
   padding: 10px 0;

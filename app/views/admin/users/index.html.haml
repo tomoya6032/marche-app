@@ -133,6 +133,7 @@
         %tr
           %th 注目
           %th イベント名
+          %th いいね数
           %th 開催日
           %th 都道府県
           %th 開催者名
@@ -147,6 +148,7 @@
                 = form.check_box "events[#{event.id}][is_featured]", { checked: event.is_featured }, true, false
                 = form.hidden_field "events[#{event.id}][id]", value: event.id
               %td= link_to event.title, event_path(event)
+              %td= event.likes_count || 0
               %td= event.start_time.strftime('%Y/%m/%d') if event.start_time
               %td= event.venue || "未設定"
               %td

@@ -7,6 +7,9 @@
     %meta{ content: "yes", name: "apple-mobile-web-app-capable" }
     %meta{ content: "yes", name: "mobile-web-app-capable" }
 
+    -# Font Awesome (CDN: v6.x)
+    %link{ href: "https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css", rel: "stylesheet" }
+
     -# ページタイトル
     %title= content_for?(:title) ? yield(:title) : "つながるマルシェ - あなたのイベントを見つけよう"
 
@@ -51,11 +54,11 @@
     %link{ rel: "stylesheet", type: "text/css", href: "//cdn.jsdelivr.net/npm/slick-carousel@1.8.1/slick/slick.css" }
     %link{ rel: "stylesheet", type: "text/css", href: "//cdn.jsdelivr.net/npm/slick-carousel@1.8.1/slick/slick-theme.css" }
     -# %script{ src: "https://code.jquery.com/jquery-3.7.1.min.js", crossorigin: "anonymous" }
-    %link{ href: "https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css", rel: "stylesheet" }
+    -# Font Awesome already included above
 
     = stylesheet_link_tag "application", media: "all", "data-turbo-track": "reload"
     = javascript_importmap_tags
-    -# = javascript_include_tag "application", "data-turbo-track": "reload", defer: true
+    = javascript_include_tag "application", type: "module", "data-turbo-track": "reload"
 
   %body
     -# ここにフラッシュメッセージの表示コードを追加

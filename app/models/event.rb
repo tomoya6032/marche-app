@@ -1,6 +1,10 @@
 class Event < ApplicationRecord
+  include AsyncVariantGenerator
+  VARIANT_ATTACHMENT_NAMES = [:images]
+  VARIANT_COMMON_VARIANTS = [{ resize_to_limit: [800, 600] }, { resize_to_limit: [1200, 630] }]
   has_many_attached :images, dependent: :purge_later
   has_many :event_views, dependent: :destroy
+  has_many :event_likes, dependent: :destroy
 
   belongs_to :seller, optional: true # セラーとの関連
   belongs_to :host, optional: true   # ホストとの関連

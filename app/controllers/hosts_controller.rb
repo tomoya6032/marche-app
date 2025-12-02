@@ -43,7 +43,7 @@ class HostsController < ApplicationController
 
     # --- 公開プロフィール用の情報（誰でも見れる部分） ---
     # イベントは開催日時が近い順に最大5件
-    @public_events = @host.events.order(start_time: :asc).limit(5)
+    @public_events = @host.events.order(start_time: :asc).limit(5).includes(images_attachments: :blob)
     @topics_text = @host.topics # トピックスのテキストを取得
     @news_text = @host.news # 新着ニュースのテキストを取得
     @description_text = @host.description # 私たちについて

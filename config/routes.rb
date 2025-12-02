@@ -65,7 +65,9 @@ Rails.application.routes.draw do
   # ==============================
   # グローバルなイベント一覧・詳細
   # ==============================
-  resources :events # これは `admin/events` と衝突しないのでこのままでOK
+  resources :events do
+    resources :event_likes, only: [:create, :destroy]
+  end
 
   # ==============================
   # ホスト関連のカスタムルート (スラッグベースより先に定義)
