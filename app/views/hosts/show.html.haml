@@ -103,7 +103,7 @@
                   %td 決済登録
                   %td
                     %form{ action: "https://example.com/host-payment", method: "get", target: "_blank" }
-                      = link_to "決済登録", "https://example.com/host-payment", class: "payment-button", target: "_blank"
+                      = link_to "決済登録", "https://www.kaihipay.jp/forms?form_code=9300764061642479", class: "payment-button", target: "_blank"
           
       -# ★★★ ホスト本人用の情報ここまで ★★★
 
@@ -131,8 +131,8 @@
     .host-events
       %h2 出店イベント一覧
       - if @public_events.present?
-        .event-slider(tabindex="0" aria-label="イベントスライダー" role="region" style="display:flex;overflow-x:auto;gap:24px;padding:16px 0;scroll-snap-type:x mandatory;")
-          - @public_events.each do |event|
+        .event-slider(tabindex="0" aria-label="イベントスライダー" role="region" style="display:flex;overflow-x:auto;gap:12px;padding:16px 0;scroll-snap-type:x mandatory;")
+          - @public_events.first(15).each do |event|
             .event-card
               - if event.images.attached? && event.images.any?
                 = link_to host_event_path(event.host&.slug.presence || event.host&.id, event) do
@@ -226,14 +226,15 @@
         %p 画像がありません。
 
     .contact-section
-      %h2 コンタクト
+      %h2 コンタクト / 問い合わせ
       %p.contact-message お問い合わせはこちらから:
       - if @host.contact_link.present?
-        %p.contact-link
+        .contact-link
           - if @host.contact_link.include?('@') # メールアドレスの場合
             = link_to "メールを送る", "mailto:#{@host.contact_link}", class: 'contact-link-text'
           - else # URLの場合
             = link_to "ショップ問い合わせフォームへ", @host.contact_link, target: '_blank', rel: 'noopener noreferrer', class: 'contact-link-text'
       - else
         %p.contact-link お問い合わせリンクが設定されていません。
+
 = render 'footer/footer' # ★ここも .host-lp-page の外側にする

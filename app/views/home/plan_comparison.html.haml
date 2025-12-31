@@ -3,10 +3,23 @@
   = render 'header/header'
   
   .plan-comparison-page
+    .hero-image-wrapper
+      %img{ src: asset_path('Image-of-function.png'), alt: 'プラン比較', class: 'features-hero-image' }
+    .share-section 
+      .share-buttons
+        = link_to "https://line.me/R/msg/text/?#{CGI.escape("プラン比較ページをチェック！ #{request.original_url}")}", target: '_blank', class: 'share-button line-share' do
+          %i.fab.fa-line
+          %span.label LINE
+        = link_to "https://www.facebook.com/sharer/sharer.php?u=#{CGI.escape(request.original_url)}", target: '_blank', class: 'share-button facebook-share' do
+          %i.fab.fa-facebook-f
+          %span.label Facebook
+        = link_to "https://twitter.com/intent/tweet?url=#{CGI.escape(request.original_url)}&text=#{CGI.escape("プラン比較ページをチェック！")}", target: '_blank', class: 'share-button twitter-share' do
+          %i.fab.fa-twitter
+          %span.label エックス
+    
     %section.hero-section
       %h1.page-title プラン比較
       %p.subtitle 個人会員とショップ会員の機能面を詳しく比較してください
-    
     .comparison-container
       .comparison-table-wrapper
         %table.plan-comparison-table

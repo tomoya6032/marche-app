@@ -8,6 +8,7 @@ class EventsController < ApplicationController
 
 
   def index
+    @breadcrumbs = [{name: "ホーム", path: root_path}, {name: "イベント一覧", path: events_path}]
     # 基本のイベント取得
     @events = Event.includes(:host, :seller, images_attachments: :blob)
     # フィルタリング: 開催日の近い順
@@ -51,6 +52,8 @@ class EventsController < ApplicationController
   end
 
   def show
+    @breadcrumbs = [{name: "ホーム", path: root_path}, {name: "イベント一覧", path: events_path}, {name: @event.title, path: event_path(@event)}]
+    
     # 閲覧数を記録（同じIPアドレスからは1日1回のみ）
     EventView.record_view!(@event, request.remote_ip)
 

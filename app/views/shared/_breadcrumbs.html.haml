@@ -1,0 +1,9 @@
+- if @breadcrumbs.present?
+  %nav.breadcrumbs{ aria: { label: 'パンくずリスト' } }
+    .breadcrumb-list
+      - @breadcrumbs.each_with_index do |crumb, index|
+        .breadcrumb-item
+          - if index == @breadcrumbs.size - 1
+            %span.breadcrumb-current= crumb[:name]
+          - else
+            = link_to crumb[:name], crumb[:path], class: 'breadcrumb-link'

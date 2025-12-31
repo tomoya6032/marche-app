@@ -1,0 +1,81 @@
+// パンくずリストのスタイル
+.breadcrumbs {
+  background-color: #ffffff;
+  padding: 12px 20px;
+  margin: 0;
+//   border-bottom: 1px solid #e9ecef;
+  font-size: 0.9rem;
+
+  .breadcrumb-list {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    max-width: 1200px;
+    margin: 0 auto;
+  }
+
+  .breadcrumb-item {
+    display: flex;
+    align-items: center;
+
+    &:not(:last-child)::after {
+      content: "›";
+      margin: 0 8px;
+      color: #6c757d;
+      font-size: 1.1em;
+    }
+  }
+
+  .breadcrumb-link {
+    color: #007bff;
+    text-decoration: none;
+    transition: color 0.2s ease;
+
+    &:hover {
+      color: #0056b3;
+      text-decoration: underline;
+    }
+  }
+
+  .breadcrumb-current {
+    color: #6c757d;
+    font-weight: 500;
+  }
+}
+
+// スマートフォン対応
+@media (max-width: 768px) {
+  .breadcrumbs {
+    padding: 10px 15px;
+    font-size: 0.85rem;
+
+    .breadcrumb-item {
+      &:not(:last-child)::after {
+        margin: 0 6px;
+      }
+    }
+  }
+}
+
+@media (max-width: 480px) {
+  .breadcrumbs {
+    padding: 8px 10px;
+    font-size: 0.8rem;
+
+    .breadcrumb-list {
+      overflow-x: auto;
+      -webkit-overflow-scrolling: touch;
+    }
+
+    .breadcrumb-item {
+      white-space: nowrap;
+
+      &:not(:last-child)::after {
+        margin: 0 4px;
+      }
+    }
+  }
+}

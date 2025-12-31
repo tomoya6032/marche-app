@@ -1,5 +1,6 @@
 $primary-color: #ec7ca1;
 $secondary-color: #41404a; // 濃い青色 (落ち着きとプロフェッショナル)
+$secondary-teal: #4dca98; /* 温かみのある青緑 */
 $accent-color: #edcaff; // 淡い黄色 (明るさと親しみやすさ)
 $text-color: #4e4e52; // 濃い灰色 (読みやすさ)
 $light-text-color: #f8f9fa; // 白に近い色 (背景とのコントラスト)
@@ -12,10 +13,11 @@ a {
 
 .host-lp-page { // 全体的なLPページのスタイル（Hamlで追加）
   // background-color: $background-color;
+  width: 95%;
   color: $text-color;
   font-family: 'Noto Sans JP', sans-serif;
   line-height: 1.6;
-  padding: 2rem;
+  padding: 1rem;
   border-radius: 8px;
   box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
 
@@ -70,7 +72,7 @@ a {
             margin: 6px;
             padding: 8px;
             padding-left: 8px;  
-            // width: 100px;
+            
             border: none;
             border-radius: 4px;
             background-color: #efb064;
@@ -442,29 +444,39 @@ a {
 
     .contact-section {
       padding: 1.5rem 0;
+      text-align: center; /* ボタンを中央寄せ */
       h2 {
         font-size: 2rem;
         color: $text-color;
         margin-bottom: 1rem;
       }
       .contact-message {
-        margin-bottom: 1rem;
+        margin-bottom: rem;
+        font-size: 1.3rem;
         color: lighten($text-color, 10%);
       }
       .contact-link {
-        font-size: 1.1rem;
+        // display: block; /* 親はブロックにして中央揃えしやすくする */
+        padding: 0; /* 実サイズは内側(.contact-link-text)で制御 */
+        width: 300px; /* 固定幅を撤廃 */
+        text-align: center; /* テキストを中央揃え */
+        transition: background-color 0.2s ease;
+        background-color: $secondary-teal;
+        /* ホバーではサイズやパディングを変えず、色のみ変更 */
+        &:hover {
+          background-color: darken($secondary-teal, 8%);
+        }
+
         .contact-link-text {
-          display: inline-block;
-          padding: 0.75rem 1.5rem;
-          background-color: $secondary-color;
+          // display: inline-block;
+          padding: 0.6rem 1.2rem; /* テキストに合わせて自動で幅を決める */
+          font-size: 1.5rem; /* 適切な読みやすいサイズ */
           color: $light-text-color;
           text-decoration: none;
           border-radius: 6px;
-          transition: background-color 0.3s ease;
-          &:hover {
-            background-color: darken($secondary-color, 10%);
-          }
+          
         }
+
       }
     }
   }

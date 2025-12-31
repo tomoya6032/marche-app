@@ -11,6 +11,7 @@ class HostsController < ApplicationController
   
   # ★★★ index アクションの修正 ★★★
   def index
+    @breadcrumbs = [{name: "ホーム", path: root_path}, {name: "ホスト一覧", path: hosts_path}]
     # ホストの一覧ページ（誰でも見れる）
     @hosts = Host.all.order(name: :asc) # 全ホストを名前順で取得
     # ここでは、@host = current_host のような行は不要です。
@@ -28,9 +29,10 @@ class HostsController < ApplicationController
     unless @host
       # ホストが見つからなかった場合の処理 (例: 404エラー)
       render file: "#{Rails.root}/public/404.html", status: :not_found, layout: false
-      return # ★★★ return を追加 ★★★
+      return
     end
-
+    
+    @breadcrumbs = [{name: "ホーム", path: root_path}, {name: "ホスト一覧", path: hosts_path}, {name: @host.name, path: public_host_profile_path(@host.slug.presence || @host.id)}]
 
     # --- ホスト本人（current_host）にのみ表示する情報 ---
     if host_signed_in? && @host == current_host
@@ -42,8 +44,8 @@ class HostsController < ApplicationController
     # --- ここまでホスト本人用 ---
 
     # --- 公開プロフィール用の情報（誰でも見れる部分） ---
-    # イベントは開催日時が近い順に最大5件
-    @public_events = @host.events.order(start_time: :asc).limit(5).includes(images_attachments: :blob)
+    # イベントは開催日時が近い順に最大30件
+      @public_events = @host.events.order(start_time: :asc).limit(15).includes(images_attachments: :blob)
     @topics_text = @host.topics # トピックスのテキストを取得
     @news_text = @host.news # 新着ニュースのテキストを取得
     @description_text = @host.description # 私たちについて

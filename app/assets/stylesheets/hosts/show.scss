@@ -59,6 +59,15 @@
   cursor: grabbing;
 }
 
+/* ホストページ全体のラッパー幅を制限して、子要素がビューポートをはみ出さないようにする */
+.host-lp-page {
+  box-sizing: border-box;
+  width: 100%;
+  
+  padding: 0 16px;
+  overflow-x: hidden; /* 横はみ出しを防止 */
+}
+
 
 .host-details {
     // padding: 20px;
@@ -72,7 +81,7 @@
     }
     font-family: 'Arial', sans-serif;
     background-color: #fdfdfd;
-    width: 90%;
+    width: 100%;
     margin: 0 auto;
     
   
@@ -191,23 +200,37 @@
     
 
     .host-top-image {
-      width: 100vw;
+      /* コンテナ幅は親に合わせて100%にし、ビューポート幅(100vw)を使わないことで
+         スクロールバーやオフセットによる横はみ出しを防ぐ */
+      width: 100%;
       position: relative;
-      left: 50%;
-      transform: translateX(-50%);
-      margin: 20px auto;
+      margin: 20px 0;
       text-align: center;
-      
+
       .top-image-container {
         width: 100%;
         overflow: hidden;
+        text-align: center;
       }
-      
-      img {
+
+      .host-top-image-custom {
+         text-align: center;
+      }
+
+      img, .host-top-image-custom {
         width: 100%;
+        // max-width: 100%;
         height: auto;
         border-radius: 0; /* 横幅いっぱいの場合は角丸なし */
         display: block;
+        margin-left: auto;
+        margin-right: auto; /* 画像が親コンテナより小さい場合は中央に寄せる */
+      }
+
+      /* 既存の application.css による上書きを回避するため、より詳細なセレクタで上書き */
+      .host-lp-page .host-details & {
+        width: 100% !important;
+        max-width: 100% !important;
       }
     }
 
@@ -226,18 +249,6 @@
         flex-wrap: wrap;
 
         .share-button {
-          // display: flex;
-          // text-align: right;
-          // gap: 8px;
-          // padding: 12px 20px;
-          // border-radius: 8px;
-          // text-decoration: none;
-          // font-weight: 600;
-          // font-size: 0.95em;
-          // transition: all 0.3s ease;
-          // box-shadow: 0 2px 4px rgba(0,0,0,0.1);
-          // min-width: 120px;
-          // justify-content: center;
 
           i {
             font-size: 1.2em;
@@ -269,6 +280,17 @@
           }
         }
 
+      }
+
+
+        /* Ensure host page share buttons stay right-aligned even if application.css loads after page CSS */
+        .host-lp-page .host-details .share-section {
+          text-align: right !important;
+        }
+
+        .host-lp-page .host-details .share-section .share-buttons {
+          justify-content: flex-end !important;
+        }
         .twitter-share {
           background: #000000;
           color: white;
@@ -282,7 +304,7 @@
         
       }
     }
-  }
+  
 
     .host-events {
       margin: 20px auto;
@@ -295,14 +317,14 @@
       .event-slider {
         display: flex;
         overflow-x: auto;
-        gap: 24px;
+        gap:12px;
         padding: 16px 0;
         scroll-snap-type: x mandatory;
       }
     
       .event-card {
-        min-width: 320px;
-        max-width: 340px;
+        min-width: 240px;
+        max-width: 320px;
         background: #ffffff;
         border-radius: 16px;
         box-shadow: 0 4px 12px rgba(0,0,0,0.1);
@@ -380,8 +402,9 @@
       }
       @media (max-width: 600px) {
         .event-card {
-          min-width: 280px;
-          max-width: 300px;
+          min-width: 140px;
+          max-width: 180px;
+          gap: 2px;
         }
         .event-card-thumb {
           height: 160px;
@@ -401,6 +424,23 @@
           font-size: 0.85em;
         }
       }
+
+/* 管理用イベント一覧（.host-events-management）を一定高さで切ってスクロール可能にする */
+.host-details .host-events-management {
+  max-height: 500px; /* 高さが500pxを超える場合は内部でスクロール */
+  overflow-y: auto;
+  -webkit-overflow-scrolling: touch; /* iOSで慣性スクロール */
+  padding: 12px;
+  border-radius: 8px;
+  border: 1px solid #e9ecef;
+  background: #fff;
+}
+
+@media (max-width: 600px) {
+  .host-details .host-events-management {
+    max-height: 60vh; /* モバイルではビューポートに合わせて調整 */
+  }
+}
 
       /* 強制上書き: 他のスタイルで縦並びになっている場合の保険 */
       .host-details .host-events > .event-slider {
@@ -757,14 +797,10 @@
   
   .host-top-image-custom {
     // width: 100vw !important;
-    margin: 0 !important;
     text-align: center;
+    margin: 0 !important;
     
-    // position: relative;
-    // left: 50%;
-    // transform: translateX(-50%); /* 中央に配置 */
-    // max-width: none; /* 最大幅制限を解除 */
-    // object-fit: cover; /* アスペクト比を保持しながらフィット */
+    
   }
     
 

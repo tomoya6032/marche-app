@@ -3,6 +3,19 @@
   = render 'header/header'
   
   .pricing-page
+    .hero-image-wrapper
+      %img{ src: asset_path('payment-of-price.png'), alt: '利用料金について', class: 'pricing-hero-image' }
+    .share-section 
+      .share-buttons
+        = link_to "https://line.me/R/msg/text/?#{CGI.escape("プラン比較ページをチェック！ #{request.original_url}")}", target: '_blank', class: 'share-button line-share' do
+          %i.fab.fa-line
+          %span.label LINE
+        = link_to "https://www.facebook.com/sharer/sharer.php?u=#{CGI.escape(request.original_url)}", target: '_blank', class: 'share-button facebook-share' do
+          %i.fab.fa-facebook-f
+          %span.label Facebook
+        = link_to "https://twitter.com/intent/tweet?url=#{CGI.escape(request.original_url)}&text=#{CGI.escape("プラン比較ページをチェック！")}", target: '_blank', class: 'share-button twitter-share' do
+          %i.fab.fa-twitter
+          %span.label エックス
     %section.hero-section
       %h1.page-title 利用料金について
       %p.subtitle イベントを探している人は無料で使えます。出店を掲載したい人も現在無料で掲載可能です！！

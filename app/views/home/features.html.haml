@@ -3,6 +3,19 @@
   = render 'header/header'
   
   .features-page
+    .hero-image-wrapper
+      = image_tag 'Image-of-function.png', alt: 'サイト機能について', class: 'features-hero-image'
+    .share-section 
+      .share-buttons
+        = link_to "https://line.me/R/msg/text/?#{CGI.escape("プラン比較ページをチェック！ #{request.original_url}")}", target: '_blank', class: 'share-button line-share' do
+          %i.fab.fa-line
+          %span.label LINE
+        = link_to "https://www.facebook.com/sharer/sharer.php?u=#{CGI.escape(request.original_url)}", target: '_blank', class: 'share-button facebook-share' do
+          %i.fab.fa-facebook-f
+          %span.label Facebook
+        = link_to "https://twitter.com/intent/tweet?url=#{CGI.escape(request.original_url)}&text=#{CGI.escape("プラン比較ページをチェック！")}", target: '_blank', class: 'share-button twitter-share' do
+          %i.fab.fa-twitter
+          %span.label エックス
     %section.hero-section
       %h1.page-title 機能一覧
       %p.subtitle つながるマルシェで利用できる豊富な機能をご紹介します。

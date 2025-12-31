@@ -117,6 +117,8 @@ Rails.application.routes.draw do
   get "features", to: "home#features", as: "features" # 機能一覧
   get "pricing", to: "home#pricing", as: "pricing" # 利用料金について
   get "plan_comparison", to: "home#plan_comparison", as: "plan_comparison" # プラン比較
+  # OGP dynamic image endpoint (generates 1200x630 images for SNS)
+  get '/og_images/:page.jpg', to: 'og_images#show', as: :og_image, constraints: { page: /features|pricing|plan_comparison/ }
   get "flow", to: "home#flow", as: "flow" # 掲載までの流れ
   get "use_cases", to: "home#use_cases", as: "use_cases" # 利用事例
   get "terms", to: "home#terms", as: "terms" # 利用規約

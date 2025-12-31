@@ -3,6 +3,7 @@ class SellersController < ApplicationController
   before_action :set_seller, only: [:show, :edit, :update, :destroy]
 
   def index
+    @breadcrumbs = [{name: "ホーム", path: root_path}, {name: "セラー一覧", path: sellers_path}]
     # セラーのマイページの処理
     @seller = current_seller
     @comments = @seller.comments.order(created_at: :desc) # 管理者からのコメントを取得
@@ -11,6 +12,7 @@ class SellersController < ApplicationController
   end
 
   def show
+    @breadcrumbs = [{name: "ホーム", path: root_path}, {name: "セラー一覧", path: sellers_path}, {name: @seller.name, path: seller_path(@seller)}]
     Rails.logger.info "@seller in show: #{@seller.inspect}"
   end
 

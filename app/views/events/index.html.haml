@@ -14,6 +14,8 @@
     -#       %p 新規イベントを作成する
 
   = form_with url: events_path, method: :get, class: 'filter-form' do |f|
+    = f.hidden_field :filter, value: params[:filter] if params[:filter].present?
+    
     .prefectures-field
       = f.label :prefecture, '都道府県で絞り込む'
       = f.select :prefecture, @prefectures, include_blank: '全て', selected: params[:prefecture]
@@ -68,7 +70,7 @@
           -#   主催者情報が不足しています。
 
 %nav.pagination
-  = paginate @events
+  = paginate @events, params: { filter: params[:filter], prefecture: params[:prefecture], sort: params[:sort] }
 
 
 = render 'footer/footer'

@@ -68,6 +68,7 @@
       .flash-alert= flash[:alert]
     - if flash[:error].present? # error もよく使う
       .flash-error= flash[:error]
+    
     -# - if administrator_signed_in?
     -#   %p ログイン中: #{current_administrator.email}
     -#   = link_to "ログアウト", destroy_administrator_session_path, method: :delete
