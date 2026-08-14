@@ -2,8 +2,8 @@ class FacilitiesController < ApplicationController
   def index
     @breadcrumbs = [{name: "ホーム", path: root_path}, {name: "出店一覧", path: facilities_path}]
     @facilities = Facility.all
-@hosts = Host.all # すべてのホストを取得
-    @sellers = Seller.all # すべてのセラーを取得
+    @hosts = Host.includes(:events).all # すべてのホストを取得（eventsをeager loading）
+    @sellers = Seller.includes(:events).all # すべてのセラーを取得（eventsをeager loading）
   end
 
   def show

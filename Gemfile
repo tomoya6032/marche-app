@@ -105,7 +105,7 @@ group :development do
   gem 'erb2haml'
   gem "haml-lint"
   gem "html2haml"
-  
+  gem "ruby-lsp", require: false
  
 
 end

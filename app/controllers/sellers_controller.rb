@@ -13,6 +13,8 @@ class SellersController < ApplicationController
 
   def show
     @breadcrumbs = [{name: "ホーム", path: root_path}, {name: "セラー一覧", path: sellers_path}, {name: @seller.name, path: seller_path(@seller)}]
+    @admin_comments = @seller.comments.order(created_at: :desc) # 管理者からのコメントを取得
+    @seller_events_for_management = @seller.events.order(created_at: :desc) # セラーが登録したイベントを取得
     Rails.logger.info "@seller in show: #{@seller.inspect}"
   end
 

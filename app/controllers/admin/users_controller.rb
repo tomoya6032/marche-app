@@ -34,6 +34,33 @@ class Admin::UsersController < Admin::BaseController
     # 例： @featured_events = Event.where(is_featured: true).order(created_at: :desc).page(params[:featured_events_page]).per(5)
   end
 
+  def show
+    @user = User.find(params[:id])
+    @admin_comments = @user.comments.order(created_at: :desc)
+  rescue ActiveRecord::RecordNotFound
+    redirect_to admin_users_path, alert: "該当するユーザーが見つかりませんでした。"
+  end
+
+  def edit
+    @user = User.find(params[:id])
+    @admin_comments = @user.comments.order(created_at: :desc)
+  rescue ActiveRecord::RecordNotFound
+    redirect_to admin_users_path, alert: "該当するユーザーが見つかりませんでした。"
+  end
+
+  def update
+    @user = User.find(params[:id])
+    if @user.update(user_params)
+      redirect_to admin_users_path, notice: "ユーザー情報を更新しました。"
+    else
+      @admin_comments = @user.comments.order(created_at: :desc)
+      flash.now[:alert] = "ユーザー情報の更新に失敗しました。"
+      render :edit
+    end
+  rescue ActiveRecord::RecordNotFound
+    redirect_to admin_users_path, alert: "該当するユーザーが見つかりませんでした。"
+  end
+
   def edit_seller
     @seller = Seller.find_by(id: params[:id])
     @admin_comments = @seller.comments.order(created_at: :desc) if @seller&.respond_to?(:comments)
@@ -78,6 +105,10 @@ class Admin::UsersController < Admin::BaseController
 
 
   private
+
+  def user_params
+    params.require(:user).permit(:name, :email, :address, :phone_number, :website)
+  end
 
   def find_user
     Seller.find_by(id: params[:id]) || Host.find_by(id: params[:id])
