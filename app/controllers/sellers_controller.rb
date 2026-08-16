@@ -3,18 +3,22 @@ class SellersController < ApplicationController
   before_action :set_seller, only: [:show, :edit, :update, :destroy]
 
   def index
-    @breadcrumbs = [{name: "ホーム", path: root_path}, {name: "セラー一覧", path: sellers_path}]
-    # セラーのマイページの処理
+    @breadcrumbs = [{name: "ホーム", path: root_path}, {name: "個人ショップ一覧", path: sellers_path}]
+    # 個人ショップのマイページの処理
     @seller = current_seller
-    @comments = @seller.comments.order(created_at: :desc) # 管理者からのコメントを取得
-    @events = @seller.events.order(created_at: :desc) # ホストが出店したイベントを取得
-    @events = @seller.events if @seller # ホストに紐づくイベントを取得する場合
+    if @seller
+      @comments = @seller.comments.order(created_at: :desc) # 管理者からのコメントを取得
+      @events = @seller.events.order(created_at: :desc) # ホストが出店したイベントを取得
+    else
+      # ログインしていない場合は全個人ショップの一覧を表示
+      @sellers = Seller.with_attached_images.includes(:events).all
+    end
   end
 
   def show
-    @breadcrumbs = [{name: "ホーム", path: root_path}, {name: "セラー一覧", path: sellers_path}, {name: @seller.name, path: seller_path(@seller)}]
+    @breadcrumbs = [{name: "ホーム", path: root_path}, {name: "個人ショップ一覧", path: sellers_path}, {name: @seller.name, path: seller_path(@seller)}]
     @admin_comments = @seller.comments.order(created_at: :desc) # 管理者からのコメントを取得
-    @seller_events_for_management = @seller.events.order(created_at: :desc) # セラーが登録したイベントを取得
+    @seller_events_for_management = @seller.events.order(created_at: :desc) # 個人ショップが登録したイベントを取得
     Rails.logger.info "@seller in show: #{@seller.inspect}"
   end
 
@@ -43,7 +47,7 @@ class SellersController < ApplicationController
 
       redirect_to seller_path(@seller), notice: 'プロフィールを更新しました。'
     else
-      flash[:alert] = 'セラー情報の更新に失敗しました。'
+      flash[:alert] = '個人ショップ情報の更新に失敗しました。'
       render :index
     end
   end

@@ -7,11 +7,11 @@
     .hosts-list
       - @hosts.each do |host|
         .host-item
-          %h2= link_to host.name, host_profile_show_host_profile_path(host) # ★ホスト詳細へのリンク
+          %h2= link_to host.name, public_host_profile_path(host.to_param) # ★ホスト詳細へのリンク
           %p= host.description.truncate(100) # 説明を短く表示
           - if host.top_image.attached?
             = image_tag host.top_image, size: "100x100"
-          = link_to '詳細を見る', host_profile_show_host_profile_path(host), class: 'btn btn-secondary'
+          = link_to '詳細を見る', public_host_profile_path(host.to_param), class: 'btn btn-secondary'
   - else
     %p 登録されているショップはまだありません。
 

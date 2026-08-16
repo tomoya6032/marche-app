@@ -3,10 +3,10 @@
 .seller-lp-page 
   .seller-details
     .seller-header
-      -# ★★★ セラー本人用の情報とボタン ★★★
+      -# ★★★ 個人ショップ本人用の情報とボタン ★★★
       - if seller_signed_in? && @seller == current_seller
         .seller-management-section
-          %h2 セラーマイページ：プロフィール情報確認
+          %h2 個人ショップマイページ：プロフィール情報確認
 
           .seller-actions
             = link_to edit_seller_path(@seller), class: 'sellers-button' do
@@ -71,7 +71,7 @@
                       = link_to "決済登録", "https://www.kaihipay.jp/forms?form_code=7064409617634745", class: "payment-button", target: "_blank"
       
           
-      -# ★★★ セラー本人用の情報ここまで ★★★
+      -# ★★★ 個人ショップの情報ここまで ★★★
 
 
 .seller-details
@@ -133,6 +133,6 @@
             %td= link_to event.title, event_path(event)
             %td= event.start_time.strftime('%Y/%m/%d') if event.start_time
   - else
-    %p このセラーはまだイベントを開催していません。
+    %p この個人ショップはまだイベントを開催していません。
 
 = render 'footer/footer' # フッターのパーシャルを呼び出す

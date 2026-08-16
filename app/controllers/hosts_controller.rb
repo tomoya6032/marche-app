@@ -11,7 +11,7 @@ class HostsController < ApplicationController
   
   # ★★★ index アクションの修正 ★★★
   def index
-    @breadcrumbs = [{name: "ホーム", path: root_path}, {name: "ホスト一覧", path: hosts_path}]
+    @breadcrumbs = [{name: "ホーム", path: root_path}, {name: "ショップ出店一覧", path: hosts_path}]
     # ホストの一覧ページ（誰でも見れる）
     @hosts = Host.all.order(name: :asc) # 全ホストを名前順で取得
     # ここでは、@host = current_host のような行は不要です。
@@ -32,7 +32,7 @@ class HostsController < ApplicationController
       return
     end
     
-    @breadcrumbs = [{name: "ホーム", path: root_path}, {name: "ホスト一覧", path: hosts_path}, {name: @host.name, path: public_host_profile_path(@host.slug.presence || @host.id)}]
+    @breadcrumbs = [{name: "ホーム", path: root_path}, {name: "ショップ出店一覧", path: hosts_path}, {name: @host.name, path: public_host_profile_path(@host.slug.presence || @host.id)}]
 
     # --- ホスト本人（current_host）にのみ表示する情報 ---
     if host_signed_in? && @host == current_host
@@ -62,13 +62,13 @@ class HostsController < ApplicationController
     @host = Host.find_by(slug: params[:host_id]) || Host.find_by(id: params[:host_id])
     # authenticate_host! により、ログイン中のホスト自身のページしか編集できないようになっているはず
     unless @host == current_host
-      redirect_to root_path, alert: "他のホストのプロフィールは編集できません。"
+      redirect_to root_path, alert: "他のショップ出店のプロフィールは編集できません。"
     end
   end
 
   def update
     unless @host == current_host
-      redirect_to root_path, alert: "他のホストのプロフィールは更新できません。" and return
+      redirect_to root_path, alert: "他のショップ出店のプロフィールは更新できません。" and return
     end
 
     # トップ画像の削除
@@ -104,7 +104,7 @@ class HostsController < ApplicationController
 
   def destroy
     unless @host == current_host
-      redirect_to root_path, alert: "他のホストのアカウントは削除できません。" and return
+      redirect_to root_path, alert: "他のショップ出店のアカウントは削除できません。" and return
     end
     @host.destroy
     redirect_to root_path, notice: 'アカウントを削除しました。'
@@ -139,7 +139,7 @@ class HostsController < ApplicationController
   # ★★★ イベントの新規作成アクションの修正 ★★★
   def new_event
     unless @host == current_host
-      redirect_to root_path, alert: "他のホストのイベントは作成できません。" and return
+      redirect_to root_path, alert: "他のショップ出店のイベントは作成できません。" and return
     end
     @event = @host.events.build(start_time: Time.zone.now, end_time: Time.zone.now + 1.hour)
     
@@ -190,7 +190,7 @@ class HostsController < ApplicationController
     @event = @host.events.find(params[:id])
 
     unless @host == current_host
-  redirect_to root_path, alert: "他のホストのイベントは編集できません。"
+  redirect_to root_path, alert: "他のショップ出店のイベントは編集できません。"
     end
     # 都道府県のリストが必要な場合
     @prefectures = [
@@ -212,7 +212,7 @@ class HostsController < ApplicationController
 
   def update_event
     unless @host == current_host && @event.host == current_host
-      redirect_to root_path, alert: "他のホストのイベントは更新できません。"
+      redirect_to root_path, alert: "他のショップ出店のイベントは更新できません。"
       return
     end
   
@@ -259,7 +259,7 @@ class HostsController < ApplicationController
 
   def destroy_event
     unless @host == current_host && @event.host == current_host
-      redirect_to root_path, alert: "他のホストのイベントは削除できません。" and return
+      redirect_to root_path, alert: "他のショップ出店のイベントは削除できません。" and return
     end
     @event.destroy
     # イベント削除後、ホストのホームページ（show）にリダイレクト
@@ -290,7 +290,7 @@ class HostsController < ApplicationController
       if host_signed_in? && current_host.persisted?
         redirect_to public_host_profile_path(id_or_slug: current_host.slug.presence || current_host.id), alert: "指定されたホストは見つかりませんでした。" and return
       else
-        redirect_to root_path, alert: "指定されたホストが見つかりませんでした。" and return
+        redirect_to root_path, alert: "指定されたショップ出店が見つかりませんでした。" and return
       end
     end
   end
