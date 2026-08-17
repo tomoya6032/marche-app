@@ -56,6 +56,9 @@
             - else
               %p 運営からのコメントはまだありません。
 
+          -# 運営への問い合わせ
+          = render 'shared/contact_support', resource: @host, resource_type: 'host'
+
           -# 登録済みイベント一覧（管理用）
           .host-events-management
             - if @host_events_for_management.present?

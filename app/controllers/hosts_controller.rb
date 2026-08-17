@@ -13,7 +13,8 @@ class HostsController < ApplicationController
   def index
     @breadcrumbs = [{name: "ホーム", path: root_path}, {name: "ショップ出店一覧", path: hosts_path}]
     # ホストの一覧ページ（誰でも見れる）
-    @hosts = Host.all.order(name: :asc) # 全ホストを名前順で取得
+    # N+1対策: top_image, images, eventsを事前読み込み
+    @hosts = Host.with_attached_top_image.with_attached_images.includes(:events).all.order(name: :asc)
     # ここでは、@host = current_host のような行は不要です。
     # ログイン中のホストのコメントやイベントは、このページでは表示しません。
   end

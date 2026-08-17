@@ -1,8 +1,10 @@
 // Entry point for your Sass build
 @import "admin/users";
 @import "admin/index";
+@import "admin/site_settings";
 @import "event/show";
 @import "events/show"; // include plural-named overrides (custom view-specific styles)
+@import "shared/contact_support"; // 共通パーツ（運営問い合わせ）
 @import "sellers/show";
 @import "sellers/index";
 @import "facilities/index";
@@ -10,6 +12,7 @@
 @import "host/show";
 @import "hosts/show";
 @import "hosts/new";
+@import "hosts/index";
 
 // 新しいページのスタイル
 @import "pages/features";

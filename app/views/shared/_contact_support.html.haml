@@ -1,0 +1,17 @@
+-# 運営への問い合わせセクション（パーシャル）
+-# 使用例:
+-#   = render 'shared/contact_support', resource: @seller, resource_type: 'seller'
+-#   = render 'shared/contact_support', resource: @host, resource_type: 'host'
+
+.contact-support-section
+  %h3 運営へのお問い合わせ
+  .contact-support-content
+    %p.notice システムからの直接返信機能は準備中のため、メールでのお問い合わせをお願いします。
+    .contact-button-wrapper
+      - contact_email = SiteSetting.contact_email
+      - subject_prefix = resource_type == 'seller' ? '【セラー問い合わせ】' : '【ホスト問い合わせ】'
+      - subject_text = "#{subject_prefix}#{resource.name}（ID: #{resource.id}）"
+      = mail_to contact_email, 
+        class: 'contact-button', 
+        subject: subject_text do
+        %span メールで問い合わせる

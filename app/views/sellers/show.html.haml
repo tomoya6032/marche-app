@@ -27,6 +27,9 @@
             - else
               %p 運営からのコメントはまだありません。
 
+          -# 運営への問い合わせ
+          = render 'shared/contact_support', resource: @seller, resource_type: 'seller'
+
           -# 登録済みイベント一覧（管理用）
           .seller-events-management
             - if @seller_events_for_management.present?

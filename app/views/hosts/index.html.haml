@@ -1,18 +1,46 @@
 = render 'header/header' # ヘッダーのパーシャルを呼び出す
 
-.hosts-index
+.hosts-list
   %h1 ショップ一覧
+  %p ショップアカウントの一覧です。詳細を確認するには、ショップ名をクリックしてください。
 
   - if @hosts.present?
-    .hosts-list
-      - @hosts.each do |host|
-        .host-item
-          %h2= link_to host.name, public_host_profile_path(host.to_param) # ★ホスト詳細へのリンク
-          %p= host.description.truncate(100) # 説明を短く表示
-          - if host.top_image.attached?
-            = image_tag host.top_image, size: "100x100"
-          = link_to '詳細を見る', public_host_profile_path(host.to_param), class: 'btn btn-secondary'
+    %table
+      %thead
+        %tr
+          %th 画像
+          %th ショップ名
+          %th 住所
+          %th 直近のイベント
+          %th 概要
+      %tbody
+        - @hosts.each do |host|
+          %tr
+            %td
+              - if host.top_image.attached?
+                = image_tag host.top_image.variant(resize_to_limit: [128, 128]), alt: host.name, class: "host-thumbnail"
+              - elsif host.images.attached?
+                = image_tag host.images.first.variant(resize_to_limit: [128, 128]), alt: host.name, class: "host-thumbnail"
+              - else
+                = image_tag "no_image_square.jpg", alt: "No image", class: "host-thumbnail"
+            %td
+              - if host.name.present?
+                = link_to host.name, public_host_profile_path(host.to_param)
+              - else
+                %span 名前未設定
+            %td= host.address.presence || '住所未設定'
+            %td
+              - if host.events.present?
+                - recent_event = host.events.order(start_time: :asc).first
+                = link_to recent_event.title, event_path(recent_event)
+              - else
+                %span イベントなし
+            %td
+              - if host.description.present?
+                = truncate(host.description, length: 80, omission: '...')
+              - else
+                %span 未設定
   - else
-    %p 登録されているショップはまだありません。
+    %p ショップが見つかりません。
 
 = render 'footer/footer'

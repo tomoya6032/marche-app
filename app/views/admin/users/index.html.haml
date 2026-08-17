@@ -1,6 +1,10 @@
 %h1 管理画面ダッシュボード★
 
 %section.admin-section
+  %h2.admin-section-title サイト設定
+  = link_to 'サイト設定（運営メールアドレス等）', edit_admin_site_setting_path, class: 'admin-button'
+
+%section.admin-section
   %h2.admin-section-title お知らせ管理
   = link_to '新規作成', new_admin_notice_path, class: 'admin-button'
   %table.admin-table

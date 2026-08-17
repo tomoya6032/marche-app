@@ -1,0 +1,22 @@
+%h1 サイト設定
+
+.site-settings-form
+  = form_with model: @site_setting, url: admin_site_setting_path, method: :patch, local: true do |f|
+    - if @site_setting.errors.any?
+      .error-messages
+        %h3= "#{@site_setting.errors.count}件のエラーがあります"
+        %ul
+          - @site_setting.errors.full_messages.each do |message|
+            %li= message
+
+    .form-group
+      = f.label :contact_email, "運営お問い合わせメールアドレス"
+      = f.email_field :contact_email, class: 'form-control', placeholder: 'mimamorilab@gmail.com'
+      %p.help-text 
+        セラーやホストが「運営へのお問い合わせ」ボタンから連絡する際の宛先メールアドレスです。
+        %br
+        未設定の場合は、デフォルトで mimamorilab@gmail.com が使用されます。
+
+    .form-actions
+      = f.submit "設定を保存", class: 'btn btn-primary'
+      = link_to "ダッシュボードに戻る", administrator_dashboard_path, class: 'btn btn-secondary'

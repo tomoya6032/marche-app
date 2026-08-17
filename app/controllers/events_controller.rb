@@ -120,8 +120,12 @@ class EventsController < ApplicationController
 
         # トランザクション内で安全に画像を管理
         ActiveRecord::Base.transaction do
-          # まず他のフィールドを更新（画像以外）
-          safe_params = event_params.except(:images, :keep_images, :remove_images)
+          # まず他のフィールドを更新（画像以外・日時分割パラメータも除外）
+          safe_params = event_params.except(
+            :images, :keep_images, :remove_images,
+            :start_time_year, :start_time_month, :start_time_day, :start_time_hour, :start_time_minute,
+            :end_time_year, :end_time_month, :end_time_day, :end_time_hour, :end_time_minute
+          )
           raise ActiveRecord::Rollback unless @event.update!(safe_params)
 
           # 画像の削除処理：keep_imagesにないものを削除

@@ -29,6 +29,9 @@ Rails.application.routes.draw do
     # デフォルトのルート（/admin にアクセスした時の動作）
     root to: "users#index" # /admin にアクセスすると admin/users#index へ
 
+    # サイト設定（シングルトンリソース）
+    resource :site_setting, only: [:edit, :update]
+
     # FAQ管理ルート
     resources :faqs, except: [ :show ]
 
