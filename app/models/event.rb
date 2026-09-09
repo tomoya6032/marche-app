@@ -2,6 +2,23 @@ class Event < ApplicationRecord
   include AsyncVariantGenerator
   VARIANT_ATTACHMENT_NAMES = [:images]
   VARIANT_COMMON_VARIANTS = [{ resize_to_limit: [800, 600] }, { resize_to_limit: [1200, 630] }]
+  ALLOWED_IMAGE_CONTENT_TYPES = %w[
+    image/jpeg
+    image/png
+    image/gif
+    image/webp
+    image/heic
+    image/heif
+  ].freeze
+  ALLOWED_IMAGE_EXTENSIONS = %w[
+    .jpg
+    .jpeg
+    .png
+    .gif
+    .webp
+    .heic
+    .heif
+  ].freeze
   has_many_attached :images, dependent: :purge_later
   has_many :event_views, dependent: :destroy
   has_many :event_likes, dependent: :destroy
@@ -15,6 +32,8 @@ class Event < ApplicationRecord
   validates :description, presence: true
   paginates_per 5 # デフォルトで1ページに5件表示
   scope :featured, -> { where(is_featured: true) }
+  scope :chronological, -> { order(start_time: :asc) }
+  scope :upcoming, -> { where("start_time >= ?", Time.zone.now).chronological }
 
   # 直近1週間で閲覧数の多いイベントを取得（画像のみpreload）
   scope :popular_this_week, ->(limit = 3) {
@@ -55,7 +74,13 @@ class Event < ApplicationRecord
     return unless images.attached?
 
     invalid_images = images.select do |image|
-      !image.content_type.in?(%w[image/jpeg image/png image/gif])
+      image_content_type = image.content_type.to_s.downcase
+      filename_extension = File.extname(image.filename.to_s).downcase
+
+      content_type_allowed = image_content_type.in?(ALLOWED_IMAGE_CONTENT_TYPES)
+      extension_allowed = filename_extension.in?(ALLOWED_IMAGE_EXTENSIONS)
+
+      !(content_type_allowed || extension_allowed)
     end
 
     if invalid_images.any?

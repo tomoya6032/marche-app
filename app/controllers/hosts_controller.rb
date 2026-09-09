@@ -38,15 +38,15 @@ class HostsController < ApplicationController
     # --- ホスト本人（current_host）にのみ表示する情報 ---
     if host_signed_in? && @host == current_host
       @admin_comments = @host.comments.order(created_at: :desc) # 管理者からのコメント（本人用）
-      @host_events_for_management = @host.events.order(created_at: :desc) # ホストの全イベント（管理用）
+      @host_events_for_management = @host.events.upcoming # 今日以降のイベントを開催日時が近い順で取得
       # ここにslugも確認できるように表示ロジックを追加できる
       @current_slug_for_display = @host.slug.presence || "未設定 (ID: #{@host.id})"
     end
     # --- ここまでホスト本人用 ---
 
     # --- 公開プロフィール用の情報（誰でも見れる部分） ---
-    # イベントは開催日時が近い順に最大30件
-      @public_events = @host.events.order(start_time: :asc).limit(15).includes(images_attachments: :blob)
+    # イベントは新しい開催日時順で最大15件
+      @public_events = @host.events.order(start_time: :desc).limit(15).includes(images_attachments: :blob)
     @topics_text = @host.topics # トピックスのテキストを取得
     @news_text = @host.news # 新着ニュースのテキストを取得
     @description_text = @host.description # 私たちについて

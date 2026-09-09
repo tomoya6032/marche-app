@@ -103,14 +103,14 @@
 
     .seller-events
       %h2 出店したイベント
-      - if @seller.events.present?
+      - if @events.present?
         %table.event-info-table
           %thead
             %tr
               %th イベント名
               %th 開催日
           %tbody
-            - @seller.events.each do |event|
+            - @events.each do |event|
               %tr
                 %td= link_to event.title, event_path(event)
                 %td= event.start_time.strftime('%Y/%m/%d') if event.start_time

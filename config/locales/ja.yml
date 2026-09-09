@@ -1,6 +1,8 @@
 ja:
   errors:
     messages:
+      invalid_image_format: "は許可されていない形式です (JPG, PNG, WEBP, HEIC などをご利用ください)"
+      image_too_large: "は100MB以下のファイルをアップロードしてください"
       not_saved:
         one: "エラーが発生したため %{resource} は保存されませんでした:"
         other: "%{count} 件のエラーが発生したため %{resource} は保存されませんでした:"
@@ -8,7 +10,7 @@ ja:
   activerecord:
     errors:
       messages:
-        invalid_image_format: "：ファイル形式がJPEG, PNG, GIF以外になっています。ファイル形式をご確認ください。"
+        invalid_image_format: "：ファイル形式がJPEG/JPG, PNG, GIF, WEBP, HEIC, HEIF以外になっています。ファイル形式をご確認ください。"
         image_too_large: "：100MB以下のファイルをアップロードしてください。"
         models:
         event:

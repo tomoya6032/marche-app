@@ -8,7 +8,7 @@ class SellersController < ApplicationController
     @seller = current_seller
     if @seller
       @comments = @seller.comments.order(created_at: :desc) # 管理者からのコメントを取得
-      @events = @seller.events.order(created_at: :desc) # ホストが出店したイベントを取得
+      @events = @seller.events.upcoming # 今日以降のイベントを開催日時が近い順で取得
     else
       # ログインしていない場合は全個人ショップの一覧を表示
       @sellers = Seller.with_attached_images.includes(:events).all
@@ -18,7 +18,7 @@ class SellersController < ApplicationController
   def show
     @breadcrumbs = [{name: "ホーム", path: root_path}, {name: "個人ショップ一覧", path: sellers_path}, {name: @seller.name, path: seller_path(@seller)}]
     @admin_comments = @seller.comments.order(created_at: :desc) # 管理者からのコメントを取得
-    @seller_events_for_management = @seller.events.order(created_at: :desc) # 個人ショップが登録したイベントを取得
+    @seller_events_for_management = @seller.events.upcoming # 今日以降のイベントを開催日時が近い順で取得
     Rails.logger.info "@seller in show: #{@seller.inspect}"
   end
 

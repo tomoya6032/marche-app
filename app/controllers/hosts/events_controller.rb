@@ -6,7 +6,7 @@ module Hosts
     before_action :set_prefectures, only: [:new, :edit]
 
     def index
-      @events = @host.events.all # ホストに紐づくイベントをすべて取得
+      @events = @host.events.upcoming # 今日以降のイベントを開催日時が近い順で取得
     end
 
     def show
