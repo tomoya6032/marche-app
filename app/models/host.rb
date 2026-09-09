@@ -17,6 +17,7 @@ class Host < ApplicationRecord
   validates :slug, uniqueness: { allow_nil: true },
                    format: { with: /\A[a-z0-9-]+\z/, message: "は半角英数字とハイフンのみ使用できます", allow_blank: true }
   validates :name, presence: true
+  before_validation :assign_default_name, on: :create
 
   # ★★★ important: `before_validation :set_slug, on: :create` の行を削除またはコメントアウト ★★★
   
@@ -85,6 +86,12 @@ class Host < ApplicationRecord
   end
 
   private
+
+  def assign_default_name
+    return if name.present?
+
+    self.name = email.to_s.split("@").first.presence || "新規ショップ"
+  end
   
   def set_slug
     # 自動生成が必要な場合のみスラッグを生成

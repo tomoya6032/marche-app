@@ -8,6 +8,7 @@
     .sign-up-form-wrapper
       = form_for(resource, as: resource_name, url: registration_path(resource_name), html: { class: 'sign-up-form' }) do |f|
         = render "devise/shared/error_messages", resource: resource
+        -# nameは登録後のプロフィール編集で設定するため、サインアップでは入力させない
 
         .form-group
           = f.label :email, 'メールアドレス'

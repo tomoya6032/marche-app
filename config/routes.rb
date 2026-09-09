@@ -9,7 +9,9 @@ Rails.application.routes.draw do
   # ==============================
   # 認証関連のルート (Devise)
   # ==============================
-  devise_for :hosts, path: "auth" # Devise for hosts (generates paths like /auth/sign_in)
+  devise_for :hosts, path: "auth", controllers: {
+    registrations: "hosts/registrations"
+  } # Devise for hosts (generates paths like /auth/sign_in)
   devise_for :sellers
   devise_for :administrator, path: "administrator", controllers: {
     sessions: "admin/sessions",
