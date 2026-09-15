@@ -1,28 +1,37 @@
 = render 'header/header' # ヘッダーのパーシャルを呼び出す
 
+- og_image_url = shop_og_image_url(@host)
+
+- content_for :title do
+  = "#{@host.name.presence || 'ショップ'} | つながるマルシェ"
+
+- content_for :description do
+  = shop_og_description(@host)
+
+- content_for :canonical_url do
+  = request.original_url
+
+- content_for :og_title do
+  = @host.name.presence || '名称未設定'
+
+- content_for :og_description do
+  = shop_og_description(@host)
+
+- content_for :og_url do
+  = request.original_url
+
+- content_for :og_image do
+  = og_image_url
+
+- content_for :twitter_card do
+  = "summary_large_image"
+
+- content_for :twitter_image do
+  = og_image_url
+
 - content_for :head do
   = stylesheet_link_tag 'hosts/show', media: 'all', 'data-turbo-track': 'reload'
   = javascript_include_tag 'hosts_event_slider', defer: true, 'data-turbo-track': 'reload'
-  
-  -# OGP設定
-  %meta{property: "og:title", content: @host.name.presence || '名称未設定'}
-  %meta{property: "og:description", content: "#{@host.name}のホストページです。出店イベント情報や商品紹介をご覧いただけます。"}
-  %meta{property: "og:type", content: "website"}
-  %meta{property: "og:url", content: request.original_url}
-  - if @host&.top_image&.attached?
-    %meta{property: "og:image", content: url_for(@host.top_image)}
-  - else
-    %meta{property: "og:image", content: asset_url('no_image_square.jpg')}
-  %meta{property: "og:site_name", content: "Marche"}
-  
-  -# Twitter Card設定
-  %meta{name: "twitter:card", content: "summary_large_image"}
-  %meta{name: "twitter:title", content: @host.name.presence || '名称未設定'}
-  %meta{name: "twitter:description", content: "#{@host.name}のホストページです。出店イベント情報や商品紹介をご覧いただけます。"}
-  - if @host&.top_image&.attached?
-    %meta{name: "twitter:image", content: url_for(@host.top_image)}
-  - else
-    %meta{name: "twitter:image", content: asset_url('no_image_square.jpg')}
 
 .host-lp-page 
   .host-details
@@ -128,7 +137,7 @@
     .host-top-image
       - if @host&.top_image&.attached?
         .top-image-container
-          = image_tag @host.top_image, class: 'host-top-image-custom'
+          = image_tag rails_storage_proxy_path(@host.top_image), class: 'host-top-image-custom'
 
  
     .host-events
@@ -139,7 +148,7 @@
             .event-card
               - if event.images.attached? && event.images.any?
                 = link_to host_event_path(event.host&.slug.presence || event.host&.id, event) do
-                  = image_tag event.images.first.variant(resize_to_limit: [320, 200]), class: 'event-card-thumb'
+                  = image_tag rails_storage_proxy_path(event.images.first.variant(resize_to_limit: [320, 200])), class: 'event-card-thumb'
               - else
                 = link_to host_event_path(event.host&.slug.presence || event.host&.id, event) do
                   = image_tag 'no_image_square.jpg', class: 'event-card-thumb no-image'
@@ -198,25 +207,25 @@
         .good-item
           %h3 goods①
           - if @host.goods_image_1.attached?
-            = image_tag @host.goods_image_1.variant(resize_to_limit: [800, 600]), class: 'good-image'
+            = image_tag rails_storage_proxy_path(@host.goods_image_1.variant(resize_to_limit: [800, 600])), class: 'good-image'
           %p= simple_format(@goods_introduction_1_text.presence || '商品紹介はありません。') # ★変数名確認
 
         .good-item
           %h3 goods②
           - if @host.goods_image_2.attached?
-            = image_tag @host.goods_image_2.variant(resize_to_limit: [800, 600]), class: 'good-image'
+            = image_tag rails_storage_proxy_path(@host.goods_image_2.variant(resize_to_limit: [800, 600])), class: 'good-image'
           %p= simple_format(@goods_introduction_2_text.presence || '商品紹介はありません。') # ★変数名確認
 
         .good-item
           %h3 goods③
           - if @host.goods_image_3.attached?
-            = image_tag @host.goods_image_3.variant(resize_to_limit: [800, 600]), class: 'good-image'
+            = image_tag rails_storage_proxy_path(@host.goods_image_3.variant(resize_to_limit: [800, 600])), class: 'good-image'
           %p= simple_format(@goods_introduction_3_text.presence || '商品紹介はありません。') # ★変数名確認
 
         .good-item
           %h3 goods④
           - if @host.goods_image_4.attached?
-            = image_tag @host.goods_image_4.variant(resize_to_limit: [800, 600]), class: 'good-image'
+            = image_tag rails_storage_proxy_path(@host.goods_image_4.variant(resize_to_limit: [800, 600])), class: 'good-image'
           %p= simple_format(@goods_introduction_4_text.presence || '商品紹介はありません。') # ★変数名確認
 
     .host-images
@@ -224,7 +233,7 @@
       - if @host.images.attached?
         .image-gallery
           - @host.images.each_with_index do |image, index|
-            = image_tag image.variant(resize_to_limit: [800, 600]), class: 'host-image', style: "order: #{index};"
+            = image_tag rails_storage_proxy_path(image.variant(resize_to_limit: [800, 600])), class: 'host-image', style: "order: #{index};"
       - else
         %p 画像がありません。
 
