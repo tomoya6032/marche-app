@@ -23,12 +23,20 @@ Rails.application.configure do
 
   # Store uploaded files on the local file system (see config/storage.yml for options).
   config.active_storage.service = :amazon
+  config.active_storage.resolve_model_to_route = :rails_storage_proxy
+  config.active_storage.variant_processor = :mini_magick
 
   # Assume all access to the app is happening through a SSL-terminating reverse proxy.
   config.assume_ssl = true
 
   # Force all access to the app over SSL, use Strict-Transport-Security, and use secure cookies.
   config.force_ssl = true
+
+  # Serve Active Storage blobs and variants through Rails so browsers never follow
+  # cross-origin redirects to S3 when resolving image tags.
+  config.action_dispatch.default_headers.merge!({
+    "Cross-Origin-Resource-Policy" => "cross-origin"
+  })
 
   # Skip http-to-https redirect for the default health check endpoint.
   # config.ssl_options = { redirect: { exclude: ->(request) { request.path == "/up" } } }
