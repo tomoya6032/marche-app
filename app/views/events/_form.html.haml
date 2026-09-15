@@ -1,4 +1,4 @@
-= form_with model: @event, local: true do |f|
+= form_with model: @event, local: true, html: { multipart: true } do |f|
   %div
     = f.label :start_time, "開始日時"
     = f.datetime_local_field :start_time
@@ -14,6 +14,10 @@
   %div
     = f.label :description, "説明"
     = f.text_area :description
+
+  %div
+    = f.label :images, "画像"
+    = f.file_field :images, multiple: true, accept: 'image/*'
 
   %div
     = f.submit "保存"
