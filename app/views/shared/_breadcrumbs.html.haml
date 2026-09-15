@@ -6,4 +6,4 @@
           - if index == @breadcrumbs.size - 1
             %span.breadcrumb-current= crumb[:name]
           - else
-            = link_to crumb[:name], crumb[:path], class: 'breadcrumb-link'
+            = link_to crumb[:name], normalize_breadcrumb_path(crumb[:path]), class: 'breadcrumb-link'

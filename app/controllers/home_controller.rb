@@ -20,8 +20,15 @@ class HomeController < ApplicationController
     # お知らせを取得
     @notices = Notice.order(published_at: :desc).limit(5)
 
-    # 直近1週間で人気のイベント上位3つを取得（N+1対策でincludesを直接使用）
-    @popular_events = Event.popular_this_week(3)
+    # 直近1週間で人気のイベント上位3つを取得（不足時は補完して最大3件表示）
+    @popular_events = Event.popular_this_week(3).to_a
+    if @popular_events.size < 3
+      fallback_events = Event.includes(images_attachments: :blob)
+                             .where.not(id: @popular_events.map(&:id))
+                             .order(Arel.sql("start_time IS NULL ASC"), start_time: :desc, created_at: :desc)
+                             .limit(3 - @popular_events.size)
+      @popular_events.concat(fallback_events)
+    end
 
     # 必要に応じて `host_signed_in?` を使用
     if host_signed_in?

@@ -1,4 +1,16 @@
 module ApplicationHelper
+  def normalize_breadcrumb_path(path)
+    return "#" if path.blank?
+
+    parsed = URI.parse(path.to_s)
+    normalized = parsed.path.presence || "/"
+    normalized += "?#{parsed.query}" if parsed.query.present?
+    normalized += "##{parsed.fragment}" if parsed.fragment.present?
+    normalized
+  rescue URI::InvalidURIError
+    path
+  end
+
   def breadcrumb_html
     return '' unless defined?(breadcrumb) && breadcrumb.present?
     
