@@ -37,7 +37,7 @@
           .event-item
             - if event.images.attached? && event.images.any?
               = link_to event_path(event) do
-                = image_tag event.images.first, alt: event.title, class: "event-image"
+                = image_tag rails_storage_proxy_path(event.images.first), alt: event.title, class: "event-image"
             - else
               = link_to event_path(event) do
                 .event-no-image
@@ -86,7 +86,7 @@
                 .event-image-container
                   - if event.images.attached? && event.images.any?
                     = link_to event_path(event) do
-                      = image_tag event.images.first, alt: event.title, class: "popular-event-image"
+                      = image_tag rails_storage_proxy_path(event.images.first), alt: event.title, class: "popular-event-image"
                   - else
                     = link_to event_path(event) do
                       = image_tag "no_image_square.jpg", alt: "no image", class: "popular-event-image"
@@ -121,7 +121,7 @@
           .event-item
             - if event.images.attached? && event.images.any?
               = link_to event_path(event) do
-                = image_tag event.images.first, alt: event.title, class: "event-image"
+                = image_tag rails_storage_proxy_path(event.images.first), alt: event.title, class: "event-image"
             - else
               .event-no-image
                 = image_tag "no_image_square.jpg", alt: "no image", class: "event-no-image"
