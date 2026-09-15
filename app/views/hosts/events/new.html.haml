@@ -7,7 +7,7 @@
     - @event.errors.full_messages.each do |message|
       %li= message
 
-= form_with model: [@host, @event], url: host_events_path(@host.slug || @host.id), local: true do |f|
+= form_with model: [@host, @event], url: host_events_path(@host.slug || @host.id), local: true, html: { multipart: true } do |f|
   .field
     = f.label :title, 'タイトル'
     = f.text_field :title
@@ -16,7 +16,7 @@
     = f.text_area :description
   .field
     = f.label :images, '画像'
-    = f.file_field :images, multiple: true
+    = f.file_field :images, multiple: true, accept: 'image/*'
   .datetime-fields
     .field
       = f.label :start_time, '開始日時'
