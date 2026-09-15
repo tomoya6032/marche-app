@@ -21,6 +21,31 @@ module ApplicationHelper
     resource.try(:description).presence || "つながるマルシェのショップ詳細ページです。"
   end
 
+  def admin_last_login_label(resource)
+    return resource.last_active_label if resource.respond_to?(:last_active_label)
+
+    last_login_at = resource.try(:last_sign_in_at)
+    return "記録なし" if last_login_at.blank?
+
+    days = (Date.today - last_login_at.to_date).to_i
+    return "本日" if days.zero?
+
+    "#{days}日前 (#{last_login_at.strftime('%Y/%m/%d')})"
+  end
+
+  def admin_last_login_class(resource)
+    return resource.last_active_status_class if resource.respond_to?(:last_active_status_class)
+
+    last_login_at = resource.try(:last_sign_in_at)
+    return "login-never" if last_login_at.blank?
+
+    days = (Date.today - last_login_at.to_date).to_i
+    return "login-stale" if days >= 180
+    return "login-warning" if days >= 90
+
+    "login-recent"
+  end
+
   def absolute_url(path_or_url)
     value = path_or_url.to_s
     return value if value.start_with?("http://", "https://")

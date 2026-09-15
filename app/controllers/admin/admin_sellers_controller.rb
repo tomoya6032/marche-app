@@ -1,6 +1,6 @@
 module Admin
   class AdminSellersController < ApplicationController
-    before_action :set_seller, only: [ :index, :edit, :update, :destroy, :toggle_editable]
+    before_action :set_seller, only: [ :index, :edit, :update, :destroy, :toggle_editable, :toggle_display_in_list]
 
     def index
       @sellers = Seller.all
@@ -35,6 +35,14 @@ module Admin
         redirect_to admin_users_path, notice: "編集可能状態を更新しました。"
       else
         redirect_to admin_users_path, alert: "編集可能状態の更新に失敗しました。"
+      end
+    end
+
+    def toggle_display_in_list
+      if @seller.update(display_in_list: !@seller.display_in_list)
+        redirect_to admin_users_path, notice: "一覧表示状態を更新しました。"
+      else
+        redirect_to admin_users_path, alert: "一覧表示状態の更新に失敗しました。"
       end
     end
 

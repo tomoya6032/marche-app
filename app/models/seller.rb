@@ -5,7 +5,7 @@ class Seller < ApplicationRecord
   # Include default devise modules. Others available are:
   # :confirmable, :lockable, :timeoutable, :trackable and :omniauthable
   devise :database_authenticatable, :registerable,
-         :recoverable, :rememberable, :validatable
+      :recoverable, :rememberable, :validatable, :trackable
 
   has_many :events, dependent: :destroy
   has_many :comments, dependent: :destroy
@@ -51,6 +51,40 @@ class Seller < ApplicationRecord
    def image_url
     image.present? ? image : "no_image_square.jpg" # デフォルトの画像ファイル名を指定
    end
+
+  def display_name
+    return name.presence if respond_to?(:name) && name.present?
+
+    id.present? ? "ショップ ##{id}" : "ショップ"
+  end
+
+  def last_active_at
+    candidates = [last_sign_in_at, events.maximum(:updated_at), comments.maximum(:updated_at), updated_at, created_at].compact
+    candidates.max
+  end
+
+  def last_active_days_ago
+    return nil if last_active_at.blank?
+
+    (Date.today - last_active_at.to_date).to_i
+  end
+
+  def last_active_label
+    days_ago = last_active_days_ago
+    return "記録なし" if days_ago.nil?
+    return "本日" if days_ago.zero?
+
+    "#{days_ago}日前 (#{last_active_at.strftime('%Y/%m/%d')})"
+  end
+
+  def last_active_status_class
+    days_ago = last_active_days_ago
+    return "login-never" if days_ago.nil?
+    return "login-stale" if days_ago >= 180
+    return "login-warning" if days_ago >= 90
+
+    "login-recent"
+  end
 
   # SNSアカウントのバリデーション
   # validate :sns_accounts_types_and_urls_length

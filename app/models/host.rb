@@ -2,8 +2,8 @@ class Host < ApplicationRecord
   include AsyncVariantGenerator
   VARIANT_ATTACHMENT_NAMES = [:top_image, :images, :goods_image_1, :goods_image_2, :goods_image_3, :goods_image_4]
   VARIANT_COMMON_VARIANTS = [{ resize_to_limit: [800, 600] }]
-  devise :database_authenticatable, :registerable,
-         :recoverable, :rememberable, :validatable
+    devise :database_authenticatable, :registerable,
+      :recoverable, :rememberable, :validatable, :trackable
 
   belongs_to :facility, optional: true
   has_many :events, dependent: :destroy
@@ -83,6 +83,40 @@ class Host < ApplicationRecord
 
   def to_param
     slug.presence || id.to_s # slug があればそれを使う。なければデフォルトの id を使う
+  end
+
+  def display_name
+    return name.presence if respond_to?(:name) && name.present?
+
+    id.present? ? "ショップ ##{id}" : "ショップ"
+  end
+
+  def last_active_at
+    candidates = [last_sign_in_at, events.maximum(:updated_at), comments.maximum(:updated_at), updated_at, created_at].compact
+    candidates.max
+  end
+
+  def last_active_days_ago
+    return nil if last_active_at.blank?
+
+    (Date.today - last_active_at.to_date).to_i
+  end
+
+  def last_active_label
+    days_ago = last_active_days_ago
+    return "記録なし" if days_ago.nil?
+    return "本日" if days_ago.zero?
+
+    "#{days_ago}日前 (#{last_active_at.strftime('%Y/%m/%d')})"
+  end
+
+  def last_active_status_class
+    days_ago = last_active_days_ago
+    return "login-never" if days_ago.nil?
+    return "login-stale" if days_ago >= 180
+    return "login-warning" if days_ago >= 90
+
+    "login-recent"
   end
 
   private

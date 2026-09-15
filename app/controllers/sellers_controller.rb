@@ -11,7 +11,9 @@ class SellersController < ApplicationController
       @events = @seller.events.upcoming # 今日以降のイベントを開催日時が近い順で取得
     else
       # ログインしていない場合は全個人ショップの一覧を表示
-      @sellers = Seller.with_attached_images.includes(:events).all
+      @sellers = Seller.where(display_in_list: true)
+                       .with_attached_images
+                       .includes(:events)
     end
   end
 

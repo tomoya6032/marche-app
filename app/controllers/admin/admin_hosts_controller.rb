@@ -1,7 +1,7 @@
 module Admin
   class AdminHostsController < ApplicationController
      # Host の CRUD 操作にのみ set_host を適用
-     before_action :set_host, only: [:show, :edit, :update, :destroy]
+  before_action :set_host, only: [:show, :edit, :update, :destroy, :toggle_display_in_list]
 
     def index
       @hosts = Host.all # ホストの一覧表示 (必要であれば)
@@ -41,26 +41,20 @@ module Admin
       end
     end
 
+    def toggle_display_in_list
+      if @host.update(display_in_list: !@host.display_in_list)
+        redirect_to admin_users_path, notice: "一覧表示状態を更新しました。"
+      else
+        redirect_to admin_users_path, alert: "一覧表示状態の更新に失敗しました。"
+      end
+    end
+
     private
 
     
 
     def set_host
-      # ここで params[:id] が数値（通常のID）でない場合や、
-      # 'events' や 'update_event_features' のような文字列であれば、
-      # slug 検索を行わないように分岐できます。
-      # しかし、これは本質的なルーティングの解決にはなりません。
-      # 通常は params[:id] が Host の slug になる想定です。
-  
-      # 例えば、特定の文字列が来た場合にスキップする（応急処置）
-      if ['events', 'update_event_features'].include?(params[:id])
-        # このケースでは set_host を中断し、ルーティングエラーを発生させるか、
-        # あるいは他の方法で処理すべきだが、現状の Rails のルーティング誤解釈では難しい
-        # エラーメッセージを変えることくらいしかできない
-        raise ActiveRecord::RecordNotFound, "Invalid host identifier provided: #{params[:id]}"
-      end
-  
-      @host = Host.find_by!(slug: params[:id]) # `id` パラメータを `slug` として検索
+      @host = Host.find_by(id: params[:id]) || Host.find_by!(slug: params[:id])
     rescue ActiveRecord::RecordNotFound
       # ★★★ ここでエラーメッセージをより具体的にするとデバッグに役立ちます ★★★
       redirect_to admin_hosts_path, alert: "指定されたホストが見つかりませんでした。無効な識別子: #{params[:id]}"

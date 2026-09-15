@@ -7,7 +7,7 @@
     %tbody
       %tr
         %th 名前
-        %td= @seller.name if @seller.respond_to?(:name) # name属性が存在する場合のみ表示
+        %td= @seller.display_name if @seller.respond_to?(:display_name)
 
       %tr
         %th メール

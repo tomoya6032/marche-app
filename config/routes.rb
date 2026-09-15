@@ -53,12 +53,14 @@ Rails.application.routes.draw do
     # Sellers管理ルート（コメント、編集可能トグル）
     resources :sellers, controller: "admin_sellers", only: [ :index, :show, :edit, :update ] do
       patch :toggle_editable, on: :member # /admin/sellers/:id/toggle_editable (PATCH)
+      patch :toggle_display_in_list, on: :member # /admin/sellers/:id/toggle_display_in_list (PATCH)
       resources :comments, only: [ :create ], module: :sellers
     end
 
     # Hosts管理ルート（コメント、編集可能トグル、destroy）
     resources :hosts, controller: "admin_hosts", only: [ :index, :show, :edit, :update, :destroy ] do
       patch :toggle_editable, on: :member # /admin/hosts/:id/toggle_editable (PATCH)
+      patch :toggle_display_in_list, on: :member # /admin/hosts/:id/toggle_display_in_list (PATCH)
       resources :comments, only: [ :create ], module: :hosts
     end
 

@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[8.0].define(version: 2026_08_17_025255) do
+ActiveRecord::Schema[8.0].define(version: 2026_09_15_123000) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "pg_catalog.plpgsql"
 
@@ -196,6 +196,13 @@ ActiveRecord::Schema[8.0].define(version: 2026_08_17_025255) do
     t.boolean "editable", default: true
     t.string "contact_link"
     t.string "slug"
+    t.boolean "display_in_list", default: true, null: false
+    t.integer "sign_in_count", default: 0, null: false
+    t.datetime "current_sign_in_at"
+    t.datetime "last_sign_in_at"
+    t.string "current_sign_in_ip"
+    t.string "last_sign_in_ip"
+    t.index ["display_in_list"], name: "index_hosts_on_display_in_list"
     t.index ["email"], name: "index_hosts_on_email", unique: true
     t.index ["facility_id"], name: "index_hosts_on_facility_id"
     t.index ["reset_password_token"], name: "index_hosts_on_reset_password_token", unique: true
@@ -241,6 +248,13 @@ ActiveRecord::Schema[8.0].define(version: 2026_08_17_025255) do
     t.text "admin_comment"
     t.bigint "facility_id"
     t.boolean "editable", default: true
+    t.boolean "display_in_list", default: true, null: false
+    t.integer "sign_in_count", default: 0, null: false
+    t.datetime "current_sign_in_at"
+    t.datetime "last_sign_in_at"
+    t.string "current_sign_in_ip"
+    t.string "last_sign_in_ip"
+    t.index ["display_in_list"], name: "index_sellers_on_display_in_list"
     t.index ["email"], name: "index_sellers_on_email", unique: true
     t.index ["facility_id"], name: "index_sellers_on_facility_id"
     t.index ["reset_password_token"], name: "index_sellers_on_reset_password_token", unique: true

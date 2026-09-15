@@ -20,4 +20,10 @@ class User < ApplicationRecord
   def admin?
     role == "admin" # roleカラムが"admin"の場合に管理者と判定
   end
+
+  def display_name
+    return name.presence if respond_to?(:name) && name.present?
+
+    id.present? ? "会員 ##{id}" : "会員"
+  end
 end

@@ -40,9 +40,9 @@
         出店者
       %td
         - if @event&.seller.present?
-          = link_to @event.seller.name, seller_path(@event.seller)
+          = link_to @event.seller.display_name, seller_path(@event.seller)
         - elsif @event&.host.present?
-          = link_to @event.host.name, public_host_profile_path(@event.host.slug.presence || @event.host.id)
+          = link_to @event.host.display_name, public_host_profile_path(@event.host.slug.presence || @event.host.id)
         - else
           出店者 未設定
     %tr

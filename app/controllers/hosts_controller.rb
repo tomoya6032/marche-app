@@ -14,7 +14,11 @@ class HostsController < ApplicationController
     @breadcrumbs = [{name: "ホーム", path: root_path}, {name: "ショップ出店一覧", path: hosts_path}]
     # ホストの一覧ページ（誰でも見れる）
     # N+1対策: top_image, images, eventsを事前読み込み
-    @hosts = Host.with_attached_top_image.with_attached_images.includes(:events).all.order(name: :asc)
+    @hosts = Host.where(display_in_list: true)
+                 .with_attached_top_image
+                 .with_attached_images
+                 .includes(:events)
+                 .order(name: :asc)
     # ここでは、@host = current_host のような行は不要です。
     # ログイン中のホストのコメントやイベントは、このページでは表示しません。
   end

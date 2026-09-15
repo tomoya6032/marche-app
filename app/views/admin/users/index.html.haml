@@ -73,6 +73,8 @@
         %th メールアドレス
         %th アカウント取得日
         %th 無料期間終了日
+        %th 最終活動 / ログイン
+        %th 一覧表示
         %th 編集可能
         %th コメント
         
@@ -80,10 +82,18 @@
       - if @recent_sellers.present?
         - @recent_sellers.each do |seller|
           %tr
-            %td= seller.name
+            %td= seller.display_name
             %td= seller.email
             %td= seller.created_at.strftime('%Y/%m/%d') if seller.created_at
             %td= (seller.created_at + 21.days).strftime('%Y/%m/%d') if seller.created_at
+            %td
+              %span{ class: admin_last_login_class(seller) }= admin_last_login_label(seller)
+            %td
+              = form_with url: toggle_display_in_list_admin_seller_path(seller), method: :patch, local: true do |f|
+                - if seller.display_in_list
+                  = f.submit "一覧から除外", class: "admin-button"
+                - else
+                  = f.submit "一覧に表示", class: "admin-button"
             %td
               = form_with url: toggle_editable_admin_seller_path(seller), method: :patch, local: true do |f|
                 = f.check_box :editable, checked: seller.editable # デフォルトでチェックをオン
@@ -92,7 +102,10 @@
               = link_to "コメント", edit_admin_seller_path(seller), class: "admin-button"
       - else
         %tr
-          %td{ colspan: 3 } 最近登録された個人会員はありません。
+          %td{ colspan: 8 } 個人会員はありません。
+
+  %nav.pagination
+    = paginate @recent_sellers, param_name: :seller_page
 
 %section.admin-section
   %h2.admin-section-title ショップ会員情報
@@ -105,16 +118,26 @@
         %th メールアドレス
         %th アカウント取得日
         %th 無料期間終了日
+        %th 最終活動 / ログイン
+        %th 一覧表示
         %th 編集可能
         %th コメント
     %tbody
       - if @recent_hosts.present?
         - @recent_hosts.each do |host|
           %tr
-            %td= host.name
+            %td= host.display_name
             %td= host.email
             %td= host.created_at.strftime('%Y/%m/%d') if host.created_at
             %td= (host.created_at + 21.days).strftime('%Y/%m/%d') if host.created_at
+            %td
+              %span{ class: admin_last_login_class(host) }= admin_last_login_label(host)
+            %td
+              = form_with url: toggle_display_in_list_admin_host_path(host), method: :patch, local: true do |f|
+                - if host.display_in_list
+                  = f.submit "一覧から除外", class: "admin-button"
+                - else
+                  = f.submit "一覧に表示", class: "admin-button"
             %td
               = form_with url: toggle_editable_admin_host_path(host), method: :patch, local: true do |f|
                 = f.check_box :editable, checked: host.editable
@@ -123,7 +146,16 @@
               = link_to "コメント", edit_admin_host_path(host), class: "admin-button"
       - else
         %tr
-          %td{ colspan: 5 } 最近登録されたショップ会員はありません。
+          %td{ colspan: 8 } ショップ会員はありません。
+
+  %nav.pagination
+    = paginate @recent_hosts, param_name: :host_page
+
+:css
+  .login-recent { color: #2e7d32; font-weight: 600; }
+  .login-warning { color: #ef6c00; font-weight: 700; }
+  .login-stale { color: #c62828; font-weight: 700; }
+  .login-never { color: #616161; font-weight: 600; }
 
 %section.admin-section
   -# ここを「全イベント一覧」に修正
@@ -157,9 +189,9 @@
               %td= event.venue || "未設定"
               %td
                 - if event.seller.present?
-                  = link_to event.seller.name, admin_seller_path(event.seller)
+                  = link_to event.seller.display_name, admin_seller_path(event.seller)
                 - elsif event.host.present?
-                  = link_to event.host.name, admin_host_path(event.host)
+                  = link_to event.host.display_name, admin_host_path(event.host)
                 - else
                   未設定
               %td
