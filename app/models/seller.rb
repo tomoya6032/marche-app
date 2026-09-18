@@ -9,6 +9,7 @@ class Seller < ApplicationRecord
 
   has_many :events, dependent: :destroy
   has_many :comments, dependent: :destroy
+  scope :visible_in_list, -> { where(display_in_list: true) }
 
   has_many_attached :images
   has_one_attached :image

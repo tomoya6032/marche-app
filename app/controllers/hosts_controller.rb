@@ -14,7 +14,7 @@ class HostsController < ApplicationController
     @breadcrumbs = [{name: "ホーム", path: root_path}, {name: "ショップ出店一覧", path: hosts_path}]
     # ホストの一覧ページ（誰でも見れる）
     # N+1対策: top_image, images, eventsを事前読み込み
-    @hosts = Host.where(display_in_list: true)
+    @hosts = Host.visible_in_list
                  .with_attached_top_image
                  .with_attached_images
                  .includes(:events)

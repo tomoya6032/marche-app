@@ -2,8 +2,9 @@ class FacilitiesController < ApplicationController
   def index
     @breadcrumbs = [{name: "ホーム", path: root_path}, {name: "出店一覧", path: facilities_path}]
     @facilities = Facility.all
-    @hosts = Host.includes(:events).all # すべてのホストを取得（eventsをeager loading）
-    @sellers = Seller.includes(:events).all # すべてのセラーを取得（eventsをeager loading）
+    # 管理画面で一覧除外されたアカウントは公開一覧に出さない
+    @hosts = Host.visible_in_list.includes(:events).order(name: :asc)
+    @sellers = Seller.visible_in_list.includes(:events).order(name: :asc)
   end
 
   def show

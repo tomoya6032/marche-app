@@ -19,10 +19,7 @@
         - @hosts.each do |host|
           %tr
             %td
-              - if host.name.present?
-                = link_to host.name, public_host_profile_path(host.to_param)
-              - else
-                %span 未設定
+              = link_to host.display_name, public_host_profile_path(host.to_param)
             -# %td= host.email.presence || 'メールアドレス未設定'
             %td= host.address.presence || '住所未設定'
             %td
@@ -47,10 +44,7 @@
         - @sellers.each do |seller|
           %tr
             %td
-              - if seller.name.present?
-                = link_to seller.name, seller_path(seller)
-              - else
-                %span 未設定
+              = link_to seller.display_name, seller_path(seller)
             -# %td= seller.email.presence || 'メールアドレス未設定'
             %td= seller.address.presence || '住所未設定'
             %td
