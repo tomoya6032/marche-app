@@ -1,18 +1,37 @@
 module ApplicationHelper
   def default_og_image_url
-    absolute_url(asset_path("marchelogo2.png"))
+    absolute_url("/marchelogo2.png")
   end
 
   def shop_og_image_url(resource)
-    attachment = if resource.respond_to?(:images) && resource.images.attached?
-      resource.images.first
-    elsif resource.respond_to?(:top_image) && resource.top_image.attached?
-      resource.top_image
+    image_url_from_resource(resource) || default_og_image_url
+  rescue StandardError
+    default_og_image_url
+  end
+
+  def event_og_image_url(event)
+    if event.respond_to?(:images) && event.images.attached?
+      return absolute_url(rails_storage_proxy_path(event.images.first))
     end
 
-    return default_og_image_url unless attachment
+    default_og_image_url
+  rescue StandardError
+    default_og_image_url
+  end
 
-    absolute_url(rails_storage_proxy_path(attachment))
+  def facility_og_image_url(facility)
+    return default_og_image_url if facility.blank?
+
+    direct_image = image_url_from_resource(facility)
+    return direct_image if direct_image.present?
+
+    host_image = facility.hosts.find_each.lazy.map { |host| image_url_from_resource(host) }.find(&:present?)
+    return host_image if host_image.present?
+
+    seller_image = facility.sellers.find_each.lazy.map { |seller| image_url_from_resource(seller) }.find(&:present?)
+    return seller_image if seller_image.present?
+
+    default_og_image_url
   rescue StandardError
     default_og_image_url
   end
@@ -47,7 +66,7 @@ module ApplicationHelper
   end
 
   def absolute_url(path_or_url)
-    value = path_or_url.to_s
+    value = path_or_url.to_s.strip
     return value if value.start_with?("http://", "https://")
 
     base = request_base_url
@@ -88,6 +107,24 @@ module ApplicationHelper
   end
 
   private
+
+  def image_url_from_resource(resource)
+    return if resource.blank?
+
+    if resource.respond_to?(:images) && resource.images.attached?
+      return absolute_url(rails_storage_proxy_path(resource.images.first))
+    end
+
+    if resource.respond_to?(:top_image) && resource.top_image.attached?
+      return absolute_url(rails_storage_proxy_path(resource.top_image))
+    end
+
+    if resource.respond_to?(:image) && resource.image.present?
+      return absolute_url(resource.image)
+    end
+
+    nil
+  end
 
   def request_base_url
     if respond_to?(:request) && request.present?

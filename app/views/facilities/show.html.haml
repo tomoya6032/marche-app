@@ -1,3 +1,41 @@
+- og_image_url = facility_og_image_url(@facility)
+
+- content_for :title do
+  = "#{@facility&.name.presence || '施設詳細'} | つながるマルシェ"
+
+- content_for :description do
+  = @facility&.description.presence || "つながるマルシェの施設詳細ページです。"
+
+- content_for :canonical_url do
+  = request.original_url
+
+- content_for :og_type do
+  = "article"
+
+- content_for :og_title do
+  = @facility&.name.presence || "施設詳細"
+
+- content_for :og_description do
+  = @facility&.description.presence || "つながるマルシェの施設詳細ページです。"
+
+- content_for :og_url do
+  = request.original_url
+
+- content_for :og_image do
+  = og_image_url
+
+- content_for :twitter_card do
+  = "summary_large_image"
+
+- content_for :twitter_title do
+  = @facility&.name.presence || "施設詳細"
+
+- content_for :twitter_description do
+  = @facility&.description.presence || "つながるマルシェの施設詳細ページです。"
+
+- content_for :twitter_image do
+  = og_image_url
+
 %body
   = render 'header/header' # ヘッダーのパーシャルを呼び出す
 

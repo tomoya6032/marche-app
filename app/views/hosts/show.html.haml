@@ -11,6 +11,9 @@
 - content_for :canonical_url do
   = request.original_url
 
+- content_for :og_type do
+  = "article"
+
 - content_for :og_title do
   = @host.display_name
 
