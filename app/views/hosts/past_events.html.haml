@@ -1,0 +1,39 @@
+= render 'header/header'
+
+- content_for :title do
+  = "#{@host.display_name} | 過去の出店リスト"
+
+- content_for :description do
+  = "#{@host.display_name}の過去イベント一覧です。"
+
+.host-lp-page
+  .host-details
+    .host-events
+      %h2 過去の出店リスト一覧
+      %p.archive-description 最新15件以前のイベント一覧です。
+
+      - if @past_events.present?
+        .past-events-grid
+          - @past_events.each do |event|
+            .event-card
+              - if event.images.attached? && event.images.any?
+                = link_to host_event_path(@host.slug.presence || @host.id, event) do
+                  = image_tag rails_storage_proxy_path(event.images.first.variant(resize_to_limit: [320, 200])), class: 'event-card-thumb'
+              - else
+                = link_to host_event_path(@host.slug.presence || @host.id, event) do
+                  = image_tag 'no_image_square.jpg', class: 'event-card-thumb no-image'
+
+              .event-card-body
+                %h3.event-card-title= link_to event.title, host_event_path(@host.slug.presence || @host.id, event)
+                %p.event-card-date= event.start_time.present? ? event.start_time.strftime('%Y/%m/%d') : '未定'
+                %p.event-card-venue= event.venue.present? ? event.venue : '未設定'
+
+        .past-events-pagination
+          = paginate @past_events
+      - else
+        %p イベントがありません。
+
+      .past-events-back
+        = link_to 'ショップページへ戻る', public_host_profile_path(@host.slug.presence || @host.id), class: 'operation-button event-back-button'
+
+= render 'footer/footer'

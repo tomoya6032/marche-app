@@ -7,6 +7,12 @@ Rails.application.routes.draw do
   get "faq", to: "faqs#index", as: :public_faqs
 
   # ==============================
+  # お問い合わせフォーム
+  # ==============================
+  get "contact", to: "contacts#new", as: :new_contact
+  post "contact", to: "contacts#create", as: :contacts
+
+  # ==============================
   # 認証関連のルート (Devise)
   # ==============================
   devise_for :hosts, path: "auth", controllers: {
@@ -95,6 +101,7 @@ Rails.application.routes.draw do
   scope ":host_id", constraints: { host_id: /[a-zA-Z0-9_\-]+|\d+/ } do
     get "events/new", to: "hosts#new_event", as: :new_host_event
     post "events", to: "hosts#create_event", as: :host_events
+    get "events/past", to: "hosts#past_events", as: :host_past_events
 
     get "events/:id/edit", to: "hosts#edit_event", as: :edit_host_event
     patch "events/:id", to: "hosts#update_event", as: :update_host_event

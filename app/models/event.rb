@@ -2,6 +2,18 @@ class Event < ApplicationRecord
   include AsyncVariantGenerator
   VARIANT_ATTACHMENT_NAMES = [:images]
   VARIANT_COMMON_VARIANTS = [{ resize_to_limit: [800, 600] }, { resize_to_limit: [1200, 630] }]
+  PREFECTURES = %w[
+    北海道 青森県 岩手県 宮城県 秋田県 山形県 福島県
+    茨城県 栃木県 群馬県 埼玉県 千葉県 東京都 神奈川県
+    新潟県 富山県 石川県 福井県 山梨県 長野県 岐阜県
+    静岡県 愛知県 三重県 滋賀県 京都府 大阪府 兵庫県
+    奈良県 和歌山県 鳥取県 島根県 岡山県 広島県 山口県
+    徳島県 香川県 愛媛県 高知県 福岡県 佐賀県 長崎県
+    熊本県 大分県 宮崎県 鹿児島県 沖縄県
+  ].freeze
+
+  PREFECTURE_CODES = PREFECTURES.each_with_index.to_h { |name, index| [index + 1, name] }.freeze
+
   ALLOWED_IMAGE_CONTENT_TYPES = %w[
     image/jpeg
     image/png
@@ -34,6 +46,27 @@ class Event < ApplicationRecord
   scope :featured, -> { where(is_featured: true) }
   scope :chronological, -> { order(start_time: :asc) }
   scope :upcoming, -> { where("start_time >= ?", Time.zone.now).chronological }
+
+  def self.prefecture_counts
+    prefecture_counts = where.not(prefecture: [nil, ""]).group(:prefecture).count
+    venue_counts = where.not(venue: [nil, ""]).group(:venue).count
+
+    prefecture_counts.merge(venue_counts) do |_prefecture, left_count, right_count|
+      left_count.to_i + right_count.to_i
+    end
+  end
+
+  def self.prefecture_summary
+    counts = prefecture_counts
+
+    PREFECTURES.map do |prefecture|
+      {
+        name: prefecture,
+        count: counts.fetch(prefecture, 0),
+        active: counts.key?(prefecture)
+      }
+    end
+  end
 
   # 直近1週間で閲覧数の多いイベントを取得（画像のみpreload）
   scope :popular_this_week, ->(limit = 3) {

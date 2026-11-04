@@ -400,6 +400,23 @@
         font-size: 0.9em;
         opacity: 0.8;
       }
+
+      .archive-link-card {
+        text-decoration: none;
+        color: inherit;
+      }
+
+      .archive-link-card .archive-thumb {
+        height: 200px;
+        background: linear-gradient(135deg, #e8f2ff, #d6e7ff);
+        display: flex;
+        align-items: center;
+        justify-content: center;
+      }
+
+      .archive-link-card .archive-icon {
+        font-size: 44px;
+      }
       @media (max-width: 600px) {
         .event-card {
           min-width: 140px;
@@ -423,6 +440,33 @@
         .event-card-date, .event-card-venue {
           font-size: 0.85em;
         }
+
+        .archive-link-card .archive-thumb {
+          height: 160px;
+        }
+      }
+
+      .past-events-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fill, minmax(240px, 1fr));
+        gap: 16px;
+        margin-top: 16px;
+      }
+
+      .archive-description {
+        margin: 8px 0 16px;
+        color: #6c757d;
+      }
+
+      .past-events-pagination {
+        margin-top: 20px;
+        display: flex;
+        justify-content: center;
+      }
+
+      .past-events-back {
+        margin-top: 20px;
+        text-align: center;
       }
 
 /* 管理用イベント一覧（.host-events-management）を一定高さで切ってスクロール可能にする */

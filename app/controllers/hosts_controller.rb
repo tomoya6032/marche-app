@@ -49,8 +49,10 @@ class HostsController < ApplicationController
     # --- ここまでホスト本人用 ---
 
     # --- 公開プロフィール用の情報（誰でも見れる部分） ---
-    # イベントは新しい開催日時順で最大15件
-      @public_events = @host.events.order(start_time: :desc).limit(15).includes(images_attachments: :blob)
+    # 最新15件のみ表示し、それ以前は過去一覧ページへ誘導
+    events_scope = @host.events.order(start_time: :desc)
+    @public_events = events_scope.limit(15).includes(images_attachments: :blob)
+    @has_past_events = events_scope.count > 15
     @topics_text = @host.topics # トピックスのテキストを取得
     @news_text = @host.news # 新着ニュースのテキストを取得
     @description_text = @host.description # 私たちについて
@@ -61,6 +63,29 @@ class HostsController < ApplicationController
 
     # @events は show アクションの冒頭で @public_events として定義したので削除
     # @host.events.order(created_at: :desc).limit(10) も削除または用途に合わせて再定義
+  end
+
+  def past_events
+    @host = Host.find_by(slug: params[:host_id]) || Host.find_by(id: params[:host_id])
+
+    unless @host
+      render file: "#{Rails.root}/public/404.html", status: :not_found, layout: false
+      return
+    end
+
+    @breadcrumbs = [
+      {name: "ホーム", path: root_path},
+      {name: "ショップ出店一覧", path: hosts_path},
+      {name: @host.name, path: public_host_profile_path(@host.slug.presence || @host.id)},
+      {name: "過去の出店リスト", path: host_past_events_path(@host.slug.presence || @host.id)}
+    ]
+
+    @past_events = @host.events
+                        .order(start_time: :desc)
+                        .offset(15)
+                        .includes(images_attachments: :blob)
+                        .page(params[:page])
+                        .per(24)
   end
 
   def edit

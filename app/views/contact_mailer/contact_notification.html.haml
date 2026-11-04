@@ -1,0 +1,18 @@
+%p お問い合わせが届きました。
+
+%p
+  %strong お名前:
+  = @contact.name
+
+%p
+  %strong メールアドレス:
+  = @contact.email
+
+%p
+  %strong 件名:
+  = @contact.subject
+
+%p
+  %strong お問い合わせ内容:
+
+%p= simple_format(@contact.message)

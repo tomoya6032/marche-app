@@ -21,6 +21,6 @@ class Admin::SiteSettingsController < Admin::BaseController
   end
 
   def site_setting_params
-    params.require(:site_setting).permit(:contact_email)
+    params.require(:site_setting).permit(:contact_email, :show_trial_period_expired_notice)
   end
 end

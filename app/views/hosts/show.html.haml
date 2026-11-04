@@ -112,8 +112,10 @@
                       - remaining_days = 21 - (Date.today - @host.created_at.to_date).to_i
                       - if remaining_days > 0
                         %span.text-muted 残り#{remaining_days}日
-                      - else
+                      - elsif SiteSetting.show_trial_period_expired_notice?
                         %span.text-muted 無料アカウント期間は終了しました。決済登録をお願いします。
+                      - else
+                        %span.text-muted 現在、無料でご利用いただけます
                 %tr
                   %td 決済登録
                   %td
@@ -159,6 +161,15 @@
                 %h3.event-card-title= link_to event.title, host_event_path(event.host&.slug.presence || event.host&.id, event)
                 %p.event-card-date= event.start_time.present? ? event.start_time.strftime('%Y/%m/%d') : '未定'
                 %p.event-card-venue= event.venue.present? ? event.venue : '未設定'
+
+          - if @has_past_events
+            = link_to host_past_events_path(@host.slug.presence || @host.id), class: 'event-card archive-link-card' do
+              .event-card-thumb.archive-thumb
+                %span.archive-icon 📚
+              .event-card-body
+                %h3.event-card-title 過去の出店リスト一覧へ
+                %p.event-card-date 最新15件以前のイベントを表示
+                %p.event-card-venue クリックして一覧ページへ
       - else
         %p イベントがありません。
 

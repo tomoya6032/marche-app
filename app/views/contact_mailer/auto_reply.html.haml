@@ -1,0 +1,13 @@
+%p いつもお世話になっております。
+
+%p お問い合わせを受け付けました。
+%p 通常、運営担当者よりご連絡いたします。
+
+%p
+  %strong 件名:
+  = @contact.subject
+
+%p
+  %strong お問い合わせ内容:
+
+%p= simple_format(@contact.message)

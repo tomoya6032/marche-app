@@ -5,7 +5,12 @@
   = truncate(@event.description, length: 100, omission: "...") # 説明文を100文字で切り詰め
 
 - content_for :canonical_url do
-  = request.original_url
+  = event_url(@event)
+
+- public_event_url = event_url(@event)
+
+- content_for :og_url do
+  = public_event_url
 
 - content_for :og_type do
   = "article"
@@ -110,13 +115,13 @@
           });
         })();
     
-    = link_to "https://line.me/R/msg/text/?#{CGI.escape("#{@event.title}のイベントページをチェック！ #{request.original_url}")}", target: '_blank', class: 'share-button line-share' do
+    = link_to "https://line.me/R/msg/text/?#{CGI.escape("#{@event.title}のイベントページをチェック！ #{public_event_url}")}", target: '_blank', class: 'share-button line-share' do
       %i.fab.fa-line
       %span.label LINE
-    = link_to "https://www.facebook.com/sharer/sharer.php?u=#{CGI.escape(request.original_url)}", target: '_blank', class: 'share-button facebook-share' do
+    = link_to "https://www.facebook.com/sharer/sharer.php?u=#{CGI.escape(public_event_url)}", target: '_blank', class: 'share-button facebook-share' do
       %i.fab.fa-facebook-f
       %span.label Facebook
-    = link_to "https://twitter.com/intent/tweet?url=#{CGI.escape(request.original_url)}&text=#{CGI.escape("#{@event.title}のイベントページをチェック！")}", target: '_blank', class: 'share-button twitter-share' do
+    = link_to "https://twitter.com/intent/tweet?url=#{CGI.escape(public_event_url)}&text=#{CGI.escape("#{@event.title}のイベントページをチェック！")}", target: '_blank', class: 'share-button twitter-share' do
       %i.fab.fa-twitter
       %span.label エックス
 
@@ -184,12 +189,12 @@
 - if (seller_signed_in? && current_seller == @event.seller) || (host_signed_in? && current_host == @event.host)
   .edit-links.edit-links-horizontal
     - if host_signed_in? && current_host == @event.host
-      = link_to '編集', edit_host_event_path(@event.host.to_param, @event), class: 'operation-button'
+      = link_to '編集', edit_host_event_path(@event.host.to_param, @event), class: 'operation-button edit-button'
       = button_to '削除', host_event_path(@event.host.to_param, @event), method: :delete, data: { confirm: '本当に削除しますか？' }, class: 'button-delete'
     - elsif seller_signed_in? && current_seller == @event.seller
-      = link_to '編集', edit_event_path(@event), class: 'operation-button'
+      = link_to '編集', edit_event_path(@event), class: 'operation-button edit-button'
       = button_to '削除', event_path(@event), method: :delete, data: { confirm: '本当に削除してもよろしいですか？' }, class: 'button-delete'
 
-= link_to 'イベント一覧へ戻る', events_path, class: 'operation-button'
+= link_to 'イベント一覧へ戻る', events_path, class: 'operation-button event-back-button'
 
 = render 'footer/footer'

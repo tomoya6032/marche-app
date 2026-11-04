@@ -1,0 +1,30 @@
+.contact-page
+  %h1 お問い合わせ
+
+  - if @contact_form.errors.any?
+    .error-messages
+      %h3= "#{@contact_form.errors.count}件のエラーがあります"
+      %ul
+        - @contact_form.errors.full_messages.each do |message|
+          %li= message
+
+  = form_with model: @contact_form, scope: :contact_form, url: contacts_path, method: :post, local: true, data: { turbo: false } do |f|
+    .form-group
+      = f.label :name, "お名前"
+      = f.text_field :name, class: 'form-control', placeholder: '例：山田 太郎'
+
+    .form-group
+      = f.label :email, "メールアドレス"
+      = f.email_field :email, class: 'form-control', placeholder: 'example@example.com'
+
+    .form-group
+      = f.label :subject, "お問い合わせ件名 / 種別"
+      = f.text_field :subject, class: 'form-control', placeholder: '例：サービスについて'
+
+    .form-group
+      = f.label :message, "お問い合わせ内容"
+      = f.text_area :message, class: 'form-control', rows: 7, placeholder: 'お問い合わせ内容をご記入ください。'
+
+    .form-actions
+      = f.submit "送信する", class: 'btn btn-primary', data: { disable_with: "送信中..." }
+      = link_to "戻る", root_path, class: 'btn btn-secondary'

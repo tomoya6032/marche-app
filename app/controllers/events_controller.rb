@@ -21,7 +21,12 @@ class EventsController < ApplicationController
 
     # フィルタリング: 都道府県
     if params[:prefecture].present?
-      @events = @events.where(venue: params[:prefecture])
+      @events = @events.where("events.venue = :prefecture OR events.prefecture = :prefecture", prefecture: params[:prefecture])
+    elsif params[:prefecture_code].present?
+      requested_prefecture = Event::PREFECTURE_CODES[params[:prefecture_code].to_i]
+      if requested_prefecture.present?
+        @events = @events.where("events.venue = :prefecture OR events.prefecture = :prefecture", prefecture: requested_prefecture)
+      end
     end
 
     # ★★★ 並び替え処理の修正：新しいソートオプションを追加 ★★★

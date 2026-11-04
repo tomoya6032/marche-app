@@ -7,6 +7,14 @@ class SiteSetting < ApplicationRecord
     first_or_create
   end
 
+  def show_trial_period_expired_notice?
+    self[:show_trial_period_expired_notice].nil? ? true : self[:show_trial_period_expired_notice]
+  end
+
+  def self.show_trial_period_expired_notice?
+    instance.show_trial_period_expired_notice?
+  end
+
   # 問い合わせメールアドレスを取得（デフォルト値付き）
   def self.contact_email
     instance.contact_email.presence || 'mimamorilab@gmail.com'

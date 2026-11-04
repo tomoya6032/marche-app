@@ -80,6 +80,8 @@
     = f.label :video, '動画URL'
     = f.text_field :video
   .actions
-    = f.submit '作成', class: 'btn btn-primary'
+    = f.submit '作成', class: 'operation-button'
 
 = link_to '戻る', hosts_path, class: 'operation-button'
+
+= render 'footer/footer'

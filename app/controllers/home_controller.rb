@@ -20,6 +20,9 @@ class HomeController < ApplicationController
     # お知らせを取得
     @notices = Notice.order(published_at: :desc).limit(5)
 
+    # 実際に掲載データが存在する都道府県一覧を取得
+    @prefecture_summary = Event.prefecture_summary
+
     # 直近1週間で人気のイベント上位3つを取得（不足時は補完して最大3件表示）
     @popular_events = Event.popular_this_week(3).to_a
     if @popular_events.size < 3

@@ -11,7 +11,7 @@ module ApplicationHelper
 
   def event_og_image_url(event)
     if event.respond_to?(:images) && event.images.attached?
-      return absolute_url(rails_storage_proxy_path(event.images.first))
+      return absolute_url(url_for(event.images.first))
     end
 
     default_og_image_url
@@ -112,11 +112,11 @@ module ApplicationHelper
     return if resource.blank?
 
     if resource.respond_to?(:images) && resource.images.attached?
-      return absolute_url(rails_storage_proxy_path(resource.images.first))
+      return absolute_url(url_for(resource.images.first))
     end
 
     if resource.respond_to?(:top_image) && resource.top_image.attached?
-      return absolute_url(rails_storage_proxy_path(resource.top_image))
+      return absolute_url(url_for(resource.top_image))
     end
 
     if resource.respond_to?(:image) && resource.image.present?

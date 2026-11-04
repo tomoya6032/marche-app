@@ -357,10 +357,97 @@ table.event-details td {
   gap: 10px; /* ボタン間のスペースを調整 */
 }
 
+.edit-links-horizontal > a.operation-button,
+.edit-links-horizontal > form .button-delete {
+  box-sizing: border-box;
+  min-height: 44px;
+  padding: 10px 14px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  line-height: 1.2;
+}
+
 .edit-links a {
   padding: 8px 15px;
 
   border-radius: 5px;
   margin-right: 10px;
+}
+
+.edit-links .edit-button {
+  background-color: #1d4ed8;
+  color: #fff;
+  width: 200px;
+  min-width: 200px;
+}
+
+.edit-links .edit-button:hover {
+  background-color: #1e40af;
+}
+
+.operation-button.event-back-button {
+  width: 200px;
+  min-height: 40px;
+  padding: 10px 14px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+}
+
+@media (max-width: 767px) {
+  .edit-links-horizontal {
+    width: 100%;
+    gap: 12px;
+  }
+
+  .edit-links-horizontal > a.operation-button,
+  .edit-links-horizontal > form {
+    flex: 1 1 0;
+    width: 50%;
+    margin: 0;
+  }
+
+  .edit-links-horizontal > a.operation-button {
+    box-sizing: border-box;
+    width: 100%;
+    min-height: 52px;
+    padding: 14px 12px;
+    margin: 0;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    line-height: 1.2;
+  }
+
+  .edit-links-horizontal > form .button-delete {
+    box-sizing: border-box;
+    width: 100%;
+    min-height: 56px;
+    padding: 16px 14px;
+    margin: 0;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    line-height: 1.2;
+    font-size: 16px;
+    font-weight: 500;
+  }
+
+  .operation-button.event-back-button {
+    box-sizing: border-box;
+    width: 100%;
+    min-height: 56px;
+    padding: 16px 14px;
+    margin: 12px 0 0;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    line-height: 1.4;
+    font-size: 18px;
+    font-weight: 500;
+  }
 }
 

@@ -144,6 +144,20 @@
       .recruitment-link
         = link_to recruitment_path do
           出店者募集要項へ
+
+    .prefecture-search
+      %h3 エリアから探す（47都道府県）
+      .prefecture-grid
+        - @prefecture_summary.each do |prefecture|
+          - if prefecture[:active]
+            = link_to events_path(prefecture: prefecture[:name]), class: 'prefecture-chip active', title: "#{prefecture[:name]}のイベントを見る" do
+              %span.prefecture-label= prefecture[:name]
+              %span.prefecture-count= "#{prefecture[:count]}件"
+          - else
+            %span.prefecture-chip.disabled{ title: "#{prefecture[:name]}の掲載データはまだありません" }
+              %span.prefecture-label= prefecture[:name]
+              %span.prefecture-count 0件
+
     .recruitment-image
       = image_tag "slider1.png", alt: "出店者募集のイメージ", class: "recruitment-image"
 

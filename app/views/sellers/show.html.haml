@@ -97,8 +97,10 @@
                       - remaining_days = 21 - (Date.today - @seller.created_at.to_date).to_i
                       - if remaining_days > 0
                         %span.text-muted 残り#{remaining_days}日
-                      - else
+                      - elsif SiteSetting.show_trial_period_expired_notice?
                         %span.text-muted 無料アカウント期間は終了しました。決済登録をお願いします。
+                      - else
+                        %span.text-muted 現在、無料でご利用いただけます
                 %tr
                   %th 決済登録
                   %td

@@ -6,7 +6,10 @@
   = truncate(@event.description, length: 150, omission: "...") # 説明文を150文字で切り詰め
 
 - content_for :canonical_url do
-  = request.original_url
+  = event_url(@event)
+
+- content_for :og_url do
+  = event_url(@event)
 
 - content_for :og_type do
   = "article"
@@ -97,12 +100,12 @@
   - if (seller_signed_in? && current_seller == @event.seller) || (host_signed_in? && current_host == @event.host)
     .edit-links
       - if host_signed_in? && current_host == @event.host
-        = link_to '編集', edit_host_event_path(@event.host.slug || @event.host.id, @event), class: 'operation-button'
+        = link_to '編集', edit_host_event_path(@event.host.slug || @event.host.id, @event), class: 'operation-button edit-button'
         
         = button_to '削除', destroy_host_event_path(@event.host.slug || @event.host.id, @event), method: :delete, data: { confirm: '本当に削除しますか？' }, class: 'button-delete'
       - elsif seller_signed_in? && current_seller == @event.seller
-        = link_to '編集', edit_event_path(@event), class: 'operation-button'
-        = link_to '削除', event_path(@event), data: { turbo_method: :delete, turbo_confirm: '本当に削除してもよろしいですか？' }, class: 'operation-button'
+        = link_to '編集', edit_event_path(@event), class: 'operation-button edit-button'
+        = link_to '削除', event_path(@event), data: { turbo_method: :delete, turbo_confirm: '本当に削除してもよろしいですか？' }, class: 'button-delete'
 
 
   -# - if (seller_signed_in? && current_seller == @event.seller) || (host_signed_in? && current_host == @event.host)
