@@ -17,11 +17,16 @@
         %br
         未設定の場合は、デフォルトで mimamorilab@gmail.com が使用されます。
 
-    .form-group
-      = f.check_box :show_trial_period_expired_notice
-      = f.label :show_trial_period_expired_notice, "無料アカウント期間終了メッセージを表示する"
-      %p.help-text
-        オフにすると、無料アカウント期間が終了した際の文言を表示せず、代わりに「現在、無料でご利用いただけます」を表示します。
+    - if SiteSetting.supports_trial_period_expired_notice?
+      .form-group
+        = f.check_box :show_trial_period_expired_notice
+        = f.label :show_trial_period_expired_notice, "無料アカウント期間終了メッセージを表示する"
+        %p.help-text
+          オフにすると、無料アカウント期間が終了した際の文言を表示せず、代わりに「現在、無料でご利用いただけます」を表示します。
+    - else
+      .form-group
+        %p.help-text
+          無料アカウント期間終了メッセージの表示切替は、データベース更新後に利用できます。
 
     .form-actions
       = f.submit "設定を保存", class: 'btn btn-primary'

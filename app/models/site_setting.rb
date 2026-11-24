@@ -7,7 +7,13 @@ class SiteSetting < ApplicationRecord
     first_or_create
   end
 
+  def self.supports_trial_period_expired_notice?
+    column_names.include?("show_trial_period_expired_notice")
+  end
+
   def show_trial_period_expired_notice?
+    return true unless self.class.supports_trial_period_expired_notice?
+
     self[:show_trial_period_expired_notice].nil? ? true : self[:show_trial_period_expired_notice]
   end
 
