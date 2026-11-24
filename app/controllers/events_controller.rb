@@ -85,7 +85,10 @@ class EventsController < ApplicationController
 
   def new
     set_prefectures
-    @event = Event.new
+    @event = Event.new(
+      start_time: Time.zone.now,
+      end_time: Time.zone.now + 1.hour
+    )
   end
 
   def create

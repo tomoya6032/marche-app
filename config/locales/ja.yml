@@ -23,6 +23,9 @@ ja:
     sessions:
       signed_in: "ログインしました。"
       signed_out: "ログアウトしました。"
+      already_signed_out: "既にログアウトしています。"
+      host:
+        already_signed_out: "既にログアウトしています。"
       # ログアウト時にメールアドレスが表示される場合など、必要に応じて
       # signed_out: "ログアウトしました。またのご利用をお待ちしております！"
     passwords:

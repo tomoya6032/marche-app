@@ -158,17 +158,18 @@
             = image_tag "no_image_square.jpg", class: "shop-image"
 
   %h2 出店したイベント
-  - if @seller.events.present?
+  - if @seller_public_events.present?
     %table.event-info-table
       %thead
         %tr
           %th イベント名
           %th 開催日
       %tbody
-        - @seller.events.each do |event|
+        - @seller_public_events.each do |event|
           %tr
             %td= link_to event.title, event_path(event)
             %td= event.start_time.strftime('%Y/%m/%d') if event.start_time
+    = paginate @seller_public_events
   - else
     %p この個人ショップはまだイベントを開催していません。
 

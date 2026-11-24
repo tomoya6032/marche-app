@@ -27,6 +27,9 @@
 - content_for :twitter_image do
   = og_image_url
 
+- content_for :twitter_card do
+  = "summary_large_image"
+
 %body
   = render 'header/header' # ヘッダーのパーシャルを呼び出す
   
@@ -118,7 +121,7 @@
     = link_to "https://line.me/R/msg/text/?#{CGI.escape("#{@event.title}のイベントページをチェック！ #{public_event_url}")}", target: '_blank', class: 'share-button line-share' do
       %i.fab.fa-line
       %span.label LINE
-    = link_to "https://www.facebook.com/sharer/sharer.php?u=#{CGI.escape(public_event_url)}", target: '_blank', class: 'share-button facebook-share' do
+    = link_to "https://www.facebook.com/sharer/sharer.php?u=#{CGI.escape(public_event_url)}&quote=#{CGI.escape(truncate(@event.description.to_s, length: 120))}", target: '_blank', class: 'share-button facebook-share' do
       %i.fab.fa-facebook-f
       %span.label Facebook
     = link_to "https://twitter.com/intent/tweet?url=#{CGI.escape(public_event_url)}&text=#{CGI.escape("#{@event.title}のイベントページをチェック！")}", target: '_blank', class: 'share-button twitter-share' do

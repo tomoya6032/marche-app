@@ -4,14 +4,21 @@ module ApplicationHelper
   end
 
   def shop_og_image_url(resource)
-    image_url_from_resource(resource) || default_og_image_url
+    host_top_image_url(resource) || image_url_from_resource(resource) || default_og_image_url
   rescue StandardError
     default_og_image_url
   end
 
   def event_og_image_url(event)
     if event.respond_to?(:images) && event.images.attached?
-      return absolute_url(url_for(event.images.first))
+      image = event.images.first
+
+      if image.variable?
+        variant = image.variant(resize_to_fill: [1200, 630], format: :jpg)
+        return absolute_url(rails_storage_proxy_path(variant, only_path: true))
+      end
+
+      return absolute_url(rails_storage_proxy_path(image, only_path: true))
     end
 
     default_og_image_url
@@ -107,6 +114,14 @@ module ApplicationHelper
   end
 
   private
+
+  def host_top_image_url(resource)
+    return nil unless resource.is_a?(Host)
+    return nil unless resource.respond_to?(:top_image)
+    return nil unless resource.top_image.attached?
+
+    absolute_url(url_for(resource.top_image))
+  end
 
   def image_url_from_resource(resource)
     return if resource.blank?
